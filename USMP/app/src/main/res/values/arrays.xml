@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Account page -->
+    <string-array name="permissions">
+        <item>@string/permission1</item>
+        <item>@string/permission2</item>
+        <item>@string/permission3</item>
+
+
+    </string-array>
+
+    <!--Slope Rating Form -->
+    <string-array name="roadTrailList">
+        <item>@string/roadTrail1</item>
+        <item>@string/roadTrail2</item>
+    </string-array>
+
+    <string-array name="sideList">
+        <item>@string/side1</item>
+        <item>@string/side2</item>
+        <item>@string/side3</item>
+        <item>@string/side4</item>
+        <item>@string/side5</item>
+        <item>@string/side6</item>
+        <item>@string/side7</item>
+        <item>@string/side8</item>
+        <item>@string/side9</item>
+        <item>@string/side10</item>
+    </string-array>
+
+    <string-array name="weatherList">
+        <item>@string/weather1</item>
+        <item>@string/weather2</item>
+        <item>@string/weather3</item>
+        <item>@string/weather4</item>
+        <item>@string/weather5</item>
+        <item>@string/weather6</item>
+        <item>@string/weather7</item>
+        <item>@string/weather8</item>
+        <item>@string/weather9</item>
+        <item>@string/weather10</item>
+        <item>@string/weather11</item>
+        <item>@string/weather12</item>
+        <item>@string/weather13</item>
+        <item>@string/weather14</item>
+        <item>@string/weather15</item>
+        <item>@string/weather16</item>
+        <item>@string/weather17</item>
+        <item>@string/weather18</item>
+        <item>@string/weather19</item>
+        <item>@string/weather20</item>
+        <item>@string/weather21</item>
+    </string-array>
+
+    <string-array name="speedList">
+        <item>@string/speed1</item>
+        <item>@string/speed2</item>
+        <item>@string/speed3</item>
+        <item>@string/speed4</item>
+        <item>@string/speed5</item>
+        <item>@string/speed6</item>
+        <item>@string/speed7</item>
+        <item>@string/speed8</item>
+        <item>@string/speed9</item>
+    </string-array>
+
+    <string-array name="ynList">
+        <item>@string/yn2</item>
+        <item>@string/yn1</item>
+    </string-array>
+
+    <!--Preliminary Ratings -->
+    <string-array name="ratingList">
+        <item>@string/rating1</item>
+        <item>@string/rating2</item>
+        <item>@string/rating3</item>
+        <item>@string/rating4</item>
+    </string-array>
+
+    <string-array name="zeroRatingList">
+        <item>@string/ZeroRating0</item>
+        <item>@string/ZeroRating1</item>
+        <item>@string/ZeroRating2</item>
+        <item>@string/ZeroRating3</item>
+        <item>@string/ZeroRating4</item>
+    </string-array>
+
+    <!--New Slope Event Form -->
+
+    <!--Event Date-->
+    <string-array name="dateList">
+        <item>@string/date1</item>
+        <item>@string/date2</item>
+        <item>@string/date3</item>
+    </string-array>
+
+    <!--Hazard Type-->
+    <string-array name="hazardList">
+        <item>@string/hazard1</item>
+        <item>@string/hazard2</item>
+        <item>@string/hazard3</item>
+        <item>@string/hazard4</item>
+    </string-array>
+
+    <!--State-->
+    <string-array name="stateList">
+        <item>@string/state1</item>
+        <item>@string/state2</item>
+        <item>@string/state3</item>
+        <item>@string/state4</item>
+        <item>@string/state5</item>
+        <item>@string/state6</item>
+        <item>@string/state7</item>
+        <item>@string/state8</item>
+        <item>@string/state9</item>
+        <item>@string/state10</item>
+        <item>@string/state11</item>
+        <item>@string/state12</item>
+        <item>@string/state13</item>
+        <item>@string/state14</item>
+        <item>@string/state15</item>
+        <item>@string/state16</item>
+        <item>@string/state17</item>
+        <item>@string/state18</item>
+        <item>@string/state19</item>
+        <item>@string/state20</item>
+        <item>@string/state21</item>
+        <item>@string/state22</item>
+        <item>@string/state23</item>
+        <item>@string/state24</item>
+        <item>@string/state25</item>
+        <item>@string/state26</item>
+        <item>@string/state27</item>
+        <item>@string/state28</item>
+        <item>@string/state29</item>
+        <item>@string/state30</item>
+        <item>@string/state31</item>
+        <item>@string/state32</item>
+        <item>@string/state33</item>
+        <item>@string/state34</item>
+        <item>@string/state35</item>
+        <item>@string/state36</item>
+        <item>@string/state37</item>
+        <item>@string/state38</item>
+        <item>@string/state39</item>
+        <item>@string/state40</item>
+        <item>@string/state41</item>
+        <item>@string/state42</item>
+        <item>@string/state43</item>
+        <item>@string/state44</item>
+        <item>@string/state45</item>
+        <item>@string/state46</item>
+        <item>@string/state47</item>
+        <item>@string/state48</item>
+        <item>@string/state49</item>
+        <item>@string/state50</item>
+        <item>@string/state51</item>
+        <item>@string/state52</item>
+        <item>@string/state53</item>
+        <item>@string/state54</item>
+        <item>@string/state55</item>
+        <item>@string/state56</item>
+    </string-array>
+
+    <!--Size of largest fallen rock -->
+    <string-array name="largestRockList">
+        <item>@string/largeRock1</item>
+        <item>@string/largeRock2</item>
+        <item>@string/largeRock3</item>
+        <item>@string/largeRock4</item>
+    </string-array>
+
+    <!--Estimated Volume of Debris -->
+    <string-array name="debrisList">
+        <item>@string/debris1</item>
+        <item>@string/debris2</item>
+        <item>@string/debris3</item>
+        <item>@string/debris4</item>
+    </string-array>
+
+    <!--Road Trail Condition after failure -->
+    <string-array name="afterFailureList">
+        <item>@string/afterFailure1</item>
+        <item>@string/afterFailure2</item>
+        <item>@string/afterFailure3</item>
+        <item>@string/afterFailure4</item>
+        <item>@string/afterFailure5</item>
+    </string-array>
+
+    <!--Number of fallen rocks -->
+    <string-array name="numFallenList">
+        <item>@string/numFallen1</item>
+        <item>@string/numFallen2</item>
+        <item>@string/numFallen3</item>
+        <item>@string/numFallen4</item>
+        <item>@string/numFallen5</item>
+    </string-array>
+
+    <!--Maintenance Form -->
+
+    <!--Maintenance Type -->
+    <string-array name="maintenanceList">
+        <item>@string/maintenance1</item>
+        <item>@string/maintenance2</item>
+    </string-array>
+
+    <!--Type of Event -->
+    <string-array name="eventTypeList">
+        <item>@string/eventType1</item>
+        <item>@string/eventType2</item>
+        <item>@string/eventType3</item>
+    </string-array>
+
+    <string-array name="maintenanceIDList">
+        <item>@string/MId1</item>
+    </string-array>
+
+    <!--Agency Stuff -->
+    <string-array name="AgencyList">
+        <item>@string/Agency0</item>
+        <item>@string/Agency1</item>
+        <item>@string/Agency2</item>
+        <item>@string/Agency3</item>
+        <item>@string/Agency4</item>
+
+    </string-array>
+
+    <string-array name="RegionalList">
+        <item>@string/Regional1</item>
+
+
+    </string-array>
+
+    <string-array name="FSRegionalList">
+        <item>@string/Regional1</item>
+        <item>@string/FSR1</item>
+        <item>@string/FSR2</item>
+        <item>@string/FSR3</item>
+        <item>@string/FSR4</item>
+        <item>@string/FSR5</item>
+        <item>@string/FSR6</item>
+        <item>@string/FSR7</item>
+        <item>@string/FSR8</item>
+        <item>@string/FSR9</item>
+    </string-array>
+
+    <string-array name="LocalList">
+        <item>@string/Local1</item>
+    </string-array>
+
+    <string-array name="FSLocalList1">
+        <item>@string/Local1</item>
+        <item>@string/FSR1L1</item>
+        <item>@string/FSR1L2</item>
+        <item>@string/FSR1L3</item>
+        <item>@string/FSR1L4</item>
+        <item>@string/FSR1L5</item>
+        <item>@string/FSR1L6</item>
+        <item>@string/FSR1L7</item>
+        <item>@string/FSR1L8</item>
+        <item>@string/FSR1L9</item>
+        <item>@string/FSR1L10</item>
+        <item>@string/FSR1L11</item>
+
+    </string-array>
+
+    <string-array name="FSLocalList2">
+        <item>@string/Local1</item>
+        <item>@string/FSR2L1</item>
+        <item>@string/FSR2L2</item>
+        <item>@string/FSR2L3</item>
+        <item>@string/FSR2L4</item>
+        <item>@string/FSR2L5</item>
+        <item>@string/FSR2L6</item>
+        <item>@string/FSR2L7</item>
+        <item>@string/FSR2L8</item>
+        <item>@string/FSR2L9</item>
+        <item>@string/FSR2L10</item>
+        <item>@string/FSR2L11</item>
+    </string-array>
+
+    <string-array name="FSLocalList3">
+        <item>@string/Local1</item>
+        <item>@string/FSR3L1</item>
+        <item>@string/FSR3L2</item>
+        <item>@string/FSR3L3</item>
+        <item>@string/FSR3L4</item>
+        <item>@string/FSR3L5</item>
+        <item>@string/FSR3L6</item>
+        <item>@string/FSR3L7</item>
+        <item>@string/FSR3L8</item>
+        <item>@string/FSR3L9</item>
+        <item>@string/FSR3L10</item>
+        <item>@string/FSR3L11</item>
+    </string-array>
+
+    <string-array name="FSLocalList4">
+        <item>@string/Local1</item>
+        <item>@string/FSR4L1</item>
+        <item>@string/FSR4L2</item>
+        <item>@string/FSR4L3</item>
+        <item>@string/FSR4L4</item>
+        <item>@string/FSR4L5</item>
+        <item>@string/FSR4L6</item>
+        <item>@string/FSR4L7</item>
+        <item>@string/FSR4L8</item>
+        <item>@string/FSR4L9</item>
+        <item>@string/FSR4L10</item>
+        <item>@string/FSR4L11</item>
+        <item>@string/FSR4L12</item>
+    </string-array>
+
+    <string-array name="FSLocalList5">
+        <item>@string/Local1</item>
+        <item>@string/FSR5L1</item>
+        <item>@string/FSR5L2</item>
+        <item>@string/FSR5L3</item>
+        <item>@string/FSR5L4</item>
+        <item>@string/FSR5L5</item>
+        <item>@string/FSR5L6</item>
+        <item>@string/FSR5L7</item>
+        <item>@string/FSR5L8</item>
+        <item>@string/FSR5L9</item>
+        <item>@string/FSR5L10</item>
+        <item>@string/FSR5L11</item>
+        <item>@string/FSR5L12</item>
+        <item>@string/FSR5L13</item>
+        <item>@string/FSR5L14</item>
+        <item>@string/FSR5L15</item>
+        <item>@string/FSR5L16</item>
+        <item>@string/FSR5L17</item>
+        <item>@string/FSR5L18</item>
+    </string-array>
+
+    <string-array name="FSLocalList6">
+        <item>@string/Local1</item>
+        <item>@string/FSR6L1</item>
+        <item>@string/FSR6L2</item>
+        <item>@string/FSR6L3</item>
+        <item>@string/FSR6L4</item>
+        <item>@string/FSR6L5</item>
+        <item>@string/FSR6L6</item>
+        <item>@string/FSR6L7</item>
+        <item>@string/FSR6L8</item>
+        <item>@string/FSR6L9</item>
+        <item>@string/FSR6L10</item>
+        <item>@string/FSR6L11</item>
+        <item>@string/FSR6L12</item>
+        <item>@string/FSR6L13</item>
+        <item>@string/FSR6L14</item>
+        <item>@string/FSR6L15</item>
+        <item>@string/FSR6L16</item>
+        <item>@string/FSR6L17</item>
+        <item>@string/FSR6L18</item>
+    </string-array>
+
+    <string-array name="FSLocalList7">
+        <item>@string/Local1</item>
+        <item>@string/FSR7L1</item>
+        <item>@string/FSR7L2</item>
+        <item>@string/FSR7L3</item>
+        <item>@string/FSR7L4</item>
+        <item>@string/FSR7L5</item>
+        <item>@string/FSR7L6</item>
+        <item>@string/FSR7L7</item>
+        <item>@string/FSR7L8</item>
+        <item>@string/FSR7L9</item>
+        <item>@string/FSR7L10</item>
+        <item>@string/FSR7L11</item>
+        <item>@string/FSR7L12</item>
+        <item>@string/FSR7L13</item>
+        <item>@string/FSR7L14</item>
+        <item>@string/FSR7L15</item>
+    </string-array>
+
+    <string-array name="FSLocalList8">
+        <item>@string/Local1</item>
+        <item>@string/FSR8L1</item>
+        <item>@string/FSR8L2</item>
+        <item>@string/FSR8L3</item>
+        <item>@string/FSR8L4</item>
+        <item>@string/FSR8L5</item>
+        <item>@string/FSR8L6</item>
+        <item>@string/FSR8L7</item>
+        <item>@string/FSR8L8</item>
+        <item>@string/FSR8L9</item>
+        <item>@string/FSR8L10</item>
+        <item>@string/FSR8L11</item>
+        <item>@string/FSR8L12</item>
+        <item>@string/FSR8L13</item>
+        <item>@string/FSR8L14</item>
+        <item>@string/FSR8L15</item>
+    </string-array>
+
+    <string-array name="FSLocalList9">
+        <item>@string/Local1</item>
+        <item>@string/FSR9L1</item>
+        <item>@string/FSR9L2</item>
+    </string-array>
+
+
+
+    <string-array name = "NPSRegionalList">
+        <item>@string/Regional1</item>
+        <item>@string/NPSR1</item>
+        <item>@string/NPSR2</item>
+        <item>@string/NPSR3</item>
+        <item>@string/NPSR4</item>
+        <item>@string/NPSR5</item>
+        <item>@string/NPSR6</item>
+        <item>@string/NPSR7</item>
+    </string-array>
+
+    <string-array name="NPSLocalList1">
+        <item>@string/Local1</item>
+        <item>@string/NPSR1L1</item>
+        <item>@string/NPSR1L2</item>
+        <item>@string/NPSR1L3</item>
+        <item>@string/NPSR1L4</item>
+        <item>@string/NPSR1L5</item>
+        <item>@string/NPSR1L6</item>
+        <item>@string/NPSR1L7</item>
+        <item>@string/NPSR1L8</item>
+        <item>@string/NPSR1L9</item>
+        <item>@string/NPSR1L10</item>
+        <item>@string/NPSR1L11</item>
+        <item>@string/NPSR1L12</item>
+        <item>@string/NPSR1L13</item>
+        <item>@string/NPSR1L14</item>
+        <item>@string/NPSR1L15</item>
+    </string-array>
+
+    <string-array name="NPSLocalList2">
+        <item>@string/Local1</item>
+        <item>@string/NPSR2L1</item>
+        <item>@string/NPSR2L2</item>
+        <item>@string/NPSR2L3</item>
+        <item>@string/NPSR2L4</item>
+        <item>@string/NPSR2L5</item>
+        <item>@string/NPSR2L6</item>
+        <item>@string/NPSR2L7</item>
+        <item>@string/NPSR2L8</item>
+        <item>@string/NPSR2L9</item>
+        <item>@string/NPSR2L10</item>
+        <item>@string/NPSR2L11</item>
+        <item>@string/NPSR2L12</item>
+        <item>@string/NPSR2L13</item>
+        <item>@string/NPSR2L14</item>
+        <item>@string/NPSR2L15</item>
+        <item>@string/NPSR2L16</item>
+        <item>@string/NPSR2L17</item>
+        <item>@string/NPSR2L18</item>
+        <item>@string/NPSR2L19</item>
+        <item>@string/NPSR2L20</item>
+        <item>@string/NPSR2L21</item>
+        <item>@string/NPSR2L22</item>
+        <item>@string/NPSR2L23</item>
+        <item>@string/NPSR2L24</item>
+        <item>@string/NPSR2L25</item>
+        <item>@string/NPSR2L26</item>
+        <item>@string/NPSR2L27</item>
+        <item>@string/NPSR2L28</item>
+        <item>@string/NPSR2L29</item>
+        <item>@string/NPSR2L30</item>
+        <item>@string/NPSR2L31</item>
+        <item>@string/NPSR2L32</item>
+        <item>@string/NPSR2L33</item>
+        <item>@string/NPSR2L34</item>
+        <item>@string/NPSR2L35</item>
+        <item>@string/NPSR2L36</item>
+        <item>@string/NPSR2L37</item>
+        <item>@string/NPSR2L38</item>
+        <item>@string/NPSR2L39</item>
+        <item>@string/NPSR2L40</item>
+        <item>@string/NPSR2L41</item>
+        <item>@string/NPSR2L42</item>
+        <item>@string/NPSR2L43</item>
+        <item>@string/NPSR2L44</item>
+        <item>@string/NPSR2L45</item>
+        <item>@string/NPSR2L46</item>
+        <item>@string/NPSR2L47</item>
+        <item>@string/NPSR2L48</item>
+        <item>@string/NPSR2L49</item>
+        <item>@string/NPSR2L51</item>
+        <item>@string/NPSR2L52</item>
+        <item>@string/NPSR2L53</item>
+        <item>@string/NPSR2L54</item>
+        <item>@string/NPSR2L55</item>
+        <item>@string/NPSR2L56</item>
+        <item>@string/NPSR2L57</item>
+        <item>@string/NPSR2L58</item>
+        <item>@string/NPSR2L59</item>
+        <item>@string/NPSR2L60</item>
+        <item>@string/NPSR2L61</item>
+        <item>@string/NPSR2L62</item>
+        <item>@string/NPSR2L63</item>
+        <item>@string/NPSR2L64</item>
+        <item>@string/NPSR2L65</item>
+        <item>@string/NPSR2L66</item>
+        <item>@string/NPSR2L67</item>
+        <item>@string/NPSR2L68</item>
+        <item>@string/NPSR2L69</item>
+        <item>@string/NPSR2L70</item>
+        <item>@string/NPSR2L71</item>
+        <item>@string/NPSR2L72</item>
+        <item>@string/NPSR2L73</item>
+        <item>@string/NPSR2L74</item>
+        <item>@string/NPSR2L75</item>
+        <item>@string/NPSR2L76</item>
+        <item>@string/NPSR2L77</item>
+        <item>@string/NPSR2L78</item>
+        <item>@string/NPSR2L79</item>
+        <item>@string/NPSR2L80</item>
+        <item>@string/NPSR2L81</item>
+        <item>@string/NPSR2L82</item>
+        <item>@string/NPSR2L83</item>
+        <item>@string/NPSR2L84</item>
+    </string-array>
+
+    <string-array name="NPSLocal3">
+        <item>@string/Local1</item>
+        <item>@string/NPSR3L1</item>
+        <item>@string/NPSR3L2</item>
+        <item>@string/NPSR3L3</item>
+        <item>@string/NPSR3L4</item>
+        <item>@string/NPSR3L5</item>
+        <item>@string/NPSR3L6</item>
+        <item>@string/NPSR3L7</item>
+        <item>@string/NPSR3L8</item>
+        <item>@string/NPSR3L9</item>
+        <item>@string/NPSR3L10</item>
+        <item>@string/NPSR3L11</item>
+        <item>@string/NPSR3L12</item>
+        <item>@string/NPSR3L13</item>
+        <item>@string/NPSR3L14</item>
+        <item>@string/NPSR3L15</item>
+        <item>@string/NPSR3L16</item>
+        <item>@string/NPSR3L17</item>
+        <item>@string/NPSR3L18</item>
+        <item>@string/NPSR3L19</item>
+        <item>@string/NPSR3L20</item>
+        <item>@string/NPSR3L21</item>
+        <item>@string/NPSR3L22</item>
+        <item>@string/NPSR3L23</item>
+        <item>@string/NPSR3L24</item>
+        <item>@string/NPSR3L25</item>
+        <item>@string/NPSR3L26</item>
+        <item>@string/NPSR3L27</item>
+        <item>@string/NPSR3L28</item>
+        <item>@string/NPSR3L29</item>
+        <item>@string/NPSR3L30</item>
+        <item>@string/NPSR3L31</item>
+        <item>@string/NPSR3L32</item>
+        <item>@string/NPSR3L33</item>
+        <item>@string/NPSR3L34</item>
+        <item>@string/NPSR3L35</item>
+        <item>@string/NPSR3L36</item>
+        <item>@string/NPSR3L37</item>
+        <item>@string/NPSR3L38</item>
+        <item>@string/NPSR3L39</item>
+        <item>@string/NPSR3L40</item>
+        <item>@string/NPSR3L41</item>
+        <item>@string/NPSR3L42</item>
+        <item>@string/NPSR3L43</item>
+        <item>@string/NPSR3L44</item>
+        <item>@string/NPSR3L45</item>
+        <item>@string/NPSR3L46</item>
+        <item>@string/NPSR3L47</item>
+        <item>@string/NPSR3L48</item>
+        <item>@string/NPSR3L49</item>
+        <item>@string/NPSR3L50</item>
+        <item>@string/NPSR3L51</item>
+        <item>@string/NPSR3L52</item>
+        <item>@string/NPSR3L53</item>
+        <item>@string/NPSR3L54</item>
+        <item>@string/NPSR3L55</item>
+        <item>@string/NPSR3L56</item>
+        <item>@string/NPSR3L57</item>
+    </string-array>
+
+    <string-array name="NPSLocal4">
+        <item>@string/Local1</item>
+        <item>@string/NPSR4L1</item>
+        <item>@string/NPSR4L2</item>
+        <item>@string/NPSR4L3</item>
+        <item>@string/NPSR4L4</item>
+        <item>@string/NPSR4L5</item>
+        <item>@string/NPSR4L6</item>
+        <item>@string/NPSR4L7</item>
+        <item>@string/NPSR4L8</item>
+        <item>@string/NPSR4L9</item>
+        <item>@string/NPSR4L10</item>
+        <item>@string/NPSR4L11</item>
+        <item>@string/NPSR4L12</item>
+        <item>@string/NPSR4L13</item>
+        <item>@string/NPSR4L14</item>
+        <item>@string/NPSR4L15</item>
+        <item>@string/NPSR4L16</item>
+        <item>@string/NPSR4L17</item>
+        <item>@string/NPSR4L18</item>
+        <item>@string/NPSR4L19</item>
+        <item>@string/NPSR4L20</item>
+        <item>@string/NPSR4L21</item>
+        <item>@string/NPSR4L22</item>
+        <item>@string/NPSR4L23</item>
+        <item>@string/NPSR4L24</item>
+        <item>@string/NPSR4L25</item>
+        <item>@string/NPSR4L26</item>
+        <item>@string/NPSR4L27</item>
+        <item>@string/NPSR4L28</item>
+        <item>@string/NPSR4L29</item>
+        <item>@string/NPSR4L30</item>
+        <item>@string/NPSR4L31</item>
+        <item>@string/NPSR4L32</item>
+        <item>@string/NPSR4L33</item>
+        <item>@string/NPSR4L34</item>
+        <item>@string/NPSR4L35</item>
+        <item>@string/NPSR4L36</item>
+        <item>@string/NPSR4L37</item>
+        <item>@string/NPSR4L38</item>
+    </string-array>
+
+    <string-array name="NPSLocal5">
+        <item>@string/Local1</item>
+        <item>@string/NPSR5L1</item>
+        <item>@string/NPSR5L2</item>
+        <item>@string/NPSR5L3</item>
+        <item>@string/NPSR5L4</item>
+        <item>@string/NPSR5L5</item>
+        <item>@string/NPSR5L6</item>
+        <item>@string/NPSR5L7</item>
+        <item>@string/NPSR5L8</item>
+        <item>@string/NPSR5L9</item>
+        <item>@string/NPSR5L10</item>
+        <item>@string/NPSR5L11</item>
+        <item>@string/NPSR5L12</item>
+        <item>@string/NPSR5L13</item>
+        <item>@string/NPSR5L14</item>
+        <item>@string/NPSR5L15</item>
+        <item>@string/NPSR5L16</item>
+        <item>@string/NPSR5L17</item>
+        <item>@string/NPSR5L18</item>
+        <item>@string/NPSR5L19</item>
+        <item>@string/NPSR5L20</item>
+        <item>@string/NPSR5L21</item>
+        <item>@string/NPSR5L22</item>
+        <item>@string/NPSR5L23</item>
+        <item>@string/NPSR5L24</item>
+        <item>@string/NPSR5L25</item>
+        <item>@string/NPSR5L26</item>
+        <item>@string/NPSR5L27</item>
+        <item>@string/NPSR5L28</item>
+        <item>@string/NPSR5L29</item>
+        <item>@string/NPSR5L30</item>
+        <item>@string/NPSR5L31</item>
+        <item>@string/NPSR5L32</item>
+        <item>@string/NPSR5L33</item>
+        <item>@string/NPSR5L34</item>
+        <item>@string/NPSR5L35</item>
+        <item>@string/NPSR5L36</item>
+        <item>@string/NPSR5L37</item>
+        <item>@string/NPSR5L38</item>
+        <item>@string/NPSR5L39</item>
+        <item>@string/NPSR5L40</item>
+        <item>@string/NPSR5L41</item>
+        <item>@string/NPSR5L42</item>
+        <item>@string/NPSR5L43</item>
+        <item>@string/NPSR5L44</item>
+        <item>@string/NPSR5L45</item>
+        <item>@string/NPSR5L46</item>
+        <item>@string/NPSR5L47</item>
+        <item>@string/NPSR5L48</item>
+        <item>@string/NPSR5L49</item>
+        <item>@string/NPSR5L50</item>
+        <item>@string/NPSR5L51</item>
+        <item>@string/NPSR5L52</item>
+        <item>@string/NPSR5L53</item>
+        <item>@string/NPSR5L54</item>
+        <item>@string/NPSR5L55</item>
+        <item>@string/NPSR5L56</item>
+        <item>@string/NPSR5L57</item>
+        <item>@string/NPSR5L58</item>
+        <item>@string/NPSR5L59</item>
+        <item>@string/NPSR5L60</item>
+        <item>@string/NPSR5L61</item>
+        <item>@string/NPSR5L62</item>
+        <item>@string/NPSR5L63</item>
+        <item>@string/NPSR5L64</item>
+        <item>@string/NPSR5L65</item>
+        <item>@string/NPSR5L66</item>
+        <item>@string/NPSR5L67</item>
+        <item>@string/NPSR5L68</item>
+        <item>@string/NPSR5L69</item>
+        <item>@string/NPSR5L70</item>
+        <item>@string/NPSR5L71</item>
+        <item>@string/NPSR5L72</item>
+        <item>@string/NPSR5L73</item>
+        <item>@string/NPSR5L74</item>
+        <item>@string/NPSR5L75</item>
+        <item>@string/NPSR5L76</item>
+        <item>@string/NPSR5L77</item>
+        <item>@string/NPSR5L78</item>
+        <item>@string/NPSR5L79</item>
+        <item>@string/NPSR5L80</item>
+        <item>@string/NPSR5L81</item>
+        <item>@string/NPSR5L82</item>
+    </string-array>
+
+    <string-array name="NPSLocal6">
+        <item>@string/Local1</item>
+        <item>@string/NPSR6L1</item>
+        <item>@string/NPSR6L2</item>
+        <item>@string/NPSR6L3</item>
+        <item>@string/NPSR6L4</item>
+        <item>@string/NPSR6L5</item>
+        <item>@string/NPSR6L6</item>
+        <item>@string/NPSR6L7</item>
+        <item>@string/NPSR6L8</item>
+        <item>@string/NPSR6L9</item>
+        <item>@string/NPSR6L10</item>
+        <item>@string/NPSR6L11</item>
+        <item>@string/NPSR6L12</item>
+        <item>@string/NPSR6L13</item>
+        <item>@string/NPSR6L14</item>
+        <item>@string/NPSR6L15</item>
+        <item>@string/NPSR6L16</item>
+        <item>@string/NPSR6L17</item>
+        <item>@string/NPSR6L18</item>
+        <item>@string/NPSR6L19</item>
+        <item>@string/NPSR6L20</item>
+        <item>@string/NPSR6L21</item>
+        <item>@string/NPSR6L22</item>
+        <item>@string/NPSR6L23</item>
+        <item>@string/NPSR6L24</item>
+        <item>@string/NPSR6L25</item>
+        <item>@string/NPSR6L26</item>
+        <item>@string/NPSR6L27</item>
+        <item>@string/NPSR6L28</item>
+        <item>@string/NPSR6L29</item>
+        <item>@string/NPSR6L30</item>
+        <item>@string/NPSR6L31</item>
+        <item>@string/NPSR6L32</item>
+        <item>@string/NPSR6L33</item>
+        <item>@string/NPSR6L34</item>
+        <item>@string/NPSR6L35</item>
+        <item>@string/NPSR6L36</item>
+        <item>@string/NPSR6L37</item>
+        <item>@string/NPSR6L38</item>
+        <item>@string/NPSR6L39</item>
+        <item>@string/NPSR6L40</item>
+        <item>@string/NPSR6L41</item>
+        <item>@string/NPSR6L42</item>
+        <item>@string/NPSR6L43</item>
+        <item>@string/NPSR6L44</item>
+        <item>@string/NPSR6L45</item>
+        <item>@string/NPSR6L46</item>
+        <item>@string/NPSR6L47</item>
+        <item>@string/NPSR6L48</item>
+        <item>@string/NPSR6L49</item>
+        <item>@string/NPSR6L50</item>
+        <item>@string/NPSR6L51</item>
+        <item>@string/NPSR6L52</item>
+        <item>@string/NPSR6L53</item>
+        <item>@string/NPSR6L54</item>
+        <item>@string/NPSR6L55</item>
+        <item>@string/NPSR6L56</item>
+        <item>@string/NPSR6L57</item>
+        <item>@string/NPSR6L58</item>
+        <item>@string/NPSR6L59</item>
+        <item>@string/NPSR6L60</item>
+        <item>@string/NPSR6L61</item>
+    </string-array>
+
+    <string-array name="NPSLocal7">
+        <item>@string/Local1</item>
+        <item>@string/NPSR7L1</item>
+        <item>@string/NPSR7L2</item>
+        <item>@string/NPSR7L3</item>
+        <item>@string/NPSR7L4</item>
+        <item>@string/NPSR7L5</item>
+        <item>@string/NPSR7L6</item>
+        <item>@string/NPSR7L7</item>
+        <item>@string/NPSR7L8</item>
+        <item>@string/NPSR7L9</item>
+        <item>@string/NPSR7L10</item>
+        <item>@string/NPSR7L11</item>
+        <item>@string/NPSR7L12</item>
+        <item>@string/NPSR7L13</item>
+        <item>@string/NPSR7L14</item>
+        <item>@string/NPSR7L15</item>
+        <item>@string/NPSR7L16</item>
+        <item>@string/NPSR7L17</item>
+        <item>@string/NPSR7L18</item>
+        <item>@string/NPSR7L19</item>
+        <item>@string/NPSR7L20</item>
+        <item>@string/NPSR7L21</item>
+        <item>@string/NPSR7L22</item>
+        <item>@string/NPSR7L23</item>
+        <item>@string/NPSR7L24</item>
+        <item>@string/NPSR7L25</item>
+        <item>@string/NPSR7L26</item>
+        <item>@string/NPSR7L27</item>
+        <item>@string/NPSR7L28</item>
+        <item>@string/NPSR7L29</item>
+        <item>@string/NPSR7L30</item>
+        <item>@string/NPSR7L31</item>
+        <item>@string/NPSR7L32</item>
+        <item>@string/NPSR7L33</item>
+        <item>@string/NPSR7L34</item>
+        <item>@string/NPSR7L35</item>
+        <item>@string/NPSR7L36</item>
+        <item>@string/NPSR7L37</item>
+        <item>@string/NPSR7L38</item>
+        <item>@string/NPSR7L39</item>
+        <item>@string/NPSR7L40</item>
+        <item>@string/NPSR7L41</item>
+        <item>@string/NPSR7L42</item>
+        <item>@string/NPSR7L43</item>
+        <item>@string/NPSR7L44</item>
+        <item>@string/NPSR7L45</item>
+        <item>@string/NPSR7L46</item>
+        <item>@string/NPSR7L47</item>
+        <item>@string/NPSR7L48</item>
+        <item>@string/NPSR7L49</item>
+        <item>@string/NPSR7L50</item>
+        <item>@string/NPSR7L51</item>
+        <item>@string/NPSR7L52</item>
+        <item>@string/NPSR7L53</item>
+        <item>@string/NPSR7L54</item>
+        <item>@string/NPSR7L55</item>
+        <item>@string/NPSR7L56</item>
+        <item>@string/NPSR7L57</item>
+        <item>@string/NPSR7L58</item>
+        <item>@string/NPSR7L59</item>
+        <item>@string/NPSR7L60</item>
+        <item>@string/NPSR7L61</item>
+        <item>@string/NPSR7L62</item>
+        <item>@string/NPSR7L63</item>
+        <item>@string/NPSR7L64</item>
+    </string-array>
+
+    <!--Offline FORM SELECTOR-->
+    <string-array name="OfflineFormSelection">
+        <item>@string/Offline1</item>
+        <item>@string/Offline2</item>
+        <item>@string/Offline3</item>
+        <item>@string/Offline4</item>
+
+    </string-array>
+
+
+</resources>

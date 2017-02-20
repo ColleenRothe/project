@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16D32" minimumToolsVersion="Xcode 7.0" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+    <entity name="ACLatitude" syncable="YES">
+        <attribute name="word" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ACLongitude" syncable="YES">
+        <attribute name="word" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ACManagement" syncable="YES">
+        <attribute name="word" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ACRater" syncable="YES">
+        <attribute name="word" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="NewOfflineLandslide" syncable="YES">
+        <attribute name="aadt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="aadtCheck" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="annualRain1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="annualRain2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="axialLength" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="beginMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="datum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchDepth1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchDepth2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchSlope1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchSlope2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchSlope3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchSlope4" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchWidth1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchWidth2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fixesPresent" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="flmaDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flmaId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flmaName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazardType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lat1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lat2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lengthAffectedRT" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="long1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="long2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="managementArea" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photos" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prAadt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prImpact" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="prLTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prRoadwayLength" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prRoadwayWidth" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="prSlideErosion" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="prTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rater" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roadOrTrail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="roadTrailClass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roadTrailNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrDsd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrEnviron" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rrEventCost" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rrHumanExposure" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrMaintenance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rrRight" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rrTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrWidth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rtWidth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shAnnualRain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shAxial" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shDrainage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shInstability" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shMovement" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shThaw" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="side" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="sightDistance" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slopeAngle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="soleAccess" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="speed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="total" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weather" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="NewOfflineRockfall" syncable="YES">
+        <attribute name="aadt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="aadtCheck" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="beginMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="beginRain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="blockSize" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="datum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchDepth1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchDepth2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchSlope1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchSlope2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchSlope3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchSlope4" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchWidth1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ditchWidth2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endRain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fixesPresent" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="flmaDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flmaId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flmaName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazardType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lat1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lat2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lengthAffected" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="long1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="long2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="managementArea" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photos" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prAadt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prBvEvent" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prDitch" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="prHistory" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="prImpact" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="prTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rater" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roadOrTrail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="roadTrailClass" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roadTrailNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrDsd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrEnviron" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rrEvent" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rrHumanExposure" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrMaintenance" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rrRight" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="rrTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrWidth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rtWidth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shAnnualRain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shDrainage" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shFriction1" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shFriction2" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shMaintFreq" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shSlopeHeight" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shStructural1" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shStructural2" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="shTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="side" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="sightDistance" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slopeAngle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slopeHeight" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="soleAccess" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="speed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="total" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="volume" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weather" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <entity name="OfflineMaintenance" syncable="YES">
+        <attribute name="agency" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="beginMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cleanDrains" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="code" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deepPatch" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="designPSE" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="drainImprove" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="flagging" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="guardrail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="haulDebris" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="local" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="maintenanceType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="minorShifting" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other1" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other1Text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other2" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other2Text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other3" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other3Text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other4" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other4Text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other5" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="other5Text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="percentTotal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regional" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="relevelAggregate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="relevelAsphalt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="removeAndMaintain" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="removeDebris" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="repairBarrier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="repairNetting" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rtNum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scalingUnstable" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sealCracks" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalCost" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OfflineSite" syncable="YES">
+        <attribute name="beginMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="coordinates" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazardType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image1" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image2" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image3" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image4" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image5" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image6" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image7" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image8" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image9" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="image10" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="imagename" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="managementArea" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photos" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="prelimRating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roadTrailNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="side" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="siteID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slopeStatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalScore" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OfflineSiteFull" syncable="YES">
+        <attribute name="aadt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="begin_annual_rainfall" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="begin_coordinate_lat" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="begin_coordinate_long" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="begin_mile_marker" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="blk_size" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="comment" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="datum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="end_annual_rainfall" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="end_coordinate_lat" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="end_coordinate_long" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="end_mile_marker" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fixes_present" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flma_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flma_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="flma_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazard_rating_annual_rainfall" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazard_rating_landslide_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazard_rating_rockfall_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazard_rating_slope_drainage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazard_rating_slope_height_axial_length" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazard_total" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hazard_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="landslide_hazard_rating_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="landslide_hazard_rating_maint_frequency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="landslide_hazard_rating_movement_history" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="landslide_hazard_rating_thaw_stability" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="landslide_prelim_length_affected" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="landslide_prelim_road_width_affected" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="landslide_prelim_slide_erosion_effects" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="length_affected" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="local_admin" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maximum_ditch_depth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maximum_ditch_slope_first" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maximum_ditch_slope_second" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maximum_ditch_width" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mgmt_area" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="minimum_ditch_depth" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="minimum_ditch_slope_first" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="minimum_ditch_slope_second" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="minimum_ditch_width" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preliminary_rating" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preliminary_rating_aadt_usage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preliminary_rating_aadt_usage_calc_checkbox" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preliminary_rating_impact_on_use" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preliminary_rating_landslide_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preliminary_rating_rockfall_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rater" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regional_admin" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="risk_rating_enviro_cult_impacts" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="risk_rating_event_cost" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="risk_rating_human_ex_factor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="risk_rating_maint_complexity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="risk_rating_percent_dsd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="risk_rating_r_w_impacts" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="risk_rating_route_trail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="risk_total" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="road_or_trail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="road_trail_class" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="road_trail_no" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="road_trail_width" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_hazard_rating_case_one_rock_friction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_hazard_rating_case_one_struc_condition" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_hazard_rating_case_two_diff_erosion" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_hazard_rating_case_two_struc_condition" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_hazard_rating_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_hazard_rating_maint_frequency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_prelim_block_size_event_vol" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_prelim_ditch_eff" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rockfall_prelim_rockfall_history" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="side" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sight_distance" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="site_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slope_angle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slope_ht_axial_length" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sole_access_route" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="speed_limit" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="total_score" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="umbrella_agency" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="volume" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="weather" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="OfflineSlopeEvent" syncable="YES">
+        <attribute name="beginMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cConstruction" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cContinuous" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cDam" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cEarthquake" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cFlooding" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cHigh" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cHurricane" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cLeaking" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cMining" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cNoObvious" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cOther" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cProlonged" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cRain" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cSnowfall" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cThunderstorm" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cUnknown" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cVolcanic" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="dateType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="datum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="deaths" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="deathsComments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="debrisVolume" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endMile" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="hazardType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lAbove" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="largestRock" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lBelow" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lBurned" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lCoast" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lCulvert" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lDeforested" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lEngineered" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lengthAffected" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lMine" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lNatural" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="long" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lOther" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lRetaining" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lRiver" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lUnknown" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="lUrban" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="numFallen" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="observerComments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="observerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phone" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photos" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roadOrTrail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="roadTrailNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rtConditionAfter" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="todaysDate" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ACLatitude" positionX="-9" positionY="171" width="128" height="60"/>
+        <element name="ACLongitude" positionX="-27" positionY="162" width="128" height="60"/>
+        <element name="ACManagement" positionX="-54" positionY="135" width="128" height="60"/>
+        <element name="ACRater" positionX="-45" positionY="144" width="128" height="60"/>
+        <element name="NewOfflineLandslide" positionX="-63" positionY="99" width="128" height="1005"/>
+        <element name="NewOfflineRockfall" positionX="-63" positionY="135" width="128" height="1050"/>
+        <element name="OfflineMaintenance" positionX="-54" positionY="144" width="128" height="30"/>
+        <element name="OfflineSite" positionX="-63" positionY="-18" width="128" height="465"/>
+        <element name="OfflineSlopeEvent" positionX="-63" positionY="135" width="128" height="870"/>
+        <element name="OfflineSiteFull" positionX="-36" positionY="135" width="128" height="1305"/>
+    </elements>
+</model>

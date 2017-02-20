@@ -1,0 +1,66 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+android {
+    signingConfigs {
+    }
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    defaultConfig {
+        multiDexEnabled true
+        applicationId "teammsu.colleenrothe.usmp"
+        minSdkVersion 17
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+        }
+    }
+    productFlavors {
+    }
+    //added this to try to solve GC overhead limit
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+    compile 'com.google.android.gms:play-services:9.2.0'
+    compile 'com.android.support:multidex:1.0.0'
+    compile('com.mapbox.mapboxsdk:mapbox-android-sdk:4.1.1@aar') {
+        transitive = true
+    }
+    compile('com.mapbox.mapboxsdk:mapbox-android-services:1.2.1@aar') {
+        transitive = true
+    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+        transitive = true;
+    }
+    compile('io.fabric.sdk.android:fabric:1.3.10@aar') {
+        transitive = true;
+    }
+}

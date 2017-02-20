@@ -1,0 +1,793 @@
+<resources>
+    <string name="app_name">USMP</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_manual">Rating Manual</string>
+    <string name="title_activity_credits">Credits</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_rockfall">Rockfall</string>
+    <string name="title_activity_rating_choice">Slope Rating Form </string>
+    <string name="title_activity_online_home">Online Home</string>
+    <string name="title_activity_landslide">Landslide</string>
+
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password </string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--Account strings-->
+    <string name="permission1">Root</string>
+    <string name="permission2">Normal User</string>
+    <string name="permission3">Read Only</string>
+
+
+    <!--Strings for Slope Rating Form -->
+    <string name="roadTrail1">Road</string>
+    <string name="roadTrail2">Trail</string>
+
+    <string name="side1">L - For use with roads with mile markers</string>
+    <string name="side2">R - For use with roads with mile markers</string>
+    <string name="side3">N - if road direction not specified with mile marker</string>
+    <string name="side4">NE - if road direction not specified with mile marker</string>
+    <string name="side5">E - if road direction not specified with mile marker</string>
+    <string name="side6">SE - if road direction not specified with mile marker</string>
+    <string name="side7">S - if road direction not specified with mile marker</string>
+    <string name="side8">SW - if road direction not specified with mile marker</string>
+    <string name="side9">W - if road direction not specified with mile marker</string>
+    <string name="side10">NW - if road direction not specified with mile marker</string>
+
+    <string name="weather1">Clear</string>
+    <string name="weather2">Clear and Breezy</string>
+    <string name="weather3">A Few Clouds</string>
+    <string name="weather4">A Few Clouds and Breezy</string>
+    <string name="weather5">Partly Cloudy</string>
+    <string name="weather6">Partly Cloudy and Breezy</string>
+    <string name="weather7">Mostly Cloudy</string>
+    <string name="weather8">Mostly Cloudy and Breezy</string>
+    <string name="weather9">Overcast</string>
+    <string name="weather10">Overcast and Breezy</string>
+    <string name="weather11">Fog</string>
+    <string name="weather12">Partial Fog</string>
+    <string name="weather13">Freezing Fog</string>
+    <string name="weather14">Light Rain</string>
+    <string name="weather15">Rain</string>
+    <string name="weather16">Heavy Rain</string>
+    <string name="weather17">Freezing Rain</string>
+    <string name="weather18">Thunderstorms</string>
+    <string name="weather19">Snow</string>
+    <string name="weather20">Smoky/Haze</string>
+    <string name="weather21">Unknown</string>
+
+    <string name="speed1">25mph </string>
+    <string name="speed2">30mph </string>
+    <string name="speed3">35mph </string>
+    <string name="speed4">40mph </string>
+    <string name="speed5">45mph </string>
+    <string name="speed6">50mph </string>
+    <string name="speed7">55mph </string>
+    <string name="speed8">60mph </string>
+    <string name="speed9">65mph </string>
+
+    <string name="yn1">yes</string>
+    <string name="yn2">no</string>
+
+    <!--Preliminary Ratings -->
+
+    <string name="rating1">3</string>
+    <string name="rating2">9</string>
+    <string name="rating3">27</string>
+    <string name="rating4">81</string>
+
+    <string name="ZeroRating0">0</string>
+    <string name="ZeroRating1">3</string>
+    <string name="ZeroRating2">9</string>
+    <string name="ZeroRating3">27</string>
+    <string name="ZeroRating4">81</string>
+
+
+    <string name="title_activity_new_slope_event">New Slope Event</string>
+
+    <!--New Slope Event Form -->
+
+    <!--Date of Event -->
+    <string name="date1">Known</string>
+    <string name="date2">Approximately</string>
+    <string name="date3">Unknown</string>
+
+    <!--Hazard Type -->
+    <string name="hazard1">Rockfall</string>
+    <string name="hazard2">Landslide</string>
+    <string name="hazard3">Debris Flow</string>
+    <string name="hazard4">Snow Avalanche</string>
+
+    <!--State-->
+    <string name="state1">Alabama</string>
+    <string name="state2">Alaska</string>
+    <string name="state3">American Samoa</string>
+    <string name="state4">Arizona</string>
+    <string name="state5">Arkansas</string>
+    <string name="state6">California</string>
+    <string name="state7">Colorado</string>
+    <string name="state8">Connecticut</string>
+    <string name="state9">Delaware</string>
+    <string name="state10">Dist. of Columbia</string>
+    <string name="state11">Florida</string>
+    <string name="state12">Georgia</string>
+    <string name="state13">Guam</string>
+    <string name="state14">Hawaii</string>
+    <string name="state15">Idaho</string>
+    <string name="state16">Illinois</string>
+    <string name="state17">Indiana</string>
+    <string name="state18">Iowa</string>
+    <string name="state19">Kansas</string>
+    <string name="state20">Kentucky</string>
+    <string name="state21">Louisiana</string>
+    <string name="state22">Maine</string>
+    <string name="state23">Maryland</string>
+    <string name="state24">Massachusetts</string>
+    <string name="state25">Michigan</string>
+    <string name="state26">Minnesota</string>
+    <string name="state27">Mississippi</string>
+    <string name="state28">Missouri</string>
+    <string name="state29">Montana</string>
+    <string name="state30">Nebraska</string>
+    <string name="state31">Nevada</string>
+    <string name="state32">New Hampshire</string>
+    <string name="state33">New Jersey</string>
+    <string name="state34">New Mexico</string>
+    <string name="state35">New York</string>
+    <string name="state36">North Carolina</string>
+    <string name="state37">North Dakota</string>
+    <string name="state38">Northern Marianas Islands</string>
+    <string name="state39">Ohio</string>
+    <string name="state40">Oklahoma</string>
+    <string name="state41">Oregon</string>
+    <string name="state42">Pennsylvania</string>
+    <string name="state43">Puerto Rico</string>
+    <string name="state44">Rhode Island</string>
+    <string name="state45">South Carolina</string>
+    <string name="state46">South Dakota</string>
+    <string name="state47">Tennessee</string>
+    <string name="state48">Texas</string>
+    <string name="state49">Utah</string>
+    <string name="state50">Vermont</string>
+    <string name="state51">Virgin Islands</string>
+    <string name="state52">Virginia</string>
+    <string name="state53">Washington</string>
+    <string name="state54">West Virginia</string>
+    <string name="state55">Wisconsin</string>
+    <string name="state56">Wyoming</string>
+
+    <!--Size of Largest Fallen Rock -->
+    <string name="largeRock1">>3in.(baseball)</string>
+    <string name="largeRock2">>1 ft.(basketball)</string>
+    <string name="largeRock3">1-3ft(fits thru doorway)</string>
+    <string name="largeRock4">>3ft(thousands of lbs)</string>
+
+    <!--Estimated Volume of Debris -->
+    <string name="debris1">Less than5ft^3(wheelbarrow)</string>
+    <string name="debris2">Less than 2.5yds^3(pickup truck)</string>
+    <string name="debris3">Less than 10yds^3(dump truck)</string>
+    <string name="debris4">More than 10yds^3(sever dumptrucks)</string>
+
+    <!-- Road Trail Condition After Failure -->
+    <string name="afterFailure1">Blocked</string>
+    <string name="afterFailure2">Blocked, detours exist around failure</string>
+    <string name="afterFailure3">Partially blocked but passable</string>
+    <string name="afterFailure4">Ditch full of debris</string>
+    <string name="afterFailure5">Route threatened by unstable slope</string>
+
+    <!--Number of fallen rocks -->
+    <string name="numFallen1">1</string>
+    <string name="numFallen2">2</string>
+    <string name="numFallen3">3-5</string>
+    <string name="numFallen4">5-10</string>
+    <string name="numFallen5">10+</string>
+    <string name="title_activity_maintenance">Maintenance Form</string>
+
+    <!--Maintenance Form -->
+
+    <!--Maintenance Type -->
+    <string name="maintenance1">New Maintenance</string>
+    <string name="maintenance2">Repeat Maintenance</string>
+
+    <!--Type of Event -->
+    <string name="eventType1">Recent Unstable Slope Event</string>
+    <string name="eventType2">Routine Maintenance</string>
+    <string name="eventType3">Slope Mitigation/Repair</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_offline_list">Offline Sites</string>
+    <string name="title_activity_maintenance_map">Maintenance Map</string>
+
+    <!--Site IDS for Maintenance-->
+    <string name="MId1"> --- </string>
+
+    <!--Agency stuff for Maintenance-->
+    <string name="Agency0">Select Agency Option</string>
+    <string name="Agency1">FS</string>
+    <string name="Agency2">NPS</string>
+    <string name="Agency3">BLM</string>
+    <string name="Agency4">BIA</string>
+
+    <!--Regional/Agency stuff for Maintenance-->
+    <string name="Regional1">Select Regional Option</string>
+
+    <!--FS Regions-->
+    <string name="FSR1">Northern Region</string>
+    <!--FS Northern Local-->
+    <string name="FSR1L1">Beaverhead-Deerlodge National Forest </string>
+    <string name="FSR1L2">Bitterroot National Forest </string>
+    <string name="FSR1L3">Dakota Prarie National Grasslands </string>
+    <string name="FSR1L4">Flathead National Forest </string>
+    <string name="FSR1L5">Custer Gallatin National Forest </string>
+    <string name="FSR1L6">Helena National Forest </string>
+    <string name="FSR1L7">Idaho Panhandle National Forests</string>
+    <string name="FSR1L8">Kootenai National Forest </string>
+    <string name="FSR1L9">Lewis and Clark National Forest </string>
+    <string name="FSR1L10">Lolo National Fores </string>
+    <string name="FSR1L11">Nez Perce-Clearwater National Forests</string>
+    <string name="FSR2">Rocky Mountain Region</string>
+    <!--FS Rocky Mountain Local-->
+    <string name="FSR2L1">Arapaho and Roosevelt National Forests and Pawnee National Grasslands </string>
+    <string name="FSR2L2">Bighorn National Forest </string>
+    <string name="FSR2L3">Black Hills National Forest </string>
+    <string name="FSR2L4">Grand Mesa, Uncompahgre and Gunnison National Forests</string>
+    <string name="FSR2L5">Medicine Bow-Routt National Forests and Thunder Basin National Grasslands</string>
+    <string name="FSR2L6">Nebraska National Forests and Grasslands </string>
+    <string name="FSR2L7">Pike and San Isabel National Forests Cimarron and Comanche National Grasslands  </string>
+    <string name="FSR2L8">Rio Grande National Forest </string>
+    <string name="FSR2L9">San Juan National Forest </string>
+    <string name="FSR2L10">Shoshone National Forest </string>
+    <string name="FSR2L11">White River National Forest </string>
+    <string name="FSR3">Southwestern Region</string>
+    <!--FS Southwestern Local-->
+    <string name="FSR3L1">Apache-Sitgreaves National Forest </string>
+    <string name="FSR3L2">Carson National Forest </string>
+    <string name="FSR3L3">Cibola National Forest </string>
+    <string name="FSR3L4">Coconino National Forest </string>
+    <string name="FSR3L5">Coronado National Forest </string>
+    <string name="FSR3L6">Gila National Forest </string>
+    <string name="FSR3L7">Kaibab National Forest </string>
+    <string name="FSR3L8">Lincoln National Forest </string>
+    <string name="FSR3L9">Prescott National Forest </string>
+    <string name="FSR3L10">Sante Fe National Forest </string>
+    <string name="FSR3L11">Tonto National Forest </string>
+    <string name="FSR4">Intermountain Region</string>
+    <!--FS Intermountain Local -->
+    <string name="FSR4L1">Ashley National Forest </string>
+    <string name="FSR4L2">Boise National Forest </string>
+    <string name="FSR4L3">Bridger-Teton National Forest </string>
+    <string name="FSR4L4">Caribou-Targhee National Forest </string>
+    <string name="FSR4L5">Dixie National Forest </string>
+    <string name="FSR4L6">Fishlake National Forest </string>
+    <string name="FSR4L7">Humboldt-Toiyabe National Forest </string>
+    <string name="FSR4L8">Manti-LaSal National Forest </string>
+    <string name="FSR4L9">Payette National Forest </string>
+    <string name="FSR4L10">Salmon-Challis National Forest </string>
+    <string name="FSR4L11">Sawtooth National Forest </string>
+    <string name="FSR4L12">Uinta-Wasatch-Cache National Forest </string>
+    <string name="FSR5">Pacific Southwest Region</string>
+    <!--FS Pacific Southwest Local -->
+    <string name="FSR5L1">Angeles National Forest </string>
+    <string name="FSR5L2">Cleveland National Forest </string>
+    <string name="FSR5L3">Eldorado National Forest </string>
+    <string name="FSR5L4">Inyo National Forest </string>
+    <string name="FSR5L5">Klamath National Forest </string>
+    <string name="FSR5L6">Lake Tahoe Basin Management Unit </string>
+    <string name="FSR5L7">Lassen National Forest </string>
+    <string name="FSR5L8">Los Padres National Forest </string>
+    <string name="FSR5L9">Mendocino National Forest </string>
+    <string name="FSR5L10">Modoc National Forest </string>
+    <string name="FSR5L11">Plumas National Forest </string>
+    <string name="FSR5L12">San Bernarndino National Forest </string>
+    <string name="FSR5L13">Sequoia National Forest </string>
+    <string name="FSR5L14">Shasta-Trinity National Forest </string>
+    <string name="FSR5L15">Sierra National Forest </string>
+    <string name="FSR5L16">Six Rivers National Forest </string>
+    <string name="FSR5L17">Stanislaus National Forest </string>
+    <string name="FSR5L18">Tahoe National Forest </string>
+    <string name="FSR6">Pacific Northwest Region</string>
+    <!--FS Pacific Northwest Local -->
+    <string name="FSR6L1">Columbia River Gorge National Scenic Area</string>
+    <string name="FSR6L2">Colvilla National Forest </string>
+    <string name="FSR6L3">Crookfed River National Grassland </string>
+    <string name="FSR6L4">Deschutes National Forest </string>
+    <string name="FSR6L5">Fremont-Winema National Forest </string>
+    <string name="FSR6L6">Gifford Pinchot National Forest </string>
+    <string name="FSR6L7">Malheur National Forest </string>
+    <string name="FSR6L8">Mt. Baker-Snoqualmie National Forest </string>
+    <string name="FSR6L9">Mt. Hood National Forest </string>
+    <string name="FSR6L10">Ochoco National Forest </string>
+    <string name="FSR6L11">Okanogan-Wenatchee National Forest </string>
+    <string name="FSR6L12">Olympic National Forest </string>
+    <string name="FSR6L13">Siuslaw National Forest </string>
+    <string name="FSR6L14">Rogue River-Siskiyou National Forest </string>
+    <string name="FSR6L15">Umatilla National Forest </string>
+    <string name="FSR6L16">Umpqua National Forest </string>
+    <string name="FSR6L17">Wallowa-Whitma National Forest </string>
+    <string name="FSR6L18">Willamette National Forest </string>
+    <string name="FSR7">Southern Region</string>
+    <!--FS Southern Local -->
+    <string name="FSR7L1">Chattahoochee-Oconee National Forest </string>
+    <string name="FSR7L2">Cherokee National Forest </string>
+    <string name="FSR7L3">Daniel Boone National Forest </string>
+    <string name="FSR7L4">El Yunque National Forest </string>
+    <string name="FSR7L5">Francis Marion and Sumter National Forests </string>
+    <string name="FSR7L6">Kisatchie National Forest </string>
+    <string name="FSR7L7">Land Between the Lakes Recreation Area </string>
+    <string name="FSR7L8">National Forests and Grasslands in Texas </string>
+    <string name="FSR7L9">National Forests in Alabama </string>
+    <string name="FSR7L10">National Forests in Florida </string>
+    <string name="FSR7L11">National Forests in Mississippi </string>
+    <string name="FSR7L12">National Forests in North Carolina </string>
+    <string name="FSR7L13">Ouachita National Forest </string>
+    <string name="FSR7L14">Ozark-St. Francis National Forest </string>
+    <string name="FSR7L15">Savannah River Site </string>
+    <string name="FSR8">Eastern Region</string>
+    <!--FS Eastern Local -->
+    <string name="FSR8L1">Allegheny National Forest </string>
+    <string name="FSR8L2">Chequamegon-Nicolet National Forest </string>
+    <string name="FSR8L3">Chippewa National Forest </string>
+    <string name="FSR8L4">Green Mountain and Finger Lakes National Forests </string>
+    <string name="FSR8L5">Hiawatha National Forest </string>
+    <string name="FSR8L6">Hoosier National Forest </string>
+    <string name="FSR8L7">Huron-Manistee National Forest </string>
+    <string name="FSR8L8">Mark Twain National Forest </string>
+    <string name="FSR8L9">Midewin National Tallgrass Prarie </string>
+    <string name="FSR8L10">Monogahela National Forest </string>
+    <string name="FSR8L11">Ottawa National Forest </string>
+    <string name="FSR8L12">Shawnee National Forest </string>
+    <string name="FSR8L13">Superior National Forest </string>
+    <string name="FSR8L14">Wayne National Forest </string>
+    <string name="FSR8L15">White Mountain National Forest </string>
+    <string name="FSR9">Alaska Region</string>
+    <!--FS Alaskan Local -->
+    <string name="FSR9L1">Chugach National Forest </string>
+    <string name="FSR9L2">Tongass National Forest </string>
+
+    <!--Local/Agency stuff for Maintenance-->
+    <string name="Local1">Select Local Option</string>
+    <string name="title_activity_annotation_info">Site Information</string>
+    <string name="title_activity_account">Account</string>
+
+    <!--OFFLINE LIST SELECTORS-->
+    <string name="Offline1">Landslide</string>
+    <string name="Offline2">Rockfall</string>
+    <string name="Offline3">Maintenance</string>
+    <string name="Offline4">New Slope Event</string>
+
+    <!--NPS -->
+    <string name="NPSR1">AKR</string>
+    <!--NPS AKR LOCAL-->
+    <string name="NPSR1L1">Klondike Gold Rush</string>
+    <string name="NPSR1L2">Sitka</string>
+    <string name="NPSR1L3">Cape Krusenstern</string>
+    <string name="NPSR1L4">Aniakchak</string>
+    <string name="NPSR1L5">Kenai Fjords</string>
+    <string name="NPSR1L6">Kobuk Valley</string>
+    <string name="NPSR1L7">Denali</string>
+    <string name="NPSR1L8">Gates of the Arctic</string>
+    <string name="NPSR1L9">Glacier Bay</string>
+    <string name="NPSR1L10">Katmai</string>
+    <string name="NPSR1L11">Lake Clark</string>
+    <string name="NPSR1L12">Wrangell-St. Elias</string>
+    <string name="NPSR1L13">Bering Land Bridge</string>
+    <string name="NPSR1L14">Notak</string>
+    <string name="NPSR1L15">Yukon-Charley Rivers</string>
+
+    <string name="NPSR2">IMR</string>
+    <!--NPS IMR LOCAL-->
+    <string name="NPSR2L1">John D. Rockefeller, Jr.</string>
+    <string name="NPSR2L2">Chaco Culture</string>
+    <string name="NPSR2L3">Lyndon B. Johnson</string>
+    <string name="NPSR2L4">Manhattan Project</string>
+    <string name="NPSR2L5">Palo Alto</string>
+    <string name="NPSR2L6">Pecos</string>
+    <string name="NPSR2L7">San Antonio Missions</string>
+    <string name="NPSR2L8">Tumacacori</string>
+    <string name="NPSR2L9">Bents Old Fort</string>
+    <string name="NPSR2L10">Fort Bowie</string>
+    <string name="NPSR2L11">Fort Davis</string>
+    <string name="NPSR2L12">Fort Lamarie</string>
+    <string name="NPSR2L13">Golden Spike</string>
+    <string name="NPSR2L14">Grant-Kohrs Ranch</string>
+    <string name="NPSR2L15">Hubbell Trading Post</string>
+    <string name="NPSR2L16">Sand Creek Massacre</string>
+    <string name="NPSR2L17">Washita</string>
+    <string name="NPSR2L18">Alibates Flint Quarries</string>
+    <string name="NPSR2L19">Aztec Ruins</string>
+    <string name="NPSR2L20">Bandelier</string>
+    <string name="NPSR2L21">Canyon De Chelly</string>
+    <string name="NPSR2L22">Capulin Volcano</string>
+    <string name="NPSR2L23">Case Grande Ruins</string>
+    <string name="NPSR2L24">Cedar Breaks</string>
+    <string name="NPSR2L25">Chiricahua</string>
+    <string name="NPSR2L26">Colorado</string>
+    <string name="NPSR2L27">Devils Tower</string>
+    <string name="NPSR2L28">Dinosaur</string>
+    <string name="NPSR2L29">El Malpais</string>
+    <string name="NPSR2L30">El Morro</string>
+    <string name="NPSR2L31">Florissant Fossil Beds</string>
+    <string name="NPSR2L32">Fort Union</string>
+    <string name="NPSR2L33">Fossil Butte</string>
+    <string name="NPSR2L34">Gila Cliff Dwellings</string>
+    <string name="NPSR2L35">Hohokam Pima</string>
+    <string name="NPSR2L36">Hovenweep</string>
+    <string name="NPSR2L37">Little Bighorn</string>
+    <string name="NPSR2L38">Montezuma Castle</string>
+    <string name="NPSR2L39">Natural Bridges</string>
+    <string name="NPSR2L40">Navajo</string>
+    <string name="NPSR2L41">Organ Pipe Cactus</string>
+    <string name="NPSR2L42">Petroglyph</string>
+    <string name="NPSR2L43">Pipe Spring</string>
+    <string name="NPSR2L44">Rainbow Bridge</string>
+    <string name="NPSR2L45">Salinas Pueblo Missions</string>
+    <string name="NPSR2L46">Sunset Crater volcano</string>
+    <string name="NPSR2L47">Timpanogos Cave</string>
+    <string name="NPSR2L48">Tonto</string>
+    <string name="NPSR2L49">Tuzigoot</string>
+    <string name="NPSR2L50">Walco Mammoth</string>
+    <string name="NPSR2L51">Walnut Canyon</string>
+    <string name="NPSR2L52">White Sands</string>
+    <string name="NPSR2L53">Wupatki</string>
+    <string name="NPSR2L54">Yucca House</string>
+    <string name="NPSR2L55">Chamizal</string>
+    <string name="NPSR2L56">Coronado</string>
+    <string name="NPSR2L57">Arches</string>
+    <string name="NPSR2L58">Big Bend</string>
+    <string name="NPSR2L59">Black Canyon of the Gunnison</string>
+    <string name="NPSR2L60">Bryce Canyon</string>
+    <string name="NPSR2L61">Canyonlands</string>
+    <string name="NPSR2L62">Capitol Reef</string>
+    <string name="NPSR2L63">Carlsbad Caverns</string>
+    <string name="NPSR2L64">Glacier</string>
+    <string name="NPSR2L65">Grand Canyon</string>
+    <string name="NPSR2L66">Grand Teton</string>
+    <string name="NPSR2L67">Guadalupe Mountains</string>
+    <string name="NPSR2L68">Mesa Verde</string>
+    <string name="NPSR2L69">Petrified Forest</string>
+    <string name="NPSR2L70">Rocky Mountain</string>
+    <string name="NPSR2L71">Saguaro</string>
+    <string name="NPSR2L72">Yellowstone</string>
+    <string name="NPSR2L73">Zion</string>
+    <string name="NPSR2L74">Big Thicket</string>
+    <string name="NPSR2L75">Great Sand Dunes</string>
+    <string name="NPSR2L76">Valles Caldera</string>
+    <string name="NPSR2L77">Amistad</string>
+    <string name="NPSR2L78">Bighorn Canyon</string>
+    <string name="NPSR2L79">Chickasaw</string>
+    <string name="NPSR2L80">Curecanti</string>
+    <string name="NPSR2L81">Glen Canyon</string>
+    <string name="NPSR2L82">Lake Meredith</string>
+    <string name="NPSR2L83">Padre Island</string>
+    <string name="NPSR2L84">Rio Grande</string>
+
+    <string name="NPSR3">MWR</string>
+    <!--NPS MWR LOCAL-->
+    <string name="NPSR3L1">Jefferson National Expansion</string>
+    <string name="NPSR3L2">Wilson\'s Creek</string>
+    <string name="NPSR3L3">River Raisin</string>
+    <string name="NPSR3L4">Dayton Aviation Heritage</string>
+    <string name="NPSR3L5">George Rogers Clark</string>
+    <string name="NPSR3L6">Hopewell Culture</string>
+    <string name="NPSR3L7">Keweenaw</string>
+    <string name="NPSR3L8">Brown V. Board of Education</string>
+    <string name="NPSR3L9">First Ladies\'</string>
+    <string name="NPSR3L10">Fort Larned</string>
+    <string name="NPSR3L11">Fort Scott</string>
+    <string name="NPSR3L12">Fort Smith</string>
+    <string name="NPSR3L13">Fort Union Trading Post</string>
+    <string name="NPSR3L14">Harry S Truman</string>
+    <string name="NPSR3L15">Herbert Hoover</string>
+    <string name="NPSR3L16">James A. Garfield</string>
+    <string name="NPSR3L17">Knife River Indian Villages</string>
+    <string name="NPSR3L18">Lincoln Home</string>
+    <string name="NPSR3L19">Little Rock Central High School</string>
+    <string name="NPSR3L20">Minuteman Missile</string>
+    <string name="NPSR3L21">Nicodemus</string>
+    <string name="NPSR3L22">President William Jefferson Clinton Birthplace Home</string>
+    <string name="NPSR3L23">Ulysses S. Grant</string>
+    <string name="NPSR3L24">William Howard Taft</string>
+    <string name="NPSR3L25">Apostle Islands</string>
+    <string name="NPSR3L26">Indiana Dunes</string>
+    <string name="NPSR3L27">Pictured Rocks</string>
+    <string name="NPSR3L28">Sleeping Bear Dunes</string>
+    <string name="NPSR3L29">Agate Fossil Beds</string>
+    <string name="NPSR3L30">Charles Young Buffalo Soldiers</string>
+    <string name="NPSR3L31">Effigy Mounds</string>
+    <string name="NPSR3L32">George Washington Carver</string>
+    <string name="NPSR3L33">Grand Portage</string>
+    <string name="NPSR3L34">Homestead</string>
+    <string name="NPSR3L35">Jewel Cave</string>
+    <string name="NPSR3L36">Pipestone</string>
+    <string name="NPSR3L37">Pullman</string>
+    <string name="NPSR3L38">Scotts Bluff</string>
+    <string name="NPSR3L39">Arkansas Post</string>
+    <string name="NPSR3L40">Lincoln Boyhood</string>
+    <string name="NPSR3L41">Mount Rushmore</string>
+    <string name="NPSR3L42">Perry\'s Victory and International Peace Memorial</string>
+    <string name="NPSR3L43">Pea Ridge</string>
+    <string name="NPSR3L44">Badlands</string>
+    <string name="NPSR3L45">Cuyahoga Valley</string>
+    <string name="NPSR3L46">Hot Springs</string>
+    <string name="NPSR3L47">Isle Royale</string>
+    <string name="NPSR3L48">Theodore Roosevelt</string>
+    <string name="NPSR3L49">Voyageurs</string>
+    <string name="NPSR3L50">Wind Cave</string>
+    <string name="NPSR3L51">Tallgrass Prairie</string>
+    <string name="NPSR3L52">Buffalo</string>
+    <string name="NPSR3L53">Mississippi National River and Recreation Area</string>
+    <string name="NPSR3L54">Niobrara</string>
+    <string name="NPSR3L55">Ozark National Scenic Riverway</string>
+    <string name="NPSR3L56">Saint Croix</string>
+    <string name="NPSR3L57">Missouri National Recreational River</string>
+
+    <string name="NPSR4">NCR</string>
+    <!--NPS NCR LOCAL-->
+    <string name="NPSR4L1">Lincoln</string>
+    <string name="NPSR4L2">Thomas Jefferson</string>
+    <string name="NPSR4L3">Vietnam Veterans</string>
+    <string name="NPSR4L4">World War II</string>
+    <string name="NPSR4L5">George Washington Memorial Parkway</string>
+    <string name="NPSR4L6">Antietam</string>
+    <string name="NPSR4L7">Monocacy</string>
+    <string name="NPSR4L8">Manassas</string>
+    <string name="NPSR4L9">Chesapeake and Ohio Canal</string>
+    <string name="NPSR4L10">Harpers Ferry</string>
+    <string name="NPSR4L11">Carter G. Woodson Home</string>
+    <string name="NPSR4L12">Clara Barton</string>
+    <string name="NPSR4L13">Ford\'s Theatre</string>
+    <string name="NPSR4L14">Frederick Douglass</string>
+    <string name="NPSR4L15">Mary Mcleod Bethune Council House</string>
+    <string name="NPSR4L16">Pennsylvania Avenue</string>
+    <string name="NPSR4L17">Belmont-Paul Women\'s Equality</string>
+    <string name="NPSR4L18">Arlington House- Robert E. Lee Memorial</string>
+    <string name="NPSR4L19">Franklin Delano Roosevelt</string>
+    <string name="NPSR4L20">Korean War Veterans</string>
+    <string name="NPSR4L21">Lyndon Baines Johnson Memorial Grove on the Potomac</string>
+    <string name="NPSR4L22">Lincoln</string>
+    <string name="NPSR4L23">Martin Luther King, Jr.</string>
+    <string name="NPSR4L24">Theodore Roosevelt Island</string>
+    <string name="NPSR4L25">World War I</string>
+    <string name="NPSR4L26">Potomac Heritage</string>
+    <string name="NPSR4L27">Constitution Gardens</string>
+    <string name="NPSR4L28">National Capital Parks-East</string>
+    <string name="NPSR4L29">National Mall</string>
+    <string name="NPSR4L30">Prince William Forest Park</string>
+    <string name="NPSR4L31">Washington Monument</string>
+    <string name="NPSR4L32">White House Presidents Park</string>
+    <string name="NPSR4L33">Wolf Trap Park for the Performing Arts</string>
+    <string name="NPSR4L34">Catoctin Mountain</string>
+    <string name="NPSR4L35">Fort Washington</string>
+    <string name="NPSR4L36">Green Belt</string>
+    <string name="NPSR4L37">Piscataway</string>
+    <string name="NPSR4L38">Rock Creek</string>
+
+    <string name="NPSR5">NER</string>
+    <!--NPS NER LOCAL-->
+    <string name="NPSR5L1">Fort Necessity</string>
+    <string name="NPSR5L2">Petersburg</string>
+    <string name="NPSR5L3">Richmond</string>
+    <string name="NPSR5L4">Adams</string>
+    <string name="NPSR5L5">Appomattox Court House</string>
+    <string name="NPSR5L6">Blackstone River Valley</string>
+    <string name="NPSR5L7">Boston</string>
+    <string name="NPSR5L8">Cedar Creek and Belle Grove</string>
+    <string name="NPSR5L9">Colonial</string>
+    <string name="NPSR5L10">First State</string>
+    <string name="NPSR5L11">Harriet Tubman Underground Railroad</string>
+    <string name="NPSR5L12">Independence</string>
+    <string name="NPSR5L13">Lowell</string>
+    <string name="NPSR5L14">Marsh-Billings-Rockefeller</string>
+    <string name="NPSR5L15">Minute Man</string>
+    <string name="NPSR5L16">Morristown</string>
+    <string name="NPSR5L17">New Bedford Whaling</string>
+    <string name="NPSR5L18">Peterson Great Falls</string>
+    <string name="NPSR5L19">Saratoga</string>
+    <string name="NPSR5L20">Thomas Edison</string>
+    <string name="NPSR5L21">Valley Forge</string>
+    <string name="NPSR5L22">Women\'s Rights</string>
+    <string name="NPSR5L23">Allegheny Portage Road</string>
+    <string name="NPSR5L24">Boston African American</string>
+    <string name="NPSR5L25">Edgar Allan Poe</string>
+    <string name="NPSR5L26">Eisenhower</string>
+    <string name="NPSR5L27">Eleanor Roosevelt</string>
+    <string name="NPSR5L28">Fredrick Law Olmsted</string>
+    <string name="NPSR5L29">Friendship Hill</string>
+    <string name="NPSR5L30">Hampton</string>
+    <string name="NPSR5L31">Home of Franklin D. Roosevelt</string>
+    <string name="NPSR5L32">Hopewell Furnace</string>
+    <string name="NPSR5L33">John Fitzgerald Kennedy</string>
+    <string name="NPSR5L34">Longfellow House-Washington\'s Headquarters</string>
+    <string name="NPSR5L35">Maggie L. Walker</string>
+    <string name="NPSR5L36">Martin Van Buren</string>
+    <string name="NPSR5L37">Sagamore Hill</string>
+    <string name="NPSR5L38">Saint Paul\'s Church</string>
+    <string name="NPSR5L39">Saint-Gaudens</string>
+    <string name="NPSR5L40">Salem Maritime</string>
+    <string name="NPSR5L41">Saugus Iron Works</string>
+    <string name="NPSR5L42">Springfield Armory</string>
+    <string name="NPSR5L43">Steamtown</string>
+    <string name="NPSR5L44">Theodore Roosevelt Birthplace</string>
+    <string name="NPSR5L45">Thomas Stone</string>
+    <string name="NPSR5L46">Vanderbilt Mansion</string>
+    <string name="NPSR5L47">Weir Farm</string>
+    <string name="NPSR5L48">African Burial Ground</string>
+    <string name="NPSR5L49">Booker T. Washington NM</string>
+    <string name="NPSR5L50">Castle Clinton</string>
+    <string name="NPSR5L51">Fort Monroe</string>
+    <string name="NPSR5L52">Fort Stanwix</string>
+    <string name="NPSR5L53">George Washington Birthplace</string>
+    <string name="NPSR5L54">Governors Island</string>
+    <string name="NPSR5L55">Katahdin Woods and Waters</string>
+    <string name="NPSR5L56">Statue of Liberty and Ellis Island</string>
+    <string name="NPSR5L57">Stonewall</string>
+    <string name="NPSR5L58">Federal Hall</string>
+    <string name="NPSR5L59">Flight 93</string>
+    <string name="NPSR5L60">General Grant</string>
+    <string name="NPSR5L61">Hamilton Grange NM</string>
+    <string name="NPSR5L62">Johnstown Flood NM</string>
+    <string name="NPSR5L63">Roger Williams</string>
+    <string name="NPSR5L64">Thaddeus Kosciuszko</string>
+    <string name="NPSR5L65">Fredricksburg \ampersand Spotsylvania</string>
+    <string name="NPSR5L66">Gettysburg</string>
+    <string name="NPSR5L67">Acadia</string>
+    <string name="NPSR5L68">Shenandoah</string>
+    <string name="NPSR5L69">New River Gorge</string>
+    <string name="NPSR5L70">Boston Harbor Islands</string>
+    <string name="NPSR5L71">Delaware Water Gap</string>
+    <string name="NPSR5L72">Gateway</string>
+    <string name="NPSR5L73">Gauley</string>
+    <string name="NPSR5L74">Assateague Island NS</string>
+    <string name="NPSR5L75">Cape Cod</string>
+    <string name="NPSR5L76">Fire Island</string>
+    <string name="NPSR5L77">Bluestone</string>
+    <string name="NPSR5L78">Fort McHenry National Monument and Historic Shrine</string>
+    <string name="NPSR5L79">Saint Croix Island International Historic Site</string>
+    <string name="NPSR5L80">Great Egg Harbor</string>
+    <string name="NPSR5L81">Upper Delaware</string>
+    <string name="NPSR5L82">Appalachian</string>
+
+    <string name="NPSR6">PWR</string>
+    <!--NPS PWR LOCAL-->
+    <string name="NPSR6L1">Big Hole</string>
+    <string name="NPSR6L2">Kalaupapa</string>
+    <string name="NPSR6L3">Kaloko-Honokohau</string>
+    <string name="NPSR6L4">Lewis and Clark</string>
+    <string name="NPSR6L5">Nez Perce</string>
+    <string name="NPSR6L6">Pu\'uhonua O Honaunau</string>
+    <string name="NPSR6L7">Rosie the Riveter/WWII Home Front</string>
+    <string name="NPSR6L8">San Francisco Maritime</string>
+    <string name="NPSR6L9">War in the Pacific</string>
+    <string name="NPSR6L10">Eugene O\'Neill</string>
+    <string name="NPSR6L11">Fort Point</string>
+    <string name="NPSR6L12">Fort Vancouver</string>
+    <string name="NPSR6L13">John Muir</string>
+    <string name="NPSR6L14">Manzanar</string>
+    <string name="NPSR6L15">Minidoka</string>
+    <string name="NPSR6L16">Pu\'Ukohola Heiau</string>
+    <string name="NPSR6L17">San Juan Island</string>
+    <string name="NPSR6L18">Whitman Mission</string>
+    <string name="NPSR6L19">Cabrillo</string>
+    <string name="NPSR6L20">Castle Mountain</string>
+    <string name="NPSR6L21">Cesar E. Chavez</string>
+    <string name="NPSR6L22">Devils Postpile</string>
+    <string name="NPSR6L23">Hagerman Fossil Beds</string>
+    <string name="NPSR6L24">Honoluliuli</string>
+    <string name="NPSR6L25">John Day Fossil Beds</string>
+    <string name="NPSR6L26">Lava Beds</string>
+    <string name="NPSR6L27">Muir Woods</string>
+    <string name="NPSR6L28">Port Chicago Naval Magazine</string>
+    <string name="NPSR6L29">Tule Springs Fossil Beds</string>
+    <string name="NPSR6L30">World War II Valor in the Pacific</string>
+    <string name="NPSR6L31">Orgeon Caves</string>
+    <string name="NPSR6L32">Craters of the Moon</string>
+    <string name="NPSR6L33">Channel Islands</string>
+    <string name="NPSR6L34">Crater Lake</string>
+    <string name="NPSR6L35">Death Valley</string>
+    <string name="NPSR6L36">Great Basin</string>
+    <string name="NPSR6L37">Haleakala</string>
+    <string name="NPSR6L38">Hawaii Volcanoes</string>
+    <string name="NPSR6L39">Joshua Tree</string>
+    <string name="NPSR6L40">Kings Canyon</string>
+    <string name="NPSR6L41">Lassen Volcanic</string>
+    <string name="NPSR6L42">Mount Rainier</string>
+    <string name="NPSR6L43">National Park of American Samoa</string>
+    <string name="NPSR6L44">North Cascades</string>
+    <string name="NPSR6L45">Olympic</string>
+    <string name="NPSR6L46">Pinnacles</string>
+    <string name="NPSR6L47">Redwood</string>
+    <string name="NPSR6L48">Sequoia</string>
+    <string name="NPSR6L49">Yosemite</string>
+    <string name="NPSR6L50">Mojave</string>
+    <string name="NPSR6L51">Golden Gate</string>
+    <string name="NPSR6L52">Lake Chelan</string>
+    <string name="NPSR6L53">Lake Mead</string>
+    <string name="NPSR6L54">Lake Roosevelt</string>
+    <string name="NPSR6L55">Ross Lake</string>
+    <string name="NPSR6L56">Santa Monica Mountains</string>
+    <string name="NPSR6L57">Whiskeytown</string>
+    <string name="NPSR6L58">Point Reyes</string>
+    <string name="NPSR6L59">American Memorial Park</string>
+    <string name="NPSR6L60">City of Rocks National Preserve</string>
+    <string name="NPSR6L61">Ebey\'s Landing National Historical Reserve</string>
+    
+    <string name="NPSR7">SER</string>
+    <!--NPS SER LOCAL-->
+    <string name="NPSR7L1">Cowpens</string>
+    <string name="NPSR7L2">Fort Donelson</string>
+    <string name="NPSR7L3">Moore\'s Creek</string>
+    <string name="NPSR7L4">Stones River</string>
+    <string name="NPSR7L5">Tupelo</string>
+    <string name="NPSR7L6">Kennesaw Mountain</string>
+    <string name="NPSR7L7">Abraham Lincoln Birthplace</string>
+    <string name="NPSR7L8">Cumberland Gap</string>
+    <string name="NPSR7L9">Natchez</string>
+    <string name="NPSR7L10">New Orleans Jazz</string>
+    <string name="NPSR7L11">Andersonville</string>
+    <string name="NPSR7L12">Andrew Johnson</string>
+    <string name="NPSR7L13">Carl Sandburg Home</string>
+    <string name="NPSR7L14">Charles Pinckney</string>
+    <string name="NPSR7L15">Christiansted</string>
+    <string name="NPSR7L16">Fort Raleigh</string>
+    <string name="NPSR7L17">Jimmy Carter</string>
+    <string name="NPSR7L18">Martin Luther King, Jr.</string>
+    <string name="NPSR7L19">Ninety Six</string>
+    <string name="NPSR7L20">San Juan</string>
+    <string name="NPSR7L21">Tuskegee Institute</string>
+    <string name="NPSR7L22">Buck Island Reef</string>
+    <string name="NPSR7L23">Castillo de San Marcos</string>
+    <string name="NPSR7L24">Fort Frederica</string>
+    <string name="NPSR7L25">Fort Matanzas</string>
+    <string name="NPSR7L26">Fort Pulaski</string>
+    <string name="NPSR7L27">Fort Sumter</string>
+    <string name="NPSR7L28">Ocmulgee</string>
+    <string name="NPSR7L29">Poverty Point State</string>
+    <string name="NPSR7L30">Russell Cave</string>
+    <string name="NPSR7L31">Virgin Islands Coral Reef</string>
+    <string name="NPSR7L32">De Soto</string>
+    <string name="NPSR7L33">Fort Caroline</string>
+    <string name="NPSR7L34">Wright Brothers</string>
+    <string name="NPSR7L35">Chickamauga and Chattanooga</string>
+    <string name="NPSR7L36">Guilford Courthouse</string>
+    <string name="NPSR7L37">Horseshoe Bend</string>
+    <string name="NPSR7L38">Kings Mountain</string>
+    <string name="NPSR7L39">Shiloh</string>
+    <string name="NPSR7L40">Vicksburg</string>
+    <string name="NPSR7L41">Biscayne</string>
+    <string name="NPSR7L42">Congaree</string>
+    <string name="NPSR7L43">Dry Tortugas</string>
+    <string name="NPSR7L44">Everglades</string>
+    <string name="NPSR7L45">Great Smoky Mountains</string>
+    <string name="NPSR7L46">Mammoth Cave</string>
+    <string name="NPSR7L47">Virgin Islands</string>
+    <string name="NPSR7L48">Little River Canyon</string>
+    <string name="NPSR7L49">Big South Fork</string>
+    <string name="NPSR7L50">Chattahoochee</string>
+    <string name="NPSR7L51">Canaveral</string>
+    <string name="NPSR7L52">Cape Hatteras</string>
+    <string name="NPSR7L53">Cape Lookout</string>
+    <string name="NPSR7L54">Cumberland Island</string>
+    <string name="NPSR7L55">Gulf Islands</string>
+    <string name="NPSR7L56">Appalachian</string>
+    <string name="NPSR7L57">Natchez Trace</string>
+    <string name="NPSR7L58">Brices Cross Roads National Battlefield Site</string>
+    <string name="NPSR7L59">Cane River Creole National Historical Park and Heritage Area</string>
+    <string name="NPSR7L60">Jean Lafitte National Historical Park and Preserve</string>
+    <string name="NPSR7L61">Salt River Bay National HIstorical Park and Ecological Preserve</string>
+    <string name="NPSR7L62">Timucuan Ecological</string>
+    <string name="NPSR7L63">Blue Ridge Parkway</string>
+    <string name="NPSR7L64">Obed</string>
+
+</resources>

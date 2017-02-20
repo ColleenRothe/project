@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="teammsu.colleenrothe.usmp">
+
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="21" />
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.android.vending.CHECK_LICENSE" />
+
+    <application
+        android:name="android.support.multidex.MultiDexApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
+
+        <activity
+            android:name=".MainActivity"
+            android:label="USMP"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".manualActivity"
+            android:label="@string/title_activity_manual"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreditsActivity"
+            android:label="@string/title_activity_credits"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".OnlineHomeActivity"
+            android:label="@string/title_activity_online_home"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RatingChoiceActivity"
+            android:label="@string/title_activity_rating_choice"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".LandslideActivity"
+            android:label="@string/title_activity_landslide"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RockfallActivity"
+            android:label="@string/title_activity_rockfall"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewSlopeEventActivity"
+            android:label="@string/title_activity_new_slope_event"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MaintenanceActivity"
+            android:label="@string/title_activity_maintenance"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="50937faf97f1a404ac46dc1ab523118c0b0a9b6a" />
+
+        <activity
+            android:name=".OfflineList"
+            android:label="@string/title_activity_offline_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MaintenanceMapActivity"
+            android:label="@string/title_activity_maintenance_map"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AnnotationInfoActivity"
+            android:label="@string/title_activity_annotation_info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AccountActivity"
+            android:label="@string/title_activity_account"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

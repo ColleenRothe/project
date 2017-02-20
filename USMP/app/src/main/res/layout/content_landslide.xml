@@ -1,0 +1,1342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="teammsu.colleenrothe.usmp.LandslideActivity"
+    tools:showIn="@layout/app_bar_landslide2">
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="fill_parent">
+
+
+        <!--Site Information -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:text= "Site Information"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Agency Information"
+            />
+
+        <Spinner
+            android:id = "@+id/LAgency"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/AgencyList"
+            >
+        </Spinner>
+
+        <Spinner
+            android:id = "@+id/LRegional"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/RegionalList"
+            >
+        </Spinner>
+
+        <Spinner
+            android:id = "@+id/LLocal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/LocalList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Date"
+            />
+        <EditText
+            android:id="@+id/L_Date"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Road/Trail ID"
+            />
+        <EditText
+            android:id="@+id/L_RoadTrailNo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Road/Trail"
+            />
+        <Spinner
+            android:id = "@+id/L_RoadTrail"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/roadTrailList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Road/Trail Class"
+            />
+        <EditText
+            android:id="@+id/L_RoadTrailClass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Rater"
+            />
+        <EditText
+            android:id="@+id/L_Rater"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Beginning Mile Marker"
+            />
+        <EditText
+            android:id="@+id/L_BeginMile"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Ending Mile Marker"
+            />
+        <EditText
+            android:id="@+id/L_EndMile"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Side"
+            />
+        <Spinner
+            android:id = "@+id/L_Side"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/sideList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Weather"
+            />
+        <Spinner
+            android:id = "@+id/L_Weather"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/weatherList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Hazard Type"
+            />
+        <EditText
+            android:id="@+id/L_HazardType"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text = "Current Location"
+                />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation = "horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autofill Begin"
+                android:id = "@+id/BeginButton"
+                android:onClick="setBeginCoords"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autofill End"
+                android:onClick="setEndCoords"
+
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Latitude"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/L_BeginLat"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned"
+                android:nextFocusDown="@+id/L_EndLat"
+                />
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="-"
+                />
+
+            <EditText
+                android:id="@id/L_EndLat"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned"
+                android:nextFocusDown="@+id/L_BeginLong"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "Longitude"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@id/L_BeginLong"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned"
+                android:nextFocusDown="@+id/L_EndLong"
+                />
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="-"
+                />
+            <EditText
+                android:id="@id/L_EndLong"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal|numberSigned"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Datum"
+            />
+        <EditText
+            android:id="@+id/L_Datum"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="WGS 84"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="AADT"
+            />
+        <EditText
+            android:id="@+id/L_Paadt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Length of Affected Road/Trail(ft)"
+            />
+        <EditText
+            android:id="@+id/L_LengthAffected"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Axial Length(ft)"
+            />
+        <EditText
+            android:id="@+id/L_AxialLength"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Slope Angle(degrees)"
+            />
+        <EditText
+            android:id="@+id/L_SlopeAngle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Sight Distance(ft)"
+            />
+        <EditText
+            android:id="@+id/L_SightDistance"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Roadway/Trail Width(ft)"
+            />
+        <EditText
+            android:id="@+id/L_RtWidth"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Speed Limit"
+            />
+        <Spinner
+            android:id = "@+id/L_Speed"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/speedList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Ditch Width(ft)"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/L_DitchWidth1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@+id/L_DitchWidth2"
+                />
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="-"
+                />
+            <EditText
+                android:id="@id/L_DitchWidth2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@+id/L_DitchDepth1"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Ditch Depth(ft)"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@id/L_DitchDepth1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@+id/L_DitchDepth2"
+                />
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="-"
+                />
+            <EditText
+                android:id="@id/L_DitchDepth2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@+id/L_DitchSlope1"
+                />
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Ditch Slope"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@id/L_DitchSlope1"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@+id/L_DitchSlope2"
+                />
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text=":"
+                />
+            <EditText
+                android:id="@id/L_DitchSlope2"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@+id/L_DitchSlope3"
+                />
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="-"
+                />
+
+            </LinearLayout>
+
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal">
+            <EditText
+                android:id="@id/L_DitchSlope3"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@+id/L_DitchSlope4"
+                />
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text=":"
+                />
+            <EditText
+                android:id="@id/L_DitchSlope4"
+                android:layout_width="100dp"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Annual Rainfall(in)"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <EditText
+                android:id="@+id/L_AnnualRain1"
+                android:layout_width="100dp"
+                android:inputType="numberDecimal"
+                android:nextFocusDown="@+id/L_AnnualRain2"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="-"
+                />
+            <EditText
+                android:id="@id/L_AnnualRain2"
+                android:layout_width="100dp"
+                android:inputType="numberDecimal"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Sole Access Route"
+            />
+        <Spinner
+            android:id = "@+id/L_SoleAccess"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ynList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Mitigation Present"
+            />
+        <Spinner
+            android:id = "@+id/L_Mitigation"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ynList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Photos"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose Files"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Comments"
+
+            />
+
+        <EditText
+            android:id="@+id/L_Comments"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:lines="3"
+            android:inputType="text"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text = "FLMA Name"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup1"
+                android:text="Info"
+                />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/L_FlmaName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "FLMA ID"
+            />
+
+        <EditText
+            android:id="@+id/L_FlmaId"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text = "FLMA Description"
+            />
+
+        <EditText
+            android:id="@+id/L_FlmaDescription"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            />
+
+        <!--Preliminary Rating-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textAllCaps="true"
+            android:text="Preliminary Rating"
+            android:textStyle = "bold"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Roadway Width Affected"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating Info"
+                android:onClick="popup2"
+
+                />
+
+        </LinearLayout>
+        <Spinner
+            android:id = "@+id/L_RWidthAffected"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Slide/Erosion Effects"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup3"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+        <Spinner
+            android:id = "@+id/L_SlideErosion"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Roadway Length Affected"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup4"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/L_RLengthAffected"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Impact on Use"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup5"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+        <Spinner
+            android:id = "@+id/L_ImpactOU"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:lines="4"
+                android:text="AADT/Usage/Economic or Recreation Importance(highest rating applies)"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup6"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_height="wrap_content"
+                android:onClick="aadtChecked"
+                android:id = "@+id/L_CheckAadt"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Use AADT in Calc."
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/L_AadtEtc"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Preliminary Rating"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup7"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/L_PrelimRating"
+            android:inputType="number"
+
+            />
+
+        <!--Slope Hazard Rating -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textAllCaps="true"
+            android:text="Slope Hazard Ratings"
+            android:textStyle = "bold"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Slope Drainage"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup8"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id = "@+id/L_SlopeDrainage"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Annual Rainfall"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup9"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/L_AnnualRainfall"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Axial Length of Slide"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup10"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/L_AxialLos"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Thaw Stability"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup11"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id = "@+id/L_ThawStability"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Instability-Related Maint. Frequency"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup122"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id = "@+id/L_InstabilityRMF"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Movement History"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup12"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id = "@+id/L_MovementHistory"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Landslide Hazard Total"
+            />
+        
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/L_HazardTotal"
+            android:inputType="number"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Risk Ratings"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Route or Trail Width"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup13"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/L_RouteTW"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Human Exposure Factor"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup14"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/L_HumanEF"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="% of Decision Sight Distance"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup15"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/L_PercentDSD"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Right of Way Impacts(left unattended)"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup16"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id = "@+id/L_RightOWI"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Environ/Cultural Impacts(left unattended)"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup17"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id = "@+id/L_ECImpact"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Maintenance Complexity"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup18"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id = "@+id/L_MaintComplexity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="Event Cost"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="popup19"
+                android:text="Rating Info"
+                />
+
+        </LinearLayout>
+
+        <Spinner
+            android:id = "@+id/L_EventCost"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/ratingList"
+            >
+        </Spinner>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="Risk Totals"
+            />
+
+        <EditText
+            android:id="@+id/L_RiskTotal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:text="Total USMP Score"
+            />
+
+        <EditText
+            android:id="@+id/L_TotalScore"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height = "wrap_content">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="LSubmit"
+                android:id="@+id/LSubmitButton"
+                android:text="Submit"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Form Offline"
+                android:onClick="newLandslide"
+
+                />
+
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
+</RelativeLayout>
