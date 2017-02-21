@@ -107,6 +107,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
         
         //offline or online?
         shareData.offline = false
+        shareData.offline_edit = false
         
         //pins
         let pinmh = pinModelHelper()
@@ -245,6 +246,8 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
     
     //tapped the info button...
     func mapView(_ mapView: MGLMapView, annotation: MGLAnnotation, calloutAccessoryControlTapped control: UIControl) {
+        print("description is")
+        print(annotation.description)
         //set the current side id
         shareData.current_site_id = (annotation.title)!!
         //set the current id
@@ -700,6 +703,30 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
         } catch{
             //error
         }
+        
+        
+        let fetchRequest2 = NSFetchRequest<NSFetchRequestResult>(entityName: "OfflineSiteFull")
+        
+        do {
+            let fetched2 =
+                try managedContext.fetch(fetchRequest2)
+            
+            for entity2 in fetched2{
+                managedContext.delete(entity2 as! NSManagedObject)
+            }
+            
+            
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        do{
+            try managedContext.save()
+        } catch{
+            //error
+        }
+        
+        
 
         
         for pack in MGLOfflineStorage.shared().packs!{
@@ -786,7 +813,12 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
                 pp.coordinate.longitude = sites[pz].value(forKey: "longitude")! as! Double
                 //set title
                 pp.title = sites[pz].value(forKey: "siteID")! as? String
-                pp.subtitle = sites[pz].value(forKey: "id")! as? String
+                //set the subtitle to have the id and the image name (helps with type)
+                var subtitleString = sites[pz].value(forKey: "id")! as? String
+                subtitleString = subtitleString?.appending("\n")
+                subtitleString = subtitleString?.appending((sites[pz].value(forKey: "imagename")! as? String)!)
+                pp.subtitle = subtitleString
+                //set the imagename
                 imagename = (sites[pz].value(forKey: "imagename")! as? String)!
                 
                 //add to the map

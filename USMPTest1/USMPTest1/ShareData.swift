@@ -177,6 +177,8 @@ class ShareData {
     //edit site
     var edit_site = false
     var current_clicked_id = ""
+    var offline_edit = false
+    var offline_edit_site_id = ""
     
 
     

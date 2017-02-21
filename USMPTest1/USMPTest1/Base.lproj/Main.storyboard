@@ -14307,15 +14307,15 @@
                                         <exclude reference="fAs-5j-0AM"/>
                                         <exclude reference="poC-py-idn"/>
                                         <exclude reference="sGO-Qy-6JI"/>
+                                        <exclude reference="FnL-E4-oeE"/>
+                                        <exclude reference="aDL-hk-7Pz"/>
+                                        <exclude reference="oPc-Sl-pcp"/>
+                                        <exclude reference="xJS-GJ-LzG"/>
                                         <exclude reference="GAN-NU-Nxh"/>
                                         <exclude reference="NaL-OV-Mg2"/>
                                         <exclude reference="aFH-TW-vMg"/>
                                         <exclude reference="ikZ-Cu-j55"/>
                                         <exclude reference="nZm-UT-cDn"/>
-                                        <exclude reference="FnL-E4-oeE"/>
-                                        <exclude reference="aDL-hk-7Pz"/>
-                                        <exclude reference="oPc-Sl-pcp"/>
-                                        <exclude reference="xJS-GJ-LzG"/>
                                         <exclude reference="3bR-9k-Yrn"/>
                                         <exclude reference="3fT-DJ-Ejf"/>
                                         <exclude reference="4ie-eY-38y"/>
@@ -15170,10 +15170,10 @@
                                         <include reference="iF0-nF-URq"/>
                                         <include reference="I9P-d5-5AZ"/>
                                         <include reference="fAs-5j-0AM"/>
-                                        <include reference="NaL-OV-Mg2"/>
-                                        <include reference="nZm-UT-cDn"/>
                                         <include reference="FnL-E4-oeE"/>
                                         <exclude reference="oPc-Sl-pcp"/>
+                                        <include reference="NaL-OV-Mg2"/>
+                                        <include reference="nZm-UT-cDn"/>
                                         <include reference="3bR-9k-Yrn"/>
                                         <include reference="6Wa-Fn-lJD"/>
                                         <exclude reference="QKg-GL-aPV"/>
@@ -15553,11 +15553,11 @@
                                         <exclude reference="Z3z-Qm-fOW"/>
                                         <include reference="poC-py-idn"/>
                                         <include reference="sGO-Qy-6JI"/>
+                                        <include reference="aDL-hk-7Pz"/>
+                                        <exclude reference="xJS-GJ-LzG"/>
                                         <include reference="GAN-NU-Nxh"/>
                                         <include reference="aFH-TW-vMg"/>
                                         <include reference="ikZ-Cu-j55"/>
-                                        <include reference="aDL-hk-7Pz"/>
-                                        <exclude reference="xJS-GJ-LzG"/>
                                         <include reference="3fT-DJ-Ejf"/>
                                         <include reference="4ie-eY-38y"/>
                                         <exclude reference="CQJ-dm-Pjt"/>
@@ -22225,6 +22225,9 @@
                                         <leftBarButtonItems>
                                             <barButtonItem title="Map" id="NkE-tW-65Z">
                                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <connections>
+                                                    <segue destination="O1i-Xq-W0C" kind="show" id="MgN-7D-NKp"/>
+                                                </connections>
                                             </barButtonItem>
                                             <barButtonItem title="Slope Rating Form" id="GYc-N6-h3T">
                                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -22397,7 +22400,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Efv-Jy-p5E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4805.6000000000004" y="-8222.3388305847075"/>
+            <point key="canvasLocation" x="3339" y="-8859"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="8yr-PB-6HQ">
@@ -22674,18 +22677,18 @@
         <image name="unchecked" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="frB-nH-gJg"/>
-        <segue reference="efm-26-qOj"/>
-        <segue reference="pN5-Dh-MWt"/>
-        <segue reference="jIf-ab-Hqf"/>
-        <segue reference="nBC-T4-fr4"/>
-        <segue reference="wYd-F1-Mn2"/>
-        <segue reference="4VO-I2-xag"/>
-        <segue reference="lCX-el-nv0"/>
-        <segue reference="xtX-Dx-Tqm"/>
-        <segue reference="VHu-1T-0xb"/>
-        <segue reference="0Xx-c6-k1n"/>
         <segue reference="mgh-ej-O6P"/>
+        <segue reference="JkF-oM-EtO"/>
+        <segue reference="jIf-ab-Hqf"/>
+        <segue reference="pN5-Dh-MWt"/>
+        <segue reference="lCX-el-nv0"/>
+        <segue reference="efm-26-qOj"/>
+        <segue reference="nBC-T4-fr4"/>
+        <segue reference="Vjv-Zu-cBt"/>
+        <segue reference="agE-sE-IY4"/>
+        <segue reference="MgN-7D-NKp"/>
+        <segue reference="mXg-XA-Dfu"/>
+        <segue reference="frB-nH-gJg"/>
         <segue reference="p2y-eQ-Y33"/>
     </inferredMetricsTieBreakers>
 </document>

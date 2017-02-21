@@ -1,16 +1,16 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "5528211E84C0F88393F76999D6920316883C15C0",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "2E9EFD2A9362B228AEF4385BAF71B45A63ECA28D",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "E9C4E516B3768E118A0EB248E276CB839C39053A" : 9223372036854775807,
-    "5528211E84C0F88393F76999D6920316883C15C0" : 9223372036854775807
+    "2E9EFD2A9362B228AEF4385BAF71B45A63ECA28D" : 9223372036854775807
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "485B725F-8427-45F0-8F98-BA93867396DE",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "E9C4E516B3768E118A0EB248E276CB839C39053A" : "USMP_project\/USMPTest1\/USMPTest1\/",
-    "5528211E84C0F88393F76999D6920316883C15C0" : "USMP_project\/"
+    "2E9EFD2A9362B228AEF4385BAF71B45A63ECA28D" : "USMP_project\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "USMPTest1",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -19,7 +19,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ColleenRothe\/project.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5528211E84C0F88393F76999D6920316883C15C0"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2E9EFD2A9362B228AEF4385BAF71B45A63ECA28D"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ColleenRothe\/app.git",

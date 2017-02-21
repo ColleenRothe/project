@@ -16,6 +16,8 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
     //listTableView
     var feedItems: NSArray = NSArray()
     let shareData = ShareData.sharedInstance
+    var sites = [NSManagedObject]()             //core data sites
+
 
     
     
@@ -136,6 +138,7 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
     
     
     func makeTableOnline(){
+        shareData.offline_edit = false
         
         let selectedLocation = feedItems.object(at: 0) as! AnnotationModel
         
@@ -174,6 +177,7 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         }
     
     func makeTableOffline(){
+        shareData.offline_edit = true
         print("makeTableOffline1 site count")
         print(site.count)
         //need to delete from "site"?
@@ -234,7 +238,8 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
                     shareData.photo_string = (site[pz].value(forKey: "photos") as? String)!
                 
                     
-                    
+                    shareData.offline_edit_site_id = (site[pz].value(forKey: "siteID")! as? String)!
+
                 }
                 
             }
@@ -245,8 +250,10 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         
     }
     
+   
     
     @IBAction func editSite(_ sender: AnyObject) {
+        print("CLICK EDIT")
         if(shareData.editType == "landslide"){
             shareData.edit_site = true
             self.performSegue(withIdentifier: "editLandslide", sender: self)
@@ -259,6 +266,5 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         }
     }
     
-    
-    
+        
 }

@@ -678,8 +678,11 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             //call special load method
             loadFromList()
         }
-        
-        if(shareData.edit_site == true){
+        if(shareData.offline_edit == true){
+            shareData.offline_edit = false
+            offlineEdit()
+        }
+        else if(shareData.edit_site == true){
             shareData.edit_site = false; //??
             edit()
         }
@@ -984,6 +987,201 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         totalScoreText.text = selectedLocation.total_score
         
         
+    }
+    
+    func offlineEdit(){
+    print("CALL OFFLINE EDIT")
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OfflineSiteFull")
+        
+        do {
+            let results =
+                try managedContext.fetch(fetchRequest)
+            sites.removeAll() //need to re-clear??
+            
+            sites = results as! [NSManagedObject] //shows up twice cuz they were appended earlier?
+            var number = 0;
+            let wanted = shareData.offline_edit_site_id
+            for i in 0 ... sites.count-1{
+                if( wanted ==  sites[i].value(forKey: "site_id") as? String){
+                    number = i
+                }
+            }
+
+            print(sites[number].value(forKey: "site_id")! as? String)
+            
+            let site_id = sites[number].value(forKey: "site_id")! as? String
+            let agency = sites[number].value(forKey: "umbrella_agency")! as? String
+            let regional_admin = sites[number].value(forKey: "regional_admin")! as? String
+            let local = sites[number].value(forKey: "local_admin")! as? String
+            
+            roadTrailNoText.text = sites[number].value(forKey: "road_trail_no")! as? String
+            roadTrailClassText.text = sites[number].value(forKey: "road_trail_class")! as? String
+            beginMileText.text = sites[number].value(forKey: "begin_mile_marker")! as? String
+            endMileText.text = sites[number].value(forKey: "end_mile_marker")! as? String
+            let road_or_trail = sites[number].value(forKey: "road_or_trail")! as? String
+            if(road_or_trail == "T"){
+                rtPicker.selectRow(1, inComponent: 0, animated: true)
+            }
+            let side = sites[number].value(forKey: "side")! as? String
+            
+            if(sideOptions.contains(side!)){
+                let sideNum = sideOptions.index(of: side!)
+                sidePicker.selectRow(sideNum!, inComponent: 0, animated: true)
+            }
+            
+            rater.text = sites[number].value(forKey: "rater")! as? String
+            let weather = sites[number].value(forKey: "weather")! as? String
+            if(weatherOptions.contains(weather!)){
+                let weatherNum = weatherOptions.index(of: weather!)
+                weatherPicker.selectRow(weatherNum!, inComponent: 0, animated: true)
+            }
+            let date = sites[number].value(forKey: "date")! as? Date
+            //datePicker.setDate(date!, animated: true)
+            
+            lat1Text.text = sites[number].value(forKey: "begin_coordinate_lat")! as? String
+            lat2Text.text = sites[number].value(forKey: "end_coordinate_lat")! as? String
+            long1Text.text = sites[number].value(forKey: "begin_coordinate_long")! as? String
+            long2Text.text = sites[number].value(forKey: "end_coordinate_long")! as? String
+            datumText.text = sites[number].value(forKey: "datum")! as? String
+            aadtText.text = sites[number].value(forKey: "aadt")! as? String
+            lengthAffectedText.text = sites[number].value(forKey: "length_affected")! as? String
+            slopeHText.text = sites[number].value(forKey: "slope_ht_axial_length")! as? String
+            slopeAngleText.text = sites[number].value(forKey: "slope_angle")! as? String
+            sightDText.text = sites[number].value(forKey: "sight_distance")! as? String
+            roadwayTWText.text = sites[number].value(forKey: "road_trail_width")! as? String
+            let speedLimit = sites[number].value(forKey: "speed_limit")! as? String
+            if(speedOptions.contains(speedLimit!)){
+                let speedNum = speedOptions.index(of: speedLimit!)
+                speedPicker.selectRow(speedNum!, inComponent: 0, animated: true)
+            }
+            ditchWidth1Text.text = sites[number].value(forKey: "minimum_ditch_width")! as? String
+            ditchWidth2Text.text = sites[number].value(forKey: "maximum_ditch_width")! as? String
+            ditchDepth1Text.text = sites[number].value(forKey: "minimum_ditch_depth")! as? String
+            ditchDepth2Text.text = sites[number].value(forKey: "maximum_ditch_depth")! as? String
+            ditchSlope1beginText.text = sites[number].value(forKey: "minimum_ditch_slope_first")! as? String
+            ditchSlope1endText.text = sites[number].value(forKey: "maximum_ditch_slope_first")! as? String
+            ditchSlope2beginText.text = sites[number].value(forKey: "minimum_ditch_slope_second")! as? String
+            ditchSlope2endText.text = sites[number].value(forKey: "maximum_ditch_slope_second")! as? String
+            blkSizeText.text = sites[number].value(forKey: "blk_size")! as? String
+            volumeText.text = sites[number].value(forKey: "volume")! as? String
+            beginRainText.text = sites[number].value(forKey: "begin_annual_rainfall")! as? String
+            endRainText.text = sites[number].value(forKey: "end_annual_rainfall")! as? String
+            let sole_access_route = sites[number].value(forKey: "sole_access_route")! as? String
+            if(sole_access_route == "N"){
+                accessPicker.selectRow(1, inComponent: 0, animated: true)
+            }else{
+                accessPicker.selectRow(0, inComponent: 0, animated: true)
+            }
+            let fixes_present = sites[number].value(forKey: "fixes_present")! as? String
+            if(fixes_present == "N"){
+                fixesPicker.selectRow(1, inComponent: 0, animated: true)
+            }
+            
+            var preliminary_rating_impact_on_use = sites[number].value(forKey: "preliminary_rating_impact_on_use")! as? String
+            if(ratingOptions.contains(preliminary_rating_impact_on_use!)){
+                impactOUPicker.selectRow(ratingOptions.index(of: preliminary_rating_impact_on_use!)!, inComponent: 0, animated: true)
+            }
+            //1 true, 0 false
+            let preliminary_rating_aadt_usage_calc_checkbox = sites[number].value(forKey: "preliminary_rating_aadt_usage_calc_checkbox")! as? String
+            
+            if(preliminary_rating_aadt_usage_calc_checkbox == "1"){
+                let image = UIImage(named: "checkmark")
+                aadtButton.setImage(image, for: UIControlState())
+                selectedAadt = true
+            }else{
+                let image = UIImage(named: "unchecked")
+                aadtButton.setImage(image, for: UIControlState())
+                selectedAadt = false
+            }
+            
+            aadtEtcText.text = sites[number].value(forKey: "preliminary_rating_aadt_usage")! as? String
+            preliminaryRatingText.text = sites[number].value(forKey: "preliminary_rating")! as? String
+            let hazard_rating_slope_drainage = sites[number].value(forKey: "hazard_rating_slope_drainage")! as? String
+            if(ratingOptions.contains(hazard_rating_slope_drainage!)){
+                slopeDPicker.selectRow(ratingOptions.index(of: hazard_rating_slope_drainage!)!, inComponent: 0, animated: true)
+            }
+            
+            annualRText.text = sites[number].value(forKey: "hazard_rating_annual_rainfall")! as? String
+            slopeHeightCalcText.text = sites[number].value(forKey: "hazard_rating_slope_height_axial_length")! as? String
+            routeTWText.text = sites[number].value(forKey: "risk_rating_route_trail")! as? String
+            humanEFText.text = sites[number].value(forKey: "risk_rating_human_ex_factor")! as? String
+            percentDSDText.text = sites[number].value(forKey: "risk_rating_percent_dsd")! as? String
+            let risk_rating_r_w_impacts = sites[number].value(forKey: "risk_rating_r_w_impacts")! as? String
+            if(ratingOptions.contains(risk_rating_r_w_impacts!)){
+                rightOWIPicker.selectRow(ratingOptions.index(of: risk_rating_r_w_impacts!)!, inComponent: 0, animated: true)
+            }
+            let risk_rating_enviro_cult_impacts = sites[number].value(forKey: "risk_rating_enviro_cult_impacts")! as? String
+            if(ratingOptions.contains(risk_rating_enviro_cult_impacts!)){
+                ecImpactsPicker.selectRow(ratingOptions.index(of: risk_rating_enviro_cult_impacts!)!, inComponent: 0, animated: true)
+            }
+            let risk_rating_maint_complexity = sites[number].value(forKey: "risk_rating_maint_complexity")! as? String
+            if(ratingOptions.contains(risk_rating_maint_complexity!)){
+                maintenanceCPicker.selectRow(ratingOptions.index(of: risk_rating_maint_complexity!)!, inComponent: 0, animated: true)
+            }
+            let risk_rating_event_cost = sites[number].value(forKey: "risk_rating_event_cost")! as? String
+            if(ratingOptions.contains(risk_rating_event_cost!)){
+                eventCPicker.selectRow(ratingOptions.index(of: risk_rating_event_cost!)!, inComponent: 0, animated: true)
+            }
+            
+            rockfallHazardTotalText.text = sites[number].value(forKey: "hazard_total")! as? String
+            totalScoreText.text = sites[number].value(forKey: "total_score")! as? String
+            commentsText.text = sites[number].value(forKey: "comment")! as? String
+            hazardTypeText.text = sites[number].value(forKey: "hazard_type")! as? String
+            
+            //ROCKFALL ONLY
+            let rockfall_prelim_ditch_eff = sites[number].value(forKey: "rockfall_prelim_ditch_eff")! as? String
+            if(ratingOptions.contains(rockfall_prelim_ditch_eff!)){
+                ditchEPicker.selectRow(ratingOptions.index(of: rockfall_prelim_ditch_eff!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_prelim_rockfall_history = sites[number].value(forKey: "rockfall_prelim_rockfall_history")! as? String
+            if(ratingOptions.contains(rockfall_prelim_rockfall_history!)){
+                rockfallHPicker.selectRow(ratingOptions.index(of: rockfall_prelim_rockfall_history!)!, inComponent: 0, animated: true)
+            }
+            
+            bsPerEventText.text = sites[number].value(forKey: "rockfall_prelim_block_size_event_vol")! as? String
+            
+            let rockfall_hazard_rating_maint_frequency = sites[number].value(forKey: "rockfall_hazard_rating_maint_frequency")! as? String
+            if(ratingOptions.contains(rockfall_hazard_rating_maint_frequency!)){
+                rockfallRMFPicker.selectRow(ratingOptions.index(of: rockfall_hazard_rating_maint_frequency!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_hazard_rating_case_one_struc_condition = sites[number].value(forKey: "rockfall_hazard_rating_case_one_struc_condition")! as? String
+            if(specialOptions.contains(rockfall_hazard_rating_case_one_struc_condition!)){
+                structuralC1Picker.selectRow(specialOptions.index(of: rockfall_hazard_rating_case_one_struc_condition!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_hazard_rating_case_one_rock_friction = sites[number].value(forKey: "rockfall_hazard_rating_case_one_rock_friction")! as? String
+            if(specialOptions.contains(rockfall_hazard_rating_case_one_rock_friction!)){
+                rockF1Picker.selectRow(specialOptions.index(of: rockfall_hazard_rating_case_one_rock_friction!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_hazard_rating_case_two_struc_condition = sites[number].value(forKey: "rockfall_hazard_rating_case_two_struc_condition")! as? String
+            if(specialOptions.contains(rockfall_hazard_rating_case_two_struc_condition!)){
+                structuralC2Picker.selectRow(specialOptions.index(of: rockfall_hazard_rating_case_two_struc_condition!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_hazard_rating_case_two_diff_erosion = sites[number].value(forKey: "rockfall_hazard_rating_case_two_diff_erosion")! as? String
+            if(specialOptions.contains(rockfall_hazard_rating_case_two_diff_erosion!)){
+                rockF2Picker.selectRow(specialOptions.index(of: rockfall_hazard_rating_case_two_diff_erosion!)!, inComponent: 0, animated: true)
+            }
+            
+            //flma link
+            flmaIdText.text = sites[number].value(forKey: "flma_id")! as? String
+            flmaNameText.text = sites[number].value(forKey: "flma_name")! as? String
+            flmaDescriptionText.text = sites[number].value(forKey: "flma_description")! as? String
+
+
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+            let alertController = UIAlertController(title: "Error", message: "Could not fetch \(error.userInfo)", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+            present(alertController, animated: true, completion: nil) //may be an issue?
+        }
     }
     
     override func didReceiveMemoryWarning() {
