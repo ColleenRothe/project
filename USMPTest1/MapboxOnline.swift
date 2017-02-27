@@ -345,19 +345,17 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
             print("Offline pack “\(userInfo["name"])” has downloaded \(completed) of \(expected) resources.")
             
             //for the progress bar
-            var percent = completed/expected
-            
-            if(completed < (expected / (4/3))){
+            if(completed < expected/4){
+                progressView.setProgress(30, animated: true)
+            }
+            else if(completed < (expected/2)){
                 progressView.setProgress(50, animated: true)
             }
-            if(completed < expected/2){
-            progressView.setProgress(35, animated: true)
+            else if(completed < (expected / (4/3))){
+            progressView.setProgress(70, animated: true)
             }
-            else if (completed < expected/4){
-                progressView.setProgress(20, animated: true)
-
-            }
-            if expected == completed{
+            
+            else if expected == completed{
                 progressView.setProgress(100, animated: true)
                 
                 //call function that handles core data implementation for save
