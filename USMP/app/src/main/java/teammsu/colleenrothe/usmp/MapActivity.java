@@ -27,34 +27,56 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 
-
+import com.mapbox.*;
+import android.os.Parcelable;
+import java.lang.Object.*;
+import com.mapbox.mapboxsdk.geometry.VisibleRegion;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.geometry.LatLngBounds;
+import android.graphics.PointF.*;
+//import com.mapbox.mapboxsdk.maps.Projection.*;
 import com.mapbox.mapboxsdk.MapboxAccountManager;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
-import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapView.*;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+
+
+
+
+import com.mapbox.mapboxsdk.maps.Projection;
 import com.mapbox.mapboxsdk.offline.OfflineManager;
 import com.mapbox.mapboxsdk.offline.OfflineRegion;
 import com.mapbox.mapboxsdk.offline.OfflineRegionError;
 import com.mapbox.mapboxsdk.offline.OfflineRegionStatus;
 import com.mapbox.mapboxsdk.offline.OfflineTilePyramidRegionDefinition;
 
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+
+
+
+
 import org.json.JSONObject;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.content.Context;
 
-
+import java.util.ArrayList;
 
 import java.io.BufferedReader;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 //https://www.mapbox.com/android-sdk/examples/offline-map/
 //https://www.mapbox.com/android-sdk/examples/offline-manager/
@@ -63,15 +85,22 @@ public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     MapView mapView; //mapbox map view
+    private MapboxMap map;
     private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/pin.php"; //to place the sites
     private static final String JSON_URL2 = "http://nl.cs.montana.edu/test_sites/colleen.rothe/percentiles.php"; //percentiles for image
 
     //offline func
     private OfflineManager offlineManager;
+    private OfflineRegion offlineRegion;
+
+
     private boolean offline = true;
 
     private boolean isEndNotified;
     private ProgressBar progressBar;
+    private int regionSelected;
+
+
     // JSON encoding/decoding
     public static final String JSON_CHARSET = "UTF-8";
     public static final String JSON_FIELD_REGION_NAME = "FIELD_REGION_NAME";
@@ -113,8 +142,13 @@ public class MapActivity extends AppCompatActivity
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
 
+
         getJSON2(JSON_URL2);
 
+        // Set up the offlineManager
+        offlineManager = OfflineManager.getInstance(this);
+        // Assign progressBar for later use
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
 
 
@@ -177,6 +211,7 @@ public class MapActivity extends AppCompatActivity
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -186,13 +221,56 @@ public class MapActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_cache_map) {
-            return true;
+            Context context = mapView.getContext();
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            final TextView tv = new TextView(this);
+            tv.setText("Corner Coordinates for saved map area", TextView.BufferType.NORMAL);
+            final EditText neLat = new EditText(this);
+            neLat.setHint("NE Corner latitude");
+            final EditText neLong = new EditText(this);
+            neLong.setHint("NE Corner longitude");
+            final EditText swLat = new EditText(this);
+            swLat.setHint("SW Corner Latitude");
+            final EditText swLong = new EditText(this);
+            swLong.setHint("SW Corner Longitude");
+
+            LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+
+
+            layout.addView(tv);
+            layout.addView(neLat);
+            layout.addView(neLong);
+            layout.addView(swLat);
+            layout.addView(swLong);
+
+            alertDialogBuilder.setView(layout);
+
+
+            alertDialogBuilder.setCancelable(true).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    downloadRegion();
+                }
+
+            });
+
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                        //finish();
+                } });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
         }
         if (id == R.id.action_clear_cache) {
             return true;
         }
         if (id == R.id.action_cache_status) {
-            return true;
+            downloadedRegionList();
         }
         if (id == R.id.action_load_offline_points) {
             return true;
@@ -227,6 +305,212 @@ public class MapActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void downloadRegion(){
+        System.out.println("DOWNLOAD");
+        final String regionName = "testRegion";
+        startProgress();
+        // Create offline definition using the current
+        // style and boundaries of visible map area
+        String styleUrl = map.getStyleUrl();
+        LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+        double minZoom = map.getCameraPosition().zoom;
+        double maxZoom = map.getMaxZoom();
+        float pixelRatio = this.getResources().getDisplayMetrics().density;
+        OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
+                styleUrl, bounds, minZoom, maxZoom, pixelRatio);
+        // Build a JSONObject using the user-defined offline region title,
+        // convert it into string, and use it to create a metadata variable.
+        // The metadata varaible will later be passed to createOfflineRegion()
+        byte[] metadata;
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(JSON_FIELD_REGION_NAME, regionName);
+            String json = jsonObject.toString();
+            metadata = json.getBytes(JSON_CHARSET);
+        } catch (Exception exception) {
+            Log.e(TAG, "Failed to encode metadata: " + exception.getMessage());
+            metadata = null;
+        }
+        // Create the offline region and launch the download
+        offlineManager.createOfflineRegion(definition, metadata, new OfflineManager.CreateOfflineRegionCallback() {
+            @Override
+            public void onCreate(OfflineRegion offlineRegion) {
+                Log.d(TAG, "Offline region created: " + regionName);
+                MapActivity.this.offlineRegion = offlineRegion;
+                launchDownload();
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e(TAG, "Error: " + error);
+            }
+        });
+    }
+
+    private void launchDownload() {
+        // Set up an observer to handle download progress and
+        // notify the user when the region is finished downloading
+        offlineRegion.setObserver(new OfflineRegion.OfflineRegionObserver() {
+            @Override
+            public void onStatusChanged(OfflineRegionStatus status) {
+                // Compute a percentage
+                double percentage = status.getRequiredResourceCount() >= 0
+                        ? (100.0 * status.getCompletedResourceCount() / status.getRequiredResourceCount()) :
+                        0.0;
+
+                if (status.isComplete()) {
+                    // Download complete
+                    endProgress("Region downloaded successfully.");
+                    return;
+                } else if (status.isRequiredResourceCountPrecise()) {
+                    // Switch to determinate state
+                    setPercentage((int) Math.round(percentage));
+                }
+
+                // Log what is being currently downloaded
+                Log.d(TAG, String.format("%s/%s resources; %s bytes downloaded.",
+                        String.valueOf(status.getCompletedResourceCount()),
+                        String.valueOf(status.getRequiredResourceCount()),
+                        String.valueOf(status.getCompletedResourceSize())));
+            }
+
+            @Override
+            public void onError(OfflineRegionError error) {
+                Log.e(TAG, "onError reason: " + error.getReason());
+                Log.e(TAG, "onError message: " + error.getMessage());
+            }
+
+            @Override
+            public void mapboxTileCountLimitExceeded(long limit) {
+                Log.e(TAG, "Mapbox tile count limit exceeded: " + limit);
+            }
+        });
+        // Change the region state
+        offlineRegion.setDownloadState(OfflineRegion.STATE_ACTIVE);
+    }
+    private void downloadedRegionList() {
+        // Build a region list when the user clicks the list button
+
+        // Reset the region selected int to 0
+        regionSelected = 0;
+
+        // Query the DB asynchronously
+        offlineManager.listOfflineRegions(new OfflineManager.ListOfflineRegionsCallback() {
+            @Override
+            public void onList(final OfflineRegion[] offlineRegions) {
+                // Check result. If no regions have been
+                // downloaded yet, notify user and return
+                if (offlineRegions == null || offlineRegions.length == 0) {
+                    Toast.makeText(MapActivity.this, "You have no regions yet.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Add all of the region names to a list
+                ArrayList<String> offlineRegionsNames = new ArrayList<>();
+                for (OfflineRegion offlineRegion : offlineRegions) {
+                    offlineRegionsNames.add(getRegionName(offlineRegion));
+                }
+                final CharSequence[] items = offlineRegionsNames.toArray(new CharSequence[offlineRegionsNames.size()]);
+
+                // Build a dialog containing the list of regions
+                AlertDialog dialog = new AlertDialog.Builder(MapActivity.this)
+                        .setTitle("List")
+                        .setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Track which region the user selects
+                                regionSelected = which;
+                            }
+                        })
+                        .setPositiveButton("Navigate to", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Toast.makeText(MapActivity.this, items[regionSelected], Toast.LENGTH_LONG).show();
+
+                                // Get the region bounds and zoom
+                                LatLngBounds bounds = ((OfflineTilePyramidRegionDefinition)
+                                        offlineRegions[regionSelected].getDefinition()).getBounds();
+                                double regionZoom = ((OfflineTilePyramidRegionDefinition)
+                                        offlineRegions[regionSelected].getDefinition()).getMinZoom();
+
+                                // Create new camera position
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(bounds.getCenter())
+                                        .zoom(regionZoom)
+                                        .build();
+
+                                // Move camera to new position
+                                map.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                            }
+                        })
+                        .setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Make progressBar indeterminate and
+                                // set it to visible to signal that
+                                // the deletion process has begun
+                                progressBar.setIndeterminate(true);
+                                progressBar.setVisibility(View.VISIBLE);
+
+                                // Begin the deletion process
+                                offlineRegions[regionSelected].delete(new OfflineRegion.OfflineRegionDeleteCallback() {
+                                    @Override
+                                    public void onDelete() {
+                                        // Once the region is deleted, remove the
+                                        // progressBar and display a toast
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        progressBar.setIndeterminate(false);
+                                        Toast.makeText(MapActivity.this, "Region deleted", Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onError(String error) {
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                        progressBar.setIndeterminate(false);
+                                        Log.e(TAG, "Error: " + error);
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // When the user cancels, don't do anything.
+                                // The dialog will automatically close
+                            }
+                        }).create();
+                dialog.show();
+
+            }
+
+            @Override
+            public void onError(String error) {
+                Log.e(TAG, "Error: " + error);
+            }
+        });
+    }
+
+    private String getRegionName(OfflineRegion offlineRegion) {
+        // Get the retion name from the offline region metadata
+        String regionName;
+
+        try {
+            byte[] metadata = offlineRegion.getMetadata();
+            String json = new String(metadata, JSON_CHARSET);
+            JSONObject jsonObject = new JSONObject(json);
+            regionName = jsonObject.getString(JSON_FIELD_REGION_NAME);
+        } catch (Exception exception) {
+            Log.e(TAG, "Failed to decode metadata: " + exception.getMessage());
+            regionName = "Region " + offlineRegion.getID();
+        }
+        return regionName;
+    }
+
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -404,94 +688,7 @@ public class MapActivity extends AppCompatActivity
         mapView.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(MapboxMap mapboxMap) {
-
-                    if(offline == true) {
-                        offlineManager = OfflineManager.getInstance(MapActivity.this);
-
-                        // Create a bounding box for the offline region
-                        LatLngBounds latLngBounds = new LatLngBounds.Builder()
-                                .include(new LatLng(37.7897, -119.5073)) // Northeast
-                                .include(new LatLng(37.6744, -119.6815)) // Southwest
-                                .build();
-
-                        // Define the offline region
-                        OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
-                                mapView.getStyleUrl(),
-                                latLngBounds,
-                                10,
-                                20,
-                                MapActivity.this.getResources().getDisplayMetrics().density);
-
-
-                        // Set the metadata
-                        byte[] metadata;
-                        try {
-                            JSONObject jsonObject = new JSONObject();
-                            jsonObject.put(JSON_FIELD_REGION_NAME, "Yosemite National Park");
-                            String json = jsonObject.toString();
-                            metadata = json.getBytes(JSON_CHARSET);
-                        } catch (Exception exception) {
-                            Log.e(TAG, "Failed to encode metadata: " + exception.getMessage());
-                            metadata = null;
-                        }
-
-                        // Create the region asynchronously
-                        offlineManager.createOfflineRegion(
-                                definition,
-                                metadata,
-                                new OfflineManager.CreateOfflineRegionCallback() {
-                                    @Override
-                                    public void onCreate(OfflineRegion offlineRegion) {
-                                        offlineRegion.setDownloadState(OfflineRegion.STATE_ACTIVE);
-
-                                        // Display the download progress bar
-                                        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-                                        startProgress();
-
-                                        // Monitor the download progress using setObserver
-                                        offlineRegion.setObserver(new OfflineRegion.OfflineRegionObserver() {
-                                                                      @Override
-                                                                      public void onStatusChanged(OfflineRegionStatus status) {
-
-                                                                          // Calculate the download percentage and update the progress bar
-                                                                          double percentage = status.getRequiredResourceCount() >= 0
-                                                                                  ? (100.0 * status.getCompletedResourceCount() / status.getRequiredResourceCount()) :
-                                                                                  0.0;
-
-                                                                          if (status.isComplete()) {
-                                                                              // Download complete
-                                                                              endProgress("Region downloaded successfully.");
-                                                                          } else if (status.isRequiredResourceCountPrecise()) {
-                                                                              // Switch to determinate state
-                                                                              setPercentage((int) Math.round(percentage));
-                                                                          }
-                                                                      }
-                                            @Override
-                                            public void onError(OfflineRegionError error) {
-                                                // If an error occurs, print to logcat
-                                                Log.e(TAG, "onError reason: " + error.getReason());
-                                                Log.e(TAG, "onError message: " + error.getMessage());
-                                            }
-
-                                            @Override
-                                            public void mapboxTileCountLimitExceeded(long limit) {
-                                                // Notify if offline region exceeds maximum tile count
-                                                Log.e(TAG, "Mapbox tile count limit exceeded: " + limit);
-                                            }
-                                        });
-                                    }
-
-                                    @Override
-                                    public void onError(String error) {
-                                        Log.e(TAG, "Error: " + error);
-                                    }
-                                });
-                    }
-          //      });
-        //}
-
-
-
+                    map = mapboxMap;
 
                     //assign the percentages
                     l25 = Double.parseDouble(percentages[0]); //string to double...
@@ -633,6 +830,11 @@ public class MapActivity extends AppCompatActivity
 
         // Show a toast
         Toast.makeText(MapActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void getStatus(){
+
+
     }
 }
 
