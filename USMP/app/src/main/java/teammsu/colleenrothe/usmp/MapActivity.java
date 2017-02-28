@@ -27,25 +27,8 @@ import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 
-import com.mapbox.*;
-import android.os.Parcelable;
-import java.lang.Object.*;
-import com.mapbox.mapboxsdk.geometry.VisibleRegion;
-import com.mapbox.mapboxsdk.geometry.LatLng;
+
 import com.mapbox.mapboxsdk.geometry.LatLngBounds;
-import android.graphics.PointF.*;
-//import com.mapbox.mapboxsdk.maps.Projection.*;
-import com.mapbox.mapboxsdk.MapboxAccountManager;
-import com.mapbox.mapboxsdk.geometry.LatLng;
-import com.mapbox.mapboxsdk.geometry.LatLngBounds;
-import com.mapbox.mapboxsdk.maps.MapView.*;
-import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
-
-
-
-
-import com.mapbox.mapboxsdk.maps.Projection;
 import com.mapbox.mapboxsdk.offline.OfflineManager;
 import com.mapbox.mapboxsdk.offline.OfflineRegion;
 import com.mapbox.mapboxsdk.offline.OfflineRegionError;
@@ -141,6 +124,13 @@ public class MapActivity extends AppCompatActivity
 
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
+
+        mapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(MapboxMap mapboxMap) {
+                map = mapboxMap;
+            }
+        });
 
 
         getJSON2(JSON_URL2);
@@ -310,6 +300,8 @@ public class MapActivity extends AppCompatActivity
         System.out.println("DOWNLOAD");
         final String regionName = "testRegion";
         startProgress();
+        System.out.println(mapView.getMarkerViewsInBounds(map.getProjection().getVisibleRegion().latLngBounds).size());
+
         // Create offline definition using the current
         // style and boundaries of visible map area
         String styleUrl = map.getStyleUrl();
@@ -359,6 +351,9 @@ public class MapActivity extends AppCompatActivity
                         ? (100.0 * status.getCompletedResourceCount() / status.getRequiredResourceCount()) :
                         0.0;
 
+
+                System.out.println("percentage is" + percentage);
+
                 if (status.isComplete()) {
                     // Download complete
                     endProgress("Region downloaded successfully.");
@@ -373,6 +368,8 @@ public class MapActivity extends AppCompatActivity
                         String.valueOf(status.getCompletedResourceCount()),
                         String.valueOf(status.getRequiredResourceCount()),
                         String.valueOf(status.getCompletedResourceSize())));
+
+                System.out.println("Status Changed");
             }
 
             @Override
@@ -805,6 +802,9 @@ public class MapActivity extends AppCompatActivity
 
     // Progress bar methods
     private void startProgress() {
+        // Disable buttons
+        //downloadButton.setEnabled(false);
+        //listButton.setEnabled(false);
 
         // Start and show the progress bar
         isEndNotified = false;
@@ -823,6 +823,10 @@ public class MapActivity extends AppCompatActivity
             return;
         }
 
+        // Enable buttons
+        //downloadButton.setEnabled(true);
+        //listButton.setEnabled(true);
+
         // Stop and hide the progress bar
         isEndNotified = true;
         progressBar.setIndeterminate(false);
@@ -831,10 +835,4 @@ public class MapActivity extends AppCompatActivity
         // Show a toast
         Toast.makeText(MapActivity.this, message, Toast.LENGTH_LONG).show();
     }
-
-    public void getStatus(){
-
-
-    }
 }
-
