@@ -37,8 +37,8 @@ import com.mapbox.mapboxsdk.offline.OfflineTilePyramidRegionDefinition;
 
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
-
-
+import com.mapbox.services.commons.models.Position;
+import java.util.List;
 
 
 import org.json.JSONObject;
@@ -75,13 +75,11 @@ public class MapActivity extends AppCompatActivity
     //offline func
     private OfflineManager offlineManager;
     private OfflineRegion offlineRegion;
-
-
-    private boolean offline = true;
-
     private boolean isEndNotified;
     private ProgressBar progressBar;
     private int regionSelected;
+
+    private ArrayList<String> offline_ids;
 
 
     // JSON encoding/decoding
@@ -257,7 +255,16 @@ public class MapActivity extends AppCompatActivity
             alertDialog.show();
         }
         if (id == R.id.action_clear_cache) {
-            return true;
+            //to save a list of the site ids in the view
+            LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+            List<Marker> markers = map.getMarkers();
+            for(int i = 0; i< markers.size(); i++){
+                if(bounds.contains(markers.get(i).getPosition())){
+                    System.out.println(markers.get(i).getTitle());
+                    offline_ids.add(markers.get(i).getTitle());
+                }
+            }
+
         }
         if (id == R.id.action_cache_status) {
             downloadedRegionList();
@@ -300,7 +307,6 @@ public class MapActivity extends AppCompatActivity
         System.out.println("DOWNLOAD");
         final String regionName = "testRegion";
         startProgress();
-        System.out.println(mapView.getMarkerViewsInBounds(map.getProjection().getVisibleRegion().latLngBounds).size());
 
         // Create offline definition using the current
         // style and boundaries of visible map area
