@@ -1152,7 +1152,7 @@ public class RockfallActivity extends AppCompatActivity
                     aadtCheckmark = true;
                 }
 
-                AadtEtc.setText(map.get("PRELIMINARY_RATING_AADT_USAGE_CALC_CHECKBOX"));
+                AadtEtc.setText(map.get("PRELIMINARY_RATING_AADT_USAGE"));
                 PrelimRating.setText(map.get("PRELIMINARY_RATING"));
 
                 //Slope Hazard Ratings ALL
@@ -1168,7 +1168,7 @@ public class RockfallActivity extends AppCompatActivity
                 SlopeHeightCalc.setText(map.get("HAZARD_RATING_SLOPE_HEIGHT_AXIAL_LENGTH"));
                 HazardTotal.setText(map.get("HAZARD_TOTAL"));
 
-                //Slope Hazard Ratings->Landslide Only
+                //Slope Hazard Ratings->Rockfall Only
                 String rockfall_hazard_rating_maint_frequency = map.get("ROCKFALL_HAZARD_RATING_MAINT_FREQUENCY");
                 for(int i = 0; i< ratingArray.length; i++){
                     if(ratingArray[i].equals(rockfall_hazard_rating_maint_frequency)){

@@ -114,8 +114,8 @@ public class OfflineSite extends Object {
                        int prelim_landslide_slide_erosion_effects, String prelim_landslide_length_affected, int prelim_rockfall_ditch_eff,
                        int prelim_rockfall_rockfall_history, String prelim_rockfall_block_size_event_vol, int impact_on_use,
                        int aadt_usage_calc_checkbox, String aadt_usage, String prelim_rating, int slope_drainage, String hazard_rating_annual_rainfall,
-                       String hazard_rating_slope_height_axial_length, int hazard_rockfall_maint_frequency, int case_one_struc_cond,
-                       int case_one_rock_friction, int case_two_struc_cond, int case_two_diff_erosion, String hazard_rating_total, int hazard_landslide_thaw_stability, int hazard_landslide_maint_frequency, int
+                       String hazard_rating_slope_height_axial_length, String hazard_rating_total,int hazard_rockfall_maint_frequency, int case_one_struc_cond,
+                       int case_one_rock_friction, int case_two_struc_cond, int case_two_diff_erosion, int hazard_landslide_thaw_stability, int hazard_landslide_maint_frequency, int
                                hazard_landslide_movement_history,
                        String route_trail_width, String human_ex_factor, String percent_dsd, int r_w_impacts, int enviro_cult_impacts,
                        int maint_complexity, int event_cost, String risk_total, String total_score){
@@ -215,8 +215,8 @@ public class OfflineSite extends Object {
                        int prelim_landslide_slide_erosion_effects, String prelim_landslide_length_affected, int prelim_rockfall_ditch_eff,
                        int prelim_rockfall_rockfall_history, String prelim_rockfall_block_size_event_vol, int impact_on_use,
                        int aadt_usage_calc_checkbox, String aadt_usage, String prelim_rating, int slope_drainage, String hazard_rating_annual_rainfall,
-                       String hazard_rating_slope_height_axial_length, int hazard_rockfall_maint_frequency, int case_one_struc_cond,
-                       int case_one_rock_friction, int case_two_struc_cond, int case_two_diff_erosion, String hazard_rating_total, int hazard_landslide_thaw_stability, int hazard_landslide_maint_frequency, int
+                       String hazard_rating_slope_height_axial_length, String hazard_rating_total, int hazard_rockfall_maint_frequency, int case_one_struc_cond,
+                       int case_one_rock_friction, int case_two_struc_cond, int case_two_diff_erosion, int hazard_landslide_thaw_stability, int hazard_landslide_maint_frequency, int
                                hazard_landslide_movement_history,
                        String route_trail_width, String human_ex_factor, String percent_dsd, int r_w_impacts, int enviro_cult_impacts,
                        int maint_complexity, int event_cost, String risk_total, String total_score){
@@ -301,6 +301,9 @@ public class OfflineSite extends Object {
         this.total_score=total_score;
 
     }
+
+    //public OfflineSite(int agency, int regional, int local, String date, String road_trail_no, int road_or_trail, String road_trail_class, String rater, String begin_mile, String end_mile, int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long, String end_coordinate_lat, String end_coordinate_long, String datum, String aadt, String length_affected, String slope_ht_axial_length, String slope_angle, String sight_distance, String road_trail_width, int speed_limit, String minimum_ditch_width, String maximum_ditch_width, String minimum_ditch_depth, String maximum_ditch_depth, String minimum_ditch_slope_first, String maximum_ditch_slope_first, String minimum_ditch_slope_second, String maximum_ditch_slope_second, String blk_size, String volume, String begin_annual_rainfall, String end_annual_rainfall, int sole_access_route, int fixes_present, String photos, String comments, String flma_name, String flma_id, String flma_description, int landslide_prelim_road_width_affected, int landslide_prelim_slide_erosion_effects, String landslide_prelim_length_affected, int rockfall_prelim_ditch_eff, int rockfall_prelim_rockfall_history, String rockfall_prelim_block_size_event_vol, int preliminary_rating_impact_on_use, int preliminary_rating_aadt_usage_calc_checkbox, String preliminary_rating_aadt_usage, String preliminary_rating, int hazard_rating_slope_drainage, String hazard_rating_annual_rainfall, String hazard_rating_slope_height_axial_length, String hazard_total, int landslide_hazard_rating_thaw_stability, int landslide_hazard_rating_maint_frequency, int landslide_hazard_rating_movement_history, int rockfall_hazard_rating_maint_frequency, int rockfall_hazard_rating_case_one_struc_condition, int rockfall_hazard_rating_case_one_rock_friction, int rockfall_hazard_rating_case_two_struc_condition, int rockfall_hazard_rating_case_two_diff_erosion, String risk_rating_route_trail, String risk_rating_human_ex_factor, String risk_rating_percent_dsd, int risk_rating_r_w_impacts, int risk_rating_enviro_cult_impacts, int risk_rating_maint_complexity, int risk_rating_event_cost, String risk_total, String total_score) {
+    //}
 
     public int getId(){return id;}
     public void setId(int id){this.id=id;}

@@ -1067,7 +1067,7 @@ public class LandslideActivity extends AppCompatActivity
                     aadtCheckmark = true;
                 }
 
-                AadtEtc.setText(map.get("PRELIMINARY_RATING_AADT_USAGE_CALC_CHECKBOX"));
+                AadtEtc.setText(map.get("PRELIMINARY_RATING_AADT_USAGE"));
                 PrelimRating.setText(map.get("PRELIMINARY_RATING"));
 
                 //Slope Hazard Ratings ALL
