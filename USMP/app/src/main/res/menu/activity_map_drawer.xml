@@ -12,24 +12,6 @@
             android:title="Map" />
 
         <item
-            android:id="@+id/CacheMap"
-            android:icon="@drawable/ic_explore_black_24dp"
-            android:title="Cache Map" />
-        <item
-            android:id="@+id/ClearCache"
-            android:icon="@drawable/ic_explore_black_24dp"
-            android:title="Clear Cache" />
-        <item
-            android:id="@+id/CacheStatus"
-            android:icon="@drawable/ic_explore_black_24dp"
-            android:title="Cache Status" />
-
-        <item
-            android:id="@+id/LoadOfflinePoints"
-            android:icon="@drawable/ic_explore_black_24dp"
-            android:title="Load Offline Points" />
-
-        <item
             android:id="@+id/slopeRatingForm"
             android:icon="@drawable/ic_assignment_black_24dp"
             android:title="Slope Rating Form" />

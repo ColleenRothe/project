@@ -28,6 +28,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 import com.google.gson.*;
@@ -42,7 +43,6 @@ public class AnnotationInfoActivity extends AppCompatActivity
     TextView siteId;
     TextView coordinates;
     TextView date;
-    TextView slopeStatus;
     TextView agency;
     TextView Rtnum;
     TextView beginMile;
@@ -55,6 +55,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
     TextView comments;
     Map<String, String> map;
     String clicked_id = "0";
+    String offline_clicked = "0";
 
     private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php"; //to place the sites
 
@@ -81,7 +82,6 @@ public class AnnotationInfoActivity extends AppCompatActivity
         siteId = (TextView) findViewById(R.id.AISiteid);
         coordinates = (TextView) findViewById(R.id.AICoordinates);
         date = (TextView) findViewById(R.id.AIDate);
-        slopeStatus = (TextView) findViewById(R.id.AISlopeStatus);
         agency = (TextView) findViewById(R.id.AIAgency);
         Rtnum = (TextView) findViewById(R.id.AIRtnum);
         beginMile = (TextView) findViewById(R.id.AIBeginMile);
@@ -93,7 +93,15 @@ public class AnnotationInfoActivity extends AppCompatActivity
         photos = (TextView) findViewById(R.id.AIPhotos);
         comments = (TextView) findViewById(R.id.AIComments);
 
-        getJSON(JSON_URL);
+        if(getIntent().getStringExtra("offline")!=null){
+            offline_clicked = getIntent().getStringExtra("offline");
+            loadFromOffline();
+
+
+        }else{
+            getJSON(JSON_URL);
+        }
+
 
     }
 
@@ -176,6 +184,44 @@ public class AnnotationInfoActivity extends AppCompatActivity
         return true;
     }
 
+    //LOAD FROM AN OFFLINE SAVED SITE
+    public void loadFromOffline(){
+        OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
+        int [] ids = dbHandler.getIds();
+        for(int i = 0; i<ids.length; i++){
+            OfflineSite offlineSite = new OfflineSite();
+            offlineSite = dbHandler.findOfflineSite(ids[i]);
+            if(offlineSite.getSite_id().equals(offline_clicked)){
+                siteId.setText(offlineSite.getSite_id());
+                coordinates.setText(offlineSite.getBegin_coordinate_lat()+","+offlineSite.getBegin_coordinate_long());
+                date.setText(offlineSite.getDate());
+
+                int agencyI = offlineSite.getAgency();
+                ArrayList<String> agencyList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.AgencyList)));
+                String agencyS = agencyList.get(agencyI);
+                agency.setText(agencyS);
+
+                Rtnum.setText(offlineSite.getRoad_trail_number());
+                beginMile.setText(offlineSite.getBegin_mile_marker());
+                endMile.setText(offlineSite.getEnd_mile_marker());
+
+                int sideI = offlineSite.getSide();
+                ArrayList<String> sideList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.sideList)));
+                String sideS = sideList.get(sideI);
+                side.setText(sideS);
+                
+                hazardType.setText(offlineSite.getHazard_type());
+                prelimRating.setText(offlineSite.getPrelim_rating());
+                totalScore.setText(offlineSite.getTotal_score());
+                photos.setText(offlineSite.getphotos());
+                comments.setText(offlineSite.getComments());
+                break;
+            }
+
+        }
+
+    }
+
     public void GetText() throws UnsupportedEncodingException {
         //String data = URLEncoder.encode("id=355", "UTF-8");
         String data="id="+MapActivity.ALoad_id;
@@ -247,7 +293,6 @@ public class AnnotationInfoActivity extends AppCompatActivity
                 siteId.setText(map.get("SITE_ID"));
                 coordinates.setText(map.get("COORDINATES"));
                 date.setText(map.get("DATE"));
-                slopeStatus.setText(map.get("SLOPE_STATUS"));
                 agency.setText(map.get("UMBRELLA_AGENCY"));
                 Rtnum.setText(map.get("ROAD_TRAIL_NO"));
                 beginMile.setText(map.get("BEGIN_MILE_MARKER"));

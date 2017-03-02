@@ -106,6 +106,10 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
 
     public static final String COLUMN_TOTAL_SCORE = "total_score";
 
+    public static final String COLUMN_SITE_ID = "site_id";
+
+
+
     public OfflineSiteDBHandler(Context context, String name,
                              SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -137,7 +141,7 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
                 " INTEGER," + COLUMN_CASE_ONE_STRUC_COND + " INTEGER," + COLUMN_CASE_ONE_ROCK_FRICTION + " INTEGER," + COLUMN_CASE_TWO_STRUC_COND + " INTEGER," +
                 COLUMN_CASE_TWO_DIFF_EROSION + " INTEGER," + COLUMN_ROUTE_TRAIL_WIDTH + " TEXT," + COLUMN_HUMAN_EX_FACTOR + " TEXT," + COLUMN_PERCENT_DSD + " TEXT," + COLUMN_R_W_IMPACTS + " INTEGER," +
                 COLUMN_ENVIRO_CULT_IMPACTS + " INTEGER," + COLUMN_MAINT_COMPLEXITY + " INTEGER," + COLUMN_EVENT_COST + " INTEGER," + COLUMN_RISK_TOTAL
-                + " TEXT," + COLUMN_TOTAL_SCORE + " TEXT" + ")";
+                + " TEXT," + COLUMN_TOTAL_SCORE + " TEXT," + COLUMN_SITE_ID + " TEXT" +")";
 
         db.execSQL(CREATE_OFFLINE_SITE_TABLE);
 
@@ -267,6 +271,9 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
 
         values.put(COLUMN_TOTAL_SCORE, form.getTotal_score());
 
+        values.put(COLUMN_SITE_ID, form.getSite_id());
+
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.insert(TABLE_OFFLINE_SITE, null, values);
@@ -377,6 +384,8 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
             offlineSite.setRisk_total(cursor.getString(74));
 
             offlineSite.setTotal_score(cursor.getString(75));
+            offlineSite.setSite_id(cursor.getString(76));
+
 
             cursor.close();
         } else {

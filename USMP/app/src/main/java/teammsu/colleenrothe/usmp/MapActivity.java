@@ -242,6 +242,7 @@ public class MapActivity extends AppCompatActivity
 //            layout.addView(swLong);
 
             final TextView tv = new TextView(this);
+            tv.setText("Enter name for saved map area");
             final EditText et = new EditText(this);
 
             layout.addView(tv);
@@ -269,22 +270,43 @@ public class MapActivity extends AppCompatActivity
             // show it
             alertDialog.show();
         }
-        if (id == R.id.action_clear_cache) {
-            //to save a list of the site ids in the view
-            LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
-            List<Marker> markers = map.getMarkers();
-            for(int i = 0; i< markers.size(); i++){
-                if(bounds.contains(markers.get(i).getPosition())){
-                    System.out.println(markers.get(i).getTitle());
-                    offline_ids.add(markers.get(i).getTitle());
-                }
-            }
 
-        }
         if (id == R.id.action_cache_status) {
             downloadedRegionList();
         }
         if (id == R.id.action_load_offline_points) {
+            OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
+            int [] ids = dbHandler.getIds();
+
+            for(int i = 0; i<ids.length; i++) {
+                OfflineSite offlineSite = new OfflineSite();
+                offlineSite = dbHandler.findOfflineSite(ids[i]);
+                System.out.println("site id is " + offlineSite.getSite_id());
+
+                map.addMarker(new MarkerOptions()
+                        .position(new LatLng(Double.parseDouble(offlineSite.getBegin_coordinate_lat()), Double.parseDouble(offlineSite.getBegin_coordinate_long())))
+                        .title(offlineSite.getSite_id()));
+                        //.snippet("Total Score:" + finalSites[k][4])
+                        //.snippet(finalSites[k][0])
+                        //.icon(icon0));
+
+
+            }
+
+            map.setOnInfoWindowLongClickListener(new MapboxMap.OnInfoWindowLongClickListener() {
+                                                           @Override
+                                                           public void onInfoWindowLongClick(Marker marker) {
+                                                               //go to the annotation's info
+                                                               //pass site id....
+                                                               //ALoad_id = marker.getTitle();
+                                                               Intent intent = new Intent(MapActivity.this, AnnotationInfoActivity.class);
+                                                               intent.putExtra("offline",marker.getTitle());
+                                                               startActivity(intent);
+
+                                                           }
+                                                       }
+            );
+
 
 
         }
@@ -318,6 +340,8 @@ public class MapActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+    // START OFFLINE SITE INFORMATION METHODS
 
     public void saveOfflineSites(){
         for(int i = 0; i < offline_ids.size(); i++){
@@ -603,7 +627,7 @@ public class MapActivity extends AppCompatActivity
         }
 
         int preliminary_rating_aadt_usage_calc_checkbox = 0;
-        String preliminary_rating_aadt_usage_calc_checkboxS = oMap.get("PRELIMINARY_RATING_AADT_USAGE_CALC_CHECKBOX"); //int
+        String preliminary_rating_aadt_usage_calc_checkboxS = oMap.get("PRELIMINARY_RATING_ADDT_USAGE_CALC_CHECKBOX"); //int
         if(!preliminary_rating_aadt_usage_calc_checkboxS.equals("")){
             preliminary_rating_aadt_usage_calc_checkbox = Integer.parseInt(preliminary_rating_aadt_usage_calc_checkboxS);
         }
@@ -695,6 +719,7 @@ public class MapActivity extends AppCompatActivity
 
         int speed_limit = 0;
         String photos = "";
+        String site_id = oMap.get("SITE_ID");
 
 
         OfflineSite offlineSite = new OfflineSite(agency,regional,local,date,road_trail_no,road_or_trail,road_trail_class,rater,begin_mile,end_mile,
@@ -709,7 +734,9 @@ public class MapActivity extends AppCompatActivity
                 rockfall_hazard_rating_maint_frequency,rockfall_hazard_rating_case_one_struc_condition,rockfall_hazard_rating_case_one_rock_friction,
                 rockfall_hazard_rating_case_two_struc_condition,rockfall_hazard_rating_case_two_diff_erosion,risk_rating_route_trail,risk_rating_human_ex_factor,
                 risk_rating_percent_dsd,risk_rating_r_w_impacts,risk_rating_enviro_cult_impacts,risk_rating_maint_complexity,risk_rating_event_cost,
-                risk_total,total_score);
+                risk_total,total_score,site_id);
+
+        dbHandler.addOfflineSite(offlineSite);
 
     }
 
@@ -744,6 +771,8 @@ public class MapActivity extends AppCompatActivity
         gj.execute(url);
     }
 
+    // END OFFLINE SITE INFORMATION METHODS
+
     public void downloadRegion(){
         System.out.println("DOWNLOAD");
         startProgress();
@@ -758,42 +787,42 @@ public class MapActivity extends AppCompatActivity
         }
         saveOfflineSites();
 
-        // Create offline definition using the current
-        // style and boundaries of visible map area
-        String styleUrl = map.getStyleUrl();
-        //LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
-        double minZoom = map.getCameraPosition().zoom;
-        double maxZoom = map.getMaxZoom();
-        float pixelRatio = this.getResources().getDisplayMetrics().density;
-        OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
-                styleUrl, bounds, minZoom, maxZoom, pixelRatio);
-        // Build a JSONObject using the user-defined offline region title,
-        // convert it into string, and use it to create a metadata variable.
-        // The metadata varaible will later be passed to createOfflineRegion()
-        byte[] metadata;
-        try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put(JSON_FIELD_REGION_NAME, regionName);
-            String json = jsonObject.toString();
-            metadata = json.getBytes(JSON_CHARSET);
-        } catch (Exception exception) {
-            Log.e(TAG, "Failed to encode metadata: " + exception.getMessage());
-            metadata = null;
-        }
-        // Create the offline region and launch the download
-        offlineManager.createOfflineRegion(definition, metadata, new OfflineManager.CreateOfflineRegionCallback() {
-            @Override
-            public void onCreate(OfflineRegion offlineRegion) {
-                Log.d(TAG, "Offline region created: " + regionName);
-                MapActivity.this.offlineRegion = offlineRegion;
-                launchDownload();
-            }
-
-            @Override
-            public void onError(String error) {
-                Log.e(TAG, "Error: " + error);
-            }
-        });
+//        // Create offline definition using the current
+//        // style and boundaries of visible map area
+//        String styleUrl = map.getStyleUrl();
+//        //LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
+//        double minZoom = map.getCameraPosition().zoom;
+//        double maxZoom = map.getMaxZoom();
+//        float pixelRatio = this.getResources().getDisplayMetrics().density;
+//        OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
+//                styleUrl, bounds, minZoom, maxZoom, pixelRatio);
+//        // Build a JSONObject using the user-defined offline region title,
+//        // convert it into string, and use it to create a metadata variable.
+//        // The metadata varaible will later be passed to createOfflineRegion()
+//        byte[] metadata;
+//        try {
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put(JSON_FIELD_REGION_NAME, regionName);
+//            String json = jsonObject.toString();
+//            metadata = json.getBytes(JSON_CHARSET);
+//        } catch (Exception exception) {
+//            Log.e(TAG, "Failed to encode metadata: " + exception.getMessage());
+//            metadata = null;
+//        }
+//        // Create the offline region and launch the download
+//        offlineManager.createOfflineRegion(definition, metadata, new OfflineManager.CreateOfflineRegionCallback() {
+//            @Override
+//            public void onCreate(OfflineRegion offlineRegion) {
+//                Log.d(TAG, "Offline region created: " + regionName);
+//                MapActivity.this.offlineRegion = offlineRegion;
+//                launchDownload();
+//            }
+//
+//            @Override
+//            public void onError(String error) {
+//                Log.e(TAG, "Error: " + error);
+//            }
+//        });
     }
 
     private void launchDownload() {
@@ -907,6 +936,13 @@ public class MapActivity extends AppCompatActivity
                                 // the deletion process has begun
                                 progressBar.setIndeterminate(true);
                                 progressBar.setVisibility(View.VISIBLE);
+
+                                //delete the site information
+                                OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(MapActivity.this, null, null, 1);
+                                int [] ids = dbHandler.getIds();
+                                for(int i = 0; i< ids.length; i++) {
+                                    dbHandler.deleteOfflineSite(ids[i]);
+                                }
 
                                 // Begin the deletion process
                                 offlineRegions[regionSelected].delete(new OfflineRegion.OfflineRegionDeleteCallback() {
@@ -1291,4 +1327,6 @@ public class MapActivity extends AppCompatActivity
         // Show a toast
         Toast.makeText(MapActivity.this, message, Toast.LENGTH_LONG).show();
     }
+
+
 }

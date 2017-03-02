@@ -9,12 +9,6 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_clear_cache"
-        android:orderInCategory="100"
-        android:title="Clear Cache"
-        app:showAsAction="never" />
-
-    <item
         android:id="@+id/action_cache_status"
         android:orderInCategory="100"
         android:title="Cache Status"
