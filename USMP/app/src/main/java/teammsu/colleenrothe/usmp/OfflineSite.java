@@ -97,6 +97,7 @@ public class OfflineSite extends Object {
     private String total_score;
 
     private String site_id;
+    private String prelim_rating_landslide_id;
 
     public OfflineSite(){
 
@@ -120,7 +121,7 @@ public class OfflineSite extends Object {
                        int case_one_rock_friction, int case_two_struc_cond, int case_two_diff_erosion, int hazard_landslide_thaw_stability, int hazard_landslide_maint_frequency, int
                                hazard_landslide_movement_history,
                        String route_trail_width, String human_ex_factor, String percent_dsd, int r_w_impacts, int enviro_cult_impacts,
-                       int maint_complexity, int event_cost, String risk_total, String total_score, String site_id){
+                       int maint_complexity, int event_cost, String risk_total, String total_score, String site_id, String prelim_rating_landslide_id){
         this.id=id;
         this.agency = agency;
         this.regional = regional;
@@ -203,6 +204,7 @@ public class OfflineSite extends Object {
         this.total_score=total_score;
 
         this.site_id = site_id;
+        this.prelim_rating_landslide_id = prelim_rating_landslide_id;
 
     }
 
@@ -223,7 +225,7 @@ public class OfflineSite extends Object {
                        int case_one_rock_friction, int case_two_struc_cond, int case_two_diff_erosion, int hazard_landslide_thaw_stability, int hazard_landslide_maint_frequency, int
                                hazard_landslide_movement_history,
                        String route_trail_width, String human_ex_factor, String percent_dsd, int r_w_impacts, int enviro_cult_impacts,
-                       int maint_complexity, int event_cost, String risk_total, String total_score, String site_id){
+                       int maint_complexity, int event_cost, String risk_total, String total_score, String site_id, String prelim_rating_landslide_id){
         this.agency = agency;
         this.regional = regional;
         this.local = local;
@@ -305,6 +307,8 @@ public class OfflineSite extends Object {
         this.total_score=total_score;
 
         this.site_id = site_id;
+        this.prelim_rating_landslide_id = prelim_rating_landslide_id;
+
 
     }
 
@@ -549,6 +553,10 @@ public class OfflineSite extends Object {
 
     public String getSite_id(){return site_id;}
     public void setSite_id(String site_id){this.site_id=site_id;}
+
+    public String getPrelim_rating_landslide_id(){return prelim_rating_landslide_id;}
+    public void setPrelim_rating_landslide_id(String prelim_rating_landslide_id){this.prelim_rating_landslide_id=prelim_rating_landslide_id;}
+
 
 
 }

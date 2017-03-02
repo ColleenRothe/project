@@ -56,6 +56,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
     Map<String, String> map;
     String clicked_id = "0";
     String offline_clicked = "0";
+    String offline_landslide_id = "";
 
     private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php"; //to place the sites
 
@@ -209,12 +210,14 @@ public class AnnotationInfoActivity extends AppCompatActivity
                 ArrayList<String> sideList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.sideList)));
                 String sideS = sideList.get(sideI);
                 side.setText(sideS);
-                
+
                 hazardType.setText(offlineSite.getHazard_type());
                 prelimRating.setText(offlineSite.getPrelim_rating());
                 totalScore.setText(offlineSite.getTotal_score());
                 photos.setText(offlineSite.getphotos());
                 comments.setText(offlineSite.getComments());
+                offline_landslide_id=offlineSite.getPrelim_rating_landslide_id();
+                offline_clicked = String.valueOf(i);
                 break;
             }
 
@@ -342,20 +345,38 @@ public class AnnotationInfoActivity extends AppCompatActivity
     }
 
     public void editSite(View view){
+        if(getIntent().getStringExtra("offline")!=null){
+            //landslide
+            System.out.println("offline landslide id is:"+offline_landslide_id);
+            if(!offline_landslide_id.equals("0")){
+                Intent intent = new Intent(this, LandslideActivity.class);
+                intent.putExtra("offline", offline_clicked);
+                startActivity(intent);
+            }
+            //rockfall
+            else{
+                Intent intent = new Intent(this, RockfallActivity.class);
+                intent.putExtra("offline", offline_clicked);
+                startActivity(intent);
+            }
 
-        clicked_id = map.get("ID");
-        String type = map.get("HAZARD_RATING_ROCKFALL_ID");
-        //landslide
-        if(type.equals("0")){
-            Intent intent = new Intent(this, LandslideActivity.class);
-            intent.putExtra("editing",clicked_id);
-            startActivity(intent);
-        }
-        //rockfall
-        else{
-            Intent intent = new Intent(this, RockfallActivity.class);
-            intent.putExtra("editing",clicked_id);
-            startActivity(intent);
+        }else {
+
+
+            clicked_id = map.get("ID");
+            String type = map.get("HAZARD_RATING_ROCKFALL_ID");
+            //landslide
+            if (type.equals("0")) {
+                Intent intent = new Intent(this, LandslideActivity.class);
+                intent.putExtra("editing", clicked_id);
+                startActivity(intent);
+            }
+            //rockfall
+            else {
+                Intent intent = new Intent(this, RockfallActivity.class);
+                intent.putExtra("editing", clicked_id);
+                startActivity(intent);
+            }
         }
 
     }

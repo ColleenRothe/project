@@ -648,6 +648,10 @@ public class LandslideActivity extends AppCompatActivity
             System.out.println("yay! please do edit");
             getJSON(JSON_URL);
         }
+        else if(getIntent().getStringExtra("offline")!=null){
+            System.out.println("yay! offline form");
+            loadFromOffline();
+        }
 
 
 
@@ -4549,6 +4553,18 @@ public class LandslideActivity extends AppCompatActivity
             Comments.setText("No Match Found"); //or something else....
         }
 
+
+    }
+
+    //Load as an Offline Site
+    public void loadFromOffline(){
+        OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this,null,null,1);
+        int [] ids = dbHandler.getIds();
+        int num = Integer.parseInt(getIntent().getStringExtra("offline"));
+        OfflineSite offlineSite = new OfflineSite();
+        offlineSite = dbHandler.findOfflineSite(num);
+
+        BeginLat.setText(offlineSite.getBegin_coordinate_lat());
 
     }
     }

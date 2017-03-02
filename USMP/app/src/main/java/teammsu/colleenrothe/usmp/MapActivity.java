@@ -720,6 +720,7 @@ public class MapActivity extends AppCompatActivity
         int speed_limit = 0;
         String photos = "";
         String site_id = oMap.get("SITE_ID");
+        String prelim_rating_landslide_id = oMap.get("PRELIMINARY_RATING_LANDSLIDE_ID");
 
 
         OfflineSite offlineSite = new OfflineSite(agency,regional,local,date,road_trail_no,road_or_trail,road_trail_class,rater,begin_mile,end_mile,
@@ -734,7 +735,7 @@ public class MapActivity extends AppCompatActivity
                 rockfall_hazard_rating_maint_frequency,rockfall_hazard_rating_case_one_struc_condition,rockfall_hazard_rating_case_one_rock_friction,
                 rockfall_hazard_rating_case_two_struc_condition,rockfall_hazard_rating_case_two_diff_erosion,risk_rating_route_trail,risk_rating_human_ex_factor,
                 risk_rating_percent_dsd,risk_rating_r_w_impacts,risk_rating_enviro_cult_impacts,risk_rating_maint_complexity,risk_rating_event_cost,
-                risk_total,total_score,site_id);
+                risk_total,total_score,site_id,prelim_rating_landslide_id);
 
         dbHandler.addOfflineSite(offlineSite);
 
