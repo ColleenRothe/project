@@ -577,12 +577,12 @@ public class MapActivity extends AppCompatActivity
         String end_annual_rainfall = oMap.get("END_ANNUAL_RAINFALL");
         int sole_access_route = 0;
         String sole_access_routeS = oMap.get("SOLE_ACCESS_ROUTE"); //Y,N
-        if(sole_access_routeS.equals("N")){
+        if(sole_access_routeS.equals("Y")){
             sole_access_route = 1;
         }
         int fixes_present = 0;
         String fixes_presentS = oMap.get("FIXES_PRESENT"); //Y,N
-        if(fixes_presentS.equals("N")){
+        if(fixes_presentS.equals("Y")){
             fixes_present = 1;
         }
         String comments = oMap.get("COMMENT");
@@ -738,6 +738,7 @@ public class MapActivity extends AppCompatActivity
                 risk_total,total_score,site_id,prelim_rating_landslide_id);
 
         dbHandler.addOfflineSite(offlineSite);
+        System.out.println("CREATED");
 
     }
 
@@ -1009,7 +1010,7 @@ public class MapActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, OnlineHomeActivity.class);
             startActivity(intent);
         } else if (id == R.id.map) {
             Intent intent = new Intent(this, MapActivity.class);

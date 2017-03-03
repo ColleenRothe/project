@@ -166,7 +166,7 @@ public class MaintenanceMapActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, OnlineHomeActivity.class);
             startActivity(intent);
         } else if (id == R.id.map) {
             Intent intent = new Intent(this, MapActivity.class);

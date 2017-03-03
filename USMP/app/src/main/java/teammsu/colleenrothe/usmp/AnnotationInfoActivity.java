@@ -150,7 +150,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, OnlineHomeActivity.class);
             startActivity(intent);
         } else if (id == R.id.map) {
             Intent intent = new Intent(this, MapActivity.class);
@@ -217,7 +217,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
                 photos.setText(offlineSite.getphotos());
                 comments.setText(offlineSite.getComments());
                 offline_landslide_id=offlineSite.getPrelim_rating_landslide_id();
-                offline_clicked = String.valueOf(i);
+                offline_clicked = offlineSite.getSite_id();
                 break;
             }
 

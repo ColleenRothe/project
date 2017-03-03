@@ -14,7 +14,7 @@ android {
     signingConfigs {
     }
     compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '25.0.0'
     defaultConfig {
         multiDexEnabled true
         applicationId "teammsu.colleenrothe.usmp"

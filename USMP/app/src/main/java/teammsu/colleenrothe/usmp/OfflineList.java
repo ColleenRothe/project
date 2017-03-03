@@ -145,7 +145,7 @@ public class OfflineList extends AppCompatActivity
         if (id == R.id.home) {
             should_load=false;
             should_submit=false;
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, OnlineHomeActivity.class);
             startActivity(intent);
         } else if (id == R.id.map) {
             should_load=false;
