@@ -4442,9 +4442,6 @@ public class RockfallActivity extends AppCompatActivity
             offlineSite = dbHandler.findOfflineSite(ids[i]);
             if (offlineSite.getSite_id().equals(offline_clicked)) {
 
-
-                System.out.println("TEST GET ANYTHIing " + offlineSite.getSite_id());
-
                 //FILL IN THE FORM
                 int agency = offlineSite.getAgency();
                 Agency.setSelection(agency);
@@ -4516,23 +4513,25 @@ public class RockfallActivity extends AppCompatActivity
                 ArrayList<String> zeroList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.zeroRatingList)));
 
 
-                int ditchEffectiveness = offlineSite.getPrelim_rockfall_ditch_eff();
-                System.out.println("Ditch effectivness is: " + ditchEffectiveness);
+                String ditchEffectiveness = String.valueOf(offlineSite.getPrelim_rockfall_ditch_eff());
+
                 if (ratingList.contains(ditchEffectiveness)) {
                     DitchEffectiveness.setSelection(ratingList.indexOf(ditchEffectiveness));
-
                 }
 
-                int rockfallHistroy = offlineSite.getPrelim_rockfall_rockfall_history();
-                if (ratingList.contains(rockfallHistroy)) {
-                    RockfallHistory.setSelection(ratingList.indexOf(rockfallHistroy));
-
+                String rockfallHistory = String.valueOf(offlineSite.getPrelim_rockfall_rockfall_history());
+                if (ratingList.contains(rockfallHistory)) {
+                    RockfallHistory.setSelection(ratingList.indexOf(rockfallHistory));
                 }
-
 
                 BSVperEvent.setText(offlineSite.getPrelim_rockfall_block_size_event_vol());
 
                 //all
+                String impact_on_use = String.valueOf(offlineSite.getImpact_on_use());
+                if(ratingList.contains(impact_on_use)){
+                    ImpactOU.setSelection(ratingList.indexOf(impact_on_use));
+                }
+
                 int checkmark = offlineSite.getAadt_usage_calc_checkbox();
                 //0 false, 1 true?
                 if (checkmark == 1) {
@@ -4547,35 +4546,35 @@ public class RockfallActivity extends AppCompatActivity
                 //SLOPE HAZARD RATINGS
                 //all
 
-                int slopeDrainage = offlineSite.getSlope_drainage();
+                String slopeDrainage = String.valueOf(offlineSite.getSlope_drainage());
                 if (ratingList.contains(slopeDrainage)) {
                     SlopeDrainage.setSelection(ratingList.indexOf(slopeDrainage));
                 }
                 AnnualRainfall.setText(offlineSite.getHazard_rating_annual_rainfall());
                 SlopeHeightCalc.setText(offlineSite.getHazard_rating_slope_height_axial_length());
 
-                int rockfallRMF = offlineSite.getHazard_rockfall_maint_frequency();
+                String rockfallRMF = String.valueOf(offlineSite.getHazard_rockfall_maint_frequency());
                 if (ratingList.contains(rockfallRMF)) {
                     RockfallRMF.setSelection(ratingList.indexOf(rockfallRMF));
                 }
 
                 //zero list stuff
-                int struc1 = offlineSite.getCase_one_struc_cond();
+                String struc1 = String.valueOf(offlineSite.getCase_one_struc_cond());
                 if (zeroList.contains(struc1)) {
                     StructuralCondition1.setSelection(zeroList.indexOf(struc1));
                 }
 
-                int rock1 = offlineSite.getCase_one_rock_friction();
+                String rock1 = String.valueOf(offlineSite.getCase_one_rock_friction());
                 if (zeroList.contains(rock1)) {
                     RockFriction1.setSelection(zeroList.indexOf(rock1));
                 }
 
-                int struc2 = offlineSite.getCase_two_struc_cond();
+                String struc2 = String.valueOf(offlineSite.getCase_two_struc_cond());
                 if (zeroList.contains(struc2)) {
                     StructuralCondition2.setSelection(zeroList.indexOf(struc2));
                 }
 
-                int rock2 = offlineSite.getCase_two_diff_erosion();
+                String rock2 = String.valueOf(offlineSite.getCase_two_diff_erosion());
                 if (zeroList.contains(rock2)) {
                     RockFriction2.setSelection(zeroList.indexOf(rock2));
                 }
@@ -4587,22 +4586,22 @@ public class RockfallActivity extends AppCompatActivity
                 HumanEF.setText(offlineSite.getHuman_ex_factor());
                 PercentDSD.setText(offlineSite.getPercent_dsd());
 
-                int rowImpacts = offlineSite.getR_w_impacts();
+                String rowImpacts = String.valueOf(offlineSite.getR_w_impacts());
                 if (ratingList.contains(rowImpacts)) {
                     RightOWI.setSelection(ratingList.indexOf(rowImpacts));
                 }
 
-                int ecImpacts = offlineSite.getEnviro_cult_impacts();
+                String ecImpacts = String.valueOf(offlineSite.getEnviro_cult_impacts());
                 if (ratingList.contains(ecImpacts)) {
                     ECImpact.setSelection(ratingList.indexOf(ecImpacts));
                 }
 
-                int maintComplexity = offlineSite.getMaint_complexity();
+                String maintComplexity = String.valueOf(offlineSite.getMaint_complexity());
                 if (ratingList.contains(maintComplexity)) {
                     MaintComplexity.setSelection(ratingList.indexOf(maintComplexity));
                 }
 
-                int eventCost = offlineSite.getEvent_cost();
+                String eventCost = String.valueOf(offlineSite.getEvent_cost());
                 if (ratingList.contains(eventCost)) {
                     EventCost.setSelection(ratingList.indexOf(eventCost));
                 }

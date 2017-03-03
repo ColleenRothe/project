@@ -1,9 +1,12 @@
 package teammsu.colleenrothe.usmp;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -110,6 +113,11 @@ public class MapActivity extends AppCompatActivity
     String [] percentages;
     static String ALoad_id = "0";
 
+    //Menu stuff
+    MenuItem cache_map;
+    MenuItem load_offline;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,6 +155,8 @@ public class MapActivity extends AppCompatActivity
         offlineManager = OfflineManager.getInstance(this);
         // Assign progressBar for later use
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
+
 
 
 
@@ -203,6 +213,23 @@ public class MapActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.map, menu); //side
+        MenuItem cache_map = menu.getItem(0);
+        MenuItem load_offline = menu.getItem(2);
+
+        //can't save map tiles w/o network connectivity
+        if(!isNetworkAvailable()){
+            cache_map.setEnabled(false);
+        }
+        //if you already have points saved, can't have any more
+        OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
+        if(dbHandler.getNumRows() != 0){
+            cache_map.setEnabled(false);
+        }
+        //if you dont have points saved, can't load any, can't load if you have service
+        if(dbHandler.getNumRows() == 0 || isNetworkAvailable()){
+            load_offline.setEnabled(false);
+        }
+        
         getMenuInflater().inflate(R.menu.menu_main, menu); //top
 
 
@@ -543,6 +570,44 @@ public class MapActivity extends AppCompatActivity
             side = sideList.indexOf(sideS);
         }
 
+        char [] sideChar = new char [2];
+        if(sideS.length()>=2) {
+            sideS.getChars(0, 2, sideChar, 0);
+        }else {
+            sideS.getChars(0,1,sideChar,0);
+        }
+
+        if(String.valueOf(sideChar[0]).equalsIgnoreCase("L")){
+            side = 0; //left
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("R")){
+            side = 1; //right
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("N") && !String.valueOf(sideChar[1]).equalsIgnoreCase("E") && !String.valueOf(sideChar[1]).equalsIgnoreCase("W")){
+            side = 2; //north
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("N") && String.valueOf(sideChar[1]).equalsIgnoreCase("E")){
+            side = 3; //north east
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("E")){
+            side = 4; //east
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("S") && String.valueOf(sideChar[1]).equalsIgnoreCase("E")){
+            side = 5; //south east
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("S") && !String.valueOf(sideChar[1]).equalsIgnoreCase("E") && !String.valueOf(sideChar[1]).equalsIgnoreCase("W")){
+            side = 6; //south
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("S") && String.valueOf(sideChar[1]).equalsIgnoreCase("W")){
+            side = 7; //south west
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("W")){
+            side = 8; //west
+        }
+        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("N") && String.valueOf(sideChar[1]).equalsIgnoreCase("W")){
+            side = 9; //north west
+        }
+
         ArrayList<String> weatherList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.weatherList)));
         int weather = 0;
         String weatherS = oMap.get("WEATHER"); //int
@@ -577,12 +642,13 @@ public class MapActivity extends AppCompatActivity
         String end_annual_rainfall = oMap.get("END_ANNUAL_RAINFALL");
         int sole_access_route = 0;
         String sole_access_routeS = oMap.get("SOLE_ACCESS_ROUTE"); //Y,N
-        if(sole_access_routeS.equals("Y")){
+        if(sole_access_routeS.equals("Y") || sole_access_routeS.equals("Yes") || sole_access_routeS.equals("yes")){
             sole_access_route = 1;
         }
+
         int fixes_present = 0;
         String fixes_presentS = oMap.get("FIXES_PRESENT"); //Y,N
-        if(fixes_presentS.equals("Y")){
+        if(fixes_presentS.equals("Y") || fixes_presentS.equals("Yes") || fixes_presentS.equals("yes")){
             fixes_present = 1;
         }
         String comments = oMap.get("COMMENT");
@@ -668,6 +734,7 @@ public class MapActivity extends AppCompatActivity
         if(!rockfall_hazard_rating_maint_frequencyS.equals("")){
             rockfall_hazard_rating_maint_frequency = Integer.parseInt(rockfall_hazard_rating_maint_frequencyS);
         }
+
         int rockfall_hazard_rating_case_one_struc_condition = 0;
         String rockfall_hazard_rating_case_one_struc_conditionS = oMap.get("ROCKFALL_HAZARD_RATING_CASE_ONE_STRUC_CONDITION"); //int
         if(!rockfall_hazard_rating_case_one_struc_conditionS.equals("")){
@@ -721,6 +788,7 @@ public class MapActivity extends AppCompatActivity
         String photos = "";
         String site_id = oMap.get("SITE_ID");
         String prelim_rating_landslide_id = oMap.get("PRELIMINARY_RATING_LANDSLIDE_ID");
+
 
 
         OfflineSite offlineSite = new OfflineSite(agency,regional,local,date,road_trail_no,road_or_trail,road_trail_class,rater,begin_mile,end_mile,
@@ -1328,6 +1396,19 @@ public class MapActivity extends AppCompatActivity
 
         // Show a toast
         Toast.makeText(MapActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    // Check all connectivities whether available or not
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
     }
 
 

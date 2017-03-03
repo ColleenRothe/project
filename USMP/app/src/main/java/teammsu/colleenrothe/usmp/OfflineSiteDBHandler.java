@@ -221,6 +221,7 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_BLK_SIZE, form.getBlk_size());
         values.put(COLUMN_VOLUME, form.getVolume());
         values.put(COLUMN_START_ANNUAL_RAINFALL, form.getStart_annual_rainfall());
+        values.put(COLUMN_END_ANNUAL_RAINFALL, form.getEnd_annual_rainfall());
         values.put(COLUMN_SOLE_ACCESS_ROUTE, form.getSole_access_route());
         values.put(COLUMN_FIXES_PRESENT, form.getFixes_Present());
         values.put(COLUMN_PHOTOS, form.getphotos());

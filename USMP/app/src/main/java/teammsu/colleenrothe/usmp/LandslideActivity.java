@@ -4558,14 +4558,170 @@ public class LandslideActivity extends AppCompatActivity
 
     //Load as an Offline Site
     public void loadFromOffline(){
-        OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this,null,null,1);
-        int [] ids = dbHandler.getIds();
-        int num = Integer.parseInt(getIntent().getStringExtra("offline"));
-        OfflineSite offlineSite = new OfflineSite();
-        offlineSite = dbHandler.findOfflineSite(num);
+        String offline_clicked = getIntent().getStringExtra("offline");
+        OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
+        int[] ids = dbHandler.getIds();
+        for (int i = 0; i < ids.length; i++) {
+            OfflineSite offlineSite = new OfflineSite();
+            offlineSite = dbHandler.findOfflineSite(ids[i]);
+            if (offlineSite.getSite_id().equals(offline_clicked)) {
 
-        BeginLat.setText(offlineSite.getBegin_coordinate_lat());
+                //FILL IN THE FORM
+                int agency = offlineSite.getAgency();
+                Agency.setSelection(agency);
+
+                int regional = offlineSite.getRegional();
+                Regional.setSelection(regional);
+
+                int local = offlineSite.getLocal();
+                Local.setSelection(local);
+
+                Date.setText(offlineSite.getDate());
+                RoadTrailNo.setText(offlineSite.getRoad_trail_number());
+
+                int road_trail = offlineSite.getRoad_or_Trail();
+                RoadTrail.setSelection(road_trail);
+
+                RoadTrailClass.setText(offlineSite.getRoad_trail_class());
+                Rater.setText(offlineSite.getRater());
+                BeginMile.setText(offlineSite.getBegin_mile_marker());
+                EndMile.setText(offlineSite.getEnd_mile_marker());
+
+                Side.setSelection(offlineSite.getSide());
+
+                Weather.setSelection(offlineSite.getWeather());
+
+                HazardType.setText(offlineSite.getHazard_type());
+                BeginLat.setText(offlineSite.getBegin_coordinate_lat());
+                EndLat.setText(offlineSite.getEnd_coordinate_latitude());
+                BeginLong.setText(offlineSite.getEnd_coordinate_longitude());
+                EndLong.setText(offlineSite.getEnd_coordinate_longitude());
+                Datum.setText(offlineSite.getDatum());
+                Aadt.setText(offlineSite.getAadt());
+                LengthAffected.setText(offlineSite.getLength_affected());
+                AxialLength.setText(offlineSite.getSlope_height_axial_length());
+                SlopeAngle.setText(offlineSite.getSlope_angle());
+                SightDistance.setText(offlineSite.getSight_distance());
+                RtWidth.setText(offlineSite.getRoad_trail_width());
+                //speed limit?
+                DitchWidth1.setText(offlineSite.getMinimum_ditch_width());
+                DitchWidth2.setText(offlineSite.getMaximum_ditch_width());
+                DitchDepth1.setText(offlineSite.getMinimum_ditch_depth());
+                DitchDepth2.setText(offlineSite.getMaximum_ditch_depth());
+                DitchSlope1.setText(offlineSite.getFirst_begin_ditch_slope());
+                DitchSlope2.setText(offlineSite.getFirst_end_ditch_slope());
+                DitchSlope3.setText(offlineSite.getSecond_begin_ditch_slope());
+                DitchSlope4.setText(offlineSite.getSecond_end_ditch_slope());
+
+                AnnualRain1.setText(offlineSite.getStart_annual_rainfall());
+                AnnualRain2.setText(offlineSite.getEnd_annual_rainfall());
+
+                int sole_access_route = offlineSite.getSole_access_route();
+                System.out.println("SOLE ACCESS IS: "+ sole_access_route);
+                SoleAccess.setSelection(sole_access_route);
+
+                int mitigation_present = offlineSite.getFixes_Present();
+                Mitigation.setSelection(mitigation_present);
+
+                //photos
+
+                Comments.setText(offlineSite.getComments());
+                FlmaName.setText(offlineSite.getFlma_name());
+                FlmaId.setText(offlineSite.getFlma_id());
+                FlmaDescription.setText(offlineSite.getFlma_description());
+
+                //PRELIMINARY RATINGS
+                //landslide only
+
+                ArrayList<String> ratingList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ratingList)));
+
+                String roadway_width_affected = String.valueOf(offlineSite.getPrelim_landslide_road_width_affected());
+                if(ratingList.contains(roadway_width_affected)){
+                    RWidthAffected.setSelection(ratingList.indexOf(roadway_width_affected));
+                }
+
+                String slide_erosion_effects = String.valueOf(offlineSite.getPrelim_landslide_slide_erosion_effects());
+                if(ratingList.contains(slide_erosion_effects)){
+                    SlideErosion.setSelection(ratingList.indexOf(slide_erosion_effects));
+                }
+
+                RLengthAffected.setText(offlineSite.getPrelim_landslide_length_affected());
+
+                //all
+                String impact_on_use = String.valueOf(offlineSite.getImpact_on_use());
+                if(ratingList.contains(impact_on_use)){
+                    ImpactOU.setSelection(ratingList.indexOf(impact_on_use));
+                }
+
+                int checkmark = offlineSite.getAadt_usage_calc_checkbox();
+                //0 false, 1 true?
+                if (checkmark == 1) {
+                    CheckAadt.setSelected(true);
+                } else {
+                    CheckAadt.setSelected(false);
+                }
+
+                AadtEtc.setText(offlineSite.getAadt_usage());
+                PrelimRating.setText(offlineSite.getPrelim_rating());
+
+                //SLOPE HAZARD RATINGS
+                //all
+
+                String slopeDrainage = String.valueOf(offlineSite.getSlope_drainage());
+                if (ratingList.contains(slopeDrainage)) {
+                    SlopeDrainage.setSelection(ratingList.indexOf(slopeDrainage));
+                }
+                AnnualRainfall.setText(offlineSite.getHazard_rating_annual_rainfall());
+                AxialLOS.setText(offlineSite.getHazard_rating_slope_height_axial_length());
+                HazardTotal.setText(offlineSite.getHazard_rating_total());
+
+                //Landslide Only
+                String thaw_stability = String.valueOf(offlineSite.getHazard_landslide_thaw_stability());
+                if(ratingList.contains(thaw_stability)){
+                    ThawStability.setSelection(ratingList.indexOf(thaw_stability));
+                }
+
+                String instability_rmf = String.valueOf(offlineSite.getHazard_landslide_maint_frequency());
+                if(ratingList.contains(instability_rmf)){
+                    InstabilityRMF.setSelection(ratingList.indexOf(instability_rmf));
+                }
+                String movement_history = String.valueOf(offlineSite.getHazard_landslide_movement_history());
+                if(ratingList.contains(movement_history)){
+                    MovementHistory.setSelection(ratingList.indexOf(movement_history));
+                }
+
+                //RISK RATINGS-ALL
+                RouteTW.setText(offlineSite.getRoute_trail_width());
+                HumanEF.setText(offlineSite.getHuman_ex_factor());
+                PercentDSD.setText(offlineSite.getPercent_dsd());
+
+                String rowImpacts = String.valueOf(offlineSite.getR_w_impacts());
+                if (ratingList.contains(rowImpacts)) {
+                    RightOWI.setSelection(ratingList.indexOf(rowImpacts));
+                }
+
+                String ecImpacts = String.valueOf(offlineSite.getEnviro_cult_impacts());
+                if (ratingList.contains(ecImpacts)) {
+                    ECImpact.setSelection(ratingList.indexOf(ecImpacts));
+                }
+
+                String maintComplexity = String.valueOf(offlineSite.getMaint_complexity());
+                if (ratingList.contains(maintComplexity)) {
+                    MaintComplexity.setSelection(ratingList.indexOf(maintComplexity));
+                }
+
+                String eventCost = String.valueOf(offlineSite.getEvent_cost());
+                if (ratingList.contains(eventCost)) {
+                    EventCost.setSelection(ratingList.indexOf(eventCost));
+                }
+
+                RiskTotal.setText(offlineSite.getRisk_total());
+
+                Total.setText(offlineSite.getTotal_score());
+
+                break;
+            }
+        }
 
     }
-    }
-
+}
