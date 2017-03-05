@@ -92,7 +92,7 @@ public class MapActivity extends AppCompatActivity
     private int regionSelected;
     private String regionName;
 
-    private ArrayList<String> offline_ids = new ArrayList<String>();
+    private static ArrayList<String> offline_ids = new ArrayList<String>();
     Map<String, String> oMap;
 
     // JSON encoding/decoding
@@ -101,16 +101,16 @@ public class MapActivity extends AppCompatActivity
     private static final String TAG = "MapActivity";
 
 
-    String [] sites;
-    String [] tempSites; //could bring down?
-    String [] [] finalSites; //final 2d array that the site information is kept in
+    String[] sites;
+    String[] tempSites; //could bring down?
+    String[][] finalSites; //final 2d array that the site information is kept in
     Double l25 = 0.0;
     Double l50 = 0.0;
     Double l75 = 0.0;
     Double r25 = 0.0;
     Double r50 = 0.0;
     Double r75 = 0.0;
-    String [] percentages;
+    String[] percentages;
     static String ALoad_id = "0";
 
     //Menu stuff
@@ -127,7 +127,7 @@ public class MapActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-      ;
+        ;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -145,25 +145,19 @@ public class MapActivity extends AppCompatActivity
             @Override
             public void onMapReady(MapboxMap mapboxMap) {
                 map = mapboxMap;
+                // Set up the offlineManager
+                offlineManager = OfflineManager.getInstance(MapActivity.this);
             }
         });
 
 
         getJSON2(JSON_URL2);
-
-        // Set up the offlineManager
-        offlineManager = OfflineManager.getInstance(this);
-        // Assign progressBar for later use
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
 
 
 
-
     }
-
-
-
 
 
     // Add the mapView lifecycle to the activity's lifecycle methods
@@ -198,7 +192,6 @@ public class MapActivity extends AppCompatActivity
     }
 
 
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -217,19 +210,17 @@ public class MapActivity extends AppCompatActivity
         MenuItem load_offline = menu.getItem(2);
 
         //can't save map tiles w/o network connectivity
-        if(!isNetworkAvailable()){
+        if (!isNetworkAvailable()) {
             cache_map.setEnabled(false);
         }
         //if you already have points saved, can't have any more
         OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
-        if(dbHandler.getNumRows() != 0){
+        if (dbHandler.getNumRows() != 0) {
             cache_map.setEnabled(false);
         }
         //if you dont have points saved, can't load any, can't load if you have service
-        if(dbHandler.getNumRows() == 0 || isNetworkAvailable()){
-            load_offline.setEnabled(false);
-        }
-        
+//        prog
+
         getMenuInflater().inflate(R.menu.menu_main, menu); //top
 
 
@@ -282,15 +273,17 @@ public class MapActivity extends AppCompatActivity
             alertDialogBuilder.setCancelable(true).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     regionName = String.valueOf(et.getText());
-                    downloadRegion();
+                    DownloadRegion dr = new DownloadRegion();
+                    dr.execute();
                 }
 
             });
 
             alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                        //finish();
-                } });
+                    //finish();
+                }
+            });
 
             // create alert dialog
             AlertDialog alertDialog = alertDialogBuilder.create();
@@ -303,9 +296,9 @@ public class MapActivity extends AppCompatActivity
         }
         if (id == R.id.action_load_offline_points) {
             OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
-            int [] ids = dbHandler.getIds();
+            int[] ids = dbHandler.getIds();
 
-            for(int i = 0; i<ids.length; i++) {
+            for (int i = 0; i < ids.length; i++) {
                 OfflineSite offlineSite = new OfflineSite();
                 offlineSite = dbHandler.findOfflineSite(ids[i]);
                 System.out.println("site id is " + offlineSite.getSite_id());
@@ -313,32 +306,32 @@ public class MapActivity extends AppCompatActivity
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng(Double.parseDouble(offlineSite.getBegin_coordinate_lat()), Double.parseDouble(offlineSite.getBegin_coordinate_long())))
                         .title(offlineSite.getSite_id()));
-                        //.snippet("Total Score:" + finalSites[k][4])
-                        //.snippet(finalSites[k][0])
-                        //.icon(icon0));
+                //.snippet("Total Score:" + finalSites[k][4])
+                //.snippet(finalSites[k][0])
+                //.icon(icon0));
 
 
             }
 
             map.setOnInfoWindowLongClickListener(new MapboxMap.OnInfoWindowLongClickListener() {
-                                                           @Override
-                                                           public void onInfoWindowLongClick(Marker marker) {
-                                                               //go to the annotation's info
-                                                               //pass site id....
-                                                               //ALoad_id = marker.getTitle();
-                                                               Intent intent = new Intent(MapActivity.this, AnnotationInfoActivity.class);
-                                                               intent.putExtra("offline",marker.getTitle());
-                                                               startActivity(intent);
+                                                     @Override
+                                                     public void onInfoWindowLongClick(Marker marker) {
+                                                         //go to the annotation's info
+                                                         //pass site id....
+                                                         //ALoad_id = marker.getTitle();
+                                                         Intent intent = new Intent(MapActivity.this, AnnotationInfoActivity.class);
+                                                         intent.putExtra("offline", marker.getTitle());
+                                                         startActivity(intent);
 
-                                                           }
-                                                       }
+                                                     }
+                                                 }
             );
-
 
 
         }
         if (id == R.id.action_info) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             final TextView tv = new TextView(this);
             String message = "Cache map: Input northeast and southwest corner coordinates to save a portion of the map for offline use" +
                     "You must be online to do this, and will be notified when the download is complete (~2 min.).\n \n" +
@@ -360,7 +353,7 @@ public class MapActivity extends AppCompatActivity
         }
 
 
-        if(id == R.id.action_home){
+        if (id == R.id.action_home) {
             Intent intent = new Intent(this, OnlineHomeActivity.class);
             startActivity(intent);
         }
@@ -370,16 +363,14 @@ public class MapActivity extends AppCompatActivity
 
     // START OFFLINE SITE INFORMATION METHODS
 
-    public void saveOfflineSites(){
-        for(int i = 0; i < offline_ids.size(); i++){
+    public void saveOfflineSites() {
+        for (int i = 0; i < offline_ids.size(); i++) {
             getJSONO(JSON_URL3, offline_ids.get(i));
         }
     }
 
     public void GetTextO(String id) throws UnsupportedEncodingException {
-        //intent thing
-        //String id = getIntent().getStringExtra("editing");
-        String data="id="+id;
+        String data = "id=" + id;
         String text = "";
         BufferedReader reader = null;
         try {
@@ -425,23 +416,25 @@ public class MapActivity extends AppCompatActivity
 
     }
 
-    public void dealWithTextO(final String text){
+    public void dealWithTextO(final String text) {
         runOnUiThread(new Runnable() {
             String text2 = text;
+
             @Override
             public void run() {
                 System.out.println("Deal with it Offline");
 
 
-                text2 = text2.replace("[",""); //old,new
-                text2 = text2.replace("]",""); //old,new
-                text2 = text2.replace("{",""); //old,new
-                text2 = text2.replace("}",""); //old,new
+                text2 = text2.replace("[", ""); //old,new
+                text2 = text2.replace("]", ""); //old,new
+                text2 = text2.replace("{", ""); //old,new
+                text2 = text2.replace("}", ""); //old,new
                 String text3 = "{";
                 text3 = text3.concat(text2);
-                text3 =text3.concat("}");
+                text3 = text3.concat("}");
 
-                oMap = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {}.getType());
+                oMap = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {
+                }.getType());
                 System.out.println(oMap.get("ID"));
                 //can't do the db handler in runnable, so call new method
                 newOfflineSite();
@@ -451,14 +444,14 @@ public class MapActivity extends AppCompatActivity
     }
 
     //create db offline site stuff
-    public void newOfflineSite(){
+    public void newOfflineSite() {
         OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
 
         ArrayList<String> agencyList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.AgencyList)));
 
         String agencyS = oMap.get("UMBRELLA_AGENCY"); //int
         int agency = 0;
-        if(agencyList.contains(agencyS)){
+        if (agencyList.contains(agencyS)) {
             agency = agencyList.indexOf(agencyS);
         }
 
@@ -468,14 +461,14 @@ public class MapActivity extends AppCompatActivity
         int regional = 0;
 
         //fs
-        if(agency == 1){
-            if(regionalList1.contains(regionalS)){
+        if (agency == 1) {
+            if (regionalList1.contains(regionalS)) {
                 regional = regionalList1.indexOf(regionalS);
             }
         }
         //nps
-        if(agency ==2){
-            if(regionalList2.contains(regionalS)){
+        if (agency == 2) {
+            if (regionalList2.contains(regionalS)) {
                 regional = regionalList2.indexOf(regionalS);
             }
         }
@@ -500,53 +493,44 @@ public class MapActivity extends AppCompatActivity
         String localS = oMap.get("LOCAL_ADMIN"); //int
         int local = 0;
         //fs
-        if(agency == 1){
-            if(regional == 1) {
+        if (agency == 1) {
+            if (regional == 1) {
                 if (localList1.contains(localS)) {
                     local = localList1.indexOf(localS);
                 }
-            }
-            else if (regional == 2){
-            if(localList2.contains(localS)) {
+            } else if (regional == 2) {
+                if (localList2.contains(localS)) {
                     local = localList2.indexOf(localS);
                 }
-            }
-            else if (regional == 3) {
+            } else if (regional == 3) {
                 if (localList3.contains(localS)) {
                     local = localList3.indexOf(localS);
                 }
-            }
-            else if(regional == 4) {
-                 if (localList4.contains(localS)) {
+            } else if (regional == 4) {
+                if (localList4.contains(localS)) {
                     local = localList4.indexOf(localS);
                 }
-            }
-            else if (regional == 5) {
-                 if (localList5.contains(localS)) {
+            } else if (regional == 5) {
+                if (localList5.contains(localS)) {
                     local = localList5.indexOf(localS);
                 }
-            }
-            else if (regional == 6) {
-                 if (localList6.contains(localS)) {
+            } else if (regional == 6) {
+                if (localList6.contains(localS)) {
                     local = localList6.indexOf(localS);
                 }
-            }
-            else if (regional == 7) {
-                 if (localList7.contains(localS)) {
+            } else if (regional == 7) {
+                if (localList7.contains(localS)) {
                     local = localList7.indexOf(localS);
                 }
-            }
-            else if (regional == 8) {
-                 if (localList8.contains(localS)) {
+            } else if (regional == 8) {
+                if (localList8.contains(localS)) {
                     local = localList8.indexOf(localS);
                 }
-            }
-            else if (regional == 9) {
-                 if (localList9.contains(localS)) {
+            } else if (regional == 9) {
+                if (localList9.contains(localS)) {
                     local = localList9.indexOf(localS);
                 }
-            }
-            else {
+            } else {
                 local = 0;
             }
         }
@@ -555,7 +539,7 @@ public class MapActivity extends AppCompatActivity
         String road_trail_no = oMap.get("ROAD_TRAIL_NO");
         int road_or_trail = 0;
         String road_or_trailS = oMap.get("ROAD_OR_TRAIL"); //R,T
-        if(road_or_trailS.equals("T")){
+        if (road_or_trailS.equals("T")) {
             road_or_trail = 1;
         }
         String road_trail_class = oMap.get("ROAD_TRAIL_CLASS");
@@ -566,52 +550,43 @@ public class MapActivity extends AppCompatActivity
         ArrayList<String> sideList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.sideList)));
         int side = 0;
         String sideS = oMap.get("SIDE"); //int
-        if(sideList.contains(sideS)){
+        if (sideList.contains(sideS)) {
             side = sideList.indexOf(sideS);
         }
 
-        char [] sideChar = new char [2];
-        if(sideS.length()>=2) {
+        char[] sideChar = new char[2];
+        if (sideS.length() >= 2) {
             sideS.getChars(0, 2, sideChar, 0);
-        }else {
-            sideS.getChars(0,1,sideChar,0);
+        } else {
+            sideS.getChars(0, 1, sideChar, 0);
         }
 
-        if(String.valueOf(sideChar[0]).equalsIgnoreCase("L")){
+        if (String.valueOf(sideChar[0]).equalsIgnoreCase("L")) {
             side = 0; //left
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("R")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("R")) {
             side = 1; //right
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("N") && !String.valueOf(sideChar[1]).equalsIgnoreCase("E") && !String.valueOf(sideChar[1]).equalsIgnoreCase("W")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("N") && !String.valueOf(sideChar[1]).equalsIgnoreCase("E") && !String.valueOf(sideChar[1]).equalsIgnoreCase("W")) {
             side = 2; //north
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("N") && String.valueOf(sideChar[1]).equalsIgnoreCase("E")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("N") && String.valueOf(sideChar[1]).equalsIgnoreCase("E")) {
             side = 3; //north east
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("E")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("E")) {
             side = 4; //east
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("S") && String.valueOf(sideChar[1]).equalsIgnoreCase("E")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("S") && String.valueOf(sideChar[1]).equalsIgnoreCase("E")) {
             side = 5; //south east
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("S") && !String.valueOf(sideChar[1]).equalsIgnoreCase("E") && !String.valueOf(sideChar[1]).equalsIgnoreCase("W")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("S") && !String.valueOf(sideChar[1]).equalsIgnoreCase("E") && !String.valueOf(sideChar[1]).equalsIgnoreCase("W")) {
             side = 6; //south
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("S") && String.valueOf(sideChar[1]).equalsIgnoreCase("W")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("S") && String.valueOf(sideChar[1]).equalsIgnoreCase("W")) {
             side = 7; //south west
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("W")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("W")) {
             side = 8; //west
-        }
-        else if(String.valueOf(sideChar[0]).equalsIgnoreCase("N") && String.valueOf(sideChar[1]).equalsIgnoreCase("W")){
+        } else if (String.valueOf(sideChar[0]).equalsIgnoreCase("N") && String.valueOf(sideChar[1]).equalsIgnoreCase("W")) {
             side = 9; //north west
         }
 
         ArrayList<String> weatherList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.weatherList)));
         int weather = 0;
         String weatherS = oMap.get("WEATHER"); //int
-        if(weatherList.contains(weatherS)){
+        if (weatherList.contains(weatherS)) {
             weather = weatherList.indexOf(weatherS);
         }
 
@@ -642,13 +617,13 @@ public class MapActivity extends AppCompatActivity
         String end_annual_rainfall = oMap.get("END_ANNUAL_RAINFALL");
         int sole_access_route = 0;
         String sole_access_routeS = oMap.get("SOLE_ACCESS_ROUTE"); //Y,N
-        if(sole_access_routeS.equals("Y") || sole_access_routeS.equals("Yes") || sole_access_routeS.equals("yes")){
+        if (sole_access_routeS.equals("Y") || sole_access_routeS.equals("Yes") || sole_access_routeS.equals("yes")) {
             sole_access_route = 1;
         }
 
         int fixes_present = 0;
         String fixes_presentS = oMap.get("FIXES_PRESENT"); //Y,N
-        if(fixes_presentS.equals("Y") || fixes_presentS.equals("Yes") || fixes_presentS.equals("yes")){
+        if (fixes_presentS.equals("Y") || fixes_presentS.equals("Yes") || fixes_presentS.equals("yes")) {
             fixes_present = 1;
         }
         String comments = oMap.get("COMMENT");
@@ -659,13 +634,13 @@ public class MapActivity extends AppCompatActivity
         //prelim ratings landslide only
         int landslide_prelim_road_width_affected = 0;
         String landslide_prelim_road_width_affectedS = oMap.get("LANDSLIDE_PRELIM_ROAD_WIDTH_AFFECTED"); //int
-        if(!"".equals(landslide_prelim_road_width_affectedS)){
+        if (!"".equals(landslide_prelim_road_width_affectedS)) {
             landslide_prelim_road_width_affected = Integer.parseInt(landslide_prelim_road_width_affectedS);
         }
 
         int landslide_prelim_slide_erosion_effects = 0;
         String landslide_prelim_slide_erosion_effectsS = oMap.get("LANDSLIDE_PRELIM_SLIDE_EROSION_EFFECTS"); //int
-        if(!landslide_prelim_slide_erosion_effectsS.equals("")){
+        if (!landslide_prelim_slide_erosion_effectsS.equals("")) {
             landslide_prelim_slide_erosion_effects = Integer.parseInt(landslide_prelim_slide_erosion_effectsS);
         }
         String landslide_prelim_length_affected = oMap.get("LANDSLIDE_PRELIM_LENGTH_AFFECTED");
@@ -673,13 +648,13 @@ public class MapActivity extends AppCompatActivity
         //prelim ratings rockfall only
         int rockfall_prelim_ditch_eff = 0;
         String rockfall_prelim_ditch_effS = oMap.get("ROCKFALL_PRELIM_DITCH_EFF"); //int
-        if(!rockfall_prelim_ditch_effS.equals("")){
+        if (!rockfall_prelim_ditch_effS.equals("")) {
             rockfall_prelim_ditch_eff = Integer.parseInt(rockfall_prelim_ditch_effS);
         }
 
         int rockfall_prelim_rockfall_history = 0;
         String rockfall_prelim_rockfall_historyS = oMap.get("ROCKFALL_PRELIM_ROCKFALL_HISTORY"); //int
-        if(!rockfall_prelim_rockfall_historyS.equals("")){
+        if (!rockfall_prelim_rockfall_historyS.equals("")) {
             rockfall_prelim_rockfall_history = Integer.parseInt(rockfall_prelim_rockfall_historyS);
         }
 
@@ -688,13 +663,13 @@ public class MapActivity extends AppCompatActivity
         //prelim ratings all
         int preliminary_rating_impact_on_use = 0;
         String preliminary_rating_impact_on_useS = oMap.get("PRELIMINARY_RATING_IMPACT_ON_USE"); //int
-        if(!preliminary_rating_impact_on_useS.equals("")){
+        if (!preliminary_rating_impact_on_useS.equals("")) {
             preliminary_rating_impact_on_use = Integer.parseInt(preliminary_rating_impact_on_useS);
         }
 
         int preliminary_rating_aadt_usage_calc_checkbox = 0;
         String preliminary_rating_aadt_usage_calc_checkboxS = oMap.get("PRELIMINARY_RATING_ADDT_USAGE_CALC_CHECKBOX"); //int
-        if(!preliminary_rating_aadt_usage_calc_checkboxS.equals("")){
+        if (!preliminary_rating_aadt_usage_calc_checkboxS.equals("")) {
             preliminary_rating_aadt_usage_calc_checkbox = Integer.parseInt(preliminary_rating_aadt_usage_calc_checkboxS);
         }
 
@@ -704,7 +679,7 @@ public class MapActivity extends AppCompatActivity
         //slope hazard ratings all
         int hazard_rating_slope_drainage = 0;
         String hazard_rating_slope_drainageS = oMap.get("HAZARD_RATING_SLOPE_DRAINAGE"); //int
-        if(!hazard_rating_slope_drainageS.equals("")){
+        if (!hazard_rating_slope_drainageS.equals("")) {
             hazard_rating_slope_drainage = Integer.parseInt(hazard_rating_slope_drainageS);
         }
         String hazard_rating_annual_rainfall = oMap.get("HAZARD_RATING_ANNUAL_RAINFALL");
@@ -714,45 +689,45 @@ public class MapActivity extends AppCompatActivity
         //slope hazard ratings landslide only
         int landslide_hazard_rating_thaw_stability = 0;
         String landslide_hazard_rating_thaw_stabilityS = oMap.get("LANDSLIDE_HAZARD_RATING_THAW_STABILITY"); //int
-        if(!landslide_hazard_rating_thaw_stabilityS.equals("")){
+        if (!landslide_hazard_rating_thaw_stabilityS.equals("")) {
             landslide_hazard_rating_thaw_stability = Integer.parseInt(landslide_hazard_rating_thaw_stabilityS);
         }
         int landslide_hazard_rating_maint_frequency = 0;
         String landslide_hazard_rating_maint_frequencyS = oMap.get("LANDSLIDE_HAZARD_RATING_MAINT_FREQUENCY"); //int
-        if(!landslide_hazard_rating_maint_frequencyS.equals("")){
+        if (!landslide_hazard_rating_maint_frequencyS.equals("")) {
             landslide_hazard_rating_maint_frequency = Integer.parseInt(landslide_hazard_rating_maint_frequencyS);
         }
         int landslide_hazard_rating_movement_history = 0;
         String landslide_hazard_rating_movement_historyS = oMap.get("LANDSLIDE_HAZARD_RATING_MOVEMENT_HISTORY"); //int
-        if(!landslide_hazard_rating_movement_historyS.equals("")){
+        if (!landslide_hazard_rating_movement_historyS.equals("")) {
             landslide_hazard_rating_movement_history = Integer.parseInt(landslide_hazard_rating_movement_historyS);
         }
 
         //slope hazard ratings rockfall only
         int rockfall_hazard_rating_maint_frequency = 0;
         String rockfall_hazard_rating_maint_frequencyS = oMap.get("ROCKFALL_HAZARD_RATING_MAINT_FREQUENCY"); //int
-        if(!rockfall_hazard_rating_maint_frequencyS.equals("")){
+        if (!rockfall_hazard_rating_maint_frequencyS.equals("")) {
             rockfall_hazard_rating_maint_frequency = Integer.parseInt(rockfall_hazard_rating_maint_frequencyS);
         }
 
         int rockfall_hazard_rating_case_one_struc_condition = 0;
         String rockfall_hazard_rating_case_one_struc_conditionS = oMap.get("ROCKFALL_HAZARD_RATING_CASE_ONE_STRUC_CONDITION"); //int
-        if(!rockfall_hazard_rating_case_one_struc_conditionS.equals("")){
+        if (!rockfall_hazard_rating_case_one_struc_conditionS.equals("")) {
             rockfall_hazard_rating_case_one_struc_condition = Integer.parseInt(rockfall_hazard_rating_case_one_struc_conditionS);
         }
         int rockfall_hazard_rating_case_one_rock_friction = 0;
         String rockfall_hazard_rating_case_one_rock_frictionS = oMap.get("ROCKFALL_HAZARD_RATING_CASE_ONE_ROCK_FRICTION"); //int
-        if(!rockfall_hazard_rating_case_one_rock_frictionS.equals("")){
+        if (!rockfall_hazard_rating_case_one_rock_frictionS.equals("")) {
             rockfall_hazard_rating_case_one_rock_friction = Integer.parseInt(rockfall_hazard_rating_case_one_rock_frictionS);
         }
         int rockfall_hazard_rating_case_two_struc_condition = 0;
         String rockfall_hazard_rating_case_two_struc_conditionS = oMap.get("ROCKFALL_HAZARD_RATING_CASE_TWO_STRUC_CONDITION"); //int
-        if(!rockfall_hazard_rating_case_two_struc_conditionS.equals("")){
+        if (!rockfall_hazard_rating_case_two_struc_conditionS.equals("")) {
             rockfall_hazard_rating_case_two_struc_condition = Integer.parseInt(rockfall_hazard_rating_case_two_struc_conditionS);
         }
         int rockfall_hazard_rating_case_two_diff_erosion = 0;
         String rockfall_hazard_rating_case_two_diff_erosionS = oMap.get("ROCKFALL_HAZARD_RATING_CASE_TWO_DIFF_EROSION"); //int
-        if(!rockfall_hazard_rating_case_two_diff_erosionS.equals("")){
+        if (!rockfall_hazard_rating_case_two_diff_erosionS.equals("")) {
             rockfall_hazard_rating_case_two_diff_erosion = Integer.parseInt(rockfall_hazard_rating_case_two_diff_erosionS);
         }
 
@@ -762,22 +737,22 @@ public class MapActivity extends AppCompatActivity
         String risk_rating_percent_dsd = oMap.get("RISK_RATING_PERCENT_DSD");
         int risk_rating_r_w_impacts = 0;
         String risk_rating_r_w_impactsS = oMap.get("RISK_RATING_R_W_IMPACTS"); //int
-        if(!risk_rating_r_w_impactsS.equals("")){
+        if (!risk_rating_r_w_impactsS.equals("")) {
             risk_rating_r_w_impacts = Integer.parseInt(risk_rating_r_w_impactsS);
         }
         int risk_rating_enviro_cult_impacts = 0;
         String risk_rating_enviro_cult_impactsS = oMap.get("RISK_RATING_ENVIRO_CULT_IMPACTS"); //int
-        if (!risk_rating_enviro_cult_impactsS.equals("")){
+        if (!risk_rating_enviro_cult_impactsS.equals("")) {
             risk_rating_enviro_cult_impacts = Integer.parseInt(risk_rating_enviro_cult_impactsS);
         }
         int risk_rating_maint_complexity = 0;
         String risk_rating_maint_complexityS = oMap.get("RISK_RATING_MAINT_COMPLEXITY"); //int
-        if(!risk_rating_maint_complexityS.equals("")){
+        if (!risk_rating_maint_complexityS.equals("")) {
             risk_rating_maint_complexity = Integer.parseInt(risk_rating_maint_complexityS);
         }
         int risk_rating_event_cost = 0;
         String risk_rating_event_costS = oMap.get("RISK_RATING_EVENT_COST"); //int
-        if(!risk_rating_event_costS.equals("")){
+        if (!risk_rating_event_costS.equals("")) {
             risk_rating_event_cost = Integer.parseInt(risk_rating_event_costS);
         }
         String risk_total = oMap.get("RISK_TOTAL");
@@ -790,20 +765,19 @@ public class MapActivity extends AppCompatActivity
         String prelim_rating_landslide_id = oMap.get("PRELIMINARY_RATING_LANDSLIDE_ID");
 
 
-
-        OfflineSite offlineSite = new OfflineSite(agency,regional,local,date,road_trail_no,road_or_trail,road_trail_class,rater,begin_mile,end_mile,
-                side,weather,hazard_type,begin_coordinate_lat,begin_coordinate_long,end_coordinate_lat,end_coordinate_long,datum,aadt,length_affected,
-                slope_ht_axial_length,slope_angle,sight_distance,road_trail_width,speed_limit,minimum_ditch_width,maximum_ditch_width,minimum_ditch_depth,
-                maximum_ditch_depth,minimum_ditch_slope_first,maximum_ditch_slope_first,minimum_ditch_slope_second,maximum_ditch_slope_second,blk_size,
-                volume,begin_annual_rainfall,end_annual_rainfall,sole_access_route,fixes_present,photos,comments,flma_name,flma_id,flma_description,
-                landslide_prelim_road_width_affected,landslide_prelim_slide_erosion_effects,landslide_prelim_length_affected,rockfall_prelim_ditch_eff,
-                rockfall_prelim_rockfall_history,rockfall_prelim_block_size_event_vol,preliminary_rating_impact_on_use,preliminary_rating_aadt_usage_calc_checkbox,
-                preliminary_rating_aadt_usage,preliminary_rating,hazard_rating_slope_drainage,hazard_rating_annual_rainfall,hazard_rating_slope_height_axial_length,
-                hazard_total,landslide_hazard_rating_thaw_stability,landslide_hazard_rating_maint_frequency,landslide_hazard_rating_movement_history,
-                rockfall_hazard_rating_maint_frequency,rockfall_hazard_rating_case_one_struc_condition,rockfall_hazard_rating_case_one_rock_friction,
-                rockfall_hazard_rating_case_two_struc_condition,rockfall_hazard_rating_case_two_diff_erosion,risk_rating_route_trail,risk_rating_human_ex_factor,
-                risk_rating_percent_dsd,risk_rating_r_w_impacts,risk_rating_enviro_cult_impacts,risk_rating_maint_complexity,risk_rating_event_cost,
-                risk_total,total_score,site_id,prelim_rating_landslide_id);
+        OfflineSite offlineSite = new OfflineSite(agency, regional, local, date, road_trail_no, road_or_trail, road_trail_class, rater, begin_mile, end_mile,
+                side, weather, hazard_type, begin_coordinate_lat, begin_coordinate_long, end_coordinate_lat, end_coordinate_long, datum, aadt, length_affected,
+                slope_ht_axial_length, slope_angle, sight_distance, road_trail_width, speed_limit, minimum_ditch_width, maximum_ditch_width, minimum_ditch_depth,
+                maximum_ditch_depth, minimum_ditch_slope_first, maximum_ditch_slope_first, minimum_ditch_slope_second, maximum_ditch_slope_second, blk_size,
+                volume, begin_annual_rainfall, end_annual_rainfall, sole_access_route, fixes_present, photos, comments, flma_name, flma_id, flma_description,
+                landslide_prelim_road_width_affected, landslide_prelim_slide_erosion_effects, landslide_prelim_length_affected, rockfall_prelim_ditch_eff,
+                rockfall_prelim_rockfall_history, rockfall_prelim_block_size_event_vol, preliminary_rating_impact_on_use, preliminary_rating_aadt_usage_calc_checkbox,
+                preliminary_rating_aadt_usage, preliminary_rating, hazard_rating_slope_drainage, hazard_rating_annual_rainfall, hazard_rating_slope_height_axial_length,
+                hazard_total, landslide_hazard_rating_thaw_stability, landslide_hazard_rating_maint_frequency, landslide_hazard_rating_movement_history,
+                rockfall_hazard_rating_maint_frequency, rockfall_hazard_rating_case_one_struc_condition, rockfall_hazard_rating_case_one_rock_friction,
+                rockfall_hazard_rating_case_two_struc_condition, rockfall_hazard_rating_case_two_diff_erosion, risk_rating_route_trail, risk_rating_human_ex_factor,
+                risk_rating_percent_dsd, risk_rating_r_w_impacts, risk_rating_enviro_cult_impacts, risk_rating_maint_complexity, risk_rating_event_cost,
+                risk_total, total_score, site_id, prelim_rating_landslide_id);
 
         dbHandler.addOfflineSite(offlineSite);
         System.out.println("CREATED");
@@ -843,56 +817,103 @@ public class MapActivity extends AppCompatActivity
 
     // END OFFLINE SITE INFORMATION METHODS
 
-    public void downloadRegion(){
+
+    private class DownloadRegion extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            // Assign progressBar for later use
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+
+            System.out.println("call do in background");
+            downloadHelper();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            //loading.dismiss(); //dismiss the "loading" message
+            //System.out.println(s);  //testing
+        }
+}
+
+    public void downloadHelper(){
         System.out.println("DOWNLOAD");
-        startProgress();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                //stuff that updates ui
+                startProgress();
+
+            }
+        });
         //to save a list of the site ids in the view
         LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
         List<Marker> markers = map.getMarkers();
-        for(int i = 0; i< markers.size(); i++){
-            if(bounds.contains(markers.get(i).getPosition())){
+        for(
+                int i = 0; i<markers.size();i++)
+
+        {
+            if (bounds.contains(markers.get(i).getPosition())) {
                 System.out.println(markers.get(i).getTitle());
                 offline_ids.add(markers.get(i).getTitle());
             }
         }
+
         saveOfflineSites();
 
-//        // Create offline definition using the current
+        //        // Create offline definition using the current
 //        // style and boundaries of visible map area
-//        String styleUrl = map.getStyleUrl();
-//        //LatLngBounds bounds = map.getProjection().getVisibleRegion().latLngBounds;
-//        double minZoom = map.getCameraPosition().zoom;
-//        double maxZoom = map.getMaxZoom();
-//        float pixelRatio = this.getResources().getDisplayMetrics().density;
-//        OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
-//                styleUrl, bounds, minZoom, maxZoom, pixelRatio);
-//        // Build a JSONObject using the user-defined offline region title,
-//        // convert it into string, and use it to create a metadata variable.
-//        // The metadata varaible will later be passed to createOfflineRegion()
-//        byte[] metadata;
-//        try {
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put(JSON_FIELD_REGION_NAME, regionName);
-//            String json = jsonObject.toString();
-//            metadata = json.getBytes(JSON_CHARSET);
-//        } catch (Exception exception) {
-//            Log.e(TAG, "Failed to encode metadata: " + exception.getMessage());
-//            metadata = null;
-//        }
-//        // Create the offline region and launch the download
-//        offlineManager.createOfflineRegion(definition, metadata, new OfflineManager.CreateOfflineRegionCallback() {
-//            @Override
-//            public void onCreate(OfflineRegion offlineRegion) {
-//                Log.d(TAG, "Offline region created: " + regionName);
-//                MapActivity.this.offlineRegion = offlineRegion;
-//                launchDownload();
-//            }
-//
-//            @Override
-//            public void onError(String error) {
-//                Log.e(TAG, "Error: " + error);
-//            }
-//        });
+        String styleUrl = map.getStyleUrl();
+        double minZoom = map.getCameraPosition().zoom;
+        double maxZoom = map.getMaxZoom();
+        float pixelRatio = this.getResources().getDisplayMetrics().density;
+        OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
+                styleUrl, bounds, minZoom, maxZoom, pixelRatio);
+        // Build a JSONObject using the user-defined offline region title,
+        // convert it into string, and use it to create a metadata variable.
+        // The metadata varaible will later be passed to createOfflineRegion()
+        byte[] metadata;
+        try
+
+        {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(JSON_FIELD_REGION_NAME, regionName);
+            String json = jsonObject.toString();
+            metadata = json.getBytes(JSON_CHARSET);
+        } catch(
+                Exception exception)
+
+        {
+            Log.e(TAG, "Failed to encode metadata: " + exception.getMessage());
+            metadata = null;
+        }
+        // Create the offline region and launch the download
+        offlineManager.createOfflineRegion(definition,metadata,new OfflineManager.CreateOfflineRegionCallback()
+
+        {
+            @Override
+            public void onCreate (OfflineRegion offlineRegion){
+                Log.d(TAG, "Offline region created: " + regionName);
+                MapActivity.this.offlineRegion = offlineRegion;
+                launchDownload();
+            }
+
+            @Override
+            public void onError (String error){
+                Log.e(TAG, "Error: " + error);
+            }
+        });
+
     }
 
     private void launchDownload() {
@@ -905,7 +926,6 @@ public class MapActivity extends AppCompatActivity
                 double percentage = status.getRequiredResourceCount() >= 0
                         ? (100.0 * status.getCompletedResourceCount() / status.getRequiredResourceCount()) :
                         0.0;
-
 
                 System.out.println("percentage is" + percentage);
 
@@ -1004,6 +1024,8 @@ public class MapActivity extends AppCompatActivity
                                 // Make progressBar indeterminate and
                                 // set it to visible to signal that
                                 // the deletion process has begun
+
+                                final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
                                 progressBar.setIndeterminate(true);
                                 progressBar.setVisibility(View.VISIBLE);
 
@@ -1053,7 +1075,7 @@ public class MapActivity extends AppCompatActivity
     }
 
     private String getRegionName(OfflineRegion offlineRegion) {
-        // Get the retion name from the offline region metadata
+        // Get the region name from the offline region metadata
         String regionName;
 
         try {
@@ -1248,6 +1270,8 @@ public class MapActivity extends AppCompatActivity
                 @Override
                 public void onMapReady(MapboxMap mapboxMap) {
                     map = mapboxMap;
+                    // Set up the offlineManager
+                    offlineManager = OfflineManager.getInstance(MapActivity.this);
 
                     //assign the percentages
                     l25 = Double.parseDouble(percentages[0]); //string to double...
