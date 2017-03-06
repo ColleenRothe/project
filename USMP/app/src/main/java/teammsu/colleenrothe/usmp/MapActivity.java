@@ -330,7 +330,7 @@ public class MapActivity extends AppCompatActivity
 
         }
         if (id == R.id.action_info) {
-            
+
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             final TextView tv = new TextView(this);
             String message = "Cache map: Input northeast and southwest corner coordinates to save a portion of the map for offline use" +

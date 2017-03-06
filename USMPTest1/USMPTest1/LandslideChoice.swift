@@ -74,6 +74,19 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
+    @IBOutlet weak var agencyPicker: UIPickerView!
+    
+    var agencyOptions = ["Select Agency option", "FS", "NPS", "BLM", "BIA"]
+    
+    @IBOutlet weak var regionalPicker: UIPickerView!
+    
+    var regionalOptions = ["Select Regional option"]
+    
+    @IBOutlet weak var localPicker: UIPickerView!
+    
+    var localOptions = ["Select Local option"]
+    
+    
     //nav bar buttons
     
     @IBOutlet weak var mapButton: UIBarButtonItem!
@@ -287,7 +300,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //For Validation
     
-    @IBOutlet weak var managementAreaText: UITextField!
     
     @IBOutlet weak var roadTrailNoText: UITextField!
     
@@ -372,12 +384,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //autocomplete
     
-    //Management Area
-    //let autoTableMA = UITableView(frame: CGRectMake(10,200,300,120), style: UITableViewStyle.Plain)
-    let autoTableMA = UITableView()
-    var pastMA = [NSString]()
-    var autocompMA = [String]()
-    var wordsMA = [NSManagedObject]()
+    
     
     //Rater
     let autoTableR = UITableView(frame: CGRect(x: 10,y: 20,width: 300,height: 120), style: UITableViewStyle.plain)
@@ -417,41 +424,15 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         super.viewDidLoad()
         //Autocomplete
-        autoTableMA.frame = CGRect(x: 10,y: 20,width: 300,height: 120)
 
-        //Management Area
-        self.view.addSubview(self.autoTableMA)
-        autoTableMA.register(UITableViewCell.self, forCellReuseIdentifier: "AutoCompleteRowIdentifier")
+
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ACManagement")
         
-        do {
-            let results =
-                try managedContext.fetch(fetchRequest)
-            wordsMA = results as! [NSManagedObject] //
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-            
-        }
-        
-        //do once at beginning to keep it up to date
-        for i in 0 ..< wordsMA.count {
-            let thing = wordsMA[i]
-            pastMA.append((wordsMA[i].value(forKey: "word") as? NSString)!)
-        }
-
     
-        autoTableMA.delegate = self
-        autoTableMA.dataSource = self
-        autoTableMA.isScrollEnabled = true
-        autoTableMA.isUserInteractionEnabled = true
-        autoTableMA.allowsSelectionDuringEditing = true
-        autoTableMA.allowsSelection = true
-        autoTableMA.isHidden = true  //true
         
         //Rater
         self.view.addSubview(self.autoTableR)
@@ -555,6 +536,16 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         //picker delegates
+        
+        agencyPicker.delegate = self
+        agencyPicker.dataSource = self
+        
+        regionalPicker.delegate = self
+        regionalPicker.dataSource = self
+        
+        localPicker.delegate = self
+        localPicker.dataSource = self
+        
         speedPicker.delegate = self
         speedPicker.dataSource = self
         
@@ -631,7 +622,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         flmaDText.delegate = self
         
         //text field delegates for validation
-        managementAreaText.delegate = self
         
         roadTrailNoText.delegate = self
         roadTrailNoText.keyboardType = .numberPad // only can have integers...
@@ -800,7 +790,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func fillToEdit(){
         let selectedLocation = feedItems.object(at: 0) as! LandslideModel
         
-        managementAreaText.text = selectedLocation.mgmt_area
+        let agency = ""
+        let regional = ""
+        let local = ""
         //date?
         let road_or_trail = selectedLocation.road_or_trail
         if(road_or_trail == "T"){
@@ -1250,13 +1242,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func textField(_ textField: UITextField!, shouldChangeCharactersIn range: NSRange, replacementString string: String!) -> Bool
     {
         
-        if(textField == managementAreaText){
-        //autoTableMA.hidden = false
-        let substring = (managementAreaText.text! as NSString).replacingCharacters(in: range, with: string)
         
-        autocompleteMA(substring)
-        }
-        else if (textField == rater){
+        if (textField == rater){
         
         let substring2 = (rater.text! as NSString).replacingCharacters(in: range, with: string)
         autocompleteR(substring2)
@@ -1282,31 +1269,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         return true
     }
     
-    func autocompleteMA(_ substring: String)
-    {
-        if(autocompMA.count != 0){ //so it doesn't show up when nothing is there and then you're stuck
-           autoTableMA.isHidden = false
-        }
-        else{
-            autoTableMA.isHidden = true
-        }
-        autocompMA.removeAll(keepingCapacity: false)
-        
-      
-        for curString in pastMA
-        {
-            let myString:NSString! = curString as NSString
-            
-            let substringRange :NSRange! = myString.range(of: substring, options: .caseInsensitive)
-            
-            if (substringRange.location  == 0)
-            {
-                autocompMA.append(curString as String)
-            }
-        }
-        
-        autoTableMA.reloadData()
-    }
     
     func autocompleteR(_ substring: String)
     {
@@ -1385,10 +1347,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if(tableView == autoTableMA){
-            return autocompMA.count
-        }
-        else if(tableView == autoTableR){ //if...
+        
+        if(tableView == autoTableR){ //if...
             return autocompR.count
         }
         else if (tableView == autoTableLong){
@@ -1402,15 +1362,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if(tableView == autoTableMA){
-        let autoCompleteRowIdentifier = "AutoCompleteRowIdentifier"
-        let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: autoCompleteRowIdentifier, for: indexPath) as UITableViewCell
-        let index = (indexPath as NSIndexPath).row as Int
         
-        cell.textLabel!.text = autocompMA[index]
-        return cell
-        }
-        else if (tableView == autoTableR) {
+        if (tableView == autoTableR) {
             let autoCompleteRowIdentifier = "AutoCompleteRowIdentifier"
             let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: autoCompleteRowIdentifier, for: indexPath) as UITableViewCell
             let index = (indexPath as NSIndexPath).row as Int
@@ -1438,15 +1391,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if(tableView == autoTableMA){
-            print("SELECTED")
-        let selectedCell : UITableViewCell = tableView.cellForRow(at: indexPath)!
-        autoTableMA.isHidden = true
-        managementAreaText.text = selectedCell.textLabel!.text
-            
         
-        }
-        else if (tableView == autoTableR){
+        if (tableView == autoTableR){
             let selectedCell : UITableViewCell = tableView.cellForRow(at: indexPath)!
             autoTableR.isHidden = true
             rater.text = selectedCell.textLabel!.text
@@ -1480,7 +1426,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //get to the next text field...
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //management area -> date picker
         //date picker -> r/t picker
                 if textField == roadTrailNoText {
             textField.resignFirstResponder()
@@ -1708,50 +1653,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         totalScoreText.text = String(calcTotalScore())
         
         //MARK: Validation--> Keyboards only work completely on phones
-        if(textField == managementAreaText){
-            //autoTableMA.hidden = true
-            if(managementAreaText.text == "" || managementAreaText.text?.characters.count >= 120){
-                managementAreaText.backgroundColor = UIColor.red
-                let messageString = "Management Area cannot be empty and must be shorter than 120 characters."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-                
-                
-            }
-            else{
-                managementAreaText.backgroundColor = UIColor.white
-            }
-            
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            let managedContext = appDelegate.managedObjectContext
-            let entity =  NSEntityDescription.entity(forEntityName: "ACManagement", in:managedContext)
-            let site = NSManagedObject(entity: entity!, insertInto: managedContext)
-            
-            if(pastMA.contains(managementAreaText.text! as NSString)){
-                
-            }else{
-                site.setValue(managementAreaText.text, forKey: "word")
-                pastMA.append(managementAreaText.text! as NSString)
-                
-            }
-            
-            
-            
-            do {
-                try managedContext.save()
-                
-            } catch let error as NSError  {
-                print("Could not save \(error), \(error.userInfo)")
-                
-                
-            }
-
        
-            
-        }
+        
         
         if(textField == roadTrailNoText){
             if(roadTrailNoText.text == "" || Int(roadTrailNoText.text!) == nil){
@@ -2529,8 +2432,20 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         var components = 0
        
+        if(pickerView .isEqual(agencyPicker)){
+            components = agencyOptions.count;
+        }
+        
+        if(pickerView .isEqual(regionalPicker)){
+            components = regionalOptions.count;
+        }
+        
         if(pickerView .isEqual(speedPicker)){
             components = speedOptions.count;
+        }
+        
+        if(pickerView .isEqual(localPicker)){
+            components = localOptions.count;
         }
         if(pickerView .isEqual(sidePicker)){
             components = sideOptions.count;
@@ -2587,7 +2502,15 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //return each row
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-      
+        if(pickerView .isEqual(agencyPicker)){
+            return agencyOptions[row]
+        }
+        if(pickerView .isEqual(regionalPicker)){
+            return regionalOptions[row]
+        }
+        if(pickerView .isEqual(localPicker)){
+            return localOptions[row]
+        }
             
         if(pickerView .isEqual(speedPicker)){
             return speedOptions[row]
@@ -3557,6 +3480,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             editSubmit()
         }
         else{
+        
+        var agency = ""
+        var regional = ""
+        var local = ""
+            
         //road/trail?
         var road_or_trail="R"
         let selected =  rtPicker.selectedRow(inComponent: 0)
@@ -3757,7 +3685,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")! as URL)
         request.httpMethod = "POST"
         
-        let postString = "mgmt_area= \(managementAreaText.text!)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)"
+        let postString = "umbrella_agency=\(agency)&regional_admin=\(regional)&local_admin=\(local)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)"
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
@@ -4077,7 +4005,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             let entity =  NSEntityDescription.entity(forEntityName: "NewOfflineLandslide", in:managedContext)
             let site = NSManagedObject(entity: entity!, insertInto: managedContext)
 
-        site.setValue(managementAreaText.text, forKey: "managementArea")
+        
+        //set value for agency, regional, local
         
             //date
         site.setValue(datePicker.date, forKey: "date")
@@ -4269,7 +4198,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
                     let number = shareData.selectedForm
                     
-                    managementAreaText.text = sites[number].value(forKey: "managementArea")! as? String
+            //agency, regional, local = sites[number].value for key
                     
                     //DATE
                     datePicker.date = (sites[number].value(forKey: "date")! as? Date)!

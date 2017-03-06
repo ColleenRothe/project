@@ -15,6 +15,7 @@
     <entity name="NewOfflineLandslide" syncable="YES">
         <attribute name="aadt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="aadtCheck" optional="YES" attributeType="Boolean" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="agency" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="annualRain1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="annualRain2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="axialLength" optional="YES" attributeType="String" syncable="YES"/>
@@ -39,9 +40,9 @@
         <attribute name="lat1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lat2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lengthAffectedRT" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="local" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="long1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="long2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="managementArea" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photos" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prAadt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prImpact" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
@@ -51,6 +52,7 @@
         <attribute name="prSlideErosion" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="prTotal" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rater" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regional" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="roadOrTrail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="roadTrailClass" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roadTrailNo" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,6 +83,7 @@
     <entity name="NewOfflineRockfall" syncable="YES">
         <attribute name="aadt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="aadtCheck" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="agency" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="beginMile" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="beginRain" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="blockSize" optional="YES" attributeType="String" syncable="YES"/>
@@ -105,9 +108,9 @@
         <attribute name="lat1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lat2" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lengthAffected" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="local" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="long1" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="long2" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="managementArea" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photos" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prAadt" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prBvEvent" optional="YES" attributeType="String" syncable="YES"/>
@@ -116,6 +119,7 @@
         <attribute name="prImpact" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="prTotal" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rater" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="regional" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="roadOrTrail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="roadTrailClass" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roadTrailNo" optional="YES" attributeType="String" syncable="YES"/>
@@ -208,7 +212,6 @@
         <attribute name="imagename" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="managementArea" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photos" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="prelimRating" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roadTrailNo" optional="YES" attributeType="String" syncable="YES"/>
@@ -365,11 +368,11 @@
         <element name="ACLongitude" positionX="-27" positionY="162" width="128" height="60"/>
         <element name="ACManagement" positionX="-54" positionY="135" width="128" height="60"/>
         <element name="ACRater" positionX="-45" positionY="144" width="128" height="60"/>
-        <element name="NewOfflineLandslide" positionX="-63" positionY="99" width="128" height="1005"/>
-        <element name="NewOfflineRockfall" positionX="-63" positionY="135" width="128" height="1050"/>
+        <element name="NewOfflineLandslide" positionX="-63" positionY="99" width="128" height="1035"/>
+        <element name="NewOfflineRockfall" positionX="-63" positionY="135" width="128" height="1080"/>
         <element name="OfflineMaintenance" positionX="-54" positionY="144" width="128" height="30"/>
-        <element name="OfflineSite" positionX="-63" positionY="-18" width="128" height="465"/>
-        <element name="OfflineSlopeEvent" positionX="-63" positionY="135" width="128" height="870"/>
+        <element name="OfflineSite" positionX="-63" positionY="-18" width="128" height="450"/>
         <element name="OfflineSiteFull" positionX="-36" positionY="135" width="128" height="1305"/>
+        <element name="OfflineSlopeEvent" positionX="-63" positionY="135" width="128" height="870"/>
     </elements>
 </model>
