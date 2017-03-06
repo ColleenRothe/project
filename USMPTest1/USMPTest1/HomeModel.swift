@@ -124,16 +124,10 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         else{
             thing.date = ""
         }
-        if(self.JSONDictionary.value(forKey:"SLOPE_STATUS") as? String != nil){
-        thing.slope_status = self.JSONDictionary.value(forKey: "SLOPE_STATUS")! as? String
-        }
-        else{
-            thing.slope_status=""
-        }
-        if(self.JSONDictionary.value(forKey:"MANAGEMENT_AREA") as? String != nil){
-        thing.management_area = self.JSONDictionary.value(forKey: "MANAGEMENT_AREA")! as? String
+        if(self.JSONDictionary.value(forKey:"UMBRELLA_AGENCY") as? String != nil){
+        thing.umbrella_agency = self.JSONDictionary.value(forKey: "UMBRELLA_AGENCY")! as? String
         }else{
-            thing.management_area=""
+            thing.umbrella_agency=""
         }
         
         if(self.JSONDictionary.value(forKey:"ROAD_TRAIL_NO") as? String != nil){

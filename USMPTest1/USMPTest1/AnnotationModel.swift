@@ -17,8 +17,7 @@ class AnnotationModel: NSObject {
     var site_id : String?
     var coordinates : String?
     var date: String?
-    var slope_status : String?
-    var management_area : String?
+    var umbrella_agency: String?
     var road_trail_no : String?
     var begin_mile_marker : String?
     var end_mile_marker: String?
@@ -38,14 +37,13 @@ class AnnotationModel: NSObject {
     }
     
     
-    init(id: String, site_id: String, coordinates: String, date: String, slope_status: String, management_area: String, road_trail_no: String, begin_mile_marker: String, end_mile_marker: String, side: String, hazard_type: String, prelim_rating: String, total_score: String, photos: String, comments: String, hazard_rating_rockfall_id: String, hazard_rating_landslide_id: String){
+    init(id: String, site_id: String, coordinates: String, date: String, umbrella_agency: String, road_trail_no: String, begin_mile_marker: String, end_mile_marker: String, side: String, hazard_type: String, prelim_rating: String, total_score: String, photos: String, comments: String, hazard_rating_rockfall_id: String, hazard_rating_landslide_id: String){
      
         self.id = id
         self.site_id = site_id
         self.coordinates = coordinates
         self.date = date
-        self.slope_status = slope_status
-        self.management_area = management_area
+        self.umbrella_agency = umbrella_agency
         self.road_trail_no = road_trail_no
         self.begin_mile_marker = begin_mile_marker
         self.end_mile_marker = end_mile_marker

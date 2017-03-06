@@ -82,10 +82,175 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     var regionalOptions = ["Select Regional option"]
     
+    var FSRegionalOptions = ["Select Regional option" ,"Northern_Region", "Rocky_Mountain_Region", "Southwestern_Region", "Intermountain_Region",
+                             "Pacific_Southwest_Region","Pacific_Northwest_Region","Southern_Region","Eastern_Region","Alaska_Region"]
+    
+    var NPSRegionalOptions = ["Select Regional option","AKR","IMR","MWR","NCR","NER","PWR","SER"]
+    
     @IBOutlet weak var localPicker: UIPickerView!
     
     var localOptions = ["Select Local option"]
     
+    var FSNorthernLocal = ["Select Local option","Beaverhead-Deerlodge_National_Forest","Bitterroot_National_Forest",
+                           "Dakota_Prairie_National_Grasslands","Flathead_National_Forest","Custer_Gallatin_National_Forest",
+                           "Helena_National_Forest","Idaho_Panhandle_National_Forests","Kootenai_National_Forest",
+                           "Lewis_&_Clark_National_Forest","Lolo_National_Forest","Nez_Perce-Clearwater_National_Forests"]
+    
+    var FSRockyMountainLocal = ["Select Local option","Arapaho_and_Roosevelt_National_Forests_and_Pawnee_National_Grassland","Bighorn_National_Forest",
+                                  "Black_Hills_National_Forest","Grand_Mesa,Uncompahgre_and_Gunnison_National_Forests",
+                                  "Medicine_Bow-Routt_National_Forests_and_Thunder_Basin_National_Grassland","Nebraska_ National_Forests_and_Grasslands",
+                                  "Pike_and_San_Isabel_National_Forests_Cimarron_and_Comanche_National_Grasslands","Rio_Grande_National_Forest",
+                                  "San_Juan_National_Forest","Shoshone_National_Forest","White_River_National_Forest"]
+    
+    var FSSouthwesternLocal = ["Select Local option","Apache-Sitgreaves_National_Forests","Carson_National_Forest","Cibola_National_Forest",
+                                 "Coconino_National_Forest","Coronado_National_Forest","Gila_National_Forest",
+                                 "Kaibab_National_Forest","Lincoln_National_Forest","Prescott_National_Forest",
+                                 "Santa_Fe_National_Forest","Tonto_National_Forest"]
+    
+    var FSIntermountainLocal = ["Select Local option","Ashley_National_Forest","Boise_National_Forest","Bridger-Teton_National_Forest",
+                                  "Caribou-Targhee_National_Forest","Dixie_National_Forest","Fishlake_National_Forest",
+                                  "Humboldt-Toiyabe_National_Forest","Manti-LaSal_National_Forest","Payette_National_Forest",
+                                  "Salmon-Challis_National_Forest","Sawtooth_National_Forest","Uinta-Wasatch-Cache_National_Forest"]
+    
+    var FSPacificSouthwestLocal = ["Select Local option","Angeles_National_Forest","Cleveland_National_Forest","Eldorado_National_Forest",
+                                     "Inyo_National_Forest","Klamath_National_Forest","Lake_Tahoe_Basin_Management_Unit",
+                                     "Lassen_National_Forest","Los_Padres_National_Forest","Mendocino_National_Forest",
+                                     "Modoc_National_Forest","Plumas_National_Forest","San_Bernardino_National_Forest",
+                                     "Sequoia_National_Forest","Shasta-Trinity_National_Forest","Sierra_National_Forest",
+                                     "Six_Rivers_National_Forest","Stanislaus_National_Forest","Tahoe_National_Forest"]
+    
+    var FSPacificNorthwestLocal = ["Select Local option","Columbia_River_Gorge_National_Scenic_Area","Colville_National_Forest",
+                                     "Crooked_River_National_Grassland","Deschutes_National_Forest",
+                                     "Fremont-Winema_National_Forest","Gifford_Pinchot_National_Forest",
+                                     "Malheur_National_Forest","Mt._Baker-Snoqualmie_National_Forest",
+                                     "Mt._Hood_National_Forest","Ochoco_National_Forest","Okanogan-Wenatchee_National_Forest",
+                                     "Olympic_National_Forest","Siuslaw_National_Forest","Rogue_River-Siskiyou_National_Forest",
+                                     "Umatilla_National_Forest","Umpqua_National_Forest",
+                                     "Wallowa-Whitma_National_Forest","Willamette_National_Forest"]
+    
+    var FSSouthernLocal = ["Select Local option","Chattahoochee-Oconee_National_Forest","Cherokee_National_Forest","Daniel_Boone_National_Forest",
+                             "El_Yunque_National_Forest","Francis_Marion_and_Sumter_National_Forests",
+                             "George_Washington_and_Jefferson_National_Forests","Kisatchie_National_Forest",
+                             "Land_Between_the_Lakes_Recreation_Area","National_Forests_and_Grasslands_in_Texas",
+                             "National_Forests_in_Alabama","National_Forests_in_Florida","National_Forests_in_Mississippi",
+                             "National_Forests_in_North_Carolina","Ouachita_National_Forest",
+                             "Ozark-St._Francis_National_Forest","Savannah_River_Site"]
+    
+    var FSEasternLocal = ["Select Local option","Allegheny_National_Forest","Chequamegon-Nicolet_National_Forest","Chippewa_National_Forest",
+                            "Green_Mountain_&_Finger_Lakes_National_Forests","Hiawatha_National_Forest","Hoosier_National_Forest",
+                            "Huron-Manistee_National_Forests","Mark_Twain_National_Forest","Midewin_National_Tallgrass_Prairie",
+                            "Monongahela_National_Forest","Ottawa_National_Forest","Shawnee_National_Forest",
+                            "Superior_National_Forest","Wayne_National_Forest","White_Mountain_National_Forest"]
+    
+    var FSAlaskaLocal = ["Select Local option","Chugach National Forest","Tongass National Forest"]
+    
+    var NPSAkrLocal = ["Select Local option","KLONDIKE_GOLD_RUSH","SITKA","CAPE_KRUSENSTERN","ANIAKCHAK","KENAI_FJORDS",
+    "KOBUK_VALLEY","DENALI","GATES_OF_THE_ARCTIC","GLACIER_BAY","KATMAI",
+    "LAKE_CLARK","WRANGELL-ST._ELIAS","BERING_LAND_BRIDGE","NOATAK",
+    "YUKON-CHARLEY_RIVERS"]
+    
+    var NPSImrLocal = ["Select Local option","JOHN_D._ROCKEFELLER,_JR.,","CHACO_CULTURE","LYNDON_B._JOHNSON",
+                       "MANHATTAN_PROJECT","PALO_ALTO","PECOS","SAN_ANTONIO_MISSIONS","TUMACACORI",
+                       "BENTS_OLD_FORT","FORT_BOWIE","FORT_DAVIS","FORT_LARAMIE","GOLDEN_SPIKE",
+                       "GRANT-KOHRS_RANCH","HUBBELL_TRADING_POST","SAND_CREEK_MASSACRE","WASHITA",
+                       "ALIBATES_FLINT_QUARRIES","AZTEC_RUINS","BANDELIER","CANYON_DE_CHELLY",
+                       "CAPULIN_VOLCANO","CASA_GRANDE_RUINS","CEDAR_BREAKS","CHIRICAHUA","COLORADO",
+                       "DEVILS_TOWER","DINOSAUR","EL_MALPAIS","EL_MORRO","FLORISSANT_FOSSIL_BEDS",
+                       "FORT_UNION","FOSSIL_BUTTE","GILA_CLIFF_DWELLINGS","HOHOKAM_PIMA","HOVENWEEP",
+                       "LITTLE_BIGHORN","MONTEZUMA_CASTLE","NATURAL_BRIDGES","NAVAJO","ORGAN_PIPE_CACTUS",
+                       "PETROGLYPH","PIPE_SPRING","RAINBOW_BRIDGE","SALINAS_PUEBLO_MISSIONS",
+                       "SUNSET_CRATER_VOLCANO","TIMPANOGOS_CAVE","TONTO","TUZIGOOT","WACO_MAMMOTH",
+                       "WALNUT_CANYON","WHITE_SANDS","WUPATKI","YUCCA_HOUSE","CHAMIZAL",
+                       "CORONADO","ARCHES","BIG_BEND","BLACK_CANYON_OF_THE_GUNNISON","BRYCE_CANYON",
+                       "CANYONLANDS","CAPITOL_REEF","CARLSBAD_CAVERNS","GLACIER","GRAND_CANYON",
+                       "GRAND_TETON","GUADALUPE_MOUNTAINS","MESA_VERDE","PETRIFIED_FOREST",
+                       "ROCKY_MOUNTAIN","SAGUARO","YELLOWSTONE","ZION","BIG_THICKET",
+                       "GREAT_SAND_DUNES","VALLES_CALDERA","AMISTAD","BIGHORN_CANYON ","CHICKASAW",
+                       "CURECANTI","GLEN_CANYON","LAKE_MEREDITH","PADRE_ISLAND","RIO_GRANDE"]
+    
+    var NPSMwrLocal = ["Select Local option","JEFFERSON_NATIONAL_EXPANSION","WILSON’S_CREEK","RIVER_RAISIN","DAYTON_AVIATION_HERITAGE",
+                       "GEORGE_ROGERS_CLARK","HOPEWELL_CULTURE","KEWEENAW","BROWN_V._BOARD_OF_EDUCATION",
+                       "FIRST_LADIES'","FORT_LARNED","FORT_SCOTT","FORT_SMITH","FORT_UNION_TRADING_POST",
+                       "HARRY_S_TRUMAN","HERBERT_HOOVER","JAMES_A._GARFIELD","KNIFE_RIVER_INDIAN_VILLAGES",
+                       "LINCOLN_HOME","LITTLE_ROCK_CENTRAL_HIGH_SCHOOL","MINUTEMAN_MISSILE","NICODEMUS",
+                       "PRESIDENT_WILLIAM_JEFFERSON_CLINTON_BIRTHPLACE_HOME","ULYSSES_S._GRANT","WILLIAM_HOWARD_TAFT",
+                       "APOSTLE_ISLANDS","INDIANA_DUNES","PICTURED_ROCKS","SLEEPING_BEAR_DUNES",
+                       "AGATE_FOSSIL_BEDS","CHARLES_YOUNG_BUFFALO_SOLDIERS","EFFIGY_MOUNDS",
+                       "GEORGE_WASHINGTON_CARVER","GRAND_PORTAGE","HOMESTEAD","JEWEL_CAVE","PIPESTONE",
+                       "PULLMAN","SCOTTS_BLUFF","ARKANSAS_POST","LINCOLN_BOYHOOD","MOUNT_RUSHMORE",
+                       "PERRY’S_VICTORY_AND_INTERNATIONAL_PEACE_MEMORIAL","PEA_RIDGE","BADLANDS",
+                       "CUYAHOGA_VALLEY","HOT_SPRINGS","ISLE_ROYALE","THEODORE_ROOSEVELT","VOYAGEURS",
+                       "WIND_CAVE","TALLGRASS_PRAIRIE","BUFFALO","MISSISSIPPI_NATIONAL_RIVER_AND_RECREATION_AREA",
+                       "NIOBRARA","OZARK_NATIONAL_SCENIC_RIVERWAY","SAINT_CROIX","MISSOURI_NATIONAL_RECREATIONAL_RIVER"]
+    
+    var NPSNcrLocal = ["Select Local option","LINCOLN","THOMAS_JEFFERSON","VIETNAM_VETERANS","WORLD_WAR_II",
+                       "GEORGE_WASHINGTON_MEMORIAL_PARKWAY","ANTIETAM","MONOCACY","MANASSAS",
+                       "CHESAPEAKE_AND_OHIO_CANAL","HARPERS_FERRY","CARTER_G._WOODSON_HOME","CLARA_BARTON",
+                       "FORD'S_THEATRE","FREDERICK_DOUGLASS","MARY_MCLEOD_BETHUNE_COUNCIL_HOUSE",
+                       "PENNSYLVANIA_AVENUE","BELMONT-PAUL_WOMEN'S_EQUALITY","ARLINGTON_HOUSE_-_ROBERT_E._LEE_MEMORIAL",
+                       "FRANKLIN_DELANO_ROOSEVELT","KOREAN_WAR_VETERANS",
+                       "LYNDON_BAINES_JOHNSON_MEMORIAL_GROVE_ON_THE_POTOMAC","MARTIN_LUTHER_KING,_JR.",
+                       "THEODORE_ROOSEVELT_ISLAND","WORLD_WAR_I","POTOMAC_HERITAGE","CONSTITUTION_GARDENS",
+                       "NATIONAL_CAPITAL_PARKS_-_EAST","NATIONAL_MALL","PRINCE_WILLIAM_FOREST_PARK",
+                       "WASHINGTON_MONUMENT","WHITE_HOUSE_PRESIDENTS_PARK","WOLF_TRAP_PARK_FOR_THE_PERFORMING_ARTS",
+                       "CATOCTIN_MOUNTAIN","FORT_WASHINGTON","GREEN_BELT","PISCATAWAY","ROCK_CREEK"]
+    
+    var NPSNerLocal = ["Select Local option","FORT_NECESSITY","PETERSBURG","RICHMOND","ADAMS","APPOMATTOX_COURT_HOUSE",
+                       "BLACKSTONE_RIVER_VALLEY","BOSTON","CEDAR_CREEK_&_BELLE_GROVE","COLONIAL",
+                       "FIRST_STATE","HARRIET_TUBMAN_UNDERGROUND_RAILROAD","INDEPENDENCE","LOWELL",
+                       "MARSH-BILLINGS-ROCKEFELLER","MINUTE_MAN","MORRISTOWN","NEW_BEDFORD_WHALING",
+                       "PATERSON_GREAT_FALLS","SARATOGA","THOMAS_EDISON","VALLEY_FORGE","WOMEN'S_RIGHTS",
+                       "ALLEGHENY_PORTAGE_RAILROAD","BOSTON_AFRICAN_AMERICAN","EDGAR_ALLAN_POE","EISENHOWER",
+                       "ELEANOR_ROOSEVELT","FREDRICK_LAW_OLMSTED","FRIENDSHIP_HILL","HAMPTON",
+                       "HOME_OF_FRANKLIN_D._ROOSEVELT","HOPEWELL_FURNACE","JOHN_FITZGERALD_KENNEDY",
+                       "LONGFELLOW_HOUSE_-WASHINGTON'S_HEADQUARTERS","MAGGIE_L._WALKER","MARTIN_VAN_BUREN",
+                       "SAGAMORE_HILL","SAINT_PAUL'S_CHURCH","SAINT-GAUDENS","SALEM_MARITIME",
+                       "SAUGUS_IRON_WORKS","SPRINGFIELD_ARMORY","STEAMTOWN","THEODORE_ROOSEVELT_BIRTHPLACE",
+                       "THOMAS_STONE","VANDERBILT_MANSION","WEIR_FARM","AFRICAN_BURIAL_GROUND",
+                       "BOOKER_T._WASHINGTON_NM","CASTLE_CLINTON","FORT_MONROE","FORT_STANWIX",
+                       "GEORGE_WASHINGTON_BIRTHPLACE","GOVERNORS_ISLAND","KATAHDIN_WOODS_AND_WATERS",
+                       "STATUE_OF_LIBERTY_AND_ELLIS_ISLAND","STONEWALL","FEDERAL_HALL","FLIGHT_93",
+                       "GENERAL_GRANT","HAMILTON_GRANGE_NM","JOHNSTOWN_FLOOD_NM","ROGER_WILLIAMS",
+                       "THADDEUS_KOSCIUSZKO","FREDRICKSBURG_&_SPOTSYLVANIA","GETTYSBURG","ACADIA",
+                       "SHENANDOAH","NEW_RIVER_GORGE","BOSTON_HARBOR_ISLANDS","DELAWARE_WATER_GAP",
+                       "GATEWAY","GAULEY","ASSATEAGUE_ISLAND_NS","CAPE_COD","FIRE_ISLAND",
+                       "BLUESTONE","FORT_MCHENRY_NATIONAL_MONUMENT_AND_HISTORIC_SHRINE",
+                       "SAINT_CROIX_ISLAND_INTERNATIONAL_HISTORIC_SITE","GREAT_EGG_HARBOR","UPPER_DELAWARE",
+                       "APPALACHIAN"]
+    
+    var NPSPwrLocal = ["Select Local option","BIG_HOLE","KALAUPAPA","KALOKO-HONOKOHAU","KLONDIKE_GOLD_RUSH",
+                       "LEWIS_AND_CLARK","NEZ_PERCE","PU'UHONUA_O_HONAUNAU","ROSIE_THE_RIVETER/WWII_HOME_FRONT",
+                       "SAN_FRANCISCO_MARITIME","WAR_IN_THE_PACIFIC","EUGENE_O'NEILL","FORT_POINT",
+                       "FORT_VANCOUVER","JOHN_MUIR","MANZANAR","MINIDOKA","PU'UKOHOLA_HEIAU",
+                       "SAN_JUAN_ISLAND","WHITMAN_MISSION","CABRILLO","CASTLE_MOUNTAIN",
+                       "CESAR_E._CHAVEZ","DEVILS_POSTPILE","HAGERMAN_FOSSIL_BEDS","HONOULIULI",
+                       "JOHN_DAY_FOSSIL_BEDS","LAVA_BEDS","MUIR_WOODS","PORT_CHICAGO_NAVAL_MAGAZINE",
+                       "TULE_SPRINGS_FOSSIL_BEDS","WORLD_WAR_II_VALOR_IN_THE_PACIFIC","OREGON_CAVES",
+                       "CRATERS_OF_THE_MOON","CHANNEL_ISLANDS","CRATER_LAKE","DEATH_VALLEY",
+                       "GREAT_BASIN","HALEAKALA","HAWAII_VOLCANOES","JOSHUA_TREE","KINGS_CANYON",
+                       "LASSEN_VOLCANIC","MOUNT_RAINIER","NATIONAL_PARK_OF_AMERICAN_SAMOA","NORTH_CASCADES",
+                       "OLYMPIC","PINNACLES","REDWOOD","SEQUOIA","YOSEMITE","MOJAVE",
+                       "GOLDEN_GATE","LAKE_CHELAN","LAKE_MEAD","LAKE_ROOSEVELT","ROSS_LAKE",
+                       "SANTA_MONICA_MOUNTAINS","WHISKEYTOWN","POINT_REYES","AMERICAN_MEMORIAL_PARK",
+                       "CITY_OF_ROCKS_NATIONAL_RESERVE","EBEY'S_LANDING_NATIONAL_HISTORICAL_RESERVE"]
+    
+    var NPSSerLocal = ["Select Local option","COWPENS",
+    "FORT_DONELSON","MOORES_CREEK","STONES_RIVER","TUPELO","KENNESAW_MOUNTAIN",
+    "ABRAHAM_LINCOLN_BIRTHPLACE","CUMBERLAND_GAP","NATCHEZ","NEW_ORLEANS_JAZZ",
+    "ANDERSONVILLE","ANDREW_JOHNSON","CARL_SANDBURG_HOME","CHARLES_PINCKNEY",
+    "CHRISTIANSTED","FORT_RALEIGH","JIMMY_CARTER","MARTIN_LUTHER_KING,_JR.",
+    "NINETY_SIX","SAN_JUAN","TUSKEGEE_AIRMEN","TUSKEGEE_INSTITUTE","BUCK_ISLAND_REEF",
+    "CASTILLO_de_SAN_MARCOS","FORT_FREDERICA","FORT_MATANZAS","FORT_PULASKI",
+    "FORT_SUMTER","OCMULGEE","POVERTY_POINT_STATE","RUSSELL_CAVE",
+    "VIRGIN_ISLANDS_CORAL_REEF","DE_SOTO","FORT_CAROLINE","WRIGHT_BROTHERS",
+    "CHICKAMAUGA_AND_CHATTANOOGA","GUILFORD_COURTHOUSE","HORSESHOE_BEND","KINGS_MOUNTAIN",
+    "SHILOH","VICKSBURG","BISCAYNE","CONGAREE","DRY_TORTUGAS","EVERGLADES",
+    "GREAT_SMOKY_MOUNTAINS","MAMMOTH_CAVE","VIRGIN_ISLANDS","LITTLE_RIVER_CANYON",
+    "BIG_SOUTH_FORK ","CHATTAHOOCHEE","CANAVERAL","CAPE_HATTERAS","CAPE_LOOKOUT",
+    "CUMBERLAND_ISLAND","GULF_ISLANDS","APPALACHIAN","NATCHEZ_TRACE",
+    "BRICES_CROSS_ROADS_NATIONAL_BATTLEFIELD_SITE","CANE_RIVER_CREOLE_NATIONAL_HISTORICAL_PARK_&_HERITAGE_AREA",
+    "JEAN_LAFITTE_NATIONAL_HISTORICAL_PARK_&_PRESERVE","SALT_RIVER_BAY_NATIONAL_HISTORICAL_PARK_&_ECOLOGICAL_PRESERVE",
+    "TIMUCUAN_ECOLOGICAL","BLUE_RIDGE_PARKWAY","OBED"]
     
     //nav bar buttons
     

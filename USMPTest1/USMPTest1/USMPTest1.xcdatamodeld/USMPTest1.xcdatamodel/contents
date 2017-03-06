@@ -219,6 +219,7 @@
         <attribute name="siteID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="slopeStatus" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="totalScore" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="umbrella_agency" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="OfflineSiteFull" syncable="YES">
         <attribute name="aadt" optional="YES" attributeType="String" syncable="YES"/>
@@ -371,7 +372,7 @@
         <element name="NewOfflineLandslide" positionX="-63" positionY="99" width="128" height="1035"/>
         <element name="NewOfflineRockfall" positionX="-63" positionY="135" width="128" height="1080"/>
         <element name="OfflineMaintenance" positionX="-54" positionY="144" width="128" height="30"/>
-        <element name="OfflineSite" positionX="-63" positionY="-18" width="128" height="450"/>
+        <element name="OfflineSite" positionX="-63" positionY="-18" width="128" height="465"/>
         <element name="OfflineSiteFull" positionX="-36" positionY="135" width="128" height="1305"/>
         <element name="OfflineSlopeEvent" positionX="-63" positionY="135" width="128" height="870"/>
     </elements>

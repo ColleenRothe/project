@@ -150,7 +150,7 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         
             //slope_statusLabel.text = "Slope Status: \(selectedLocation.slope_status!)"
         
-            management_areaLabel.text = "Management Area: \(selectedLocation.management_area!)"
+            management_areaLabel.text = "Agency: \(selectedLocation.umbrella_agency!)"
         
             road_trail_noLabel.text = "Road/Trail No: \(selectedLocation.road_trail_no!)"
         
@@ -215,7 +215,7 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
                     
                     //slope_statusLabel.text = "Slope Status: \((site[pz].value(forKey: "slopeStatus") as? String)!)"
                     
-                    management_areaLabel.text = "Management Area: \((site[pz].value(forKey: "managementArea") as? String)!)"
+                    management_areaLabel.text = "Agency: \((site[pz].value(forKey: "umbrella_agency") as? String)!)"
                     
                     road_trail_noLabel.text = "Road/Trail No: \((site[pz].value(forKey: "roadTrailNo") as? String)!)"
                     
