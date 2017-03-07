@@ -74,12 +74,13 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    @IBOutlet weak var agencyPicker: UIPickerView!
+    
+    @IBOutlet weak var agency: UIPickerView!
     
     var agencyOptions = ["Select Agency option", "FS", "NPS", "BLM", "BIA"]
     
-    @IBOutlet weak var regionalPicker: UIPickerView!
     
+    @IBOutlet weak var regional: UIPickerView!
     var regionalOptions = ["Select Regional option"]
     
     var FSRegionalOptions = ["Select Regional option" ,"Northern_Region", "Rocky_Mountain_Region", "Southwestern_Region", "Intermountain_Region",
@@ -87,7 +88,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     var NPSRegionalOptions = ["Select Regional option","AKR","IMR","MWR","NCR","NER","PWR","SER"]
     
-    @IBOutlet weak var localPicker: UIPickerView!
+    @IBOutlet weak var local: UIPickerView!
     
     var localOptions = ["Select Local option"]
     
@@ -702,14 +703,14 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         //picker delegates
         
-        agencyPicker.delegate = self
-        agencyPicker.dataSource = self
+        agency.delegate = self
+        agency.dataSource = self
         
-        regionalPicker.delegate = self
-        regionalPicker.dataSource = self
+        regional.delegate = self
+        regional.dataSource = self
         
-        localPicker.delegate = self
-        localPicker.dataSource = self
+        local.delegate = self
+        local.dataSource = self
         
         speedPicker.delegate = self
         speedPicker.dataSource = self
@@ -2515,6 +2516,131 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //update calculations after changing picker selection
     func pickerView(_ pickerView: UIPickerView,didSelectRow row: Int,inComponent component: Int){
+        if(pickerView.isEqual(agency)){
+            //"select", "FS","NPS","BLM","BIA"
+            if(agency.selectedRow(inComponent: 0) == 0){
+                regionalOptions.removeAll()
+                regionalOptions.append("Select Regional option")
+                regional.reloadAllComponents()
+            }
+            if(agency.selectedRow(inComponent: 0) == 1){ //fs
+                regionalOptions.removeAll()
+                regionalOptions.append(contentsOf: FSRegionalOptions)
+                regional.reloadAllComponents()
+            }
+            if(agency.selectedRow(inComponent: 0) == 2){ //nps
+                regionalOptions.removeAll()
+                regionalOptions.append(contentsOf: NPSRegionalOptions)
+                regional.reloadAllComponents()
+            }
+        }
+        
+        if(pickerView.isEqual(regional)){
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 0){
+                localOptions.removeAll()
+                localOptions.append("Select Local option")
+                local.reloadAllComponents()
+            }
+            //FS North
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 1){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSNorthernLocal)
+                local.reloadAllComponents()
+            }
+            //FS Rocky
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 2){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSRockyMountainLocal)
+                local.reloadAllComponents()
+            }
+            //FS Southwestern
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 3){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSSouthwesternLocal)
+                local.reloadAllComponents()
+            }
+            //FS Intermountain
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 4){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSIntermountainLocal)
+                local.reloadAllComponents()
+            }
+            //FS Pacific Southwestern
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 5){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSPacificSouthwestLocal)
+                local.reloadAllComponents()
+            }
+            //FS Pacific Northwestern
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 6){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSPacificNorthwestLocal)
+                local.reloadAllComponents()
+            }
+            //FS South
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 7){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSSouthernLocal)
+                local.reloadAllComponents()
+            }
+            //FS Eastern
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 8){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSEasternLocal)
+                local.reloadAllComponents()
+            }
+            //FS North
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 9){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSAlaskaLocal)
+                local.reloadAllComponents()
+            }
+            
+            if(agency.selectedRow(inComponent: 0) == 2){
+                if(regional.selectedRow(inComponent: 0) == 0){
+                    localOptions.removeAll()
+                    localOptions.append("Select Local option")
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 1){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSAkrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 2){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSImrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 3){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSMwrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 4){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSNcrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 5){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSNerLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 6){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSPwrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 7){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSSerLocal)
+                    local.reloadAllComponents()
+                }
+            }
+        }
+
+        
         //calc C
         roadwayLAText.text = String(calculateC())
         
@@ -2597,11 +2723,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         var components = 0
        
-        if(pickerView .isEqual(agencyPicker)){
+        if(pickerView .isEqual(agency)){
             components = agencyOptions.count;
         }
         
-        if(pickerView .isEqual(regionalPicker)){
+        if(pickerView .isEqual(regional)){
             components = regionalOptions.count;
         }
         
@@ -2609,7 +2735,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             components = speedOptions.count;
         }
         
-        if(pickerView .isEqual(localPicker)){
+        if(pickerView .isEqual(local)){
             components = localOptions.count;
         }
         if(pickerView .isEqual(sidePicker)){
@@ -2667,13 +2793,13 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //return each row
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if(pickerView .isEqual(agencyPicker)){
+        if(pickerView .isEqual(agency)){
             return agencyOptions[row]
         }
-        if(pickerView .isEqual(regionalPicker)){
+        if(pickerView .isEqual(regional)){
             return regionalOptions[row]
         }
-        if(pickerView .isEqual(localPicker)){
+        if(pickerView .isEqual(local)){
             return localOptions[row]
         }
             

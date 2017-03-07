@@ -649,6 +649,16 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
         
         //Pickers
+        agency.delegate = self
+        agency.dataSource = self
+        
+        regional.delegate = self
+        regional.dataSource = self
+        
+        local.delegate = self
+        local.dataSource = self
+        
+        
         rtPicker.delegate = self
         rtPicker.dataSource = self
         
@@ -884,6 +894,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
+    
+    
+    
     
     func isInternetAvailable() -> Bool
     {
@@ -2606,6 +2619,129 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     //auto-update when you change picker value
     func pickerView(_ pickerView: UIPickerView,didSelectRow row: Int,inComponent component: Int){
         
+        if(pickerView.isEqual(agency)){
+            //"select", "FS","NPS","BLM","BIA"
+            if(agency.selectedRow(inComponent: 0) == 0){
+                regionalOptions.removeAll()
+                regionalOptions.append("Select Regional option")
+                regional.reloadAllComponents()
+            }
+            if(agency.selectedRow(inComponent: 0) == 1){ //fs
+                regionalOptions.removeAll()
+                regionalOptions.append(contentsOf: FSRegionalOptions)
+                regional.reloadAllComponents()
+            }
+            if(agency.selectedRow(inComponent: 0) == 2){ //nps
+                regionalOptions.removeAll()
+                regionalOptions.append(contentsOf: NPSRegionalOptions)
+                regional.reloadAllComponents()
+            }
+        }
+        
+        if(pickerView.isEqual(regional)){
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 0){
+                localOptions.removeAll()
+                localOptions.append("Select Local option")
+                local.reloadAllComponents()
+            }
+            //FS North
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 1){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSNorthernLocal)
+                local.reloadAllComponents()
+            }
+            //FS Rocky
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 2){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSRockyMountainLocal)
+                local.reloadAllComponents()
+            }
+            //FS Southwestern
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 3){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSSouthwesternLocal)
+                local.reloadAllComponents()
+            }
+            //FS Intermountain
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 4){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSIntermountainLocal)
+                local.reloadAllComponents()
+            }
+            //FS Pacific Southwestern
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 5){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSPacificSouthwestLocal)
+                local.reloadAllComponents()
+            }
+            //FS Pacific Northwestern
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 6){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSPacificNorthwestLocal)
+                local.reloadAllComponents()
+            }
+            //FS South
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 7){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSSouthernLocal)
+                local.reloadAllComponents()
+            }
+            //FS Eastern
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 8){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSEasternLocal)
+                local.reloadAllComponents()
+            }
+            //FS North
+            if(agency.selectedRow(inComponent: 0) == 1 && regional.selectedRow(inComponent: 0) == 9){
+                localOptions.removeAll()
+                localOptions.append(contentsOf: FSAlaskaLocal)
+                local.reloadAllComponents()
+            }
+            
+            if(agency.selectedRow(inComponent: 0) == 2){
+                if(regional.selectedRow(inComponent: 0) == 0){
+                    localOptions.removeAll()
+                    localOptions.append("Select Local option")
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 1){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSAkrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 2){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSImrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 3){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSMwrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 4){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSNcrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 5){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSNerLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 6){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSPwrLocal)
+                    local.reloadAllComponents()
+                }
+                if(regional.selectedRow(inComponent: 0) == 7){
+                    localOptions.removeAll()
+                    localOptions.append(contentsOf: NPSSerLocal)
+                    local.reloadAllComponents()
+                }
+            }
+        }
         
         //calc F
         bsPerEventText.text = String(calculateF())
@@ -2803,9 +2939,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else{
             return "error";
         }
-      
-
-        
+    
     }
     
     //MARK: Info Buttons
