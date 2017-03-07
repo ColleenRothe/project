@@ -3930,9 +3930,75 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             editSubmit()
         }else{
         
-        var agency = ""
-        var regional = ""
-        var local = ""
+            //agency
+            var agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+            //regional
+            var regionalS = ""
+            if(agency.selectedRow(inComponent: 0) == 1){ //fs
+                regionalS = FSRegionalOptions[regional.selectedRow(inComponent: 0)]
+            }
+            if(agency.selectedRow(inComponent: 0) == 2){ //fs
+                regionalS = NPSRegionalOptions[regional.selectedRow(inComponent: 0)]
+            }
+            //local
+            var localS = ""
+            if(agency.selectedRow(inComponent: 0) == 1){ //FS
+                if(regional.selectedRow(inComponent: 0) == 1){  //NORTHERN
+                    localS = FSNorthernLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 2){  //Rocky MTN
+                    localS = FSRockyMountainLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 3){  //Southwestern
+                    localS = FSSouthwesternLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 4){  //Intermountain
+                    localS = FSIntermountainLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 5){  //Pacific Southwest
+                    localS = FSPacificSouthwestLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 6){  //Pacific Northwest
+                    localS = FSPacificNorthwestLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 7){  //Southern
+                    localS = FSSouthernLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 8){  //Eastern
+                    localS = FSEasternLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 9){  //Alaska
+                    localS = FSAlaskaLocal[local.selectedRow(inComponent: 0)]
+                }
+            }
+            
+            if(agency.selectedRow(inComponent: 0) == 2){ //NPS
+                if(regional.selectedRow(inComponent: 0) == 1){  //Akr
+                    localS = NPSAkrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 2){  //Imr
+                    localS = NPSImrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 3){  //Mwr
+                    localS = NPSMwrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 4){  //Ncr
+                    localS = NPSNcrLocal[local.selectedRow(inComponent: 0)]
+                }
+                
+                if(regional.selectedRow(inComponent: 0) == 5){  //Ner
+                    localS = NPSNerLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 6){  //pwr
+                    localS = NPSPwrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 7){  //ser
+                    localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
+                }
+                
+                
+            }
+
             
         //road/trail?
         var road_or_trail="R"
@@ -4207,9 +4273,76 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func editSubmit(){
         
-        var agency = ""
-        var regional = ""
-        var local = ""
+        //agency
+        var agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+        //regional
+        var regionalS = ""
+        if(agency.selectedRow(inComponent: 0) == 1){ //fs
+            regionalS = FSRegionalOptions[regional.selectedRow(inComponent: 0)]
+        }
+        if(agency.selectedRow(inComponent: 0) == 2){ //fs
+            regionalS = NPSRegionalOptions[regional.selectedRow(inComponent: 0)]
+        }
+        //local
+        var localS = ""
+        if(agency.selectedRow(inComponent: 0) == 1){ //FS
+            if(regional.selectedRow(inComponent: 0) == 1){  //NORTHERN
+                localS = FSNorthernLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 2){  //Rocky MTN
+                localS = FSRockyMountainLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 3){  //Southwestern
+                localS = FSSouthwesternLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 4){  //Intermountain
+                localS = FSIntermountainLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 5){  //Pacific Southwest
+                localS = FSPacificSouthwestLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 6){  //Pacific Northwest
+                localS = FSPacificNorthwestLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 7){  //Southern
+                localS = FSSouthernLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 8){  //Eastern
+                localS = FSEasternLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 9){  //Alaska
+                localS = FSAlaskaLocal[local.selectedRow(inComponent: 0)]
+            }
+        }
+        
+        if(agency.selectedRow(inComponent: 0) == 2){ //NPS
+            if(regional.selectedRow(inComponent: 0) == 1){  //Akr
+                localS = NPSAkrLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 2){  //Imr
+                localS = NPSImrLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 3){  //Mwr
+                localS = NPSMwrLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 4){  //Ncr
+                localS = NPSNcrLocal[local.selectedRow(inComponent: 0)]
+            }
+            
+            if(regional.selectedRow(inComponent: 0) == 5){  //Ner
+                localS = NPSNerLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 6){  //pwr
+                localS = NPSPwrLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 7){  //ser
+                localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
+            }
+            
+            
+        }
+        
+
         
         //road/trail?
         var road_or_trail="R"
@@ -4511,9 +4644,14 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let site = NSManagedObject(entity: entity!, insertInto: managedContext)
         
         
-        //agency
-        //regional
-        //local
+        let selectedAgency = agency.selectedRow(inComponent: 0)
+        let selectedRegional = regional.selectedRow(inComponent: 0)
+        let selectedLocal = local.selectedRow(inComponent: 0)
+        
+        site.setValue(selectedAgency, forKey: "agency")
+        site.setValue(selectedRegional, forKey: "regional")
+        site.setValue(selectedLocal, forKey: "local")
+        
         
         //date
         site.setValue(datePicker.date, forKey: "date")
@@ -4709,14 +4847,18 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
              let number = shareData.selectedForm
             
-            //agency
-            //regional
-            //local
             
+            let agencyI = sites[number].value(forKey: "agency")! as! NSObject as! Int
+            let regionalI = sites[number].value(forKey: "regional")! as! NSObject as! Int
+            let localI = sites[number].value(forKey: "local")! as! NSObject as! Int
             
-                    
+            agency.selectRow(agencyI, inComponent: 0, animated: true)
+            //works??
+            agency.selectRow(regionalI, inComponent: 0, animated: true)
+            local.selectRow(localI, inComponent: 0, animated: true)
+
                     //Date
-                    
+            
                     datePicker.date = (sites[number].value(forKey: "date")! as? Date)!
                     
                     //road or trail?

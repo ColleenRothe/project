@@ -3772,9 +3772,74 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         else{
         
-        var agency = ""
-        var regional = ""
-        var local = ""
+            //agency
+        var agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+            //regional
+        var regionalS = ""
+        if(agency.selectedRow(inComponent: 0) == 1){ //fs
+                regionalS = FSRegionalOptions[regional.selectedRow(inComponent: 0)]
+        }
+        if(agency.selectedRow(inComponent: 0) == 2){ //fs
+            regionalS = NPSRegionalOptions[regional.selectedRow(inComponent: 0)]
+        }
+            //local
+        var localS = ""
+            if(agency.selectedRow(inComponent: 0) == 1){ //FS
+                if(regional.selectedRow(inComponent: 0) == 1){  //NORTHERN
+                    localS = FSNorthernLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 2){  //Rocky MTN
+                    localS = FSRockyMountainLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 3){  //Southwestern
+                    localS = FSSouthwesternLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 4){  //Intermountain
+                    localS = FSIntermountainLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 5){  //Pacific Southwest
+                    localS = FSPacificSouthwestLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 6){  //Pacific Northwest
+                    localS = FSPacificNorthwestLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 7){  //Southern
+                    localS = FSSouthernLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 8){  //Eastern
+                    localS = FSEasternLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 9){  //Alaska
+                    localS = FSAlaskaLocal[local.selectedRow(inComponent: 0)]
+                }
+            }
+            
+            if(agency.selectedRow(inComponent: 0) == 2){ //NPS
+                if(regional.selectedRow(inComponent: 0) == 1){  //Akr
+                    localS = NPSAkrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 2){  //Imr
+                    localS = NPSImrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 3){  //Mwr
+                    localS = NPSMwrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 4){  //Ncr
+                    localS = NPSNcrLocal[local.selectedRow(inComponent: 0)]
+                }
+                
+                if(regional.selectedRow(inComponent: 0) == 5){  //Ner
+                    localS = NPSNerLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 6){  //pwr
+                    localS = NPSPwrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 7){  //ser
+                    localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
+                }
+                
+                
+            }
             
         //road/trail?
         var road_or_trail="R"
@@ -3976,7 +4041,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")! as URL)
         request.httpMethod = "POST"
         
-        let postString = "umbrella_agency=\(agency)&regional_admin=\(regional)&local_admin=\(local)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)"
+        let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)"
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
@@ -4015,6 +4080,75 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         //let postString = "old_site_id=1559"
         
+        //agency
+        var agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+        //regional
+        var regionalS = ""
+        if(agency.selectedRow(inComponent: 0) == 1){ //fs
+            regionalS = FSRegionalOptions[regional.selectedRow(inComponent: 0)]
+        }
+        if(agency.selectedRow(inComponent: 0) == 2){ //fs
+            regionalS = NPSRegionalOptions[regional.selectedRow(inComponent: 0)]
+        }
+        //local
+        var localS = ""
+        if(agency.selectedRow(inComponent: 0) == 1){ //FS
+            if(regional.selectedRow(inComponent: 0) == 1){  //NORTHERN
+                localS = FSNorthernLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 2){  //Rocky MTN
+                localS = FSRockyMountainLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 3){  //Southwestern
+                localS = FSSouthwesternLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 4){  //Intermountain
+                localS = FSIntermountainLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 5){  //Pacific Southwest
+                localS = FSPacificSouthwestLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 6){  //Pacific Northwest
+                localS = FSPacificNorthwestLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 7){  //Southern
+                localS = FSSouthernLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 8){  //Eastern
+                localS = FSEasternLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 9){  //Alaska
+                localS = FSAlaskaLocal[local.selectedRow(inComponent: 0)]
+            }
+        }
+        
+        if(agency.selectedRow(inComponent: 0) == 2){ //NPS
+            if(regional.selectedRow(inComponent: 0) == 1){  //Akr
+                localS = NPSAkrLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 2){  //Imr
+                localS = NPSImrLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 3){  //Mwr
+                localS = NPSMwrLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 4){  //Ncr
+                localS = NPSNcrLocal[local.selectedRow(inComponent: 0)]
+            }
+            
+            if(regional.selectedRow(inComponent: 0) == 5){  //Ner
+                localS = NPSNerLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 6){  //pwr
+                localS = NPSPwrLocal[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 7){  //ser
+                localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
+            }
+            
+            
+        }
+
         
         //road/trail?
         var road_or_trail="R"
@@ -4215,8 +4349,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/editSite.php")! as URL)
         request.httpMethod = "POST"
-        let postString = "old_site_id=\(shareData.current_site_id)"
-//        let postString = "old_site_id=\(shareData.current_site_id)&mgmt_area= \(managementAreaText.text!)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)"
+    
+        let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)"
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
@@ -4298,8 +4432,15 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
         
         //set value for agency, regional, local
+            let selectedAgency = agency.selectedRow(inComponent: 0)
+            let selectedRegional = regional.selectedRow(inComponent: 0)
+            let selectedLocal = local.selectedRow(inComponent: 0)
         
-            //date
+        site.setValue(selectedAgency, forKey: "agency")
+        site.setValue(selectedRegional, forKey: "regional")
+        site.setValue(selectedLocal, forKey: "local")
+
+        //date
         site.setValue(datePicker.date, forKey: "date")
 
         
@@ -4489,8 +4630,17 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
                     let number = shareData.selectedForm
                     
-            //agency, regional, local = sites[number].value for key
-                    
+                    //agency, regional, local = sites[number].value for key
+            
+                    let agencyI = sites[number].value(forKey: "agency")! as! NSObject as! Int
+                    let regionalI = sites[number].value(forKey: "regional")! as! NSObject as! Int
+                    let localI = sites[number].value(forKey: "local")! as! NSObject as! Int
+            
+                    agency.selectRow(agencyI, inComponent: 0, animated: true)
+                    //works??
+                    agency.selectRow(regionalI, inComponent: 0, animated: true)
+                    local.selectRow(localI, inComponent: 0, animated: true)
+        
                     //DATE
                     datePicker.date = (sites[number].value(forKey: "date")! as? Date)!
             
