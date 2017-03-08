@@ -139,19 +139,22 @@ public class MapActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         mapView = (MapView) findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-
-        mapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(MapboxMap mapboxMap) {
-                map = mapboxMap;
-                // Set up the offlineManager
-                offlineManager = OfflineManager.getInstance(MapActivity.this);
-            }
-        });
 
 
-        getJSON2(JSON_URL2);
+            mapView.onCreate(savedInstanceState);
+
+            mapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(MapboxMap mapboxMap) {
+                    map = mapboxMap;
+                    // Set up the offlineManager
+                    offlineManager = OfflineManager.getInstance(MapActivity.this);
+                }
+            });
+
+
+            getJSON2(JSON_URL2);
+
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
 
@@ -333,11 +336,11 @@ public class MapActivity extends AppCompatActivity
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             final TextView tv = new TextView(this);
-            String message = "Cache map: Input northeast and southwest corner coordinates to save a portion of the map for offline use" +
+            String message = "Cache map: Input a name for your saved map area (map in view of screen area)" +
                     "You must be online to do this, and will be notified when the download is complete (~2 min.).\n \n" +
                     "Clear Cache: Delete the current saved map (can only save one at a time). \n \n" +
-                    "Cache Status: Check to see if you have a map section saved for offline use. If cached area is invalid, will notify you and automatically clear. \n \n" +
-                    "Load Offline Points: While offline, load the map and previously saved sites. Only works if you have previously saved a map while online. You may need to zoom in to view map tiles.";
+                    "Cache Status: Check to see if you have a saved map area. Navigate to the area, or delete the saved map tiles and site(s) information.\n \n" +
+                    "Load Offline Points: While offline, load previously saved sites. Only works if you have previously saved a map while online. You may need to zoom in to view map tiles.";
             tv.setText(message, TextView.BufferType.NORMAL);
 
             alertDialogBuilder.setView(tv);
@@ -1184,7 +1187,7 @@ public class MapActivity extends AppCompatActivity
                 super.onPostExecute(s);
                 getJSON(JSON_URL); //move down to get images
                 //then testing...then create the map sites
-                System.out.println(s);
+                //System.out.println(s);
             }
         }
         GetJSON gj = new GetJSON();
