@@ -956,9 +956,76 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func fillToEdit(){
         let selectedLocation = feedItems.object(at: 0) as! LandslideModel
         
-        let agency = ""
-        let regional = ""
-        let local = ""
+        var agencyS = selectedLocation.umbrella_agency
+        var regionS = selectedLocation.regiona_admin
+        var localS = selectedLocation.local_admin
+        
+        if(agencyS == "FS"){
+            agency.selectRow(1, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
+            
+        }else if(agencyS == "NPS"){
+            agency.selectRow(2, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+            
+            
+        }else if(agencyS == "BLM"){
+            agency.selectRow(3, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 3, inComponent: 0)
+            
+            
+        }else if(agencyS == "BIA"){
+            agency.selectRow(4, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
+        }
+        
+        if(FSRegionalOptions.contains(regionS!)){
+            regional.selectRow(FSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
+            self.regional.delegate?.pickerView!(regional, didSelectRow: FSRegionalOptions.index(of: regionS!)!, inComponent: 0)
+            if(FSNorthernLocal.contains(localS!)){
+                local.selectRow(FSNorthernLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSRockyMountainLocal.contains(localS!)){
+                local.selectRow(FSRockyMountainLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSSouthwesternLocal.contains(localS!)){
+                local.selectRow(FSSouthwesternLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSIntermountainLocal.contains(localS!)){
+                local.selectRow(FSIntermountainLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSPacificSouthwestLocal.contains(localS!)){
+                local.selectRow(FSPacificSouthwestLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSPacificNorthwestLocal.contains(localS!)){
+                local.selectRow(FSPacificNorthwestLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSSouthernLocal.contains(localS!)){
+                local.selectRow(FSSouthernLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSEasternLocal.contains(localS!)){
+                local.selectRow(FSEasternLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSAlaskaLocal.contains(localS!)){
+                local.selectRow(FSAlaskaLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }
+            
+        }
+            
+        else if(NPSRegionalOptions.contains(regionS!)){
+            regional.selectRow(NPSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
+            self.regional.delegate?.pickerView!(regional, didSelectRow: NPSRegionalOptions.index(of: regionS!)!, inComponent: 0)
+            
+            if(NPSAkrLocal.contains(localS!)){
+                local.selectRow(NPSAkrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSImrLocal.contains(localS!)){
+                local.selectRow(NPSImrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSMwrLocal.contains(localS!)){
+                local.selectRow(NPSMwrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSNcrLocal.contains(localS!)){
+                local.selectRow(NPSNcrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSNerLocal.contains(localS!)){
+                local.selectRow(NPSNerLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSPwrLocal.contains(localS!)){
+                local.selectRow(NPSPwrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSSerLocal.contains(localS!)){
+                local.selectRow(NPSSerLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }
+            
+        }
+
         //date?
         let road_or_trail = selectedLocation.road_or_trail
         if(road_or_trail == "T"){
@@ -4346,11 +4413,14 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             event_cost = 81
         }
         
+        var email = ""
         
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/editSite.php")! as URL)
         request.httpMethod = "POST"
-    
-        let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)"
+        print("old site id")
+        print(shareData.current_site_id)
+        
+        let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)&email=\(email)"
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
@@ -4629,18 +4699,21 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 sites = results as! [NSManagedObject] //shows up twice cuz they were appended earlier
             
                     let number = shareData.selectedForm
-                    
-                    //agency, regional, local = sites[number].value for key
             
                     let agencyI = sites[number].value(forKey: "agency")! as! NSObject as! Int
                     let regionalI = sites[number].value(forKey: "regional")! as! NSObject as! Int
                     let localI = sites[number].value(forKey: "local")! as! NSObject as! Int
             
+                    //need to manually call didSelectRow to load lists correctly
                     agency.selectRow(agencyI, inComponent: 0, animated: true)
-                    //works??
-                    agency.selectRow(regionalI, inComponent: 0, animated: true)
+                    self.agency.delegate?.pickerView!(agency, didSelectRow: agencyI, inComponent: 0)
+            
+                    regional.selectRow(regionalI, inComponent: 0, animated: true)
+                    self.regional.delegate?.pickerView!(regional, didSelectRow: regionalI, inComponent: 0)
+
                     local.selectRow(localI, inComponent: 0, animated: true)
-        
+            
+            
                     //DATE
                     datePicker.date = (sites[number].value(forKey: "date")! as? Date)!
             

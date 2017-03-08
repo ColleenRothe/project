@@ -123,7 +123,18 @@ class OfflineList: UITableViewController{
             if(shareData.OfflineType == "landslide" || shareData.OfflineType == "rockfall"){
                 
                 cell.labelOne.text = "Hazard Type:" + (site.value(forKey: "hazardType")! as! String) //as? String
-                cell.labelTwo.text = "Management Area:" + (site.value(forKey: "managementArea")! as! String) //as? String
+                var agencyS = ""
+                var agencyNum = (site.value(forKey: "agency")! as! NSObject) as! Int
+                if(agencyNum  == 1){
+                    agencyS = "FS"
+                }else if(agencyNum == 2){
+                    agencyS = "NPS"
+                }else if (agencyNum == 3){
+                    agencyS = "BLM"
+                }else if (agencyNum == 4){
+                    agencyS = "BIA"
+                }
+                cell.labelTwo.text = "Agency: "+agencyS
                 cell.labelThree.text = "Road/Trail No:" + (site.value(forKey: "roadTrailNo")! as! String) //as? String
                 
                 let dateformatter = DateFormatter()
