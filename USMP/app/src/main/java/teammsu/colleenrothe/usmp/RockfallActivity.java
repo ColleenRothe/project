@@ -3782,13 +3782,13 @@ public class RockfallActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void RSubmit(View view) throws Exception{
+    public void editSubmit() throws Exception{
         Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
-                try  {
-                    URL url = new URL("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php");
+                try {
+                    URL url = new URL("http://nl.cs.montana.edu/test_sites/colleen.rothe/editSite.php");
                     URLConnection conn = url.openConnection();
                     conn.setDoOutput(true);
                     OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
@@ -3804,38 +3804,30 @@ public class RockfallActivity extends AppCompatActivity
                     String begin_mile_marker = String.valueOf(BeginMile.getText());
                     String end_mile_marker = String.valueOf(EndMile.getText());
                     String road_or_trail = "R";
-                    if(RoadTrail.getSelectedItem().toString().equals("Trail")){
-                        road_or_trail="T";
+                    if (RoadTrail.getSelectedItem().toString().equals("Trail")) {
+                        road_or_trail = "T";
                     }
                     String side = ""; //L/R??
-                    if(Side.getSelectedItemPosition()==0){
+                    if (Side.getSelectedItemPosition() == 0) {
                         side = "L";
-                    }
-                    else if(Side.getSelectedItemPosition()==1){
+                    } else if (Side.getSelectedItemPosition() == 1) {
                         side = "R";
-                    }
-                    else if(Side.getSelectedItemPosition()==2){
+                    } else if (Side.getSelectedItemPosition() == 2) {
                         side = "N";
-                    }
-                    else if(Side.getSelectedItemPosition()==3){
+                    } else if (Side.getSelectedItemPosition() == 3) {
                         side = "NE";
-                    }
-                    else if(Side.getSelectedItemPosition()==4){
+                    } else if (Side.getSelectedItemPosition() == 4) {
                         side = "E";
-                    }
-                    else if(Side.getSelectedItemPosition()==5){
+                    } else if (Side.getSelectedItemPosition() == 5) {
                         side = "SE";
-                    }
-                    else if(Side.getSelectedItemPosition()==6){
+                    } else if (Side.getSelectedItemPosition() == 6) {
                         side = "S";
-                    }
-                    else if(Side.getSelectedItemPosition()==7){
+                    } else if (Side.getSelectedItemPosition() == 7) {
                         side = "SW";
-                    }
-                    else if(Side.getSelectedItemPosition()==8){
+                    } else if (Side.getSelectedItemPosition() == 8) {
                         side = "W";
                     }
-                    if(Side.getSelectedItemPosition()==9){
+                    if (Side.getSelectedItemPosition() == 9) {
                         side = "NW";
                     }
 
@@ -3875,12 +3867,12 @@ public class RockfallActivity extends AppCompatActivity
                     String end_annual_rainfall = String.valueOf(AnnualRain2.getText());
 
                     String sole_access_route = "N";
-                    if(SoleAccess.getSelectedItemPosition()==1){
-                        sole_access_route ="Y";
+                    if (SoleAccess.getSelectedItemPosition() == 1) {
+                        sole_access_route = "Y";
                     }
 
                     String fixes_present = "N";
-                    if(Mitigation.getSelectedItemPosition()==1){
+                    if (Mitigation.getSelectedItemPosition() == 1) {
                         fixes_present = "Y";
                     }
 
@@ -3896,42 +3888,36 @@ public class RockfallActivity extends AppCompatActivity
 
                     //PRELIMINARY RATING
                     String ditch_eff = "3";
-                    if(DitchEffectiveness.getSelectedItemPosition() == 1){
+                    if (DitchEffectiveness.getSelectedItemPosition() == 1) {
                         ditch_eff = "9";
-                    }
-                    else if(DitchEffectiveness.getSelectedItemPosition() == 2){
+                    } else if (DitchEffectiveness.getSelectedItemPosition() == 2) {
                         ditch_eff = "27";
-                    }
-                    else if(DitchEffectiveness.getSelectedItemPosition() == 3){
+                    } else if (DitchEffectiveness.getSelectedItemPosition() == 3) {
                         ditch_eff = "81";
                     }
 
                     String rockfall_history = "3";
-                    if(RockfallHistory.getSelectedItemPosition()==1){
+                    if (RockfallHistory.getSelectedItemPosition() == 1) {
                         rockfall_history = "9";
-                    }
-                    else if(RockfallHistory.getSelectedItemPosition()==2){
+                    } else if (RockfallHistory.getSelectedItemPosition() == 2) {
                         rockfall_history = "27";
-                    }
-                    else if(RockfallHistory.getSelectedItemPosition()==3){
+                    } else if (RockfallHistory.getSelectedItemPosition() == 3) {
                         rockfall_history = "81";
                     }
 
                     String block_size_event_vol = String.valueOf(BSVperEvent.getText());
 
                     String impact_on_use = "3";
-                    if(ImpactOU.getSelectedItemPosition() == 1){
+                    if (ImpactOU.getSelectedItemPosition() == 1) {
                         impact_on_use = "9";
-                    }
-                    else if(ImpactOU.getSelectedItemPosition() == 2){
+                    } else if (ImpactOU.getSelectedItemPosition() == 2) {
                         impact_on_use = "27";
-                    }
-                    else if(ImpactOU.getSelectedItemPosition() == 3){
+                    } else if (ImpactOU.getSelectedItemPosition() == 3) {
                         impact_on_use = "81";
                     }
 
                     String aadt_usage_calc_checkbox = "0";
-                    if(CheckAadt.isChecked()){
+                    if (CheckAadt.isChecked()) {
                         aadt_usage_calc_checkbox = "1";
                     }
 
@@ -3943,73 +3929,61 @@ public class RockfallActivity extends AppCompatActivity
 
                     //for all
                     String slope_drainage = "3";
-                    if(SlopeDrainage.getSelectedItemPosition() == 1){
+                    if (SlopeDrainage.getSelectedItemPosition() == 1) {
                         slope_drainage = "9";
-                    }
-                    else if(SlopeDrainage.getSelectedItemPosition() == 2){
+                    } else if (SlopeDrainage.getSelectedItemPosition() == 2) {
                         slope_drainage = "27";
-                    }
-                    else if(SlopeDrainage.getSelectedItemPosition() == 3){
+                    } else if (SlopeDrainage.getSelectedItemPosition() == 3) {
                         slope_drainage = "81";
                     }
 
                     String annual_rainfall = String.valueOf(AnnualRainfall.getText());
                     String axial_los = String.valueOf(SlopeHeightCalc.getText()); //hr_slope_height_axial_length
 
-                    String rockfall_related_maint_frequency= "3";
-                    if(RockfallRMF.getSelectedItemPosition()==1){
-                        rockfall_related_maint_frequency="9";
-                    }
-                    else if(RockfallRMF.getSelectedItemPosition()==2){
-                        rockfall_related_maint_frequency="27";
-                    }
-                    else if(RockfallRMF.getSelectedItemPosition()==3){
-                        rockfall_related_maint_frequency="81";
+                    String rockfall_related_maint_frequency = "3";
+                    if (RockfallRMF.getSelectedItemPosition() == 1) {
+                        rockfall_related_maint_frequency = "9";
+                    } else if (RockfallRMF.getSelectedItemPosition() == 2) {
+                        rockfall_related_maint_frequency = "27";
+                    } else if (RockfallRMF.getSelectedItemPosition() == 3) {
+                        rockfall_related_maint_frequency = "81";
                     }
 
                     //geo case 1
                     String case_one_struc_condition = "3";
-                    if(StructuralCondition1.getSelectedItemPosition() == 1){
+                    if (StructuralCondition1.getSelectedItemPosition() == 1) {
                         case_one_struc_condition = "9";
-                    }
-                    else if(StructuralCondition1.getSelectedItemPosition() == 2){
+                    } else if (StructuralCondition1.getSelectedItemPosition() == 2) {
                         case_one_struc_condition = "27";
-                    }
-                    else if(StructuralCondition1.getSelectedItemPosition() == 3){
+                    } else if (StructuralCondition1.getSelectedItemPosition() == 3) {
                         case_one_struc_condition = "81";
                     }
 
                     String case_one_rock_friction = "3";
-                    if(RockFriction1.getSelectedItemPosition() == 1){
+                    if (RockFriction1.getSelectedItemPosition() == 1) {
                         case_one_rock_friction = "9";
-                    }
-                    else if(RockFriction1.getSelectedItemPosition() == 2){
+                    } else if (RockFriction1.getSelectedItemPosition() == 2) {
                         case_one_rock_friction = "27";
-                    }
-                    else if(RockFriction1.getSelectedItemPosition() == 3){
+                    } else if (RockFriction1.getSelectedItemPosition() == 3) {
                         case_one_rock_friction = "81";
                     }
 
                     //geo case 2
                     String case_two_struc_condition = "3";
-                    if(StructuralCondition2.getSelectedItemPosition() == 1){
+                    if (StructuralCondition2.getSelectedItemPosition() == 1) {
                         case_two_struc_condition = "9";
-                    }
-                    else if(StructuralCondition2.getSelectedItemPosition() == 2){
+                    } else if (StructuralCondition2.getSelectedItemPosition() == 2) {
                         case_two_struc_condition = "27";
-                    }
-                    else if(StructuralCondition2.getSelectedItemPosition() == 3){
+                    } else if (StructuralCondition2.getSelectedItemPosition() == 3) {
                         case_two_struc_condition = "81";
                     }
 
                     String case_two_diff_erosion = "3";
-                    if(RockFriction2.getSelectedItemPosition() == 1){
+                    if (RockFriction2.getSelectedItemPosition() == 1) {
                         case_two_diff_erosion = "9";
-                    }
-                    else if(RockFriction2.getSelectedItemPosition() == 2){
+                    } else if (RockFriction2.getSelectedItemPosition() == 2) {
                         case_two_diff_erosion = "27";
-                    }
-                    else if(RockFriction2.getSelectedItemPosition() == 3){
+                    } else if (RockFriction2.getSelectedItemPosition() == 3) {
                         case_two_diff_erosion = "81";
                     }
 
@@ -4022,46 +3996,38 @@ public class RockfallActivity extends AppCompatActivity
                     String percent_dsd = String.valueOf(PercentDSD.getText());
 
                     String r_w_impacts = "3";
-                    if(RightOWI.getSelectedItemPosition() == 1){
+                    if (RightOWI.getSelectedItemPosition() == 1) {
                         r_w_impacts = "9";
-                    }
-                    else if(RightOWI.getSelectedItemPosition() == 2){
+                    } else if (RightOWI.getSelectedItemPosition() == 2) {
                         r_w_impacts = "27";
-                    }
-                    else if(RightOWI.getSelectedItemPosition() == 3){
+                    } else if (RightOWI.getSelectedItemPosition() == 3) {
                         r_w_impacts = "81";
                     }
 
                     String enviro_cult_impacts = "3";
-                    if(ECImpact.getSelectedItemPosition() == 1){
+                    if (ECImpact.getSelectedItemPosition() == 1) {
                         enviro_cult_impacts = "9";
-                    }
-                    else if(ECImpact.getSelectedItemPosition() == 2){
+                    } else if (ECImpact.getSelectedItemPosition() == 2) {
                         enviro_cult_impacts = "27";
-                    }
-                    else if(ECImpact.getSelectedItemPosition() == 3){
+                    } else if (ECImpact.getSelectedItemPosition() == 3) {
                         enviro_cult_impacts = "81";
                     }
 
                     String maint_complexity = "3";
-                    if(MaintComplexity.getSelectedItemPosition() == 1){
+                    if (MaintComplexity.getSelectedItemPosition() == 1) {
                         maint_complexity = "9";
-                    }
-                    else if(MaintComplexity.getSelectedItemPosition() == 2){
+                    } else if (MaintComplexity.getSelectedItemPosition() == 2) {
                         maint_complexity = "27";
-                    }
-                    else if(MaintComplexity.getSelectedItemPosition() == 3){
+                    } else if (MaintComplexity.getSelectedItemPosition() == 3) {
                         maint_complexity = "81";
                     }
 
                     String event_cost = "3";
-                    if(EventCost.getSelectedItemPosition() == 1){
+                    if (EventCost.getSelectedItemPosition() == 1) {
                         event_cost = "9";
-                    }
-                    else if(EventCost.getSelectedItemPosition() == 2){
+                    } else if (EventCost.getSelectedItemPosition() == 2) {
                         event_cost = "27";
-                    }
-                    else if(EventCost.getSelectedItemPosition() == 3){
+                    } else if (EventCost.getSelectedItemPosition() == 3) {
                         event_cost = "81";
                     }
 
@@ -4071,27 +4037,27 @@ public class RockfallActivity extends AppCompatActivity
 
                     //flma problem
 
-                    writer.write("mgmt_area="+ "&umbrella_agency="+umbrella_agency+"&regional_admin="+regional_admin+"&local_admin="+local_admin+"&road_trail_number="+road_trail_number+"&road_trail_class="+road_trail_class+
-                            "&begin_mile_marker="+begin_mile_marker+"&end_mile_marker="+end_mile_marker+"&road_or_trail="+road_or_trail+"&side="+
-                            side +"&rater="+l_rater+"&weather="+weather+"&begin_coordinate_latitude="+begin_coordinate_lat+"&begin_coordinate_longitude="+
-                            begin_coordinate_long+"&end_coordinate_latitude="+end_coordinate_latitude+"&end_coordinate_longitude="+end_coordinate_longitude+
-                            "&datum="+datum+"&aadt="+aadt+"&hazard_type="+hazard_type+"&length_affected="+length_affected+"&slope_height_axial_length="+
-                            slope_height_axial_length+"&slope_angle="+slope_angle+"&sight_distance="+sight_distance+"&road_trail_width="+road_trail_width+
-                            "&speed_limit="+speed_limit+"&minimum_ditch_width="+minimum_ditch_width+"&maximum_ditch_width"+maximum_ditch_width+
-                            "&minimum_ditch_depth="+minimum_ditch_depth+"&maximum_ditch_depth="+maximum_ditch_depth+"&first_begin_ditch_slope="+first_begin_ditch_slope+
-                            "&first_end_ditch_slope="+first_end_ditch_slope+"&second_begin_ditch_slope="+second_begin_ditch_slope+"&second_end_ditch_slope="+
-                            second_end_ditch_slope+"&start_annual_rainfall="+start_annual_rainfall+"&end_annual_rainfall="+end_annual_rainfall+
-                            "&sole_access_route="+sole_access_route+"&fixes_present="+fixes_present+"&blk_size="+blk_size+" &volume="+volume+"&prelim_landslide_road_width_affected= &prelim_landslide_slide_erosion_effects= &prelim_landslide_slide_erosion_effects= "+
-                            "&prelim_landslide_length_affected="+length_affected+"&prelim_rockfall_ditch_eff="+ditch_eff+"&prelim_rockfall_rockfall_history="+rockfall_history +
-                            "&prelim_rockfall_block_size_event_vol="+block_size_event_vol+" &impact_on_use="+impact_on_use+"&aadt_usage_calc_checkbox="+
-                            aadt_usage_calc_checkbox+"&aadt_usage="+aadt_usage+"&prelim_rating="+prelim_rating+"&slope_drainage="+
-                            slope_drainage+"&hazard_rating_annual_rainfall="+annual_rainfall+"&hazard_rating_slope_height_axial_length="+axial_los+
-                            "&hazard_landslide_thaw_stability= &hazard_landslide_maint_frequency= &hazard_landslide_movement_history= "+
-                            "&hazard_rockfall_maint_frequency="+rockfall_related_maint_frequency+"&case_one_struc_cond="+case_one_struc_condition+" &case_one_rock_friction="+case_one_rock_friction+"&case_two_struc_condition="+case_two_struc_condition+" &case_two_diff_erosion="+
-                            case_two_diff_erosion+"&route_trail_width="+route_trail_width+"&human_ex_factor="+human_ex_factor+"&percent_dsd="+percent_dsd+"&r_w_impacts="+
-                            r_w_impacts+"&enviro_cult_impacts="+enviro_cult_impacts+"&maint_complexity="+maint_complexity+"&event_cost="+event_cost+
-                            "&hazard_rating_landslide_total="+hazard_total+"&hazard_rating_rockfall_total= &risk_total="+risk_total+"&total_score="+total_score+"&comments="+
-                            comments +"&fmla_id="+flma_id+"&fmla_name="+flma_name+"&fmla_description="+flma_description);
+                    writer.write("umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
+                            "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
+                            side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
+                            begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
+                            "&datum=" + datum + "&aadt=" + aadt + "&hazard_type=" + hazard_type + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                            slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
+                            "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width" + maximum_ditch_width +
+                            "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
+                            "&first_end_ditch_slope=" + first_end_ditch_slope + "&second_begin_ditch_slope=" + second_begin_ditch_slope + "&second_end_ditch_slope=" +
+                            second_end_ditch_slope + "&start_annual_rainfall=" + start_annual_rainfall + "&end_annual_rainfall=" + end_annual_rainfall +
+                            "&sole_access_route=" + sole_access_route + "&fixes_present=" + fixes_present + "&blk_size=" + blk_size + " &volume=" + volume + "&prelim_landslide_road_width_affected= &prelim_landslide_slide_erosion_effects= &prelim_landslide_slide_erosion_effects= " +
+                            "&prelim_landslide_length_affected=" + length_affected + "&prelim_rockfall_ditch_eff=" + ditch_eff + "&prelim_rockfall_rockfall_history=" + rockfall_history +
+                            "&prelim_rockfall_block_size_event_vol=" + block_size_event_vol + " &impact_on_use=" + impact_on_use + "&aadt_usage_calc_checkbox=" +
+                            aadt_usage_calc_checkbox + "&aadt_usage=" + aadt_usage + "&prelim_rating=" + prelim_rating + "&slope_drainage=" +
+                            slope_drainage + "&hazard_rating_annual_rainfall=" + annual_rainfall + "&hazard_rating_slope_height_axial_length=" + axial_los +
+                            "&hazard_landslide_thaw_stability= &hazard_landslide_maint_frequency= &hazard_landslide_movement_history= " +
+                            "&hazard_rockfall_maint_frequency=" + rockfall_related_maint_frequency + "&case_one_struc_cond=" + case_one_struc_condition + " &case_one_rock_friction=" + case_one_rock_friction + "&case_two_struc_condition=" + case_two_struc_condition + " &case_two_diff_erosion=" +
+                            case_two_diff_erosion + "&route_trail_width=" + route_trail_width + "&human_ex_factor=" + human_ex_factor + "&percent_dsd=" + percent_dsd + "&r_w_impacts=" +
+                            r_w_impacts + "&enviro_cult_impacts=" + enviro_cult_impacts + "&maint_complexity=" + maint_complexity + "&event_cost=" + event_cost +
+                            "&hazard_rating_landslide_total=" + hazard_total + "&hazard_rating_rockfall_total= &risk_total=" + risk_total + "&total_score=" + total_score + "&comments=" +
+                            comments + "&fmla_id=" + flma_id + "&fmla_name=" + flma_name + "&fmla_description=" + flma_description);
 
                     //success message
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RockfallActivity.this);
@@ -4127,6 +4093,327 @@ public class RockfallActivity extends AppCompatActivity
         });
 
         thread.start();
+
+    }
+
+    public void RSubmit(View view) throws Exception{
+        //EDIT
+        if(getIntent().getStringExtra("editing") != null){
+            System.out.println("yay! please do EDIT SUBMIT");
+            editSubmit();
+        }
+        else {
+            Thread thread = new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        URL url = new URL("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php");
+                        URLConnection conn = url.openConnection();
+                        conn.setDoOutput(true);
+                        OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
+
+                        //GET ALL THE VALUES
+
+                        String umbrella_agency = String.valueOf(Agency.getSelectedItem());
+                        String regional_admin = String.valueOf(Regional.getSelectedItem());
+                        String local_admin = String.valueOf(Local.getSelectedItem());
+
+                        String road_trail_number = String.valueOf(RoadTrailNo.getText());
+                        String road_trail_class = String.valueOf(RoadTrailClass.getText());
+                        String begin_mile_marker = String.valueOf(BeginMile.getText());
+                        String end_mile_marker = String.valueOf(EndMile.getText());
+                        String road_or_trail = "R";
+                        if (RoadTrail.getSelectedItem().toString().equals("Trail")) {
+                            road_or_trail = "T";
+                        }
+                        String side = ""; //L/R??
+                        if (Side.getSelectedItemPosition() == 0) {
+                            side = "L";
+                        } else if (Side.getSelectedItemPosition() == 1) {
+                            side = "R";
+                        } else if (Side.getSelectedItemPosition() == 2) {
+                            side = "N";
+                        } else if (Side.getSelectedItemPosition() == 3) {
+                            side = "NE";
+                        } else if (Side.getSelectedItemPosition() == 4) {
+                            side = "E";
+                        } else if (Side.getSelectedItemPosition() == 5) {
+                            side = "SE";
+                        } else if (Side.getSelectedItemPosition() == 6) {
+                            side = "S";
+                        } else if (Side.getSelectedItemPosition() == 7) {
+                            side = "SW";
+                        } else if (Side.getSelectedItemPosition() == 8) {
+                            side = "W";
+                        }
+                        if (Side.getSelectedItemPosition() == 9) {
+                            side = "NW";
+                        }
+
+                        String l_rater = String.valueOf(Rater.getText());
+
+                        //ENUM in Database.....
+                        String weather = "";
+                        weather = Weather.getSelectedItem().toString();
+
+                        //date stuff
+
+                        String begin_coordinate_lat = String.valueOf(BeginLat.getText());
+                        String begin_coordinate_long = String.valueOf(BeginLong.getText());
+                        String end_coordinate_latitude = String.valueOf(EndLat.getText());
+                        String end_coordinate_longitude = String.valueOf(EndLong.getText());
+                        String datum = String.valueOf(Datum.getText());
+                        String aadt = String.valueOf(Aadt.getText());
+                        String hazard_type = String.valueOf(HazardType.getText());
+                        String length_affected = String.valueOf(LengthAffected.getText());
+                        String slope_height_axial_length = String.valueOf(SlopeHeight.getText());
+                        String slope_angle = String.valueOf(SlopeAngle.getText());
+                        String sight_distance = String.valueOf(SightDistance.getText());
+                        String road_trail_width = String.valueOf(RtWidth.getText()); //?
+
+                        String speed_limit = Speed.getSelectedItem().toString();
+
+                        String minimum_ditch_width = String.valueOf(DitchWidth1.getText());
+                        String maximum_ditch_width = String.valueOf(DitchWidth2.getText());
+                        String minimum_ditch_depth = String.valueOf(DitchDepth1.getText());
+                        String maximum_ditch_depth = String.valueOf(DitchDepth2.getText());
+                        String first_begin_ditch_slope = String.valueOf(DitchSlope1.getText());
+                        String first_end_ditch_slope = String.valueOf(DitchSlope2.getText());
+                        String second_begin_ditch_slope = String.valueOf(DitchSlope3.getText());
+                        String second_end_ditch_slope = String.valueOf(DitchSlope4.getText());
+
+                        String start_annual_rainfall = String.valueOf(AnnualRain1.getText());
+                        String end_annual_rainfall = String.valueOf(AnnualRain2.getText());
+
+                        String sole_access_route = "N";
+                        if (SoleAccess.getSelectedItemPosition() == 1) {
+                            sole_access_route = "Y";
+                        }
+
+                        String fixes_present = "N";
+                        if (Mitigation.getSelectedItemPosition() == 1) {
+                            fixes_present = "Y";
+                        }
+
+                        //blk size
+                        String blk_size = String.valueOf(BlkSize.getText());
+                        String volume = String.valueOf(Volume.getText());
+
+
+                        String comments = String.valueOf(Comments.getText());
+                        String flma_id = String.valueOf(FlmaId.getText());
+                        String flma_name = String.valueOf(FlmaName.getText());
+                        String flma_description = String.valueOf(FlmaDescription.getText());
+
+                        //PRELIMINARY RATING
+                        String ditch_eff = "3";
+                        if (DitchEffectiveness.getSelectedItemPosition() == 1) {
+                            ditch_eff = "9";
+                        } else if (DitchEffectiveness.getSelectedItemPosition() == 2) {
+                            ditch_eff = "27";
+                        } else if (DitchEffectiveness.getSelectedItemPosition() == 3) {
+                            ditch_eff = "81";
+                        }
+
+                        String rockfall_history = "3";
+                        if (RockfallHistory.getSelectedItemPosition() == 1) {
+                            rockfall_history = "9";
+                        } else if (RockfallHistory.getSelectedItemPosition() == 2) {
+                            rockfall_history = "27";
+                        } else if (RockfallHistory.getSelectedItemPosition() == 3) {
+                            rockfall_history = "81";
+                        }
+
+                        String block_size_event_vol = String.valueOf(BSVperEvent.getText());
+
+                        String impact_on_use = "3";
+                        if (ImpactOU.getSelectedItemPosition() == 1) {
+                            impact_on_use = "9";
+                        } else if (ImpactOU.getSelectedItemPosition() == 2) {
+                            impact_on_use = "27";
+                        } else if (ImpactOU.getSelectedItemPosition() == 3) {
+                            impact_on_use = "81";
+                        }
+
+                        String aadt_usage_calc_checkbox = "0";
+                        if (CheckAadt.isChecked()) {
+                            aadt_usage_calc_checkbox = "1";
+                        }
+
+                        String aadt_usage = String.valueOf(AadtEtc.getText());
+
+                        String prelim_rating = String.valueOf(PrelimRating.getText());
+
+                        //SLOPE HAZARD RATINGS
+
+                        //for all
+                        String slope_drainage = "3";
+                        if (SlopeDrainage.getSelectedItemPosition() == 1) {
+                            slope_drainage = "9";
+                        } else if (SlopeDrainage.getSelectedItemPosition() == 2) {
+                            slope_drainage = "27";
+                        } else if (SlopeDrainage.getSelectedItemPosition() == 3) {
+                            slope_drainage = "81";
+                        }
+
+                        String annual_rainfall = String.valueOf(AnnualRainfall.getText());
+                        String axial_los = String.valueOf(SlopeHeightCalc.getText()); //hr_slope_height_axial_length
+
+                        String rockfall_related_maint_frequency = "3";
+                        if (RockfallRMF.getSelectedItemPosition() == 1) {
+                            rockfall_related_maint_frequency = "9";
+                        } else if (RockfallRMF.getSelectedItemPosition() == 2) {
+                            rockfall_related_maint_frequency = "27";
+                        } else if (RockfallRMF.getSelectedItemPosition() == 3) {
+                            rockfall_related_maint_frequency = "81";
+                        }
+
+                        //geo case 1
+                        String case_one_struc_condition = "3";
+                        if (StructuralCondition1.getSelectedItemPosition() == 1) {
+                            case_one_struc_condition = "9";
+                        } else if (StructuralCondition1.getSelectedItemPosition() == 2) {
+                            case_one_struc_condition = "27";
+                        } else if (StructuralCondition1.getSelectedItemPosition() == 3) {
+                            case_one_struc_condition = "81";
+                        }
+
+                        String case_one_rock_friction = "3";
+                        if (RockFriction1.getSelectedItemPosition() == 1) {
+                            case_one_rock_friction = "9";
+                        } else if (RockFriction1.getSelectedItemPosition() == 2) {
+                            case_one_rock_friction = "27";
+                        } else if (RockFriction1.getSelectedItemPosition() == 3) {
+                            case_one_rock_friction = "81";
+                        }
+
+                        //geo case 2
+                        String case_two_struc_condition = "3";
+                        if (StructuralCondition2.getSelectedItemPosition() == 1) {
+                            case_two_struc_condition = "9";
+                        } else if (StructuralCondition2.getSelectedItemPosition() == 2) {
+                            case_two_struc_condition = "27";
+                        } else if (StructuralCondition2.getSelectedItemPosition() == 3) {
+                            case_two_struc_condition = "81";
+                        }
+
+                        String case_two_diff_erosion = "3";
+                        if (RockFriction2.getSelectedItemPosition() == 1) {
+                            case_two_diff_erosion = "9";
+                        } else if (RockFriction2.getSelectedItemPosition() == 2) {
+                            case_two_diff_erosion = "27";
+                        } else if (RockFriction2.getSelectedItemPosition() == 3) {
+                            case_two_diff_erosion = "81";
+                        }
+
+
+                        String hazard_total = String.valueOf(HazardTotal.getText());
+
+                        //RISK RATINGS--same for all
+                        String route_trail_width = String.valueOf(RouteTW.getText());
+                        String human_ex_factor = String.valueOf(HumanEF.getText());
+                        String percent_dsd = String.valueOf(PercentDSD.getText());
+
+                        String r_w_impacts = "3";
+                        if (RightOWI.getSelectedItemPosition() == 1) {
+                            r_w_impacts = "9";
+                        } else if (RightOWI.getSelectedItemPosition() == 2) {
+                            r_w_impacts = "27";
+                        } else if (RightOWI.getSelectedItemPosition() == 3) {
+                            r_w_impacts = "81";
+                        }
+
+                        String enviro_cult_impacts = "3";
+                        if (ECImpact.getSelectedItemPosition() == 1) {
+                            enviro_cult_impacts = "9";
+                        } else if (ECImpact.getSelectedItemPosition() == 2) {
+                            enviro_cult_impacts = "27";
+                        } else if (ECImpact.getSelectedItemPosition() == 3) {
+                            enviro_cult_impacts = "81";
+                        }
+
+                        String maint_complexity = "3";
+                        if (MaintComplexity.getSelectedItemPosition() == 1) {
+                            maint_complexity = "9";
+                        } else if (MaintComplexity.getSelectedItemPosition() == 2) {
+                            maint_complexity = "27";
+                        } else if (MaintComplexity.getSelectedItemPosition() == 3) {
+                            maint_complexity = "81";
+                        }
+
+                        String event_cost = "3";
+                        if (EventCost.getSelectedItemPosition() == 1) {
+                            event_cost = "9";
+                        } else if (EventCost.getSelectedItemPosition() == 2) {
+                            event_cost = "27";
+                        } else if (EventCost.getSelectedItemPosition() == 3) {
+                            event_cost = "81";
+                        }
+
+                        String risk_total = String.valueOf(RiskTotal.getText());
+
+                        String total_score = String.valueOf(Total.getText());
+
+                        //flma problem
+
+                        writer.write("umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
+                                "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
+                                side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
+                                begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
+                                "&datum=" + datum + "&aadt=" + aadt + "&hazard_type=" + hazard_type + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                                slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
+                                "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width" + maximum_ditch_width +
+                                "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
+                                "&first_end_ditch_slope=" + first_end_ditch_slope + "&second_begin_ditch_slope=" + second_begin_ditch_slope + "&second_end_ditch_slope=" +
+                                second_end_ditch_slope + "&start_annual_rainfall=" + start_annual_rainfall + "&end_annual_rainfall=" + end_annual_rainfall +
+                                "&sole_access_route=" + sole_access_route + "&fixes_present=" + fixes_present + "&blk_size=" + blk_size + " &volume=" + volume + "&prelim_landslide_road_width_affected= &prelim_landslide_slide_erosion_effects= &prelim_landslide_slide_erosion_effects= " +
+                                "&prelim_landslide_length_affected=" + length_affected + "&prelim_rockfall_ditch_eff=" + ditch_eff + "&prelim_rockfall_rockfall_history=" + rockfall_history +
+                                "&prelim_rockfall_block_size_event_vol=" + block_size_event_vol + " &impact_on_use=" + impact_on_use + "&aadt_usage_calc_checkbox=" +
+                                aadt_usage_calc_checkbox + "&aadt_usage=" + aadt_usage + "&prelim_rating=" + prelim_rating + "&slope_drainage=" +
+                                slope_drainage + "&hazard_rating_annual_rainfall=" + annual_rainfall + "&hazard_rating_slope_height_axial_length=" + axial_los +
+                                "&hazard_landslide_thaw_stability= &hazard_landslide_maint_frequency= &hazard_landslide_movement_history= " +
+                                "&hazard_rockfall_maint_frequency=" + rockfall_related_maint_frequency + "&case_one_struc_cond=" + case_one_struc_condition + " &case_one_rock_friction=" + case_one_rock_friction + "&case_two_struc_condition=" + case_two_struc_condition + " &case_two_diff_erosion=" +
+                                case_two_diff_erosion + "&route_trail_width=" + route_trail_width + "&human_ex_factor=" + human_ex_factor + "&percent_dsd=" + percent_dsd + "&r_w_impacts=" +
+                                r_w_impacts + "&enviro_cult_impacts=" + enviro_cult_impacts + "&maint_complexity=" + maint_complexity + "&event_cost=" + event_cost +
+                                "&hazard_rating_landslide_total=" + hazard_total + "&hazard_rating_rockfall_total= &risk_total=" + risk_total + "&total_score=" + total_score + "&comments=" +
+                                comments + "&fmla_id=" + flma_id + "&fmla_name=" + flma_name + "&fmla_description=" + flma_description);
+
+                        //success message
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RockfallActivity.this);
+                        final TextView tv = new TextView(RockfallActivity.this);
+                        tv.setText("Form Submitted Successfully", TextView.BufferType.NORMAL);
+
+                        alertDialogBuilder.setView(tv);
+                        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        // show it
+                        alertDialog.show();
+                        //end success message
+
+
+                        writer.flush();
+                        String line;
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                        }
+                        writer.close();
+                        reader.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            thread.start();
+        }
 
     }
 

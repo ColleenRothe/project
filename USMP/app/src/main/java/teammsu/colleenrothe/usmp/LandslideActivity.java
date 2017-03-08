@@ -3666,13 +3666,13 @@ public class LandslideActivity extends AppCompatActivity
             @Override
             public void run() {
                 try  {
-                    URL url = new URL("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php");
+                    //REALLY??
+                    URL url = new URL("http://nl.cs.montana.edu/test_sites/colleen.rothe/editSite.php");
                     URLConnection conn = url.openConnection();
                     conn.setDoOutput(true);
                     OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
                     //GET ALL THE VALUES
-                    //String mgmt_area = String.valueOf(ManagementArea.getText());
                     String umbrella_agency = String.valueOf(Agency.getSelectedItem());
                     String regional_admin = String.valueOf(Regional.getSelectedItem());
                     String local_admin = String.valueOf(Local.getSelectedItem());
