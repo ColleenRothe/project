@@ -28,7 +28,10 @@ import UIKit
 import MapKit
 import AssetsLibrary
 import CoreData
+import Photos
 import SystemConfiguration
+import BSImagePicker
+
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
@@ -578,6 +581,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     var sidePickerX = CGFloat()
     var sidePickerY = CGFloat()
+    
+    //Images
+    var images = [PHAsset]()
     
 
     override func viewDidAppear(_ animated: Bool) {
@@ -3775,52 +3781,54 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
     
     //PHOTO STUFF HERE
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
-        //dismiss the picker if the user canceled
-        dismiss(animated: true, completion: nil) //animates dismissal of image picker controller
-        
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]){
-        //the info dictionary contains multiple representations of the image and this uses the original
-        let selectedImage=info[UIImagePickerControllerOriginalImage] as! UIImage
-        
-        //set photoImageView to display the selected image
-        //photoImageView.image = selectedImage
-        
-        
-        if let referenceUrl = info[UIImagePickerControllerReferenceURL] as? URL{
+        @IBAction func selectImages(_ sender: AnyObject) {
+            let vc = BSImagePickerViewController()
+            var defaultAssetIds = [String]()
             
-            ALAssetsLibrary().asset(for: referenceUrl, resultBlock: { asset in
+            let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
+            
+            allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
                 
-                let fileName = asset?.defaultRepresentation().filename()
-                self.imagesLabel.text = self.imagesLabel.text! + fileName! + ","
                 
-                //do whatever with your file name
-                
-                }, failureBlock: nil)
-        }
-        
+            })
+            
+            //if there are some images saved...
+            if(self.images.count != 0){
+                for i in 0 ... self.images.count-1{
+                    if allAssets.contains(self.images[i]){ //if the images is one of all the assets
+                        let index = allAssets.index(of: self.images[i]) //gets its index
+                        defaultAssetIds.append(allAssets[index].localIdentifier) //add its identifier to the defaults
+                        print("appending!")
+                    } //if
+                } //for
+            } //if
+            
+            
+            let defaultSelected = PHAsset.fetchAssets(withLocalIdentifiers: defaultAssetIds, options: nil)
+            vc.defaultSelections = defaultSelected
+            
+            
+            bs_presentImagePickerController(vc, animated: true,
+                                            select: { (asset: PHAsset) -> Void in
+                                                // User selected an asset.
+                                                // Do something with it, start upload perhaps?
+                                                //print("Selected: \(asset)")
+                                                self.images.append(asset)
+            }, deselect: { (asset: PHAsset) -> Void in
+                // User deselected an assets.
+                // Do something, cancel upload?
+                let index = self.images.index(of: asset)
+                self.images.remove(at: index!)
+            }, cancel: { (assets: [PHAsset]) -> Void in
+                // User cancelled. And this where the assets currently selected.
+                self.images.removeAll()
+            }, finish: { (assets: [PHAsset]) -> Void in
+                // User finished with these assets
+                for i in 0 ... self.images.count-1{
+                    print(self.images[i])
+                }
+            }, completion: nil)
 
-        
-        //dismiss the picker
-        dismiss(animated: true, completion: nil)
-        
-        
-    }
-
-    
-    @IBAction func selectImages(_ sender: AnyObject) {
-        //UIImagePickerController is a view controller that lets a user pick an image from their photo library
-        let imagePickerController = UIImagePickerController()
-        
-        //Only allow photos to be picked, not taken.
-        imagePickerController.sourceType = .photoLibrary //uses simulator's camera roll
-        
-        //Make sure ViewController is notified when the user picks an image
-        imagePickerController.delegate = self
-        
-        present(imagePickerController, animated: true, completion: nil)
         
 
     }

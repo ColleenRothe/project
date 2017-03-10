@@ -225,6 +225,10 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     @IBOutlet weak var damagesCommentsText: UITextView!
     
+    //Images
+    var images = [PHAsset]()
+
+    
     
     
     
@@ -1144,65 +1148,53 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     //MARK: Choose Images
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController){
-        //dismiss the picker if the user canceled
-        dismiss(animated: true, completion: nil) //animates dismissal of image picker controller
-        
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]){
-        //the info dictionary contains multiple representations of the image and this uses the original
-        let selectedImage=info[UIImagePickerControllerOriginalImage] as! UIImage
-        
-        //set photoImageView to display the selected image
-        //photoImageView.image = selectedImage
-        
-        
-        if let referenceUrl = info[UIImagePickerControllerReferenceURL] as? URL{
-            
-            ALAssetsLibrary().asset(for: referenceUrl, resultBlock: { asset in
-                
-                let fileName = asset?.defaultRepresentation().filename()
-                self.imagesLabel.text = self.imagesLabel.text! + fileName! + "," 
-                
-                //do whatever with your file name
-                
-                }, failureBlock: nil)
-        }
-    
-    
-        //dismiss the picker
-        dismiss(animated: true, completion: nil)
-        
-        
-    }
-
-    
     @IBAction func chooseImages(_ sender: AnyObject) {
-//        //UIImagePickerController is a view controller that lets a user pick an image from their photo library
-//        let imagePickerController = UIImagePickerController()
-//        
-//        //Only allow photos to be picked, not taken.
-//        imagePickerController.sourceType = .photoLibrary //uses simulator's camera roll
-//        
-//        //Make sure ViewController is notified when the user picks an image
-//        imagePickerController.delegate = self
-//        
-//        present(imagePickerController, animated: true, completion: nil)
-        
+
         let vc = BSImagePickerViewController()
+        var defaultAssetIds = [String]()
+
+        let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
+        
+        allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
+            
+            
+        })
+        
+        //if there are some images saved...
+        if(self.images.count != 0){
+            for i in 0 ... self.images.count-1{
+                if allAssets.contains(self.images[i]){ //if the images is one of all the assets
+                    let index = allAssets.index(of: self.images[i]) //gets its index
+                    defaultAssetIds.append(allAssets[index].localIdentifier) //add its identifier to the defaults
+                    print("appending!")
+                } //if
+            } //for
+        } //if
+        
+        
+        let defaultSelected = PHAsset.fetchAssets(withLocalIdentifiers: defaultAssetIds, options: nil)
+        vc.defaultSelections = defaultSelected
+    
         
         bs_presentImagePickerController(vc, animated: true,
                                         select: { (asset: PHAsset) -> Void in
                                             // User selected an asset.
                                             // Do something with it, start upload perhaps?
+                                            //print("Selected: \(asset)")
+                                            self.images.append(asset)
         }, deselect: { (asset: PHAsset) -> Void in
             // User deselected an assets.
             // Do something, cancel upload?
+            let index = self.images.index(of: asset)
+            self.images.remove(at: index!)
         }, cancel: { (assets: [PHAsset]) -> Void in
             // User cancelled. And this where the assets currently selected.
+            self.images.removeAll()
         }, finish: { (assets: [PHAsset]) -> Void in
             // User finished with these assets
+            for i in 0 ... self.images.count-1{
+                print(self.images[i])
+            }
         }, completion: nil)
         
         
@@ -1219,16 +1211,34 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         //new slope event
         //date_approximator
-        //date_input
-        //hazard_type
-        //state
-        //rt_type
-        //condition
-        //size_rock
-        //num_fallen_rocks
-        //vol_debris
-        //damages_y_n //Y or N?
+        var dateApproximatorS = ""
+        if(dateTypePicker.selectedRow(inComponent: 0) == 1){
+            dateApproximatorS = "Approximately"
+        }
+        else if (dateTypePicker.selectedRow(inComponent: 0) == 2){
+            dateApproximatorS = "Unknown"
+        }else{
+            dateApproximatorS = "Known"
+        }
         
+        var dateFormatter = DateFormatter()
+        let dateInput = dateFormatter.string(from: datePicker.date)
+        let hazardI = hazardTypePicker.selectedRow(inComponent: 0)
+        let hazardType = hazardOptions[hazardI]
+        
+        var state = stateOptions[statePicker.selectedRow(inComponent: 0)]
+        var rt_type = "R"
+        if(rtPicker.selectedRow(inComponent: 0)==1){
+            rt_type = "T"
+        }
+        
+        let condition = afterFailureOptions[afterFailurePicker.selectedRow(inComponent: 0)]
+        let size_rock = largestRockOptions[largestRockPicker.selectedRow(inComponent: 0)]
+        let num_fallen = fallenRocksOptions[fallenRocksPicker.selectedRow(inComponent: 0)]
+        let estimated_volume = estimatedVolumeOptions[estimatedVolumePicker.selectedRow(inComponent: 0)]
+        let damages = damagesOptions[damagesPicker.selectedRow(inComponent: 0)]
+
+    
         //0=false, 1 = true
         //description of event location
         var c1 = 0
@@ -1361,7 +1371,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         
         
-        let postString = "observer_name=\(observerNameText.text!)&email=\(emailText.text!)&phone_no=\(phoneText.text!)&observer_comments=\(observerCommentsText.text!)&road_trail_number=\(roadTrailNoText.text!)&begin_mile_marker\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&datum=\(datumText.text!)&begin_coordinate_latitude=\(latitudeText.text!)&begin_coordinate_longitude=\(longitudeText.text!)&affected_length=\(lengthAffectedText.text!)&above_road=\(c1)&below_road=\(c2)&at_culvert=\(c3)&above_river=\(c4)&above_coast=\(c5)&burned_area=\(c6)&deforested_slope=\(c7)&urban=\(c8)&mine=\(c9)&retaining_wall=\(c10)&natural_slope=\(c11)&engineered_slope=\(c12)&unknown=\(c13)&other=\(c14)&rain_checkbox=\(cc1)&thunder_checkbox=\(cc2)&cont_rain_checkbox=\(cc3)&hurricane_checkbox=\(cc4)&flood_checkbox=\(cc5)&snowfall_checkbox=\(cc6)&freezing_checkbox=\(cc7)&high_temp_checkbox=\(cc8)&earthquake_checkbox=\(cc9)&volcano_checkbox=\(cc10)&leaky_pipe_checkbox=\(cc11)&mining_checkbox=\(cc12)&construction_checkbox=\(cc13)&dam_embankment_checkbox=\(cc14)&not_obvious_checkbox=\(cc15)&unknown_checkbox=\(cc16)&other_checkbox=\(cc17)&damages=\(damagesCommentsText.text!)"
+        let postString = "observer_name=\(observerNameText.text!)&email=\(emailText.text!)&phone_no=\(phoneText.text!)&observer_comments=\(observerCommentsText.text!)&date_approximator=\(dateApproximatorS)&dateinput=\(dateInput)&hazard_type=\(hazardType)&state=\(state)&rt_type=\(rt_type)&road_trail_number=\(roadTrailNoText.text!)&begin_mile_marker\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&datum=\(datumText.text!)&begin_coordinate_latitude=\(latitudeText.text!)&begin_coordinate_longitude=\(longitudeText.text!)&condition=\(condition)&affected_length=\(lengthAffectedText.text!)&size_rock=\(size_rock)&num_fallen_rocks=\(num_fallen)&vol_debris=\(estimated_volume)&above_road=\(c1)&below_road=\(c2)&at_culvert=\(c3)&above_river=\(c4)&above_coast=\(c5)&burned_area=\(c6)&deforested_slope=\(c7)&urban=\(c8)&mine=\(c9)&retaining_wall=\(c10)&natural_slope=\(c11)&engineered_slope=\(c12)&unknown=\(c13)&other=\(c14)&rain_checkbox=\(cc1)&thunder_checkbox=\(cc2)&cont_rain_checkbox=\(cc3)&hurricane_checkbox=\(cc4)&flood_checkbox=\(cc5)&snowfall_checkbox=\(cc6)&freezing_checkbox=\(cc7)&high_temp_checkbox=\(cc8)&earthquake_checkbox=\(cc9)&volcano_checkbox=\(cc10)&leaky_pipe_checkbox=\(cc11)&mining_checkbox=\(cc12)&construction_checkbox=\(cc13)&dam_embankment_checkbox=\(cc14)&not_obvious_checkbox=\(cc15)&unknown_checkbox=\(cc16)&other_checkbox=\(cc17)&damages_y_n=\(damages)&damages=\(damagesCommentsText.text!)"
         
         
         
@@ -1428,6 +1438,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     //MARK: save offline sites
     
     @IBAction func saveOffline(_ sender: AnyObject) {
+        print("save offline")
       
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
@@ -1454,7 +1465,8 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let selectedState = statePicker.selectedRow(inComponent: 0)
         site.setValue(selectedState, forKey: "state")
     
-        //pictures
+        //pictures (string)
+        site.setValue(images, forKey:"photos")
        
         
         site.setValue(imagesLabel.text, forKey:"photos")
@@ -1750,7 +1762,8 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     statePicker.selectRow(state, inComponent:0, animated: true)
                     
                     //PICTURES
-                    imagesLabel.text = sites[number].value(forKey: "photos")! as? String
+                    //imagesLabel.text = sites[number].value(forKey: "photos")! as? String
+            
                     
                     roadTrailNoText.text = sites[number].value(forKey: "roadTrailNo")! as? String
                     
