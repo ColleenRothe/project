@@ -3794,7 +3794,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             ALAssetsLibrary().asset(for: referenceUrl, resultBlock: { asset in
                 
                 let fileName = asset?.defaultRepresentation().filename()
-                self.imagesLabel.text = self.imagesLabel.text! + ","+fileName!
+                self.imagesLabel.text = self.imagesLabel.text! + fileName! + ","
                 
                 //do whatever with your file name
                 

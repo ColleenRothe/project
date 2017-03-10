@@ -30,6 +30,9 @@ import AssetsLibrary
 import Photos
 import CoreData
 import SystemConfiguration
+//import Pods_USMPTest1
+import BSImagePicker
+
 
 class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate  {
     
@@ -1160,7 +1163,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             ALAssetsLibrary().asset(for: referenceUrl, resultBlock: { asset in
                 
                 let fileName = asset?.defaultRepresentation().filename()
-                self.imagesLabel.text = self.imagesLabel.text! + "," + fileName!
+                self.imagesLabel.text = self.imagesLabel.text! + fileName! + "," 
                 
                 //do whatever with your file name
                 
@@ -1176,16 +1179,31 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
 
     
     @IBAction func chooseImages(_ sender: AnyObject) {
-        //UIImagePickerController is a view controller that lets a user pick an image from their photo library
-        let imagePickerController = UIImagePickerController()
+//        //UIImagePickerController is a view controller that lets a user pick an image from their photo library
+//        let imagePickerController = UIImagePickerController()
+//        
+//        //Only allow photos to be picked, not taken.
+//        imagePickerController.sourceType = .photoLibrary //uses simulator's camera roll
+//        
+//        //Make sure ViewController is notified when the user picks an image
+//        imagePickerController.delegate = self
+//        
+//        present(imagePickerController, animated: true, completion: nil)
         
-        //Only allow photos to be picked, not taken.
-        imagePickerController.sourceType = .photoLibrary //uses simulator's camera roll
+        let vc = BSImagePickerViewController()
         
-        //Make sure ViewController is notified when the user picks an image
-        imagePickerController.delegate = self
-        
-        present(imagePickerController, animated: true, completion: nil)
+        bs_presentImagePickerController(vc, animated: true,
+                                        select: { (asset: PHAsset) -> Void in
+                                            // User selected an asset.
+                                            // Do something with it, start upload perhaps?
+        }, deselect: { (asset: PHAsset) -> Void in
+            // User deselected an assets.
+            // Do something, cancel upload?
+        }, cancel: { (assets: [PHAsset]) -> Void in
+            // User cancelled. And this where the assets currently selected.
+        }, finish: { (assets: [PHAsset]) -> Void in
+            // User finished with these assets
+        }, completion: nil)
         
         
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		463D806DED7D2BF380FDE51B /* Pods_USMPTest1Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB6F427B585BA643D30428E /* Pods_USMPTest1Tests.framework */; };
 		9B1399F91D9AE1C100D893B1 /* USMPTest1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1399F81D9AE1C100D893B1 /* USMPTest1Tests.swift */; };
 		9B2D69D11CBB091F00D6AB80 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B2D69D01CBB091F00D6AB80 /* Mapbox.framework */; };
 		9B2D69D21CBB091F00D6AB80 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9B2D69D01CBB091F00D6AB80 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -59,6 +60,7 @@
 		9BEC1ADD1C83A7D3006E2D76 /* AnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEC1ADC1C83A7D2006E2D76 /* AnnotationModel.swift */; };
 		9BEC1ADF1C83AF50006E2D76 /* pinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEC1ADE1C83AF4F006E2D76 /* pinModel.swift */; };
 		9BEC1AE11C83AFA0006E2D76 /* pinModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEC1AE01C83AFA0006E2D76 /* pinModelHelper.swift */; };
+		AAE53977A6193BD45714DB19 /* Pods_USMPTest1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F61E07AD692C5AC3223CAB45 /* Pods_USMPTest1.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2AB6F427B585BA643D30428E /* Pods_USMPTest1Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_USMPTest1Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		514A8CE3B9B880B4342C1697 /* Pods-USMPTest1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-USMPTest1.release.xcconfig"; path = "Pods/Target Support Files/Pods-USMPTest1/Pods-USMPTest1.release.xcconfig"; sourceTree = "<group>"; };
 		9B1399F61D9AE1BF00D893B1 /* USMPTest1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = USMPTest1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B1399F81D9AE1C100D893B1 /* USMPTest1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USMPTest1Tests.swift; sourceTree = "<group>"; };
 		9B1399FA1D9AE1C200D893B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,6 +147,10 @@
 		9BEC1ADC1C83A7D2006E2D76 /* AnnotationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationModel.swift; sourceTree = "<group>"; };
 		9BEC1ADE1C83AF4F006E2D76 /* pinModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pinModel.swift; sourceTree = "<group>"; };
 		9BEC1AE01C83AFA0006E2D76 /* pinModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pinModelHelper.swift; sourceTree = "<group>"; };
+		9EE6E3CD9C53732848AFC885 /* Pods-USMPTest1.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-USMPTest1.debug.xcconfig"; path = "Pods/Target Support Files/Pods-USMPTest1/Pods-USMPTest1.debug.xcconfig"; sourceTree = "<group>"; };
+		BFF0E0386FB20E1A5DC46BBF /* Pods-USMPTest1Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-USMPTest1Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-USMPTest1Tests/Pods-USMPTest1Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		CD7F90750A37C007F70209A1 /* Pods-USMPTest1Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-USMPTest1Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-USMPTest1Tests/Pods-USMPTest1Tests.release.xcconfig"; sourceTree = "<group>"; };
+		F61E07AD692C5AC3223CAB45 /* Pods_USMPTest1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_USMPTest1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				463D806DED7D2BF380FDE51B /* Pods_USMPTest1Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,12 +170,22 @@
 				9B2D69D11CBB091F00D6AB80 /* Mapbox.framework in Frameworks */,
 				9B87DD5F1CFDE30200C3F44C /* Crashlytics.framework in Frameworks */,
 				9B87DD5E1CFDE30100C3F44C /* Fabric.framework in Frameworks */,
+				AAE53977A6193BD45714DB19 /* Pods_USMPTest1.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		91203954346AE50DB76570F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F61E07AD692C5AC3223CAB45 /* Pods_USMPTest1.framework */,
+				2AB6F427B585BA643D30428E /* Pods_USMPTest1Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9B1399F71D9AE1C100D893B1 /* USMPTest1Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +206,8 @@
 				9B5B8B621BF4E7CF00A345E8 /* USMPTest1Tests */,
 				9B1399F71D9AE1C100D893B1 /* USMPTest1Tests */,
 				9B5B8B4C1BF4E7CF00A345E8 /* Products */,
+				C344AD9184A35D80537FF74A /* Pods */,
+				91203954346AE50DB76570F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -262,6 +283,17 @@
 			path = USMPTest1Tests;
 			sourceTree = "<group>";
 		};
+		C344AD9184A35D80537FF74A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9EE6E3CD9C53732848AFC885 /* Pods-USMPTest1.debug.xcconfig */,
+				514A8CE3B9B880B4342C1697 /* Pods-USMPTest1.release.xcconfig */,
+				BFF0E0386FB20E1A5DC46BBF /* Pods-USMPTest1Tests.debug.xcconfig */,
+				CD7F90750A37C007F70209A1 /* Pods-USMPTest1Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -269,9 +301,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9B1399FD1D9AE1C200D893B1 /* Build configuration list for PBXNativeTarget "USMPTest1Tests" */;
 			buildPhases = (
+				60052FAC0FE22F565E65680D /* [CP] Check Pods Manifest.lock */,
 				9B1399F21D9AE1BF00D893B1 /* Sources */,
 				9B1399F31D9AE1BF00D893B1 /* Frameworks */,
 				9B1399F41D9AE1BF00D893B1 /* Resources */,
+				187921489F0698448848930C /* [CP] Embed Pods Frameworks */,
+				BA844FE42FF9501C9DE10AA9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -287,12 +322,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9B5B8B681BF4E7CF00A345E8 /* Build configuration list for PBXNativeTarget "USMPTest1" */;
 			buildPhases = (
+				7E945AE9FB0B88A0D80C5240 /* [CP] Check Pods Manifest.lock */,
 				9B5B8B471BF4E7CF00A345E8 /* Sources */,
 				9B5B8B481BF4E7CF00A345E8 /* Frameworks */,
 				9B5B8B491BF4E7CF00A345E8 /* Resources */,
 				9B2D69D31CBB091F00D6AB80 /* Embed Frameworks */,
 				9B9B89151CE8F27400F6A827 /* ShellScript */,
 				9B87DD5B1CFDE29900C3F44C /* ShellScript */,
+				DB0FE8F0856D284C7B9FFD24 /* [CP] Embed Pods Frameworks */,
+				5C7C9EDB90E618183068D1FE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -372,6 +410,66 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		187921489F0698448848930C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-USMPTest1Tests/Pods-USMPTest1Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5C7C9EDB90E618183068D1FE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-USMPTest1/Pods-USMPTest1-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		60052FAC0FE22F565E65680D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7E945AE9FB0B88A0D80C5240 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		9B87DD5B1CFDE29900C3F44C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -397,6 +495,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\nFRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\nFRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\necho \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\nEXTRACTED_ARCHS=()\n\nfor ARCH in $ARCHS\ndo\necho \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\nlipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\nEXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\ndone\n\necho \"Merging extracted architectures: ${ARCHS}\"\nlipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\nrm \"${EXTRACTED_ARCHS[@]}\"\n\necho \"Replacing original executable with thinned version\"\nrm \"$FRAMEWORK_EXECUTABLE_PATH\"\nmv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone";
+		};
+		BA844FE42FF9501C9DE10AA9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-USMPTest1Tests/Pods-USMPTest1Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DB0FE8F0856D284C7B9FFD24 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-USMPTest1/Pods-USMPTest1-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -490,6 +618,7 @@
 /* Begin XCBuildConfiguration section */
 		9B1399FE1D9AE1C200D893B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFF0E0386FB20E1A5DC46BBF /* Pods-USMPTest1Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -509,6 +638,7 @@
 		};
 		9B1399FF1D9AE1C200D893B1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD7F90750A37C007F70209A1 /* Pods-USMPTest1Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -615,7 +745,9 @@
 		};
 		9B5B8B691BF4E7CF00A345E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9EE6E3CD9C53732848AFC885 /* Pods-USMPTest1.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -626,6 +758,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/USMPTest1",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/BSImagePicker",
 				);
 				INFOPLIST_FILE = USMPTest1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -639,7 +772,9 @@
 		};
 		9B5B8B6A1BF4E7CF00A345E8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 514A8CE3B9B880B4342C1697 /* Pods-USMPTest1.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -649,6 +784,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/USMPTest1",
+					"$(PROJECT_DIR)/build/Debug-iphoneos/BSImagePicker",
 				);
 				INFOPLIST_FILE = USMPTest1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
