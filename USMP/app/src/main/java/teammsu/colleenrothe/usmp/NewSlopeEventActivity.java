@@ -36,6 +36,7 @@ import android.widget.Button;
 
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -43,6 +44,12 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.io.IOException;
+
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.net.Uri;
+import android.content.SharedPreferences;
 
 public class NewSlopeEventActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -113,6 +120,9 @@ public class NewSlopeEventActivity extends AppCompatActivity
     TextView DamagesComments;
 
     Button SubmitButton;
+
+    private int PICK_IMAGE_REQUEST = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1193,8 +1203,41 @@ public class NewSlopeEventActivity extends AppCompatActivity
         ObserverName.setText("No Match Found"); //or something else....
     }
 
-
-
     }
+    //image picker
+    public void chooseImages(View view){
+        System.out.println("choose image");
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            Uri uri = data.getData();
+
+            SharedPreferences myPrefs = getSharedPreferences("imageUri", 0);
+            SharedPreferences.Editor myPrefsEdit = myPrefs.edit();
+
+            myPrefsEdit.putString("url", uri.toString());
+            myPrefsEdit.commit();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                // Log.d(TAG, String.valueOf(bitmap));
+
+                //picture.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 
 }

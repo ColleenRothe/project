@@ -167,6 +167,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="chooseImages"
             android:text = "Choose Files"
             />
 
@@ -975,7 +976,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save Form Offline"
-
                 android:onClick="newNSE"
                 />
 
