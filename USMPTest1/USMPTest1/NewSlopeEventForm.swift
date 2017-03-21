@@ -1466,10 +1466,32 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         site.setValue(selectedState, forKey: "state")
     
         //pictures (string)
-        site.setValue(images, forKey:"photos")
+        
+        var defaultAssetIds = [String]()
+        
+        let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
+        
+        allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
+            
+            
+        })
+        
+        //if there are some images saved...
+        if(self.images.count != 0){
+            for i in 0 ... self.images.count-1{
+                if allAssets.contains(self.images[i]){ //if the images is one of all the assets
+                    let index = allAssets.index(of: self.images[i]) //gets its index
+                    defaultAssetIds.append(allAssets[index].localIdentifier) //add its identifier to the defaults
+                    print("appending!")
+                } //if
+            } //for
+        } //if
+        
+        
+        site.setValue(defaultAssetIds, forKey:"photos")
        
         
-        site.setValue(imagesLabel.text, forKey:"photos")
+        //site.setValue(imagesLabel.text, forKey:"photos")
         
         site.setValue(roadTrailNoText.text, forKey: "roadTrailNo")
 
@@ -1763,10 +1785,13 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     
                     //PICTURES
                     //imagesLabel.text = sites[number].value(forKey: "photos")! as? String
-                    let photos = sites[number].value(forKey: "photos")! as! [PHAsset]
-                    images = photos
-
+                    let photos = sites[number].value(forKey: "photos")! as! [String]
+                    
+                    let photoResults = PHAsset.fetchAssets(withLocalIdentifiers: photos, options: nil)
             
+                    for i in 0 ... photoResults.count-1{
+                            images.append(photoResults.object(at: i))
+                    }
             
                     roadTrailNoText.text = sites[number].value(forKey: "roadTrailNo")! as? String
                     

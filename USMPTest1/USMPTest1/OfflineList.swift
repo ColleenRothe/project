@@ -149,13 +149,13 @@ class OfflineList: UITableViewController{
                 
                 
                 //hazard type
-                if((site.value(forKey: "hazardType")! as! NSObject) as! Decimal == 3){
+                if((site.value(forKey: "hazardType")! as! NSObject) as! Int == 3){
                     cell.labelOne.text = "Hazard Type: Snow Avalanche"
                 }
-                else if ((site.value(forKey: "hazardType")! as! NSObject) as! Decimal == 2){
+                else if ((site.value(forKey: "hazardType")! as! NSObject) as! Int == 2){
                     cell.labelOne.text = "Hazard Type: Debris Flow"
                 }
-                else if((site.value(forKey: "hazardType")! as! NSObject) as! Decimal == 1){
+                else if((site.value(forKey: "hazardType")! as! NSObject) as! Int == 1){
                     cell.labelOne.text = "Hazard Type: Landslide"
                 }
                 else{
