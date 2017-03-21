@@ -1465,7 +1465,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let selectedState = statePicker.selectedRow(inComponent: 0)
         site.setValue(selectedState, forKey: "state")
     
-        //pictures (string)
+        //pictures
         
         var defaultAssetIds = [String]()
         
@@ -1786,7 +1786,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     //PICTURES
                     //imagesLabel.text = sites[number].value(forKey: "photos")! as? String
                     let photos = sites[number].value(forKey: "photos")! as! [String]
-                    
+            
                     let photoResults = PHAsset.fetchAssets(withLocalIdentifiers: photos, options: nil)
             
                     for i in 0 ... photoResults.count-1{

@@ -4586,7 +4586,31 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         site.setValue(selectedFixes, forKey: "fixesPresent")
         
         //PHOTOS!!!
-        site.setValue(imagesLabel.text, forKey: "photos")
+        //site.setValue(imagesLabel.text, forKey: "photos")
+        
+        var defaultAssetIds = [String]()
+        
+        let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
+        
+        allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
+            
+            
+        })
+        
+        //if there are some images saved...
+        if(self.images.count != 0){
+            for i in 0 ... self.images.count-1{
+                if allAssets.contains(self.images[i]){ //if the images is one of all the assets
+                    let index = allAssets.index(of: self.images[i]) //gets its index
+                    defaultAssetIds.append(allAssets[index].localIdentifier) //add its identifier to the defaults
+                    print("appending!")
+                } //if
+            } //for
+        } //if
+        
+        
+        site.setValue(defaultAssetIds, forKey:"photos")
+        
         
         site.setValue(commentsText.text, forKey: "comments")
         site.setValue(flmaNameText.text, forKey: "flmaName")
@@ -4784,7 +4808,15 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     fixesPicker.selectRow(fixes, inComponent: 0, animated: true)
                     
                     //PHOTOS
-                    imagesLabel.text = sites[number].value(forKey: "photos")! as? String
+                    //imagesLabel.text = sites[number].value(forKey: "photos")! as? String
+                    let photos = sites[number].value(forKey: "photos")! as! [String]
+            
+                    let photoResults = PHAsset.fetchAssets(withLocalIdentifiers: photos, options: nil)
+            
+                    for i in 0 ... photoResults.count-1{
+                            images.append(photoResults.object(at: i))
+                    }
+            
             
                     commentsText.text = sites[number].value(forKey: "comments")! as? String
                     flmaNameText.text = sites[number].value(forKey: "flmaName")! as? String
