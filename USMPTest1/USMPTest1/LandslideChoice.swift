@@ -962,9 +962,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func fillToEdit(){
         let selectedLocation = feedItems.object(at: 0) as! LandslideModel
         
-        var agencyS = selectedLocation.umbrella_agency
-        var regionS = selectedLocation.regiona_admin
-        var localS = selectedLocation.local_admin
+        let agencyS = selectedLocation.umbrella_agency
+        let regionS = selectedLocation.regiona_admin
+        let localS = selectedLocation.local_admin
         
         if(agencyS == "FS"){
             agency.selectRow(1, inComponent: 0, animated: true)
@@ -1373,7 +1373,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 fixesPicker.selectRow(1, inComponent: 0, animated: true)
             }
             
-            var preliminary_rating_impact_on_use = sites[number].value(forKey: "preliminary_rating_impact_on_use")! as? String
+            let preliminary_rating_impact_on_use = sites[number].value(forKey: "preliminary_rating_impact_on_use")! as? String
             if(ratingOptions.contains(preliminary_rating_impact_on_use!)){
                 impactOUPicker.selectRow(ratingOptions.index(of: preliminary_rating_impact_on_use!)!, inComponent: 0, animated: true)
             }
@@ -1478,7 +1478,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //MARK: Automplete Stuff
     
-    func textField(_ textField: UITextField!, shouldChangeCharactersIn range: NSRange, replacementString string: String!) -> Bool
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         
         
@@ -3848,7 +3848,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         else{
         
             //agency
-        var agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+        let agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
             //regional
         var regionalS = ""
         if(agency.selectedRow(inComponent: 0) == 1){ //fs
@@ -3923,15 +3923,15 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             road_or_trail="T"
         }
         
-        var tempSide = sidePicker.selectedRow(inComponent: 0)
-        var side = sideOptions[tempSide]
+        let tempSide = sidePicker.selectedRow(inComponent: 0)
+        let side = sideOptions[tempSide]
         
         //how to do enum?
-        var tempWeather = weatherPicker.selectedRow(inComponent: 0)
-        var weather = weatherOptions[tempWeather]
+        let tempWeather = weatherPicker.selectedRow(inComponent: 0)
+        let weather = weatherOptions[tempWeather]
         
         //hazard type?
-        var hazard = hazardTypeText.text
+        let hazard = hazardTypeText.text
         
         //speed
         var speed = 0
@@ -4138,10 +4138,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alertController, animated: true, completion: nil)
             
-            return
-            
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("responseString = \(responseString)")
+            return
+            
+           
         }
         task.resume()
         }
@@ -4156,7 +4157,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         //let postString = "old_site_id=1559"
         
         //agency
-        var agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+        let agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
         //regional
         var regionalS = ""
         if(agency.selectedRow(inComponent: 0) == 1){ //fs
@@ -4232,15 +4233,15 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             road_or_trail="T"
         }
         
-        var tempSide = sidePicker.selectedRow(inComponent: 0)
-        var side = sideOptions[tempSide]
+        let tempSide = sidePicker.selectedRow(inComponent: 0)
+        let side = sideOptions[tempSide]
         
         //how to do enum?
-        var tempWeather = weatherPicker.selectedRow(inComponent: 0)
-        var weather = weatherOptions[tempWeather]
+        let tempWeather = weatherPicker.selectedRow(inComponent: 0)
+        let weather = weatherOptions[tempWeather]
         
         //hazard type?
-        var hazard = hazardTypeText.text
+        let hazard = hazardTypeText.text
         
         //speed
         var speed = 0
@@ -4421,7 +4422,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             event_cost = 81
         }
         
-        var email = ""
+        let email = ""
         
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/editSite.php")! as URL)
         request.httpMethod = "POST"
@@ -4450,11 +4451,13 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alertController, animated: true, completion: nil)
             
-            return
             
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("responseString = \(responseString)")
-        }
+
+            return
+            
+                    }
         task.resume()
     
         

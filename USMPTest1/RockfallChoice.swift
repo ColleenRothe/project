@@ -947,9 +947,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func fillToEdit(){
         let selectedLocation = feedItems.object(at: 0) as! RockfallModel
         
-        var agencyS = selectedLocation.umbrella_agency
-        var regionS = selectedLocation.regiona_admin
-        var localS = selectedLocation.local_admin
+        let agencyS = selectedLocation.umbrella_agency
+        let regionS = selectedLocation.regiona_admin
+        let localS = selectedLocation.local_admin
         
         if(agencyS == "FS"){
             agency.selectRow(1, inComponent: 0, animated: true)
@@ -1112,19 +1112,19 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //Prelim Ratings...Rockfall Only
         let ditch_effectiveness = selectedLocation.prelim_rockfall_ditch_eff as String!
         if(ratingOptions.contains(ditch_effectiveness!)){
-            var tempDitch = ratingOptions.index(of: ditch_effectiveness!)
+            let tempDitch = ratingOptions.index(of: ditch_effectiveness!)
             ditchEPicker.selectRow(tempDitch!, inComponent: 0, animated: true)
         }
         
         let rockfall_history = selectedLocation.prelim_rockfall_rockfall_history as String!
         if(ratingOptions.contains(rockfall_history!)){
-            var temp_history = ratingOptions.index(of: rockfall_history!)
+            let temp_history = ratingOptions.index(of: rockfall_history!)
             rockfallHPicker.selectRow(temp_history!, inComponent: 0, animated: true)
         }
         
         let bsv = selectedLocation.prelim_rockfall_block_size_event_vol as String!
         if(ratingOptions.contains(bsv!)){
-            var temp_bsv = ratingOptions.index(of: bsv!)
+            let temp_bsv = ratingOptions.index(of: bsv!)
             rockfallHPicker.selectRow(temp_bsv!, inComponent: 0, animated: true)
         }
      
@@ -1353,7 +1353,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 fixesPicker.selectRow(1, inComponent: 0, animated: true)
             }
             
-            var preliminary_rating_impact_on_use = sites[number].value(forKey: "preliminary_rating_impact_on_use")! as? String
+            let preliminary_rating_impact_on_use = sites[number].value(forKey: "preliminary_rating_impact_on_use")! as? String
             if(ratingOptions.contains(preliminary_rating_impact_on_use!)){
                 impactOUPicker.selectRow(ratingOptions.index(of: preliminary_rating_impact_on_use!)!, inComponent: 0, animated: true)
             }
@@ -4442,10 +4442,10 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         //how to do enum?
         var tempWeather = weatherPicker.selectedRow(inComponent: 0)
-        var weather = weatherOptions[tempWeather]
+        let weather = weatherOptions[tempWeather]
         
         //hazard type?
-        var hazard = 0
+        let hazard = 0
         
         //speed
         var speed = 0
@@ -4654,7 +4654,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             event_cost = 81
         }
         
-        var email = ""
+        let email = ""
 
         
         
@@ -4686,10 +4686,12 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alertController, animated: true, completion: nil)
             
-            return
-            
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("responseString = \(responseString)")
+            
+            return
+            
+          
         }
         task.resume()
         

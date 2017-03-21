@@ -124,7 +124,7 @@ class OfflineList: UITableViewController{
                 
                 cell.labelOne.text = "Hazard Type:" + (site.value(forKey: "hazardType")! as! String) //as? String
                 var agencyS = ""
-                var agencyNum = (site.value(forKey: "agency")! as! NSObject) as! Int
+                let agencyNum = (site.value(forKey: "agency")! as! NSObject) as! Int
                 if(agencyNum  == 1){
                     agencyS = "FS"
                 }else if(agencyNum == 2){

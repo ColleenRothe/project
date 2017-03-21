@@ -1221,12 +1221,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             dateApproximatorS = "Known"
         }
         
-        var dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
         let dateInput = dateFormatter.string(from: datePicker.date)
         let hazardI = hazardTypePicker.selectedRow(inComponent: 0)
         let hazardType = hazardOptions[hazardI]
         
-        var state = stateOptions[statePicker.selectedRow(inComponent: 0)]
+        let state = stateOptions[statePicker.selectedRow(inComponent: 0)]
         var rt_type = "R"
         if(rtPicker.selectedRow(inComponent: 0)==1){
             rt_type = "T"
@@ -1763,8 +1763,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     
                     //PICTURES
                     //imagesLabel.text = sites[number].value(forKey: "photos")! as? String
+                    let photos = sites[number].value(forKey: "photos")! as! [PHAsset]
+                    images = photos
+
             
-                    
+            
                     roadTrailNoText.text = sites[number].value(forKey: "roadTrailNo")! as? String
                     
                     //road or trail? - 2 options
