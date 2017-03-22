@@ -46,10 +46,19 @@ import java.util.Calendar;
 import java.util.TimeZone;
 import java.io.IOException;
 
-import android.graphics.Bitmap;
-import android.provider.MediaStore;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.content.SharedPreferences;
+
+
+
+
+
+import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
+import com.darsh.multipleimageselect.helpers.Constants;
+import com.darsh.multipleimageselect.models.Image;
+import java.util.ArrayList;
+import android.util.Log;
 
 public class NewSlopeEventActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -121,8 +130,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
     Button SubmitButton;
 
-    private int PICK_IMAGE_REQUEST = 1;
-
+    ArrayList<Image> selectedImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1205,38 +1213,40 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
     }
     //image picker
-    public void chooseImages(View view){
-        System.out.println("choose image");
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    public void chooseImages(View view) {
+        Intent intent = new Intent(this, AlbumSelectActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 10);
+        startActivityForResult(intent, Constants.REQUEST_CODE);
+        if(selectedImages != null){
+            for (int j = 0; j < selectedImages.size(); j++) {
+                selectedImages.get(j).isSelected = true;
+                System.out.println("called here"+ selectedImages.get(j).name);
+                System.out.println("called here2"+ selectedImages.get(j).isSelected);
+
+
+            }
+        }
+
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            Uri uri = data.getData();
-
-            SharedPreferences myPrefs = getSharedPreferences("imageUri", 0);
-            SharedPreferences.Editor myPrefsEdit = myPrefs.edit();
-
-            myPrefsEdit.putString("url", uri.toString());
-            myPrefsEdit.commit();
-
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                // Log.d(TAG, String.valueOf(bitmap));
-
-                //picture.setImageBitmap(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            selectedImages = data.getParcelableArrayListExtra(Constants.INTENT_EXTRA_IMAGES);
+            StringBuffer stringBuffer = new StringBuffer();
+            for (int i = 0, l = selectedImages.size(); i < l; i++) {
+                stringBuffer.append(selectedImages.get(i).path + "\n");
+                System.out.println(selectedImages.get(i).isSelected);
             }
+            System.out.println(stringBuffer.toString());
         }
+
+        //Uri uri = data.getData();
     }
+
+
+
 
 
 

@@ -34,6 +34,8 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="luminous.ACTION_PICK" />
+                <action android:name="luminous.ACTION_MULTIPLE_PICK" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -68,7 +70,8 @@
         <activity
             android:name=".NewSlopeEventActivity"
             android:label="@string/title_activity_new_slope_event"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+        />
         <activity
             android:name=".MaintenanceActivity"
             android:label="@string/title_activity_maintenance"
@@ -107,6 +110,8 @@
             android:name=".AccountActivity"
             android:label="@string/title_activity_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
     </application>
 
 </manifest>
