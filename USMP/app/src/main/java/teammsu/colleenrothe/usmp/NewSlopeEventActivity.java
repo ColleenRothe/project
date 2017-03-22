@@ -50,14 +50,12 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.content.SharedPreferences;
 
-
-
-
-
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
+import com.darsh.multipleimageselect.activities.ImageSelectActivity;
 import java.util.ArrayList;
+import java.util.List;
 import android.util.Log;
 
 public class NewSlopeEventActivity extends AppCompatActivity
@@ -131,6 +129,9 @@ public class NewSlopeEventActivity extends AppCompatActivity
     Button SubmitButton;
 
     ArrayList<Image> selectedImages;
+
+    public static final int REQUEST_CODE_CHOOSE = 1;
+    private List<Uri> mSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1215,17 +1216,14 @@ public class NewSlopeEventActivity extends AppCompatActivity
     //image picker
     public void chooseImages(View view) {
         Intent intent = new Intent(this, AlbumSelectActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 10);
-        startActivityForResult(intent, Constants.REQUEST_CODE);
-        if(selectedImages != null){
-            for (int j = 0; j < selectedImages.size(); j++) {
-                selectedImages.get(j).isSelected = true;
-                System.out.println("called here"+ selectedImages.get(j).name);
-                System.out.println("called here2"+ selectedImages.get(j).isSelected);
+                intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 10);
+                startActivityForResult(intent, Constants.REQUEST_CODE);
+                if(selectedImages != null) {
+                    for (int j = 0; j < selectedImages.size(); j++) {
+                        System.out.println("called here" + selectedImages.get(j).name);
 
-
-            }
-        }
+                    }
+                }
 
 
     }
@@ -1237,13 +1235,16 @@ public class NewSlopeEventActivity extends AppCompatActivity
             StringBuffer stringBuffer = new StringBuffer();
             for (int i = 0, l = selectedImages.size(); i < l; i++) {
                 stringBuffer.append(selectedImages.get(i).path + "\n");
-                System.out.println(selectedImages.get(i).isSelected);
             }
             System.out.println(stringBuffer.toString());
         }
 
-        //Uri uri = data.getData();
+        ImageSelectActivity is = new ImageSelectActivity();
+        //is.toggleSelection(2);
+
+
     }
+
 
 
 
