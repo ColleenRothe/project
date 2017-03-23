@@ -81,7 +81,6 @@ public class MapActivity extends AppCompatActivity
     MapView mapView; //mapbox map view
     private MapboxMap map;
     private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/pin.php"; //to place the sites
-    private static final String JSON_URL2 = "http://nl.cs.montana.edu/test_sites/colleen.rothe/percentiles.php"; //percentiles for image
     private static final String JSON_URL3 = "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php"; //to get full site info for an offline site
 
     //offline func
@@ -153,11 +152,7 @@ public class MapActivity extends AppCompatActivity
             });
 
 
-            getJSON2(JSON_URL2);
-
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
-
 
 
     }
@@ -1141,60 +1136,6 @@ public class MapActivity extends AppCompatActivity
         return true;
     }
 
-    //DATABASE STUFF (PERCENTILES FOR IMAGE)
-    private void getJSON2(String url) {
-        class GetJSON extends AsyncTask<String, Void, String>{
-            //dont need another loading message...
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-
-                String uri = params[0];
-
-                BufferedReader bufferedReader = null;
-                try {
-                    URL url = new URL(uri);
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    StringBuilder sb = new StringBuilder();
-
-                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
-                    String json;
-                    while((json = bufferedReader.readLine())!= null){
-                        sb.append(json+"\n");
-                    }
-                    String temp1 = sb.toString().replaceAll("\"", ""); //get rid of the ""
-                    String temp2 = temp1.replaceAll("\\[", ""); //get rid of the brackets
-                    String temp = temp2.replaceAll("\\]", ""); //get rid of brackets
-
-                    percentages = temp.split(","); //break up the percentages by ,
-                    return sb.toString().trim();
-
-                }catch(Exception e){
-                    return null;
-                }
-
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                getJSON(JSON_URL); //move down to get images
-                //then testing...then create the map sites
-                //System.out.println(s);
-            }
-        }
-        GetJSON gj = new GetJSON();
-        gj.execute(url);
-    }
-
-
 
     //DATABASE STUFF (MARKER)
     private void getJSON(String url) {
@@ -1297,10 +1238,7 @@ public class MapActivity extends AppCompatActivity
 
                     Drawable iconDrawable2 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_yellowlandslide);
                     Icon icon2 = iconFactory.fromDrawable(iconDrawable2);
-
-                    Drawable iconDrawable3 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_orangelandslide);
-                    Icon icon3 = iconFactory.fromDrawable(iconDrawable3);
-
+                    
                     Drawable iconDrawable4 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_redlandslide);
                     Icon icon4 = iconFactory.fromDrawable(iconDrawable4);
 
@@ -1310,9 +1248,6 @@ public class MapActivity extends AppCompatActivity
 
                     Drawable iconDrawable6 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_yellowrockfall);
                     Icon icon6 = iconFactory.fromDrawable(iconDrawable6);
-
-                    Drawable iconDrawable7 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_orangerockfall);
-                    Icon icon7 = iconFactory.fromDrawable(iconDrawable7);
 
                     Drawable iconDrawable8 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_redrockfall);
                     Icon icon8 = iconFactory.fromDrawable(iconDrawable8);
