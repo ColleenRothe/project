@@ -22,6 +22,8 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
     let shareData = ShareData.sharedInstance
     var current_id = 0 //where to set??
     var pressNew = UILongPressGestureRecognizer(target: self, action: #selector(MaintenanceMap.newForm))
+    var imagename = ""                          //used to set image of each pin when online
+
 
     
     
@@ -85,6 +87,16 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
             poiCoordinates.latitude = CDouble(selectedLocation.latitude!)!
             poiCoordinates.longitude = CDouble(selectedLocation.longitude!)!
             
+            //connected to a slope rating
+            if(selectedLocation.site_id != "0"){
+                imagename = "mmblue"
+
+            }
+            //not connected to a slope rating
+            else{
+                imagename = "mmwhite"
+            }
+            
             //make a new pin
             let pin: MGLPointAnnotation = MGLPointAnnotation()
             pin.coordinate = poiCoordinates
@@ -117,24 +129,24 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
     }
 
     
-//    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-//        //print("adding images")
-//        // Try to reuse the existing annotation image, if it exists
-////        var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: imagename)
-////        
-////        if annotationImage == nil {
-////            var image = UIImage(named: imagename)!
-////            
-////            
-////            image = image.withAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
-////            
-////            // Initialize the  annotation image with the UIImage just loaded
-////            annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: imagename)
-////            print("HERE IT GOES")
-//        }
-//        
-//        //return annotationImage
-//    }
+    func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
+        //print("adding images")
+        // Try to reuse the existing annotation image, if it exists
+       var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: imagename)
+    
+        if annotationImage == nil {
+            var image = UIImage(named: imagename)!
+    
+    
+           image = image.withAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
+    
+            // Initialize the  annotation image with the UIImage just loaded
+            annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: imagename)
+            print("HERE IT GOES")
+        }
+    
+        return annotationImage
+    }
 
     
     
@@ -144,6 +156,14 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func clickLegend(_ sender: Any) {
+        let messageString = "White icon - the maintenance form is NOT associated with a slope rating. \n \n Blue icon - the maintenance form IS associated with a slope rating"
+
+        let alert = UIAlertController(title: "Legend", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+
+    }
     
 
     

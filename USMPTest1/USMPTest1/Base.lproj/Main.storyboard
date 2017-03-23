@@ -3982,11 +3982,18 @@
                                 <rect key="frame" x="0.0" y="58" width="414" height="44"/>
                                 <items>
                                     <navigationItem id="B3o-ij-oaz">
-                                        <barButtonItem key="leftBarButtonItem" title="Home" id="wqO-FE-pOf">
-                                            <connections>
-                                                <segue destination="1oD-pp-Cuc" kind="show" id="8NJ-yf-sqs"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <leftBarButtonItems>
+                                            <barButtonItem title="Home" id="wqO-FE-pOf">
+                                                <connections>
+                                                    <segue destination="1oD-pp-Cuc" kind="show" id="8NJ-yf-sqs"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem title="Legend" id="fZM-ik-HIJ">
+                                                <connections>
+                                                    <action selector="clickLegend:" destination="YkF-JG-Jzg" id="BLu-q3-S1f"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </leftBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -22631,18 +22638,18 @@
         <image name="unchecked" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="p2y-eQ-Y33"/>
         <segue reference="ct4-op-jlw"/>
         <segue reference="WgU-bv-pba"/>
         <segue reference="nBC-T4-fr4"/>
         <segue reference="5li-Ie-c6J"/>
         <segue reference="pN5-Dh-MWt"/>
-        <segue reference="pBJ-1Y-5rg"/>
         <segue reference="r9s-A1-TPS"/>
         <segue reference="RSw-B6-vg5"/>
-        <segue reference="YeF-EY-Fpv"/>
         <segue reference="ywe-DB-QTs"/>
+        <segue reference="pBJ-1Y-5rg"/>
         <segue reference="mgh-ej-O6P"/>
+        <segue reference="8NJ-yf-sqs"/>
+        <segue reference="p2y-eQ-Y33"/>
         <segue reference="frB-nH-gJg"/>
     </inferredMetricsTieBreakers>
 </document>
