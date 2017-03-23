@@ -1250,7 +1250,7 @@ public class MapActivity extends AppCompatActivity
     //for the pin model helper...just to place the sites
     public void testing(){
         //-2 because the last one has the double bracket
-        finalSites = new String[(sites.length -1)][7]; //the final 2d array to hold onto the sites
+        finalSites = new String[(sites.length -1)][8]; //the final 2d array to hold onto the sites
         for(int i = 0; i < (sites.length -1); i++) { //for all of the sites
             String temp = sites[i];
             String temp1 = temp.replaceAll("\"", ""); // get rid of the "" around each thing
@@ -1286,6 +1286,7 @@ public class MapActivity extends AppCompatActivity
 
                     //create icon for the custom marker to use
                     IconFactory iconFactory = IconFactory.getInstance(MapActivity.this);
+
                     Drawable iconDrawable0 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_whitelandslide);
                     Icon icon0;
 
@@ -1322,37 +1323,38 @@ public class MapActivity extends AppCompatActivity
                         //image to be used....for now they are all red rockfall
                         Double type = Double.parseDouble(finalSites[k][6]); //help tell if landslide or rockfall
                         Double total = Double.parseDouble(finalSites[k][4]); //total score to determine image
+                        Double prelimRating = Double.parseDouble(finalSites[k][7]); //prelim rating
 
                         //then it's a landslide
                         if(type > 0){
-                            //System.out.println("YAY ITS A LANDSLIDE");
-                            if(total <= l25){
-                                icon0 = icon;
+                            //poor
+                            if(prelimRating > 161){
+                                icon0 = icon4;
                             }
-                            else if(total <= l50){
+                            //fair
+                            else if (prelimRating <= 161 && prelimRating > 21){
                                 icon0 = icon2;
                             }
-                            else if(total <= l75){
-                                icon0 = icon3;
-                            }
+                            //good
                             else{
-                                icon0 = icon4;
+                                icon0 = icon;
                             }
 
                         }
                         else{ //rockfall
-                            if(total <= r25){
-                                icon0 = icon5;
-                            }
-                            else if(total <= r50){
-                                icon0 = icon6;
-                            }
-                            else if(total <= r75){
-                                icon0 = icon7;
-                            }
-                            else{
+                            //poor
+                            if(prelimRating > 161){
                                 icon0 = icon8;
                             }
+                            //fair
+                            else if (prelimRating <= 161 && prelimRating > 21){
+                                icon0 = icon6;
+                            }
+                            //good
+                            else{
+                                icon0 = icon5;
+                            }
+
 
                         }
 
