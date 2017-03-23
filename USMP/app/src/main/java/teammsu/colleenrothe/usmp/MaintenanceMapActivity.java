@@ -1,6 +1,7 @@
 package teammsu.colleenrothe.usmp;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,8 +21,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
+import com.mapbox.mapboxsdk.annotations.Icon;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
 
 import com.mapbox.mapboxsdk.MapboxAccountManager;
 import com.mapbox.mapboxsdk.annotations.Icon;
@@ -38,6 +43,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+//blue marker from: http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_blue.png
+//white marker from: http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_white.png
 
 public class MaintenanceMapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -148,8 +155,23 @@ public class MaintenanceMapActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_mmLegend) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            final TextView tv = new TextView(this);
+            tv.setText("White icon - the maintenance form is NOT associated with a slope rating. \n \n " +
+                    "Blue icon - the maintenance form IS associated with a slope rating", TextView.BufferType.NORMAL);
+
+            alertDialogBuilder.setView(tv);
+            alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+
         }
         if(id == R.id.action_home){
             Intent intent = new Intent(this, OnlineHomeActivity.class);
@@ -278,22 +300,46 @@ public class MaintenanceMapActivity extends AppCompatActivity
             @Override
             public void onMapReady(final MapboxMap mapboxMap) {
 
+                IconFactory iconFactory = IconFactory.getInstance(MaintenanceMapActivity.this);
+
+                //no slope rating associated (site id = 0)
+                Drawable iconDrawable = ContextCompat.getDrawable(MaintenanceMapActivity.this, R.mipmap.ic_mmwhite);
+                Icon whiteIcon = iconFactory.fromDrawable(iconDrawable);
+
+                //slope rating associated
+                Drawable iconDrawable2 = ContextCompat.getDrawable(MaintenanceMapActivity.this, R.mipmap.ic_mmblue);
+                Icon blueIcon = iconFactory.fromDrawable(iconDrawable2);
+
+
+
                 for(int k = 0; k<finalSites.length; k++) { //finalSites.length
+                    Icon chosenIcon = blueIcon;
 
 
                     //need to convert lat/long values from string -> double to be used to place site
                     double latitude = Double.parseDouble(finalSites[k][2]);
                     double longitude = Double.parseDouble(finalSites[k][3]);
 
+                    if(finalSites[k][1].equals("0")){
+                        chosenIcon = whiteIcon;
+                    }else{
+                        System.out.println("test: "+finalSites[k][1]);
+
+                    }
+
+
                     //String finalScore = finalSites[k][4];
                     //the first site...should be somewhere near ghana
                     mapboxMap.addMarker(new MarkerOptions()
                             .position(new LatLng(latitude, longitude))
                             .title(finalSites[k][1])
+                            .setIcon(chosenIcon)
                             //.snippet("Code" + finalSites[k][4]));
                             .snippet(finalSites[k][0]));
                             //.icon(icon0));
+
                 }
+
 
                 mapboxMap.setOnMapLongClickListener(new MapboxMap.OnMapLongClickListener() {
                     @Override
