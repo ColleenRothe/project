@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/mapLegend"
+        android:orderInCategory="100"
+        android:title="Legend"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_cache_map"
         android:orderInCategory="100"
         android:title="Cache Map"

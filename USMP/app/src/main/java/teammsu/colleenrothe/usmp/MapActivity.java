@@ -292,6 +292,25 @@ public class MapActivity extends AppCompatActivity
         if (id == R.id.action_cache_status) {
             downloadedRegionList();
         }
+        if (id == R.id.mapLegend) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            final TextView tv = new TextView(this);
+            tv.setText("Based on Preliminary Rating \n \n" +
+                    "Green: Good (0-15)\n" +
+                    "Yellow: Fair (22-161)\n" +
+                    "Red: Poor (>161)", TextView.BufferType.NORMAL);
+
+            alertDialogBuilder.setView(tv);
+            alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+
+            // create alert dialog
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            // show it
+            alertDialog.show();
+        }
         if (id == R.id.action_load_offline_points) {
             OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
             int[] ids = dbHandler.getIds();
@@ -1238,7 +1257,7 @@ public class MapActivity extends AppCompatActivity
 
                     Drawable iconDrawable2 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_yellowlandslide);
                     Icon icon2 = iconFactory.fromDrawable(iconDrawable2);
-                    
+
                     Drawable iconDrawable4 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_redlandslide);
                     Icon icon4 = iconFactory.fromDrawable(iconDrawable4);
 
