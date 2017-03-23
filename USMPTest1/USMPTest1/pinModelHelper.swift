@@ -78,7 +78,7 @@ class pinModelHelper: NSObject, URLSessionDataDelegate{
             jsonElement = jsonResult[i] as! NSArray
             let thing = pinModel() //instantiate object to hold each element in the spec. JSON obj.
             
-            if let id = jsonElement[0] as? String, let site_id = jsonElement[1] as? String, let coordinate1 = jsonElement[2] as? String, let coordinate2 = jsonElement[3] as? String, let total = jsonElement[4] as? String, let hazard_rating_rockfall_id = jsonElement[5] as? String, let hazard_rating_landslide_id = jsonElement[6] as? String {
+            if let id = jsonElement[0] as? String, let site_id = jsonElement[1] as? String, let coordinate1 = jsonElement[2] as? String, let coordinate2 = jsonElement[3] as? String, let total = jsonElement[4] as? String, let hazard_rating_rockfall_id = jsonElement[5] as? String, let hazard_rating_landslide_id = jsonElement[6] as? String, let prelimRating = jsonElement[7] as? String {
                 
                 
                 
@@ -89,6 +89,7 @@ class pinModelHelper: NSObject, URLSessionDataDelegate{
                 thing.total = total
                 thing.hazard_rating_rockfall_id = hazard_rating_rockfall_id
                 thing.hazard_rating_landslide_id = hazard_rating_landslide_id
+                thing.prelimRating = prelimRating
                 
             }
             

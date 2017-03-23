@@ -17,8 +17,6 @@
 		9B3417691D075C8000428E11 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3417681D075C7F00428E11 /* ButtonCell.swift */; };
 		9B35AFCB1CD83DEC00CAE8CB /* RockfallChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35AFCA1CD83DEC00CAE8CB /* RockfallChoice.swift */; };
 		9B4BCA1C1C5FC75B001528D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4BCA1B1C5FC75B001528D5 /* MapKit.framework */; };
-		9B4FB4DA1C9F125F00CFB1FA /* getPercentiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4FB4D91C9F125F00CFB1FA /* getPercentiles.swift */; };
-		9B4FB4DC1C9F134200CFB1FA /* percentilesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4FB4DB1C9F134200CFB1FA /* percentilesModel.swift */; };
 		9B5844A51C617231003FB1CA /* AnnotationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5844A41C617231003FB1CA /* AnnotationInfo.swift */; };
 		9B5B8B4F1BF4E7CF00A345E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5B8B4E1BF4E7CF00A345E8 /* AppDelegate.swift */; };
 		9B5B8B511BF4E7CF00A345E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5B8B501BF4E7CF00A345E8 /* ViewController.swift */; };
@@ -100,8 +98,6 @@
 		9B3417681D075C7F00428E11 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
 		9B35AFCA1CD83DEC00CAE8CB /* RockfallChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RockfallChoice.swift; path = ../RockfallChoice.swift; sourceTree = "<group>"; };
 		9B4BCA1B1C5FC75B001528D5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		9B4FB4D91C9F125F00CFB1FA /* getPercentiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = getPercentiles.swift; sourceTree = "<group>"; };
-		9B4FB4DB1C9F134200CFB1FA /* percentilesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = percentilesModel.swift; sourceTree = "<group>"; };
 		9B5844A41C617231003FB1CA /* AnnotationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationInfo.swift; sourceTree = "<group>"; };
 		9B5B8B4B1BF4E7CF00A345E8 /* USMPTest1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = USMPTest1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B5B8B4E1BF4E7CF00A345E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -256,8 +252,6 @@
 				9BE8D2521DEA7FBB004F2210 /* MaintenanceInfoModelHelper.swift */,
 				9BE93E0C1E43E03800A44D1A /* LandslideModelHelper.swift */,
 				9BEC1ADE1C83AF4F006E2D76 /* pinModel.swift */,
-				9B4FB4DB1C9F134200CFB1FA /* percentilesModel.swift */,
-				9B4FB4D91C9F125F00CFB1FA /* getPercentiles.swift */,
 				9BEC1AE01C83AFA0006E2D76 /* pinModelHelper.swift */,
 				9B5844A41C617231003FB1CA /* AnnotationInfo.swift */,
 				9BEC1ADC1C83A7D2006E2D76 /* AnnotationModel.swift */,
@@ -552,7 +546,6 @@
 				9B9EDF791C346E5B00DED3D6 /* ShareData.swift in Sources */,
 				9BCBCB961C8E5E330044C587 /* Credits.swift in Sources */,
 				9B8828961CC147D3009D20CB /* LandslideChoice.swift in Sources */,
-				9B4FB4DA1C9F125F00CFB1FA /* getPercentiles.swift in Sources */,
 				9BA4DA9B1CF89DB700F67269 /* VCAccount.swift in Sources */,
 				9BD7C7451DF1FE4000286DAE /* SiteListModel.swift in Sources */,
 				9B9DFB3F1E5B97650012E668 /* OfflineModel.swift in Sources */,
@@ -577,7 +570,6 @@
 				9B3417691D075C8000428E11 /* ButtonCell.swift in Sources */,
 				9B5B8B711BF5459E00A345E8 /* ViewControllerLogin.swift in Sources */,
 				9BEC1ADD1C83A7D3006E2D76 /* AnnotationModel.swift in Sources */,
-				9B4FB4DC1C9F134200CFB1FA /* percentilesModel.swift in Sources */,
 				9BE8D2531DEA7FBB004F2210 /* MaintenanceInfoModelHelper.swift in Sources */,
 				9BEC1AE11C83AFA0006E2D76 /* pinModelHelper.swift in Sources */,
 				9B9DFB411E5BAE210012E668 /* OfflineModelHelper.swift in Sources */,

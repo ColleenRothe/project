@@ -16740,15 +16740,15 @@
             <objects>
                 <tableViewController id="0Kn-uB-weQ" customClass="OfflineList" customModule="USMPTest1" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="9kq-J4-Hf6">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="900" height="3300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="returnToForm" id="Whd-xA-GbB" customClass="ButtonCell" customModule="USMPTest1" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="900" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Whd-xA-GbB" id="x0W-3a-FDB">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="900" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J6Y-Hm-VQp">
@@ -16797,10 +16797,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OptionCell" id="h81-5r-YYd" customClass="OptionCell" customModule="USMPTest1" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="900" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="h81-5r-YYd" id="SC9-Xk-3ym">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="900" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jvw-xf-HV5">
@@ -16845,10 +16845,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="OfflineCell" rowHeight="150" id="FUz-ad-Yed" customClass="OfflineCell" customModule="USMPTest1" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="116" width="414" height="150"/>
+                                <rect key="frame" x="0.0" y="116" width="900" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FUz-ad-Yed" id="cbT-m4-Nsb">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="149.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="900" height="149.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nNm-af-kPM">
@@ -22512,6 +22512,11 @@
                                                     <segue destination="1oD-pp-Cuc" kind="show" id="iXF-Qe-xhP"/>
                                                 </connections>
                                             </barButtonItem>
+                                            <barButtonItem title="Legend" id="N4I-Ed-M8e">
+                                                <connections>
+                                                    <action selector="clickLegend:" destination="O1i-Xq-W0C" id="NBn-nl-xv5"/>
+                                                </connections>
+                                            </barButtonItem>
                                             <barButtonItem title="Cache Map" id="hqS-6m-bW0">
                                                 <connections>
                                                     <action selector="saveMap:" destination="O1i-Xq-W0C" id="ZPZ-98-V5c"/>
@@ -22624,6 +22629,7 @@
                         <outlet property="clearCacheButton" destination="vu6-C4-j2s" id="3Yi-LE-k3h"/>
                         <outlet property="homeButton" destination="yBS-5t-9ad" id="Nlx-KS-Zph"/>
                         <outlet property="infoButton" destination="9oD-H9-7kN" id="WqF-0W-6WW"/>
+                        <outlet property="legendButton" destination="N4I-Ed-M8e" id="bTt-FX-HlR"/>
                         <outlet property="loadOfflineButton" destination="llA-34-Uus" id="Z8v-RP-8xA"/>
                         <outlet property="mapView" destination="9dY-m8-lqd" id="tAB-Uk-0iI"/>
                         <segue destination="RA8-Dj-VQs" kind="show" identifier="getInfo2" id="4tm-Ra-Xm8"/>
@@ -22638,18 +22644,18 @@
         <image name="unchecked" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ct4-op-jlw"/>
-        <segue reference="WgU-bv-pba"/>
-        <segue reference="nBC-T4-fr4"/>
-        <segue reference="5li-Ie-c6J"/>
-        <segue reference="pN5-Dh-MWt"/>
+        <segue reference="r8m-xH-uKb"/>
+        <segue reference="Nog-UT-dYS"/>
+        <segue reference="ueR-qn-71D"/>
+        <segue reference="4tm-Ra-Xm8"/>
+        <segue reference="qEQ-uj-yh6"/>
+        <segue reference="iXF-Qe-xhP"/>
+        <segue reference="llY-fe-SOr"/>
+        <segue reference="wmW-Im-6MB"/>
         <segue reference="r9s-A1-TPS"/>
-        <segue reference="RSw-B6-vg5"/>
+        <segue reference="g83-tB-Grj"/>
         <segue reference="ywe-DB-QTs"/>
-        <segue reference="pBJ-1Y-5rg"/>
-        <segue reference="mgh-ej-O6P"/>
-        <segue reference="8NJ-yf-sqs"/>
-        <segue reference="p2y-eQ-Y33"/>
-        <segue reference="frB-nH-gJg"/>
+        <segue reference="ost-gi-qRl"/>
+        <segue reference="ob1-xV-U4Z"/>
     </inferredMetricsTieBreakers>
 </document>

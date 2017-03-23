@@ -22,13 +22,14 @@ class pinModel: NSObject {
     var hazard_rating_rockfall_id : String?
     var hazard_rating_landslide_id : String?
     var imageName = "YellowLandslide"
+    var prelimRating : String?
     
     override init(){
         
     }
     
     
-    init(id: String, site_id: String, coordinate1: String, coordinate2: String, total:String, hazard_rating_rockfall_id: String, hazard_rating_landslide_id: String){
+    init(id: String, site_id: String, coordinate1: String, coordinate2: String, total:String, hazard_rating_rockfall_id: String, hazard_rating_landslide_id: String, prelimRating: String){
         
         self.id = id
         self.site_id = site_id
@@ -37,6 +38,7 @@ class pinModel: NSObject {
         self.total = total
         self.hazard_rating_rockfall_id = hazard_rating_rockfall_id
         self.hazard_rating_landslide_id = hazard_rating_landslide_id
+        self.prelimRating = prelimRating
                 
     }
     

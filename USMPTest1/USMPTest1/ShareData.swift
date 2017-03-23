@@ -150,14 +150,6 @@ class ShareData {
     var password : String = ""
     var permissions: String = ""
     
-    //percentiles
-    var rockfall_twenty_five = ""
-    var rockfall_fifty = ""
-    var rockfall_seventy_five = ""
-    var landslide_twenty_five = ""
-    var landslide_fifty = ""
-    var landslide_seventy_five = ""
-    
     //offline...
     var offIds: [String] = []
     var offline = false

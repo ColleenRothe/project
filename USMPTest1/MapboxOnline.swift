@@ -49,11 +49,10 @@ fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 
-class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtocol, HomeModel2Protocol, MGLMapViewDelegate {
+class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, MGLMapViewDelegate {
     
     @IBOutlet weak var mapView: MGLMapView!
     var feedItems: NSArray = NSArray()          //feed for pin info
-    var otherFeed: NSArray = NSArray()          //feed for percentiles
     var offFeed: NSArray = NSArray()            //feed for offline site info
     let shareData = ShareData.sharedInstance
     var imagename = ""                          //used to set image of each pin when online
@@ -74,6 +73,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
     
     @IBOutlet weak var homeButton: UIBarButtonItem!
     
+    @IBOutlet weak var legendButton: UIBarButtonItem!
     @IBOutlet weak var cacheMapButton: UIBarButtonItem!
     
     
@@ -114,11 +114,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
         pinmh.delegate = self
         pinmh.downloadItems()
         
-        //percentiles
-        let percentiles = getPercentiles()
-        percentiles.delegate = self
-        percentiles.downloadItems()
-        
         //offline pin info
         homeModel.delegate = self
         
@@ -143,18 +138,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
 
     }
     
-    //percentiles protocol
-    func itemsDownloaded1(_ items: NSArray) {
-        otherFeed = items
-        shareData.rockfall_twenty_five = (otherFeed.object(at: 0) as! percentilesModel).rockfall_twenty_five!
-        shareData.rockfall_fifty = (otherFeed.object(at: 0) as! percentilesModel).rockfall_fifty!
-        shareData.rockfall_seventy_five = (otherFeed.object(at: 0) as! percentilesModel).rockfall_seventy_five!
-        
-        shareData.landslide_twenty_five = (otherFeed.object(at: 0) as! percentilesModel).landslide_twenty_five!
-        shareData.landslide_fifty = (otherFeed.object(at: 0) as! percentilesModel).landslide_fifty!
-        shareData.landslide_seventy_five = (otherFeed.object(at: 0) as! percentilesModel).landslide_seventy_five!
-        
-    }
     
     //annotation...
     func itemsDownloaded2(_ items: NSArray) {
@@ -170,6 +153,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
             let font = UIFont(name: "Times New Roman", size: 15)
             
             homeButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            legendButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             cacheMapButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             clearCacheButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             cacheStatusButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
@@ -181,6 +165,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
             let font = UIFont(name: "Times New Roman", size: 9)
             
             homeButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            legendButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             cacheMapButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             clearCacheButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             cacheStatusButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
@@ -202,28 +187,32 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
             poiCoordinates.longitude = CDouble(selectedLocation.coordinate2!)!
             //get the total
             tempTotal = Int(selectedLocation.total!)!
+            var prelimRating = Int(selectedLocation.prelimRating!)!
             //It's a landslide
             if Int(selectedLocation.hazard_rating_landslide_id!)! > 0{
-                if tempTotal <= Int(shareData.landslide_twenty_five){
-                    imagename = "GreenLandslide"
-                }else if tempTotal <= Int(shareData.landslide_fifty){
-                    imagename = "YellowLandslide"
-                }else if tempTotal <= Int(shareData.landslide_seventy_five){
-                    imagename = "OrangeLandslide"
-                }else{
+                if(prelimRating > 161){
                     imagename = "RedLandslide"
                 }
+                else if(prelimRating <= 161 && prelimRating >= 22){
+                    imagename = "YellowLandslide"
+                }
+                else{
+                    imagename = "GreenLandslide"
+                }
+                
+           
                 
             }else{ //it's a rockfall
-                if tempTotal <= Int(shareData.rockfall_twenty_five){
-                    imagename = "GreenRockfall"
-                }else if tempTotal <= Int(shareData.rockfall_fifty){
-                    imagename = "YellowRockfall"
-                }else if tempTotal <= Int(shareData.rockfall_seventy_five){
-                    imagename = "OrangeRockfall"
-                }else{
+                if(prelimRating > 161){
                     imagename = "RedRockfall"
                 }
+                else if(prelimRating <= 161 && prelimRating >= 22){
+                    imagename = "YellowRockfall"
+                }
+                else{
+                    imagename = "GreenRockfall"
+                }
+
                 
             }
             
@@ -828,5 +817,15 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, getPercentilesProtoc
         }
         
     }
+    
+    @IBAction func clickLegend(_ sender: Any) {
+        let messageString = "Based on Preliminary Rating \n \nGreen: Good (0-15)\n\n Yellow: Fair (22-161)\n\nRed: Poor (>161)"
+        
+        let alert = UIAlertController(title: "Legend", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
+    
 }
 
