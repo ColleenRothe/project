@@ -26,6 +26,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -37,6 +38,7 @@ import android.widget.Button;
 
 import java.io.BufferedReader;
 import java.io.Console;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -50,13 +52,18 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.content.SharedPreferences;
 
+import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.graphics.drawable.*;
+import android.widget.RelativeLayout;
+
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
 import com.darsh.multipleimageselect.activities.ImageSelectActivity;
 import java.util.ArrayList;
 import java.util.List;
-import android.util.Log;
+
 
 public class NewSlopeEventActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -132,6 +139,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
     public static final int REQUEST_CODE_CHOOSE = 1;
     private List<Uri> mSelected;
+    Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1224,6 +1232,9 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
                     }
                 }
+        System.out.println("Clicked image button");
+
+
 
 
     }
@@ -1239,16 +1250,37 @@ public class NewSlopeEventActivity extends AppCompatActivity
             System.out.println(stringBuffer.toString());
         }
 
-        ImageSelectActivity is = new ImageSelectActivity();
-        //is.toggleSelection(2);
+        imageUri = Uri.fromFile(new File(selectedImages.get(0).path));
+        System.out.println("test uri");
+        System.out.println(imageUri);
+
+    }
+
+    //need to be able to view multiple images
+    //need to save the uri string, when saving offline
+    public void viewChosen(View view){
+        System.out.println(imageUri);
+        Dialog builder = new Dialog(this);
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(
+                new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
+
+        ImageView imageView = new ImageView(this);
+        imageView.setImageURI(imageUri);
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        builder.show();
+    }
 
 
     }
 
 
 
-
-
-
-
-}

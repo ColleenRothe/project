@@ -71,8 +71,8 @@ dependencies {
     }
 
     compile 'com.github.darsh2:MultipleImageSelect:v0.0.4'
-    compile 'com.github.barteksc:android-pdf-viewer:2.4.0'
-    provided 'org.androidannotations:androidannotations:4.0.0'
+    compile 'com.github.barteksc:android-pdf-viewer:2.4.0' //pdf viewer
+
 
 
 
