@@ -495,28 +495,20 @@ public class LandslideActivity extends AppCompatActivity
         //Speed.setOnItemSelectedListener(riskWatcher); //NEW NEW NEW NEW
 
         DitchWidth1 = (EditText) findViewById(R.id.L_DitchWidth1);
-        DitchWidth1.setOnFocusChangeListener(ditchWidth1Watcher);
 
         DitchWidth2 = (EditText) findViewById(R.id.L_DitchWidth2);
-        DitchWidth2.setOnFocusChangeListener(ditchWidth2Watcher);
 
         DitchDepth1 = (EditText) findViewById(R.id.L_DitchDepth1);
-        DitchDepth1.setOnFocusChangeListener(ditchDepth1Watcher);
 
         DitchDepth2 = (EditText) findViewById(R.id.L_DitchDepth2);
-        DitchDepth2.setOnFocusChangeListener(ditchDepth2Watcher);
 
         DitchSlope1 = (EditText) findViewById(R.id.L_DitchSlope1);
-        DitchSlope1.setOnFocusChangeListener(ditchSlope1Watcher);
 
         DitchSlope2 = (EditText) findViewById(R.id.L_DitchSlope2);
-        DitchSlope2.setOnFocusChangeListener(ditchSlope2Watcher);
 
         DitchSlope3 = (EditText) findViewById(R.id.L_DitchSlope3);
-        DitchSlope3.setOnFocusChangeListener(ditchSlope3Watcher);
 
         DitchSlope4 = (EditText) findViewById(R.id.L_DitchSlope4);
-        DitchSlope4.setOnFocusChangeListener(ditchSlope4Watcher);
 
         AnnualRain1 = (EditText) findViewById(R.id.L_AnnualRain1);
         AnnualRain1.setOnFocusChangeListener(rainWatcher1);
@@ -1191,7 +1183,7 @@ public class LandslideActivity extends AppCompatActivity
                     RoadTrailNo.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Road/Trail No. must have an integer value.")
+                    builder.setMessage("Road/Trail No. must have a value.")
                             .setTitle("Warning");
                     builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -1220,7 +1212,7 @@ public class LandslideActivity extends AppCompatActivity
                     RoadTrailClass.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Road/Trail class must have an integer value.")
+                    builder.setMessage("Road/Trail class must have a value.")
                             .setTitle("Warning");
                     builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -1838,268 +1830,6 @@ public class LandslideActivity extends AppCompatActivity
                     PercentDSD.setText(scores);
                     calcRiskTotal();
                     SightDistance.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-
-            }
-
-        }
-
-    };
-
-    //Validation ditch width(s) validation
-
-    private final OnFocusChangeListener ditchWidth1Watcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                String text = DitchWidth1.getText().toString();
-                if (DitchWidth1.length() == 0 || !(Pattern.matches("[0-9]+\\.*[0-9]*", text))) {
-                    DitchWidth1.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Ditch width minimum must have a decimal value.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    DitchWidth1.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-
-            }
-
-        }
-
-    };
-
-    private final OnFocusChangeListener ditchWidth2Watcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                String text = DitchWidth2.getText().toString();
-                if (DitchWidth2.length() == 0 || !(Pattern.matches("[0-9]+\\.*[0-9]*", text))) {
-                    DitchWidth2.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Ditch width maximum must have a decimal value.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    DitchWidth2.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-
-            }
-
-        }
-
-    };
-
-    //Validation: Ditch Depth(s)
-    private final OnFocusChangeListener ditchDepth1Watcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                String text = DitchWidth1.getText().toString();
-                if (text.length() == 0 || !(Pattern.matches("[0-9]+\\.*[0-9]*", text))) {
-                    DitchDepth1.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Ditch Depth minimum must have a decimal value.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    System.out.println("TEXT IS" + DitchDepth1.getText().toString());
-                    DitchDepth1.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-
-            }
-
-        }
-
-    };
-
-    private final OnFocusChangeListener ditchDepth2Watcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                String text = DitchWidth2.getText().toString();
-                if (text.length() == 0 || !(Pattern.matches("[0-9]+\\.*[0-9]*", text))) {
-                    DitchDepth2.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Ditch Depth maximum must have a decimal value.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    DitchDepth2.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-
-            }
-
-        }
-
-    };
-    private final OnFocusChangeListener ditchSlope1Watcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                if (DitchSlope1.length() == 0) {
-                    DitchSlope1.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Ditch Slope first begin must have an integer value.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    DitchSlope1.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-
-            }
-
-        }
-
-    };
-
-    private final OnFocusChangeListener ditchSlope2Watcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                if (DitchSlope2.length() == 0) {
-                    DitchSlope2.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Ditch Slope first end must have an integer value.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    DitchSlope2.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-
-            }
-
-        }
-
-    };
-    private final OnFocusChangeListener ditchSlope3Watcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                if (DitchSlope3.length() == 0) {
-                    DitchSlope3.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Ditch Slope second begin must have an integer value.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    DitchSlope3.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-
-            }
-
-        }
-
-    };
-
-    private final OnFocusChangeListener ditchSlope4Watcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                if (DitchSlope4.length() == 0) {
-                    DitchSlope4.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Ditch Slope second end must have an integer value.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    DitchSlope4.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                 }
 
