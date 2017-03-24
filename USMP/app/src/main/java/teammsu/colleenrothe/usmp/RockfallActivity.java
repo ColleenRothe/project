@@ -1072,7 +1072,34 @@ public class RockfallActivity extends AppCompatActivity
                 }
 
                 //todo: hazard type (1)
-                //HazardType.setText(map.get("HAZARD_TYPE"));
+                String hazardString = map.get("HAZARD_TYPE");
+                if(hazardString.contains("-")) {
+                    //example entry is "Landslide - Shallow Slump, Below Route"
+                    int start = hazardString.indexOf("-");
+                    hazardString = hazardString.substring(start+2);
+                    String [] hazards = hazardString.split(",");
+
+                    ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
+
+
+                    for(int i = 0; i<hazardTypeList.size(); i++){
+                        if(i==3){ //can't have more than 3
+                            break;
+                        }
+                        //if it's in the list, set the spinner to it
+                        if(hazardTypeList.contains(hazards[i])){
+                            if(i == 0){
+                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            }else if(i == 1){
+                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            }else{
+                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            }
+                        }
+                    }
+
+                }
+
 
                 BeginLat.setText(map.get("BEGIN_COORDINATE_LAT"));
                 EndLat.setText(map.get("END_COORDINATE_LAT"));
@@ -3561,7 +3588,22 @@ public class RockfallActivity extends AppCompatActivity
                     String datum = String.valueOf(Datum.getText());
                     String aadt = String.valueOf(Aadt.getText());
                     //todo: hazard type (2)
-                    //String hazard_type = String.valueOf(HazardType.getText());
+                    String temp = "Rockfall - ";
+                    if(HazardType1.getSelectedItem().toString() != "") {
+                        temp = temp.concat(HazardType1.getSelectedItem().toString());
+                    }
+                    if(HazardType2.getSelectedItem().toString() != "") {
+                        temp = temp.concat(",");
+                        temp = temp.concat(HazardType2.getSelectedItem().toString());
+                    }
+                    if(HazardType3.getSelectedItem().toString() != "") {
+                        temp = temp.concat(",");
+                        temp = temp.concat(HazardType3.getSelectedItem().toString());
+                    }
+                    String hazard_type = temp;
+
+
+
                     String length_affected = String.valueOf(LengthAffected.getText());
                     String slope_height_axial_length = String.valueOf(SlopeHeight.getText());
                     String slope_angle = String.valueOf(SlopeAngle.getText());
@@ -3759,7 +3801,7 @@ public class RockfallActivity extends AppCompatActivity
                             "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
                             side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
                             begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
-                            "&datum=" + datum + "&aadt=" + aadt + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                            "&datum=" + datum + "&aadt=" + aadt + "&hazard_type="+hazard_type+ "&length_affected=" + length_affected + "&slope_height_axial_length=" +
                             slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
                             "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width" + maximum_ditch_width +
                             "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
@@ -3884,7 +3926,19 @@ public class RockfallActivity extends AppCompatActivity
                         String datum = String.valueOf(Datum.getText());
                         String aadt = String.valueOf(Aadt.getText());
                         //todo: hazard type (4)
-                        //String hazard_type = String.valueOf(HazardType.getText());
+                        String temp = "Rockfall - ";
+                        if(HazardType1.getSelectedItem().toString() != "") {
+                            temp = temp.concat(HazardType1.getSelectedItem().toString());
+                        }
+                        if(HazardType2.getSelectedItem().toString() != "") {
+                            temp = temp.concat(",");
+                            temp = temp.concat(HazardType2.getSelectedItem().toString());
+                        }
+                        if(HazardType3.getSelectedItem().toString() != "") {
+                            temp = temp.concat(",");
+                            temp = temp.concat(HazardType3.getSelectedItem().toString());
+                        }
+                        String hazard_type = temp;
                         String length_affected = String.valueOf(LengthAffected.getText());
                         String slope_height_axial_length = String.valueOf(SlopeHeight.getText());
                         String slope_angle = String.valueOf(SlopeAngle.getText());
@@ -4082,7 +4136,7 @@ public class RockfallActivity extends AppCompatActivity
                                 "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
                                 side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
                                 begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
-                                "&datum=" + datum + "&aadt=" + aadt + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                                "&datum=" + datum + "&aadt=" + aadt +"&hazard_type="+hazard_type+ "&length_affected=" + length_affected + "&slope_height_axial_length=" +
                                 slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
                                 "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width" + maximum_ditch_width +
                                 "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
@@ -4156,7 +4210,22 @@ public class RockfallActivity extends AppCompatActivity
         int side = Side.getSelectedItemPosition();
         int weather = Weather.getSelectedItemPosition();
         //todo: hazard type (6)
-        //String hazard_type = HazardType.getText().toString();
+        String temp = "Rockfall - ";
+        if(HazardType1.getSelectedItem().toString() != "") {
+            temp = temp.concat(HazardType1.getSelectedItem().toString());
+        }
+        if(HazardType2.getSelectedItem().toString() != "") {
+            temp = temp.concat(",");
+            temp = temp.concat(HazardType2.getSelectedItem().toString());
+        }
+        if(HazardType3.getSelectedItem().toString() != "") {
+            temp = temp.concat(",");
+            temp = temp.concat(HazardType3.getSelectedItem().toString());
+        }
+        String hazard_type = temp;
+
+
+
         String begin_coordinate_lat = BeginLat.getText().toString();
         String begin_coordinate_long = BeginLong.getText().toString();
         String end_coordinate_latitude = EndLat.getText().toString();
@@ -4229,9 +4298,7 @@ public class RockfallActivity extends AppCompatActivity
 
         String total_score = Total.getText().toString();
 
-        //todo: hazard type (7)
-        String hazard_type = "0";
-        
+
         Rockfall rockfall=new Rockfall(umbrella_agency,regional_admin,local_admin, date, road_trail_number,  road_or_trail,
          road_trail_class, rater,  begin_mile_marker,  end_mile_marker,
          side,  weather,  hazard_type,  begin_coordinate_lat,  begin_coordinate_long,
@@ -4264,7 +4331,10 @@ public class RockfallActivity extends AppCompatActivity
         EndMile.setText("");
         Side.setSelection(0);
         Weather.setSelection(0);
-        //todo: hazard type (8)
+        HazardType1.setSelection(0);
+        HazardType2.setSelection(0);
+        HazardType3.setSelection(0);
+
         //HazardType.setText("");
         BeginLat.setText("");
         BeginLong.setText("");
@@ -4358,7 +4428,36 @@ public class RockfallActivity extends AppCompatActivity
             Side.setSelection(rockfall.getSide());
             Weather.setSelection(rockfall.getWeather());
             //todo: hazard type (9)
-            //HazardType.setText(rockfall.getHazard_type());
+            String hazardString = rockfall.getHazard_type();
+
+            if(hazardString.contains("-")) {
+                //example entry is "Landslide - Shallow Slump, Below Route"
+
+                int start = hazardString.indexOf("-");
+                hazardString = hazardString.substring(start+2);
+                String [] hazards = hazardString.split(",");
+
+                ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
+
+
+                for(int i = 0; i<hazardTypeList.size(); i++){
+                    if(i==3){ //can't have more than 3
+                        break;
+                    }
+                    //if it's in the list, set the spinner to it
+                    if(hazardTypeList.contains(hazards[i])){
+                        if(i == 0){
+                            HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
+                        }else if(i == 1){
+                            HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
+                        }else{
+                            HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
+                        }
+                    }
+                }
+
+            }
+
             BeginLat.setText(rockfall.getBegin_coordinate_lat());
             BeginLong.setText(rockfall.getBegin_coordinate_long());
             EndLat.setText(rockfall.getEnd_coordinate_latitude());
@@ -4481,7 +4580,35 @@ public class RockfallActivity extends AppCompatActivity
                 Weather.setSelection(offlineSite.getWeather());
 
                 //todo: hazard type (10)
-                //HazardType.setText(offlineSite.getHazard_type());
+                String hazardString = offlineSite.getHazard_type();
+
+                if(hazardString.contains("-")) {
+                    //example entry is "Landslide - Shallow Slump, Below Route"
+                    int start = hazardString.indexOf("-");
+                    hazardString = hazardString.substring(start+2);
+                    String [] hazards = hazardString.split(",");
+
+                    ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
+
+
+                    for(int j = 0; j<hazardTypeList.size(); j++){
+                        if(j==3){ //can't have more than 3
+                            break;
+                        }
+                        //if it's in the list, set the spinner to it
+                        if(hazardTypeList.contains(hazards[j])){
+                            if(j == 0){
+                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[j]));
+                            }else if(j == 1){
+                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[j]));
+                            }else{
+                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[j]));
+                            }
+                        }
+                    }
+
+                }
+
                 BeginLat.setText(offlineSite.getBegin_coordinate_lat());
                 EndLat.setText(offlineSite.getEnd_coordinate_latitude());
                 BeginLong.setText(offlineSite.getEnd_coordinate_longitude());

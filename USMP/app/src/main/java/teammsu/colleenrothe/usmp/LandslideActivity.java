@@ -4408,7 +4408,6 @@ public class LandslideActivity extends AppCompatActivity
 
 
                     for(int j = 0; j<hazardTypeList.size(); j++){
-                        System.out.println("Hazard "+ j+" is:" + hazardTypeList.get(j));
                         if(j==3){ //can't have more than 3
                             break;
                         }
