@@ -188,12 +188,29 @@
             android:layout_margin="@dimen/text_margin"
             android:text = "Hazard Type"
             />
-        <EditText
-            android:id="@+id/L_HazardType"
+        <Spinner
+            android:id = "@+id/LHazard1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            />
+            android:entries = "@array/HazardTypeList"
+            >
+        </Spinner>
+
+        <Spinner
+            android:id = "@+id/LHazard2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/HazardTypeList"
+            >
+        </Spinner>
+
+        <Spinner
+            android:id = "@+id/LHazard3"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:entries = "@array/HazardTypeList"
+            >
+        </Spinner>
 
 
             <TextView
@@ -239,7 +256,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="84dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:text="Starting"
@@ -267,11 +284,6 @@
                 android:nextFocusDown="@+id/L_EndLat"
                 />
 
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:text="-"
-                />
 
             <EditText
                 android:id="@id/L_EndLat"
@@ -296,7 +308,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="84dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:text="Starting"
@@ -323,11 +335,7 @@
                 android:inputType="numberDecimal|numberSigned"
                 android:nextFocusDown="@+id/L_EndLong"
                 />
-            <TextView
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:text="-"
-                />
+
             <EditText
                 android:id="@id/L_EndLong"
                 android:layout_width="100dp"

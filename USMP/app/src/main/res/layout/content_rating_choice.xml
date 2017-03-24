@@ -34,16 +34,4 @@
         android:id="@+id/button2"
         />
 
-    <Button
-        android:id="@+id/ratingChoiceSubmit"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Submit All Saved Rating Forms"
-        android:layout_below="@+id/button2"
-        android:layout_alignRight="@+id/button"
-        android:layout_alignEnd="@+id/button" />
-
-
-
-
 </RelativeLayout>

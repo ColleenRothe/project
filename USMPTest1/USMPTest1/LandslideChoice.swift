@@ -796,10 +796,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         //text field delegates for validation
         
         roadTrailNoText.delegate = self
-        roadTrailNoText.keyboardType = .numberPad // only can have integers...
         
         roadTrailClassText.delegate = self
-        roadTrailClassText.keyboardType = .numberPad //only can have integers...
         
         rater.delegate = self
         
@@ -1896,9 +1894,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         
         if(textField == roadTrailNoText){
-            if(roadTrailNoText.text == "" || Int(roadTrailNoText.text!) == nil){
+            if(roadTrailNoText.text == ""){
                 roadTrailNoText.backgroundColor = UIColor.red
-                let messageString = "Road/Trail No. must have an integer value."
+                let messageString = "Road/Trail No. must have an value."
                 
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -1914,9 +1912,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         
         if(textField == roadTrailClassText){
-            if(roadTrailClassText.text == "" || Int(roadTrailNoText.text!) == nil){
+            if(roadTrailClassText.text == ""){
                 roadTrailClassText.backgroundColor = UIColor.red
-                let messageString = "Road/Trail Class must have an integer value."
+                let messageString = "Road/Trail Class must have a value."
                 
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -2056,7 +2054,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             if(pastLat.contains(lat1Text.text! as NSString)){
                 
             }else{
-                print("NOT THERE YET")
                 pastLat.append(lat1Text.text! as NSString)
                 
             }
@@ -2303,133 +2300,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
         }
         
-        if(textField == ditchWidth1Text){
-            if(ditchWidth1Text.text == "" || (ditchWidth1Text.text! =~ "[0-9]+\\.*[0-9]*") == false){
-                ditchWidth1Text.backgroundColor = UIColor.red
-                let messageString = "Ditch Width minimum must have a decimal value."
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-            }
-            else{
-                ditchWidth1Text.backgroundColor = UIColor.white
-            }
-            
-        }
-        
-        if(textField == ditchWidth2Text){
-            if(ditchWidth2Text.text == "" || (ditchWidth2Text.text! =~ "[0-9]+\\.*[0-9]*") == false){
-                ditchWidth2Text.backgroundColor = UIColor.red
-                let messageString = "Ditch Width maximum must have a decimal value."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-            }
-            else{
-                ditchWidth2Text.backgroundColor = UIColor.white
-            }
-            
-        }
-         
-        if(textField == ditchDepth1Text ){
-            if(ditchDepth1Text.text == "" || (ditchDepth1Text.text! =~ "[0-9]+\\.*[0-9]*") == false){
-                ditchDepth1Text.backgroundColor = UIColor.red
-                let messageString = "Ditch Depth minimum must have a decimal value."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-            }
-            else{
-                ditchDepth1Text.backgroundColor = UIColor.white
-            }
-            
-        }
-        
-        if(textField == ditchDepth2Text){
-            if(ditchDepth2Text.text == "" || (ditchDepth2Text.text! =~ "[0-9]+\\.*[0-9]*") == false){
-                ditchDepth2Text.backgroundColor = UIColor.red
-                let messageString = "Ditch Depth maximum must have a decimal value."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-            }
-            else{
-                ditchDepth2Text.backgroundColor = UIColor.white
-            }
-            
-        }
-        
-        if(textField == ditchSlope1beginText){
-            if(ditchSlope1beginText.text == "" || Int(ditchSlope1beginText.text!) == nil ){
-                ditchSlope1beginText.backgroundColor = UIColor.red
-                let messageString = "Ditch Slope first begin must have an integer value."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-            }
-            else{
-                ditchSlope1beginText.backgroundColor = UIColor.white
-            }
-            
-        }
-        
-        if(textField == ditchSlope1endText){
-            if(ditchSlope1endText.text == "" ||  Int(ditchSlope1endText.text!) == nil){
-                ditchSlope1endText.backgroundColor = UIColor.red
-                let messageString = "Ditch Slope first end must have an integer value."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-            }
-            else{
-                ditchSlope1endText.backgroundColor = UIColor.white
-            }
-            
-        }
-        
-        if(textField == ditchSlope2beginText){
-            if(ditchSlope2beginText.text == "" ||  Int(ditchSlope2beginText.text!) == nil){
-                ditchSlope2beginText.backgroundColor = UIColor.red
-                let messageString = "Ditch Slope second begin must have an integer value."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-            }
-            else{
-                ditchSlope2beginText.backgroundColor = UIColor.white
-            }
-            
-        }
-        
-        if(textField == ditchSlope2endText){
-            if(ditchSlope2endText.text == "" ||  Int(ditchSlope2endText.text!) == nil){
-                ditchSlope2endText.backgroundColor = UIColor.red
-                let messageString = "Ditch Slope second end must have an integer value."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-            }
-            else{
-                ditchSlope2endText.backgroundColor = UIColor.white
-            }
-            
-        }
-        
+    
         
         if(textField == beginRainText){
             if(beginRainText.text == "" || (beginRainText.text! =~ "[0-9]+\\.*[0-9]*") == false){

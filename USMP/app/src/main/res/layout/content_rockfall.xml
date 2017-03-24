@@ -194,12 +194,29 @@
                 android:text = "Hazard Type"
 
                 />
-            <EditText
-                android:id="@+id/R_HazardType"
+            <Spinner
+                android:id = "@+id/RHazard1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                />
+                android:entries = "@array/HazardTypeList"
+                >
+            </Spinner>
+
+            <Spinner
+                android:id = "@+id/RHazard2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries = "@array/HazardTypeList"
+                >
+            </Spinner>
+
+            <Spinner
+                android:id = "@+id/RHazard3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries = "@array/HazardTypeList"
+                >
+            </Spinner>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -243,7 +260,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="84dp"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
                     android:text="Starting"
@@ -273,12 +290,6 @@
 
                     />
 
-                <TextView
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    />
-
                 <EditText
                     android:id="@id/R_EndLat"
                     android:layout_width="100dp"
@@ -304,7 +315,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_width="84dp"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
                     android:text="Starting"
@@ -333,11 +344,7 @@
 
 
                     />
-                <TextView
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:text="-"
-                    />
+
                 <EditText
                     android:id="@id/R_EndLong"
                     android:layout_width="100dp"

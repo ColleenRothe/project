@@ -90,7 +90,9 @@ public class LandslideActivity extends AppCompatActivity
     EditText EndMile;
     Spinner Side;
     Spinner Weather;
-    EditText HazardType;
+    Spinner HazardType1;
+    Spinner HazardType2;
+    Spinner HazardType3;
     EditText BeginLat;
     EditText EndLat;
     EditText BeginLong;
@@ -450,8 +452,17 @@ public class LandslideActivity extends AppCompatActivity
         Weather.setFocusable(true);
         Weather.setFocusableInTouchMode(true);
 
-        HazardType = (EditText) findViewById(R.id.L_HazardType);
-        HazardType.setOnFocusChangeListener(hazardTypeWatcher);
+        HazardType1 = (Spinner) findViewById(R.id.LHazard1);
+        HazardType1.setFocusable(true);
+        HazardType1.setFocusableInTouchMode(true);
+
+        HazardType2 = (Spinner) findViewById(R.id.LHazard2);
+        HazardType2.setFocusable(true);
+        HazardType2.setFocusableInTouchMode(true);
+
+        HazardType3 = (Spinner) findViewById(R.id.LHazard3);
+        HazardType3.setFocusable(true);
+        HazardType3.setFocusableInTouchMode(true);
 
         BeginLat = (EditText) findViewById(R.id.L_BeginLat);
         BeginLat.setOnFocusChangeListener(beginLatWatcher);
@@ -978,7 +989,9 @@ public class LandslideActivity extends AppCompatActivity
                     }
                 }
 
-                HazardType.setText(map.get("HAZARD_TYPE"));
+                //TODO: hazard type here (1)
+
+                //HazardType.setText(map.get("HAZARD_TYPE"));
 
                 BeginLat.setText(map.get("BEGIN_COORDINATE_LAT"));
                 EndLat.setText(map.get("END_COORDINATE_LAT"));
@@ -1326,36 +1339,6 @@ public class LandslideActivity extends AppCompatActivity
 
     };
 
-    //Hazard Type Verification
-    private final OnFocusChangeListener hazardTypeWatcher = new OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                if (HazardType.getText().length() == 0 || HazardType.getText().length() >= 255) {
-                    HazardType.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(LandslideActivity.this);
-                    builder.setMessage("Hazard Type cannot be empty and must be shorter than 255 characters.")
-                            .setTitle("Warning");
-                    builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            // User clicked OK button
-                        }
-                    });
-
-                    AlertDialog dialog = builder.create();
-
-                    dialog.show();
-
-                } else {
-                    HazardType.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-                }
-
-            }
-        }
-
-    };
 
 
     //Latitude Validation
@@ -3462,7 +3445,9 @@ public class LandslideActivity extends AppCompatActivity
                     String end_coordinate_longitude = String.valueOf(EndLong.getText());
                     String datum = String.valueOf(Datum.getText());
                     String aadt = String.valueOf(Aadt.getText());
-                    String hazard_type = String.valueOf(HazardType.getText());
+                    //todo: slope hazard here (2)
+
+                    //String hazard_type = String.valueOf(HazardType.getText());
                     String length_affected = String.valueOf(LengthAffected.getText());
                     String slope_height_axial_length = String.valueOf(AxialLength.getText());
                     String slope_angle = String.valueOf(SlopeAngle.getText());
@@ -3662,12 +3647,12 @@ public class LandslideActivity extends AppCompatActivity
 
                     String old_site_id = "0";
 
-
+                    //todo: slope hazard (3) (after aadt)
                     writer.write("old_site_id="+old_site_id+"&umbrella_agency="+umbrella_agency+"&regional_admin="+regional_admin+"&local_admin="+local_admin+"&road_trail_number="+road_trail_number+"&road_trail_class="+road_trail_class+
                             "&begin_mile_marker="+begin_mile_marker+"&end_mile_marker="+end_mile_marker+"&road_or_trail="+road_or_trail+"&side="+
                             side +"&rater="+l_rater+"&weather="+weather+"&begin_coordinate_latitude="+begin_coordinate_lat+"&begin_coordinate_longitude="+
                             begin_coordinate_long+"&end_coordinate_latitude="+end_coordinate_latitude+"&end_coordinate_longitude="+end_coordinate_longitude+
-                            "&datum="+datum+"&aadt="+aadt+"&hazard_type="+hazard_type+"&length_affected="+length_affected+"&slope_height_axial_length="+
+                            "&datum="+datum+"&aadt="+aadt+"&length_affected="+length_affected+"&slope_height_axial_length="+
                             slope_height_axial_length+"&slope_angle="+slope_angle+"&sight_distance="+sight_distance+"&road_trail_width="+road_trail_width+
                             "&speed_limit="+speed_limit+"&minimum_ditch_width="+minimum_ditch_width+"&maximum_ditch_width="+maximum_ditch_width+
                             "&minimum_ditch_depth="+minimum_ditch_depth+"&maximum_ditch_depth="+maximum_ditch_depth+"&first_begin_ditch_slope="+first_begin_ditch_slope+
@@ -3773,7 +3758,8 @@ public class LandslideActivity extends AppCompatActivity
                         String end_coordinate_longitude = String.valueOf(EndLong.getText());
                         String datum = String.valueOf(Datum.getText());
                         String aadt = String.valueOf(Aadt.getText());
-                        String hazard_type = String.valueOf(HazardType.getText());
+                        //todo: hazard type here (4)
+                        //String hazard_type = String.valueOf(HazardType.getText());
                         String length_affected = String.valueOf(LengthAffected.getText());
                         String slope_height_axial_length = String.valueOf(AxialLength.getText());
                         String slope_angle = String.valueOf(SlopeAngle.getText());
@@ -3951,12 +3937,12 @@ public class LandslideActivity extends AppCompatActivity
 
                         //flma problem
 
-
+                        //todo: hazard type (5) (after aadt)
                         writer.write("mgmt_area=" + "&umbrella_agency="+umbrella_agency+"&regional_admin="+regional_admin+"&local_admin="+local_admin+"&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
                                 "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
                                 side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
                                 begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
-                                "&datum=" + datum + "&aadt=" + aadt + "&hazard_type=" + hazard_type + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                                "&datum=" + datum + "&aadt=" + aadt + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
                                 slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
                                 "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width=" + maximum_ditch_width +
                                 "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
@@ -4008,7 +3994,8 @@ public class LandslideActivity extends AppCompatActivity
         String end_mile_marker = EndMile.getText().toString();
         int side = Side.getSelectedItemPosition();
         int weather = Weather.getSelectedItemPosition();
-        String hazard_type = HazardType.getText().toString();
+       // todo: hazard type (6)
+       // String hazard_type = HazardType.getText().toString();
         String begin_coordinate_lat = BeginLat.getText().toString();
         String begin_coordinate_long = BeginLong.getText().toString();
         String end_coordinate_latitude = EndLat.getText().toString();
@@ -4077,6 +4064,10 @@ public class LandslideActivity extends AppCompatActivity
 
         String total_score = Total.getText().toString();
 
+        //todo: hazard type (7)
+        String hazard_type = "0";
+
+
         Landslide landslide =
                 new Landslide(umbrella_agency,regional_admin,local_admin,date,road_trail_number,road_or_trail,road_trail_class,
                         rater,begin_mile_marker,end_mile_marker,side,weather,hazard_type,
@@ -4110,7 +4101,8 @@ public class LandslideActivity extends AppCompatActivity
         EndMile.setText("");
         Side.setSelection(0);
         Weather.setSelection(0);
-        HazardType.setText("");
+        //todo: hazard type (8)
+        //HazardType.setText("");
         BeginLat.setText("");
         BeginLong.setText("");
         EndLat.setText("");
@@ -4199,7 +4191,8 @@ public class LandslideActivity extends AppCompatActivity
             EndMile.setText(landslide.getEnd_mile_marker());
             Side.setSelection(landslide.getSide());
             Weather.setSelection(landslide.getWeather());
-            HazardType.setText(landslide.getHazard_type());
+            //todo hazard type (9)
+            //HazardType.setText(landslide.getHazard_type());
             BeginLat.setText(landslide.getBegin_coordinate_lat());
             BeginLong.setText(landslide.getBegin_coordinate_long());
             EndLat.setText(landslide.getEnd_coordinate_latitude());
@@ -4320,8 +4313,8 @@ public class LandslideActivity extends AppCompatActivity
                 Side.setSelection(offlineSite.getSide());
 
                 Weather.setSelection(offlineSite.getWeather());
-
-                HazardType.setText(offlineSite.getHazard_type());
+                //todo: hazard type (10)
+                //HazardType.setText(offlineSite.getHazard_type());
                 BeginLat.setText(offlineSite.getBegin_coordinate_lat());
                 EndLat.setText(offlineSite.getEnd_coordinate_latitude());
                 BeginLong.setText(offlineSite.getEnd_coordinate_longitude());

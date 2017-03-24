@@ -849,5 +849,22 @@
 
     </string-array>
 
+    <!--Slope Event Hazard Type Options-->
+    <string-array name="HazardTypeList">
+        <item>@string/HazardType0</item>
+        <item>@string/HazardType1</item>
+        <item>@string/HazardType2</item>
+        <item>@string/HazardType3</item>
+        <item>@string/HazardType4</item>
+        <item>@string/HazardType5</item>
+        <item>@string/HazardType6</item>
+        <item>@string/HazardType7</item>
+        <item>@string/HazardType8</item>
+        <item>@string/HazardType9</item>
+        <item>@string/HazardType10</item>
+        <item>@string/HazardType11</item>
+        <item>@string/HazardType12</item>
+    </string-array>
+
 
 </resources>

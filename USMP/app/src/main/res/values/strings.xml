@@ -790,4 +790,26 @@
     <string name="NPSR7L63">Blue Ridge Parkway</string>
     <string name="NPSR7L64">Obed</string>
 
+    <!--Hazard Type Dropdown-->
+    <string name="HazardType0"> </string>
+    <string name="HazardType1">Planar</string>
+    <string name="HazardType2">Wedge</string>
+    <string name="HazardType3">Toppling</string>
+    <string name="HazardType4">Raveling/Undermining</string>
+    <string name="HazardType5">Rock Avalanche</string>
+    <string name="HazardType6">Indeterminate Rock Failures</string>
+    <string name="HazardType7">Diff. Erosion</string>
+    <string name="HazardType8">Translational</string>
+    <string name="HazardType9">Rotational</string>
+    <string name="HazardType10">Debris Flow</string>
+    <string name="HazardType11">Shallow Slump</string>
+    <string name="HazardType12">Erosional Failure</string>
+
 </resources>
+
+
+
+
+
+
+

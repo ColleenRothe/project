@@ -37,7 +37,6 @@ public class RatingChoiceActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(Color.rgb(0,90,49));
 
-        submit = (Button) findViewById(R.id.ratingChoiceSubmit);
 
 
 
