@@ -849,21 +849,26 @@
 
     </string-array>
 
-    <!--Slope Event Hazard Type Options-->
-    <string-array name="HazardTypeList">
+    <!--Slope Event Rockfall Hazard Type Options-->
+    <string-array name="HazardTypeRList">
         <item>@string/HazardType0</item>
-        <item>@string/HazardType1</item>
-        <item>@string/HazardType2</item>
-        <item>@string/HazardType3</item>
-        <item>@string/HazardType4</item>
-        <item>@string/HazardType5</item>
-        <item>@string/HazardType6</item>
-        <item>@string/HazardType7</item>
-        <item>@string/HazardType8</item>
-        <item>@string/HazardType9</item>
-        <item>@string/HazardType10</item>
-        <item>@string/HazardType11</item>
-        <item>@string/HazardType12</item>
+        <item>@string/HazardTypeR1</item>
+        <item>@string/HazardTypeR2</item>
+        <item>@string/HazardTypeR3</item>
+        <item>@string/HazardTypeR4</item>
+        <item>@string/HazardTypeR5</item>
+        <item>@string/HazardTypeR6</item>
+        <item>@string/HazardTypeR7</item>
+    </string-array>
+
+    <!--Slope Event Rockfall Hazard Type Options-->
+    <string-array name="HazardTypeLList">
+        <item>@string/HazardType0</item>
+        <item>@string/HazardTypeL8</item>
+        <item>@string/HazardTypeL9</item>
+        <item>@string/HazardTypeL10</item>
+        <item>@string/HazardTypeL11</item>
+        <item>@string/HazardTypeL12</item>
     </string-array>
 
 

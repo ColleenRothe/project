@@ -192,7 +192,7 @@
             android:id = "@+id/LHazard1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:entries = "@array/HazardTypeList"
+            android:entries = "@array/HazardTypeLList"
             >
         </Spinner>
 
@@ -200,7 +200,7 @@
             android:id = "@+id/LHazard2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:entries = "@array/HazardTypeList"
+            android:entries = "@array/HazardTypeLList"
             >
         </Spinner>
 
@@ -208,7 +208,7 @@
             android:id = "@+id/LHazard3"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:entries = "@array/HazardTypeList"
+            android:entries = "@array/HazardTypeLList"
             >
         </Spinner>
 

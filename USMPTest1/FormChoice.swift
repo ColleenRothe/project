@@ -23,7 +23,6 @@ class FormChoice: UIViewController{
     
     @IBOutlet weak var rockfallButton: UIButton!
     
-    @IBOutlet weak var submitAllButton: UIButton!
     //nav bar
     @IBOutlet weak var mapButton: UIBarButtonItem!
     
@@ -67,12 +66,7 @@ class FormChoice: UIViewController{
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
         }
         
-        if(!isInternetAvailable()){
-            submitAllButton.isEnabled = false
-            submitAllButton.backgroundColor = UIColor.darkGray
-        }
-        
-
+    
     }
     
     override func didReceiveMemoryWarning() {
@@ -114,12 +108,6 @@ class FormChoice: UIViewController{
         landslidebutton.layer.borderWidth = 1
         landslidebutton.layer.borderColor = UIColor.init(red: 0, green: 0.35, blue: 0.19, alpha: 1).cgColor
         
-        //submit
-        submitAllButton.layer.cornerRadius = 5
-        submitAllButton.layer.borderWidth = 1
-        submitAllButton.layer.borderColor = UIColor.init(red: 0, green: 0.35, blue: 0.19, alpha: 1).cgColor
-        
-       
     }
     
     func handleSubmit(_ alertView:UIAlertAction!){

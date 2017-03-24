@@ -277,7 +277,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //preliminary ratings
     
-    @IBOutlet weak var hazardTypeText: UITextField!
     
     @IBOutlet weak var speedPicker: UIPickerView!
     
@@ -551,8 +550,16 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var weatherPicker: UIPickerView!
     
-    //autocomplete
+    @IBOutlet weak var hazardType1: UIPickerView!
     
+    @IBOutlet weak var hazardType2: UIPickerView!
+    
+    @IBOutlet weak var hazardType3: UIPickerView!
+    
+    var hazardOptions = ["","Rotational", "Debris Flow", "Shallow Slump", "Erosional Failure"]
+    
+    
+    //autocomplete
     
     
     //Rater
@@ -770,8 +777,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         weatherPicker.delegate = self
         weatherPicker.dataSource = self
         
+        hazardType1.delegate = self
+        hazardType2.dataSource = self
+        
         //text field delegates for calcs...
-        hazardTypeText.delegate = self
         lengthOARTText.delegate = self
         aadtText.delegate = self
         axialLText.delegate = self
@@ -1073,8 +1082,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             weatherPicker.selectRow(temp!, inComponent: 0, animated: true)
             
         }
+        //TODO: Hazard Type (1)
         
-        hazardTypeText.text = selectedLocation.hazard_type
+        //hazardTypeText.text = selectedLocation.hazard_type
         lat1Text.text = selectedLocation.begin_coordinate_lat
         lat2Text.text = selectedLocation.end_coordinate_lat
         long1Text.text = selectedLocation.begin_coordinate_long
@@ -1420,7 +1430,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             hazardTotalText.text = sites[number].value(forKey: "hazard_total")! as? String
             totalScoreText.text = sites[number].value(forKey: "total_score")! as? String
             commentsText.text = sites[number].value(forKey: "comment")! as? String
-            hazardTypeText.text = sites[number].value(forKey: "hazard_type")! as? String
+            //TODO: Hazard Type (2)
+           // hazardTypeText.text = sites[number].value(forKey: "hazard_type")! as? String
             
             //Landslide ONLY
             let landslide_prelim_road_width_affected = sites[number].value(forKey: "landslide_prelim_road_width_affected")! as? String
@@ -1687,13 +1698,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         //end mile marker -> side picker
         //side picker-> weather
         
-        if textField == hazardTypeText{
-            textField.resignFirstResponder()
-            lat1Text.becomeFirstResponder()
-            return false
-        }
-        
-    
         if textField == lat1Text {
             textField.resignFirstResponder()
             lat2Text.becomeFirstResponder()
@@ -2010,25 +2014,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
         }
         
-
-        
-        if(textField == hazardTypeText){
-            if(hazardTypeText.text == "" || hazardTypeText.text?.characters.count >= 255){
-                hazardTypeText.backgroundColor = UIColor.red
-                let messageString = "Hazard Type cannot be empty and must be shorter than 255 characters."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-                
-                
-            }
-            else{
-                hazardTypeText.backgroundColor = UIColor.white
-            }
-            
-        }
         
         //lat/long pattern matching
         if(textField == lat1Text){
@@ -2666,6 +2651,18 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     //total components=components in array
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         var components = 0
+        
+        if(pickerView .isEqual(hazardType1)){
+            components = hazardOptions.count;
+        }
+        
+        if(pickerView .isEqual(hazardType2)){
+            components = hazardOptions.count;
+        }
+        
+        if(pickerView .isEqual(hazardType3)){
+            components = hazardOptions.count;
+        }
        
         if(pickerView .isEqual(agency)){
             components = agencyOptions.count;
@@ -2737,6 +2734,16 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //return each row
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if(pickerView .isEqual(hazardType1)){
+            return hazardOptions[row]
+        }
+        if(pickerView .isEqual(hazardType2)){
+            return hazardOptions[row]
+        }
+        if(pickerView .isEqual(hazardType3)){
+            return hazardOptions[row]
+        }
+        
         if(pickerView .isEqual(agency)){
             return agencyOptions[row]
         }
@@ -3802,7 +3809,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let weather = weatherOptions[tempWeather]
         
         //hazard type?
-        let hazard = hazardTypeText.text
+        //let hazard = hazardTypeText.text
+            let hazard = ""
+        
+        //TODO: Hazard Type (4)
+
         
         //speed
         var speed = 0
@@ -4112,7 +4123,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let weather = weatherOptions[tempWeather]
         
         //hazard type?
-        let hazard = hazardTypeText.text
+        //TODO: Hazard Type (5)
+        let hazard = ""
+
+        //let hazard = hazardTypeText.text
         
         //speed
         var speed = 0
@@ -4418,8 +4432,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let selectedWeather = weatherPicker.selectedRow(inComponent: 0)
         site.setValue(selectedWeather, forKey: "weather")
-        
-        site.setValue(hazardTypeText.text, forKey: "hazardType")
+        //TODO: Hazard Type (6)
+
+        //site.setValue(hazardTypeText.text, forKey: "hazardType")
         site.setValue(lat1Text.text, forKey: "lat1")
         site.setValue(lat2Text.text, forKey: "lat2")
         site.setValue(long1Text.text, forKey: "long1")
@@ -4640,8 +4655,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     let weatherVal = sites[number].value(forKey: "weather")! as! Int
                     weatherPicker.selectRow(weatherVal, inComponent: 0, animated: true)
                     
-                    
-                    hazardTypeText.text = sites[number].value(forKey: "HazardType")! as? String
+                    //TODO: Hazard Type (7)
+
+                    //hazardTypeText.text = sites[number].value(forKey: "HazardType")! as? String
                     
                     lat1Text.text = sites[number].value(forKey: "lat1")! as? String
                     lat2Text.text = sites[number].value(forKey: "lat2")! as? String

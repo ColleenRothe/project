@@ -792,18 +792,18 @@
 
     <!--Hazard Type Dropdown-->
     <string name="HazardType0"> </string>
-    <string name="HazardType1">Planar</string>
-    <string name="HazardType2">Wedge</string>
-    <string name="HazardType3">Toppling</string>
-    <string name="HazardType4">Raveling/Undermining</string>
-    <string name="HazardType5">Rock Avalanche</string>
-    <string name="HazardType6">Indeterminate Rock Failures</string>
-    <string name="HazardType7">Diff. Erosion</string>
-    <string name="HazardType8">Translational</string>
-    <string name="HazardType9">Rotational</string>
-    <string name="HazardType10">Debris Flow</string>
-    <string name="HazardType11">Shallow Slump</string>
-    <string name="HazardType12">Erosional Failure</string>
+    <string name="HazardTypeR1">Planar</string>
+    <string name="HazardTypeR2">Wedge</string>
+    <string name="HazardTypeR3">Toppling</string>
+    <string name="HazardTypeR4">Raveling/Undermining</string>
+    <string name="HazardTypeR5">Rock Avalanche</string>
+    <string name="HazardTypeR6">Indeterminate Rock Failures</string>
+    <string name="HazardTypeR7">Diff. Erosion</string>
+    <string name="HazardTypeL8">Translational</string>
+    <string name="HazardTypeL9">Rotational</string>
+    <string name="HazardTypeL10">Debris Flow</string>
+    <string name="HazardTypeL11">Shallow Slump</string>
+    <string name="HazardTypeL12">Erosional Failure</string>
 
 </resources>
 

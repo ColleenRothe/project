@@ -491,6 +491,8 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
      var weatherOptions = ["Clear","Clear and Breezy","A Few Clouds","A Few Clouds and Breezy","Partly Cloudy","Partly Cloudy and Breezy","Mostly Cloudy","Mostly Cloudy and Breezy","Overcast","Overcast and Breezy","Fog","Partial Fog","Freezing Fog","Light Rain","Rain","Heavy Rain","Freezing Rain","Thunderstorms","Snow","Smoky\\/Haze","Unknown"]
     
+      var hazardOptions = ["","Planar", "Wedge", "Toppling", "Raveling/Undermining", "Rock Avalanche", "Indeterminate Rock Failures", "Diff. Erosion"]
+    
     //autocomplete
     let autoTableMA = UITableView(frame: CGRect(x: 10,y: 200,width: 300,height: 120), style: UITableViewStyle.plain)
     var pastMA = [NSString]()
