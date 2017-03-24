@@ -778,7 +778,13 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         weatherPicker.dataSource = self
         
         hazardType1.delegate = self
+        hazardType1.dataSource = self
+        
+        hazardType2.delegate = self
         hazardType2.dataSource = self
+        
+        hazardType3.delegate = self
+        hazardType3.dataSource = self
         
         //text field delegates for calcs...
         lengthOARTText.delegate = self
