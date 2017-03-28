@@ -23,17 +23,14 @@ class HomeModel: NSObject, URLSessionDataDelegate{
     var responseString = ""
     var JSONDictionary = NSDictionary()
 
-    
-
-    
-    
-    //or wherever the php service lives...
-    //let urlPath: String = "http://nl.cs.montana.edu/usmp/colleen/mapService.php"
-    let urlPath: String = "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService.php"
 
     func helper(){
         print("Helper")
-        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php")! as URL)
+        //let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php")! as URL)
+        
+        //update to master once merged.....
+          let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/prashanta.saha/server///edit_site_php/get_current_site_information.php")! as URL)
+        
         request.httpMethod = "POST"
         
         let postString = "id=\(shareData.current_site_id)"
@@ -85,6 +82,7 @@ class HomeModel: NSObject, URLSessionDataDelegate{
     
     
     func downloadItems(){
+        print("map service")
        helper()
         
     }

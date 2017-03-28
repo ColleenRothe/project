@@ -77,6 +77,7 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
     weak var delegate: LandslideModelHelperProtocol?
     
     func downloadItems(){
+        print("landslide helper")
         helper()
         
         
