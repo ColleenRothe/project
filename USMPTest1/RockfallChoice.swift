@@ -288,9 +288,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var scrollView: UIScrollView!
     
     
-    @IBOutlet weak var hazardTypeText: UITextField!
-    
-    
     @IBOutlet weak var speedPicker: UIPickerView!
     
     var speedOptions = ["25 mph", "30 mph", "35 mph", "40 mph", "45 mph", "50 mph", "55 mph", "60 mph", "65 mph", "70 mph"]
@@ -490,6 +487,13 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var weatherPicker: UIPickerView!
     
      var weatherOptions = ["Clear","Clear and Breezy","A Few Clouds","A Few Clouds and Breezy","Partly Cloudy","Partly Cloudy and Breezy","Mostly Cloudy","Mostly Cloudy and Breezy","Overcast","Overcast and Breezy","Fog","Partial Fog","Freezing Fog","Light Rain","Rain","Heavy Rain","Freezing Rain","Thunderstorms","Snow","Smoky\\/Haze","Unknown"]
+    
+    @IBOutlet weak var hazardType1: UIPickerView!
+    
+    @IBOutlet weak var hazardType2: UIPickerView!
+    
+    @IBOutlet weak var hazardType3: UIPickerView!
+    
     
       var hazardOptions = ["","Planar", "Wedge", "Toppling", "Raveling/Undermining", "Rock Avalanche", "Indeterminate Rock Failures", "Diff. Erosion"]
     
@@ -761,7 +765,15 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         flmaDescriptionText.delegate = self
         
         
-        hazardTypeText.delegate = self
+        hazardType1.delegate = self
+        hazardType1.dataSource = self
+        
+        hazardType2.delegate = self
+        hazardType2.dataSource = self
+        
+        hazardType3.delegate = self
+        hazardType3.dataSource = self
+        
         
         roadTrailNoText.delegate = self
         
@@ -1062,7 +1074,8 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
         }
         
-        hazardTypeText.text = selectedLocation.hazard_type
+        //TODO: Hazard Type (1)
+        
         lat1Text.text = selectedLocation.begin_coordinate_lat
         lat2Text.text = selectedLocation.end_coordinate_lat
         long1Text.text = selectedLocation.begin_coordinate_long
@@ -1402,7 +1415,8 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             rockfallHazardTotalText.text = sites[number].value(forKey: "hazard_total")! as? String
             totalScoreText.text = sites[number].value(forKey: "total_score")! as? String
             commentsText.text = sites[number].value(forKey: "comment")! as? String
-            hazardTypeText.text = sites[number].value(forKey: "hazard_type")! as? String
+            //TODO: hazard type (2)
+            //hazardTypeText.text = sites[number].value(forKey: "hazard_type")! as? String
             
             //ROCKFALL ONLY
             let rockfall_prelim_ditch_eff = sites[number].value(forKey: "rockfall_prelim_ditch_eff")! as? String
@@ -1749,15 +1763,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //end mile marker -> side picker
         //side picker-> weather
         
-   
-        
-        if textField == hazardTypeText{
-            textField.resignFirstResponder()
-            lat1Text.becomeFirstResponder()
-            return false
-        }
-        
-        
         if textField == lat1Text {
             textField.resignFirstResponder()
             lat2Text.becomeFirstResponder()
@@ -2088,26 +2093,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             
         }
-        
 
-        
-        if(textField == hazardTypeText){
-            if(hazardTypeText.text == "" || hazardTypeText.text?.characters.count >= 255){
-                hazardTypeText.backgroundColor = UIColor.red
-                let messageString = "Hazard Type cannot be empty and must be shorter than 255 characters."
-                
-                let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                
-                
-                
-            }
-            else{
-                hazardTypeText.backgroundColor = UIColor.white
-            }
-            
-        }
         
         //lat/long pattern matching
         if(textField == lat1Text){
@@ -2740,6 +2726,16 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         var components = 0
+        if(pickerView .isEqual(hazardType1)){
+            components = hazardOptions.count;
+        }
+        if(pickerView .isEqual(hazardType2)){
+            components = hazardOptions.count;
+        }
+        if(pickerView .isEqual(hazardType3)){
+            components = hazardOptions.count;
+        }
+        
         if(pickerView .isEqual(agency)){
             components = agencyOptions.count;
         }
@@ -2817,6 +2813,16 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if(pickerView .isEqual(hazardType1)){
+            return hazardOptions[row]
+        }
+        if(pickerView .isEqual(hazardType2)){
+            return hazardOptions[row]
+        }
+        if(pickerView .isEqual(hazardType3)){
+            return hazardOptions[row]
+        }
+        
         if(pickerView .isEqual(agency)){
             return agencyOptions[row]
         }
@@ -4638,7 +4644,26 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         site.setValue(selectedWeather, forKey: "weather")
         
-        site.setValue(hazardTypeText.text, forKey: "hazardType")
+        //TODO: Hazard Type 6
+        var hazardString = ""
+        //must select the first one if they are going to select the second or third
+        if(hazardType1.selectedRow(inComponent: 0) != 0){
+            let temp = hazardOptions[hazardType1.selectedRow(inComponent: 0)]
+            hazardString.append(temp)
+            if(hazardType2.selectedRow(inComponent: 0) != 0){
+                let temp = hazardOptions[hazardType2.selectedRow(inComponent: 0)]
+                hazardString.append(",")
+                hazardString.append(temp)
+            }
+            if(hazardType3.selectedRow(inComponent: 0) != 0){
+                let temp = hazardOptions[hazardType3.selectedRow(inComponent: 0)]
+                hazardString.append(",")
+                hazardString.append(temp)
+            }
+        }
+        
+        site.setValue(hazardString, forKey: "hazardType")
+
             
         
         site.setValue(lat1Text.text, forKey: "lat1")
@@ -4868,8 +4893,26 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     let weatherVal = sites[number].value(forKey: "weather")! as! Int
                     weatherPicker.selectRow(weatherVal, inComponent: 0, animated: true)
                     
-                    hazardTypeText.text = sites[number].value(forKey: "hazardType")! as? String
-                    
+                    //TODO: Hazard Type7
+            var hazardString = ""
+            hazardString = (sites[number].value(forKey: "HazardType")! as? String)!
+            let hazards = hazardString.components(separatedBy: ",")
+            
+            for i in 0 ... ((hazards.count) - 1){
+                if(hazardOptions.contains((hazards[i]))){
+                    let index = hazardOptions.index(of: hazards[i])
+                    if(i == 0){
+                        hazardType1.selectRow(index!, inComponent: 0, animated: true)
+                    }else if (i == 1){
+                        hazardType2.selectRow(index!, inComponent: 0, animated: true)
+                        
+                    }else{
+                        hazardType3.selectRow(index!, inComponent: 0, animated: true)
+                        
+                    }
+                }
+            }
+            
                     lat1Text.text = sites[number].value(forKey: "lat1")! as? String
                     lat2Text.text = sites[number].value(forKey: "lat2")! as? String
                     long1Text.text = sites[number].value(forKey: "long1")! as? String
@@ -4914,9 +4957,11 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
                     let photoResults = PHAsset.fetchAssets(withLocalIdentifiers: photos, options: nil)
             
+            if(photoResults.count != 0){
                     for i in 0 ... photoResults.count-1{
                             images.append(photoResults.object(at: i))
                     }
+            }
             
                     commentsText.text = sites[number].value(forKey: "comments")! as? String
                     flmaNameText.text = sites[number].value(forKey: "flmaName")! as? String

@@ -1090,6 +1090,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         //TODO: Hazard Type (1)
         
+        print("testing Hazard type")
+        print(selectedLocation.hazard_type)
+        
         //hazardTypeText.text = selectedLocation.hazard_type
         lat1Text.text = selectedLocation.begin_coordinate_lat
         lat2Text.text = selectedLocation.end_coordinate_lat
@@ -1438,6 +1441,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             commentsText.text = sites[number].value(forKey: "comment")! as? String
             //TODO: Hazard Type (2)
            // hazardTypeText.text = sites[number].value(forKey: "hazard_type")! as? String
+            
             
             //Landslide ONLY
             let landslide_prelim_road_width_affected = sites[number].value(forKey: "landslide_prelim_road_width_affected")! as? String
@@ -4439,8 +4443,25 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let selectedWeather = weatherPicker.selectedRow(inComponent: 0)
         site.setValue(selectedWeather, forKey: "weather")
         //TODO: Hazard Type (6)
-
-        //site.setValue(hazardTypeText.text, forKey: "hazardType")
+        var hazardString = ""
+        //must select the first one if they are going to select the second or third
+        if(hazardType1.selectedRow(inComponent: 0) != 0){
+            let temp = hazardOptions[hazardType1.selectedRow(inComponent: 0)]
+            hazardString.append(temp)
+            if(hazardType2.selectedRow(inComponent: 0) != 0){
+                let temp = hazardOptions[hazardType2.selectedRow(inComponent: 0)]
+                hazardString.append(",")
+                hazardString.append(temp)
+            }
+            if(hazardType3.selectedRow(inComponent: 0) != 0){
+                let temp = hazardOptions[hazardType3.selectedRow(inComponent: 0)]
+                hazardString.append(",")
+                hazardString.append(temp)
+            }
+        }
+        
+        site.setValue(hazardString, forKey: "hazardType")
+        
         site.setValue(lat1Text.text, forKey: "lat1")
         site.setValue(lat2Text.text, forKey: "lat2")
         site.setValue(long1Text.text, forKey: "long1")
@@ -4662,8 +4683,25 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     weatherPicker.selectRow(weatherVal, inComponent: 0, animated: true)
                     
                     //TODO: Hazard Type (7)
-
-                    //hazardTypeText.text = sites[number].value(forKey: "HazardType")! as? String
+                    var hazardString = ""
+                    hazardString = (sites[number].value(forKey: "HazardType")! as? String)!
+                    let hazards = hazardString.components(separatedBy: ",")
+            
+                for i in 0 ... ((hazards.count) - 1){
+                    if(hazardOptions.contains((hazards[i]))){
+                        let index = hazardOptions.index(of: hazards[i])
+                        if(i == 0){
+                            hazardType1.selectRow(index!, inComponent: 0, animated: true)
+                        }else if (i == 1){
+                            hazardType2.selectRow(index!, inComponent: 0, animated: true)
+                            
+                        }else{
+                            hazardType3.selectRow(index!, inComponent: 0, animated: true)
+                            
+                        }
+                    }
+                }
+            
                     
                     lat1Text.text = sites[number].value(forKey: "lat1")! as? String
                     lat2Text.text = sites[number].value(forKey: "lat2")! as? String
@@ -4706,9 +4744,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
                     let photoResults = PHAsset.fetchAssets(withLocalIdentifiers: photos, options: nil)
             
+            if(photoResults.count != 0){
                     for i in 0 ... photoResults.count-1{
                             images.append(photoResults.object(at: i))
                     }
+            }
             
             
                     commentsText.text = sites[number].value(forKey: "comments")! as? String
