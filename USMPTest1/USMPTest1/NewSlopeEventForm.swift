@@ -1199,87 +1199,89 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         
     }
-    
     //image upload?
     func UploadRequest()
     {
-        let url = NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_slope_event/add_new_slope_event.php")
-        
-        let request = NSMutableURLRequest(url: url! as URL)
-        request.httpMethod = "POST"
-        
-        let boundary = generateBoundaryString()
-        
-        //define the multipart request type
-        
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        let manager = PHImageManager.default()
-        let option = PHImageRequestOptions()
-        var thumbnail = UIImage()
-        option.isSynchronous = true
-        manager.requestImage(for: images[0], targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
-            thumbnail = result!
-        })
-        
-        
-      //if nil...
-        
-        let image_data = UIImagePNGRepresentation(thumbnail)
-        
-        
-        if(image_data == nil)
-        {
-            return
-        }
-        
-        
-        let body = NSMutableData()
-        
-        let fname = "nseTest.jpg"
-        let mimetype = "image/jpg"
-        
-        //define the data post parameter
-        
-        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
-        body.append("Content-Disposition:form-data; name=\"test\"\r\n\r\n".data(using: String.Encoding.utf8)!)
-        body.append("hi\r\n".data(using: String.Encoding.utf8)!)
-        
-        
-        
-        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
-        body.append("Content-Disposition:form-data; name=\"file\"; filename=\"\(fname)\"\r\n".data(using: String.Encoding.utf8)!)
-        body.append("Content-Type: \(mimetype)\r\n\r\n".data(using: String.Encoding.utf8)!)
-        body.append(image_data!)
-        body.append("\r\n".data(using: String.Encoding.utf8)!)
-        
-        
-        body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
-        
-        
-        
-        request.httpBody = body as Data
-        
-        
-        
-        let session = URLSession.shared
-        
-        
-        let task = session.dataTask(with: request as URLRequest) {
-            (
-            data, response, error) in
-            
-            guard let _:NSData = data as NSData?, let _:URLResponse = response, error == nil else {
-                print("error")
-                return
+        if(images.count != 0){
+            for i in 0 ... (images.count-1){
+                let url = NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_slope_event/add_new_slope_event.php")
+                
+                let request = NSMutableURLRequest(url: url! as URL)
+                request.httpMethod = "POST"
+                
+                let boundary = generateBoundaryString()
+                
+                //define the multipart request type
+                
+                request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+                
+                let manager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                var thumbnail = UIImage()
+                option.isSynchronous = true
+                manager.requestImage(for: images[i], targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+                    thumbnail = result!
+                })
+                
+                
+                let image_data = UIImagePNGRepresentation(thumbnail)
+                
+                
+                if(image_data == nil)
+                {
+                    return
+                }
+                
+                
+                let body = NSMutableData()
+                
+                var fname = images[i].localIdentifier //how to name?
+                fname = fname.replacingOccurrences(of: "/", with: "")
+                fname.append(".jpg")
+                print("fname test")
+                print(fname)
+                let mimetype = "image/jpg"
+                
+                //define the data post parameter
+                
+                //if name is "file", will add as a document
+                
+                body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+                body.append("Content-Disposition:form-data; name=\"\(fname)\"; filename=\"\(fname)\"\r\n".data(using: String.Encoding.utf8)!)
+                body.append("Content-Type: \(mimetype)\r\n\r\n".data(using: String.Encoding.utf8)!)
+                body.append(image_data!)
+                body.append("\r\n".data(using: String.Encoding.utf8)!)
+                
+                
+                body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
+                
+                
+                
+                request.httpBody = body as Data
+                
+                
+                
+                let session = URLSession.shared
+                
+                
+                let task = session.dataTask(with: request as URLRequest) {
+                    (
+                    data, response, error) in
+                    
+                    guard let _:NSData = data as NSData?, let _:URLResponse = response, error == nil else {
+                        print("error")
+                        return
+                    }
+                    
+                    let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                    print(dataString)
+                    
+                }
+                
+                task.resume()
             }
             
-            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print(dataString)
-            
         }
-        
-        task.resume()
         
         
     }
@@ -1289,6 +1291,9 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     {
         return "Boundary-\(NSUUID().uuidString)"
     }
+
+    
+ 
 
     //MARK: Submit Form Online
     

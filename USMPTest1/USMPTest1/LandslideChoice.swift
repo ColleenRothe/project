@@ -22,6 +22,9 @@
 //check connectivity
 //http://stackoverflow.com/questions/39558868/check-internet-connection-ios-10
 
+//file upload
+//http://www.kaleidosblog.com/how-to-upload-images-using-swift-2-send-multipart-post-request
+
 
 import Foundation
 import UIKit
@@ -3723,6 +3726,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     //image upload?
     func UploadRequest()
     {
+        if(images.count != 0){
+            for i in 0 ... (images.count-1){
         let url = NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
         
         let request = NSMutableURLRequest(url: url! as URL)
@@ -3738,12 +3743,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let option = PHImageRequestOptions()
         var thumbnail = UIImage()
         option.isSynchronous = true
-        manager.requestImage(for: images[0], targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+        manager.requestImage(for: images[i], targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
             thumbnail = result!
         })
         
-        
-        //if nil...
         
         let image_data = UIImagePNGRepresentation(thumbnail)
         
@@ -3756,19 +3759,19 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let body = NSMutableData()
         
-        let fname = "nseTest.jpg"
+        var fname = images[i].localIdentifier //how to name?
+        fname = fname.replacingOccurrences(of: "/", with: "")
+        fname.append(".jpg")
+        print("fname test")
+        print(fname)
         let mimetype = "image/jpg"
         
         //define the data post parameter
         
-        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
-        body.append("Content-Disposition:form-data; name=\"test\"\r\n\r\n".data(using: String.Encoding.utf8)!)
-        body.append("hi\r\n".data(using: String.Encoding.utf8)!)
-        
-        
+        //if name is "file", will add as a document
         
         body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
-        body.append("Content-Disposition:form-data; name=\"file\"; filename=\"\(fname)\"\r\n".data(using: String.Encoding.utf8)!)
+        body.append("Content-Disposition:form-data; name=\"\(fname)\"; filename=\"\(fname)\"\r\n".data(using: String.Encoding.utf8)!)
         body.append("Content-Type: \(mimetype)\r\n\r\n".data(using: String.Encoding.utf8)!)
         body.append(image_data!)
         body.append("\r\n".data(using: String.Encoding.utf8)!)
@@ -3800,6 +3803,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         
         task.resume()
+            }
+            
+        }
         
         
     }
