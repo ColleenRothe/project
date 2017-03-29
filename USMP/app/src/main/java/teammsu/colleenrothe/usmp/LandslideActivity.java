@@ -49,6 +49,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -83,6 +84,16 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import android.view.View.OnFocusChangeListener;
+
+//import javax.ws.rs.core.MediaType.*;
+//import javax.ws.rs.core.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.Headers;
+import  com.squareup.okhttp.MediaType;
 
 public class LandslideActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -191,8 +202,6 @@ public class LandslideActivity extends AppCompatActivity
     Uri imageUri;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         System.out.println("Landslide");
@@ -264,7 +273,6 @@ public class LandslideActivity extends AppCompatActivity
                 // do nothing....
             }
         });
-
 
 
         Regional.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -359,7 +367,7 @@ public class LandslideActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                }else if (region.equals("IMR")) {
+                } else if (region.equals("IMR")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.NPSLocalList2);
                     for (int i = 0; i < localArray.length; i++) {
@@ -367,7 +375,7 @@ public class LandslideActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                }else if (region.equals("MWR")) {
+                } else if (region.equals("MWR")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.NPSLocal3);
                     for (int i = 0; i < localArray.length; i++) {
@@ -375,7 +383,7 @@ public class LandslideActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                }else if (region.equals("NCR")) {
+                } else if (region.equals("NCR")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.NPSLocal4);
                     for (int i = 0; i < localArray.length; i++) {
@@ -383,7 +391,7 @@ public class LandslideActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                }else if (region.equals("NER")) {
+                } else if (region.equals("NER")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.NPSLocal5);
                     for (int i = 0; i < localArray.length; i++) {
@@ -391,7 +399,7 @@ public class LandslideActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                }else if (region.equals("PWR")) {
+                } else if (region.equals("PWR")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.NPSLocal6);
                     for (int i = 0; i < localArray.length; i++) {
@@ -399,7 +407,7 @@ public class LandslideActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                }else if (region.equals("SER")) {
+                } else if (region.equals("SER")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.NPSLocal7);
                     for (int i = 0; i < localArray.length; i++) {
@@ -417,7 +425,7 @@ public class LandslideActivity extends AppCompatActivity
 
 
         });
-;
+        ;
 
         fs_regions = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.RegionalList)));
         adapterRegional = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fs_regions);
@@ -425,13 +433,10 @@ public class LandslideActivity extends AppCompatActivity
         Regional.setAdapter(adapterRegional);
 
 
-
         fs_local1 = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.RegionalList)));
         adapterLocal = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fs_local1);
         adapterLocal.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Local.setAdapter(adapterLocal);
-
-
 
 
         Date = (EditText) findViewById(R.id.L_Date);
@@ -553,9 +558,9 @@ public class LandslideActivity extends AppCompatActivity
 
         //Photos here
 
-        Comments= (EditText) findViewById(R.id.L_Comments);
-        FlmaName= (EditText) findViewById(R.id.L_FlmaName);
-        FlmaId= (EditText) findViewById(R.id.L_FlmaId);
+        Comments = (EditText) findViewById(R.id.L_Comments);
+        FlmaName = (EditText) findViewById(R.id.L_FlmaName);
+        FlmaId = (EditText) findViewById(R.id.L_FlmaId);
         FlmaDescription = (EditText) findViewById(R.id.L_FlmaDescription);
 
         //<<<PRELIMINARY RATINGS>>>
@@ -657,24 +662,22 @@ public class LandslideActivity extends AppCompatActivity
         Total = (EditText) findViewById(R.id.L_TotalScore);
 
         //LOAD
-        if (OfflineList.selected_row!=-1 && OfflineList.should_load==true){
-            OfflineList.should_load=false;
+        if (OfflineList.selected_row != -1 && OfflineList.should_load == true) {
+            OfflineList.should_load = false;
             lookupLandslide(OfflineList.selected_row);
         }
 
         //EDIT
-        if(getIntent().getStringExtra("editing") != null){
+        if (getIntent().getStringExtra("editing") != null) {
             System.out.println("yay! please do edit");
             getJSON(JSON_URL);
-        }
-        else if(getIntent().getStringExtra("offline")!=null){
+        } else if (getIntent().getStringExtra("offline") != null) {
             System.out.println("yay! offline form");
             loadFromOffline();
         }
 
 
-
-        if(!isNetworkAvailable()){
+        if (!isNetworkAvailable()) {
             SubmitButton.setBackgroundColor(Color.DKGRAY);
             SubmitButton.setClickable(false);
         }
@@ -702,7 +705,6 @@ public class LandslideActivity extends AppCompatActivity
         }
 
         createLocationRequest();
-
 
 
     }
@@ -804,7 +806,7 @@ public class LandslideActivity extends AppCompatActivity
     public void GetText() throws UnsupportedEncodingException {
         //intent thing
         String id = getIntent().getStringExtra("editing");
-        String data="id="+id;
+        String data = "id=" + id;
         String text = "";
         BufferedReader reader = null;
         try {
@@ -851,70 +853,69 @@ public class LandslideActivity extends AppCompatActivity
     }
 
 
-
-    public void dealWithText(final String text){
+    public void dealWithText(final String text) {
         runOnUiThread(new Runnable() {
             String text2 = text;
+
             @Override
             public void run() {
 
 
-                text2 = text2.replace("[",""); //old,new
-                text2 = text2.replace("]",""); //old,new
-                text2 = text2.replace("{",""); //old,new
-                text2 = text2.replace("}",""); //old,new
+                text2 = text2.replace("[", ""); //old,new
+                text2 = text2.replace("]", ""); //old,new
+                text2 = text2.replace("{", ""); //old,new
+                text2 = text2.replace("}", ""); //old,new
                 String text3 = "{";
                 text3 = text3.concat(text2);
-                text3 =text3.concat("}");
-
-
+                text3 = text3.concat("}");
 
 
                 //Map<String, String> map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
-                map = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {}.getType());
+                map = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {
+                }.getType());
                 System.out.println(map);
 
                 String agency = (map.get("UMBRELLA_AGENCY"));
-                String [] agencyArray = getResources().getStringArray(R.array.AgencyList);
-                for(int i = 0; i<agencyArray.length;i++){
-                    if(agencyArray[i].equals(agency)){
+                String[] agencyArray = getResources().getStringArray(R.array.AgencyList);
+                for (int i = 0; i < agencyArray.length; i++) {
+                    if (agencyArray[i].equals(agency)) {
                         Agency.setSelection(i);
                     }
                 }
 
                 String regional = (map.get("REGIONAL_ADMIN"));
-                String [] regionalArray1 = getResources().getStringArray(R.array.FSRegionalList);
-                String [] regionalArray2 = getResources().getStringArray(R.array.NPSRegionalList);
+                String[] regionalArray1 = getResources().getStringArray(R.array.FSRegionalList);
+                String[] regionalArray2 = getResources().getStringArray(R.array.NPSRegionalList);
 
-                for(int i = 0; i<regionalArray1.length;i++){
-                    if(regionalArray1[i].equals(regional)){
+                for (int i = 0; i < regionalArray1.length; i++) {
+                    if (regionalArray1[i].equals(regional)) {
                         Regional.setSelection(i);
                     }
                 }
 
-                for(int i = 0; i<regionalArray2.length;i++){
-                    if(regionalArray2[i].equals(regional)){
+                for (int i = 0; i < regionalArray2.length; i++) {
+                    if (regionalArray2[i].equals(regional)) {
                         Regional.setSelection(i);
                     }
                 }
 
                 String local = (map.get("LOCAL_ADMIN"));
-                String [] local1 = getResources().getStringArray(R.array.FSLocalList1);
-                String [] local2 = getResources().getStringArray(R.array.FSLocalList2);
-                String [] local3 = getResources().getStringArray(R.array.FSLocalList3);
-                String [] local4 = getResources().getStringArray(R.array.FSLocalList4);
-                String [] local5 = getResources().getStringArray(R.array.FSLocalList5);
-                String [] local6 = getResources().getStringArray(R.array.FSLocalList6);
-                String [] local7 = getResources().getStringArray(R.array.FSLocalList7);
-                String [] local8 = getResources().getStringArray(R.array.FSLocalList8);
-                String [] local9 = getResources().getStringArray(R.array.FSLocalList9);
-                String [] local10 = getResources().getStringArray(R.array.NPSLocalList1);
-                String [] local11 = getResources().getStringArray(R.array.NPSLocalList2);
-                String [] local12 = getResources().getStringArray(R.array.NPSLocal3);
-                String [] local13 = getResources().getStringArray(R.array.NPSLocal4);
-                String [] local14 = getResources().getStringArray(R.array.NPSLocal5);
-                String [] local15 = getResources().getStringArray(R.array.NPSLocal6);
-                String [] local16 = getResources().getStringArray(R.array.NPSLocal7);
+                String[] local1 = getResources().getStringArray(R.array.FSLocalList1);
+                String[] local2 = getResources().getStringArray(R.array.FSLocalList2);
+                String[] local3 = getResources().getStringArray(R.array.FSLocalList3);
+                String[] local4 = getResources().getStringArray(R.array.FSLocalList4);
+                String[] local5 = getResources().getStringArray(R.array.FSLocalList5);
+                String[] local6 = getResources().getStringArray(R.array.FSLocalList6);
+                String[] local7 = getResources().getStringArray(R.array.FSLocalList7);
+                String[] local8 = getResources().getStringArray(R.array.FSLocalList8);
+                String[] local9 = getResources().getStringArray(R.array.FSLocalList9);
+                String[] local10 = getResources().getStringArray(R.array.NPSLocalList1);
+                String[] local11 = getResources().getStringArray(R.array.NPSLocalList2);
+                String[] local12 = getResources().getStringArray(R.array.NPSLocal3);
+                String[] local13 = getResources().getStringArray(R.array.NPSLocal4);
+                String[] local14 = getResources().getStringArray(R.array.NPSLocal5);
+                String[] local15 = getResources().getStringArray(R.array.NPSLocal6);
+                String[] local16 = getResources().getStringArray(R.array.NPSLocal7);
 
                 ArrayList<String> localList1 = new ArrayList<String>(Arrays.asList(local1));
                 ArrayList<String> localList2 = new ArrayList<String>(Arrays.asList(local2));
@@ -934,38 +935,37 @@ public class LandslideActivity extends AppCompatActivity
                 ArrayList<String> localList16 = new ArrayList<String>(Arrays.asList(local16));
 
 
-                if(localList1.contains(local)){
+                if (localList1.contains(local)) {
                     Local.setSelection(localList1.indexOf(local));
-                }
-                else if (localList2.contains(local)){
+                } else if (localList2.contains(local)) {
                     Local.setSelection(localList2.indexOf(local));
-                }else if (localList3.contains(local)){
+                } else if (localList3.contains(local)) {
                     Local.setSelection(localList3.indexOf(local));
-                }else if (localList4.contains(local)){
+                } else if (localList4.contains(local)) {
                     Local.setSelection(localList4.indexOf(local));
-                }else if (localList5.contains(local)){
+                } else if (localList5.contains(local)) {
                     Local.setSelection(localList5.indexOf(local));
-                }else if (localList6.contains(local)){
+                } else if (localList6.contains(local)) {
                     Local.setSelection(localList6.indexOf(local));
-                }else if (localList7.contains(local)){
+                } else if (localList7.contains(local)) {
                     Local.setSelection(localList7.indexOf(local));
-                }else if (localList8.contains(local)){
+                } else if (localList8.contains(local)) {
                     Local.setSelection(localList8.indexOf(local));
-                }else if (localList9.contains(local)){
+                } else if (localList9.contains(local)) {
                     Local.setSelection(localList9.indexOf(local));
-                }else if (localList10.contains(local)){
+                } else if (localList10.contains(local)) {
                     Local.setSelection(localList10.indexOf(local));
-                }else if (localList11.contains(local)){
+                } else if (localList11.contains(local)) {
                     Local.setSelection(localList11.indexOf(local));
-                }else if (localList12.contains(local)){
+                } else if (localList12.contains(local)) {
                     Local.setSelection(localList12.indexOf(local));
-                }else if (localList13.contains(local)){
+                } else if (localList13.contains(local)) {
                     Local.setSelection(localList13.indexOf(local));
-                }else if (localList14.contains(local)){
+                } else if (localList14.contains(local)) {
                     Local.setSelection(localList14.indexOf(local));
-                }else if (localList15.contains(local)){
+                } else if (localList15.contains(local)) {
                     Local.setSelection(localList15.indexOf(local));
-                }else if (localList16.contains(local)){
+                } else if (localList16.contains(local)) {
                     Local.setSelection(localList16.indexOf(local));
                 }
 
@@ -973,10 +973,9 @@ public class LandslideActivity extends AppCompatActivity
                 Date.setText(map.get("DATE"));
                 RoadTrailNo.setText(map.get("ROAD_TRAIL_NO"));
                 String road_or_trail = map.get("ROAD_OR_TRAIL");
-                if(road_or_trail.equals("1")){
+                if (road_or_trail.equals("1")) {
                     RoadTrail.setSelection(1);
-                }
-                else{
+                } else {
                     RoadTrail.setSelection(0);
                 }
                 RoadTrailClass.setText(map.get("ROAD_TRAIL_CLASS"));
@@ -985,43 +984,43 @@ public class LandslideActivity extends AppCompatActivity
                 EndMile.setText(map.get("END_MILE_MARKER"));
 
                 String side = map.get("SIDE");
-                String [] sideArray = getResources().getStringArray(R.array.sideList);
-                for(int i = 0; i<sideArray.length;i++){
-                    if(sideArray[i].equals(side)){
+                String[] sideArray = getResources().getStringArray(R.array.sideList);
+                for (int i = 0; i < sideArray.length; i++) {
+                    if (sideArray[i].equals(side)) {
                         Side.setSelection(i);
                     }
                 }
 
                 String weather = map.get("WEATHER");
-                String [] weatherArray = getResources().getStringArray(R.array.weatherList);
-                for(int i = 0; i<weatherArray.length;i++){
-                    if(weatherArray[i].equals(weather)){
+                String[] weatherArray = getResources().getStringArray(R.array.weatherList);
+                for (int i = 0; i < weatherArray.length; i++) {
+                    if (weatherArray[i].equals(weather)) {
                         Weather.setSelection(i);
                     }
                 }
 
                 //TODO: hazard type here (1)
                 String hazardString = map.get("HAZARD_TYPE");
-                if(hazardString.contains("-")) {
+                if (hazardString.contains("-")) {
                     //example entry is "Landslide - Shallow Slump, Below Route"
                     int start = hazardString.indexOf("-");
-                    hazardString = hazardString.substring(start+2);
-                    String [] hazards = hazardString.split(",");
+                    hazardString = hazardString.substring(start + 2);
+                    String[] hazards = hazardString.split(",");
 
                     ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
 
 
-                    for(int i = 0; i<hazardTypeList.size(); i++){
-                        if(i==3){ //can't have more than 3
+                    for (int i = 0; i < hazardTypeList.size(); i++) {
+                        if (i == 3) { //can't have more than 3
                             break;
                         }
                         //if it's in the list, set the spinner to it
-                        if(hazardTypeList.contains(hazards[i])){
-                            if(i == 0){
+                        if (hazardTypeList.contains(hazards[i])) {
+                            if (i == 0) {
                                 HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            }else if(i == 1){
+                            } else if (i == 1) {
                                 HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            }else{
+                            } else {
                                 HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
                             }
                         }
@@ -1060,16 +1059,16 @@ public class LandslideActivity extends AppCompatActivity
                 AnnualRain2.setText(map.get("END_ANNUAL_RAINFALL"));
 
                 String sole_access_route = map.get("SOLE_ACCESS_ROUTE");
-                if(sole_access_route.equals("yes")){
+                if (sole_access_route.equals("yes")) {
                     SoleAccess.setSelection(1);
-                }else{
+                } else {
                     SoleAccess.setSelection(0);
                 }
 
                 String fixes_present = map.get("FIXES_PRESENT");
-                if(fixes_present.equals("yes")){
+                if (fixes_present.equals("yes")) {
                     Mitigation.setSelection(1);
-                }else{
+                } else {
                     Mitigation.setSelection(0);
                 }
 
@@ -1081,18 +1080,18 @@ public class LandslideActivity extends AppCompatActivity
                 FlmaDescription.setText(map.get("FLMA_DESCRIPTION"));
 
                 //PRELIMINARY RATINGS-LANDSLIDE ONLY
-                String [] ratingArray = getResources().getStringArray(R.array.ratingList);
+                String[] ratingArray = getResources().getStringArray(R.array.ratingList);
 
                 String landslide_prelim_road_width_affected = map.get("LANDSLIDE_PRELIM_ROAD_WIDTH_AFFECTED");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(landslide_prelim_road_width_affected)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(landslide_prelim_road_width_affected)) {
                         RWidthAffected.setSelection(i);
                     }
                 }
 
                 String landslide_prelim_slide_erosion_effects = map.get("LANDSLIDE_PRELIM_SLIDE_EROSION_EFFECTS");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(landslide_prelim_slide_erosion_effects)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(landslide_prelim_slide_erosion_effects)) {
                         SlideErosion.setSelection(i);
                     }
                 }
@@ -1101,14 +1100,14 @@ public class LandslideActivity extends AppCompatActivity
 
                 //PRELIM RATINGS ALL
                 String preliminary_rating_impact_on_use = map.get("PRELIMINARY_RATING_IMPACT_ON_USE");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(preliminary_rating_impact_on_use)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(preliminary_rating_impact_on_use)) {
                         ImpactOU.setSelection(i);
                     }
                 }
 
                 String aadt_checkbox = (map.get("PRELIMINARY_RATING_AADT_USAGE_CALC_CHECKBOX"));
-                if(aadt_checkbox == "1"){
+                if (aadt_checkbox == "1") {
                     CheckAadt.toggle();
                     aadtCheckmark = true;
                 }
@@ -1119,8 +1118,8 @@ public class LandslideActivity extends AppCompatActivity
                 //Slope Hazard Ratings ALL
 
                 String hazard_rating_slope_drainage = map.get("HAZARD_RATING_SLOPE_DRAINAGE");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(hazard_rating_slope_drainage)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(hazard_rating_slope_drainage)) {
                         SlopeDrainage.setSelection(i);
                     }
                 }
@@ -1131,22 +1130,22 @@ public class LandslideActivity extends AppCompatActivity
 
                 //Slope Hazard Ratings->Landslide Only
                 String landslide_hazard_rating_thaw_stability = map.get("LANDSLIDE_HAZARD_RATING_THAW_STABILITY");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(landslide_hazard_rating_thaw_stability)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(landslide_hazard_rating_thaw_stability)) {
                         ThawStability.setSelection(i);
                     }
                 }
 
                 String landslide_hazard_rating_maint_frequency = map.get("LANDSLIDE_HAZARD_RATING_MAINT_FREQUENCY");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(landslide_hazard_rating_maint_frequency)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(landslide_hazard_rating_maint_frequency)) {
                         InstabilityRMF.setSelection(i);
                     }
                 }
 
                 String landslide_hazard_rating_movement_history = map.get("LANDSLIDE_HAZARD_RATING_MOVEMENT_HISTORY");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(landslide_hazard_rating_movement_history)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(landslide_hazard_rating_movement_history)) {
                         MovementHistory.setSelection(i);
                     }
                 }
@@ -1156,28 +1155,28 @@ public class LandslideActivity extends AppCompatActivity
                 HumanEF.setText(map.get("RISK_RATING_HUMAN_EX_FACTOR"));
                 PercentDSD.setText(map.get("RISK_RATING_PERCENT_DSD"));
                 String risk_rating_r_w_impacts = map.get("RISK_RATING_R_W_IMPACTS");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(risk_rating_r_w_impacts)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(risk_rating_r_w_impacts)) {
                         RightOWI.setSelection(i);
                     }
                 }
                 String risk_rating_enviro_cult_impacts = map.get("RISK_RATING_ENVIRO_CULT_IMPACTS");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(risk_rating_r_w_impacts)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(risk_rating_r_w_impacts)) {
                         ECImpact.setSelection(i);
                     }
                 }
 
                 String risk_rating_maint_complexity = map.get("RISK_RATING_MAINT_COMPLEXITY");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(risk_rating_maint_complexity)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(risk_rating_maint_complexity)) {
                         MaintComplexity.setSelection(i);
                     }
                 }
 
                 String risk_rating_event_cost = map.get("RISK_RATING_EVENT_COST");
-                for(int i = 0; i< ratingArray.length; i++){
-                    if(ratingArray[i].equals(risk_rating_event_cost)){
+                for (int i = 0; i < ratingArray.length; i++) {
+                    if (ratingArray[i].equals(risk_rating_event_cost)) {
                         EventCost.setSelection(i);
                     }
                 }
@@ -1190,6 +1189,7 @@ public class LandslideActivity extends AppCompatActivity
 
 
     }
+
     private void getJSON(String url) {
         class GetJSON extends AsyncTask<String, Void, String> {
             //ProgressDialog loading; //just to tell the user that the map is in progress...all good
@@ -1221,7 +1221,6 @@ public class LandslideActivity extends AppCompatActivity
         GetJSON gj = new GetJSON();
         gj.execute(url);
     }
-
 
 
     //Road Trail No. Verification
@@ -1375,7 +1374,6 @@ public class LandslideActivity extends AppCompatActivity
         }
 
     };
-
 
 
     //Latitude Validation
@@ -2994,7 +2992,7 @@ public class LandslideActivity extends AppCompatActivity
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
 
-        }else if (id == R.id.savedList) {
+        } else if (id == R.id.savedList) {
             Intent intent = new Intent(this, OfflineList.class);
             startActivity(intent);
 
@@ -3396,12 +3394,12 @@ public class LandslideActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    public void editSubmit() throws Exception{
+    public void editSubmit() throws Exception {
         Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
-                try  {
+                try {
                     //REALLY??
                     URL url = new URL("http://nl.cs.montana.edu/test_sites/colleen.rothe/editSite.php");
                     URLConnection conn = url.openConnection();
@@ -3419,38 +3417,30 @@ public class LandslideActivity extends AppCompatActivity
                     String begin_mile_marker = String.valueOf(BeginMile.getText());
                     String end_mile_marker = String.valueOf(EndMile.getText());
                     String road_or_trail = "R";
-                    if(RoadTrail.getSelectedItem().toString().equals("Trail")){
-                        road_or_trail="T";
+                    if (RoadTrail.getSelectedItem().toString().equals("Trail")) {
+                        road_or_trail = "T";
                     }
                     String side = ""; //L/R??
-                    if(Side.getSelectedItemPosition()==0){
+                    if (Side.getSelectedItemPosition() == 0) {
                         side = "L";
-                    }
-                    else if(Side.getSelectedItemPosition()==1){
+                    } else if (Side.getSelectedItemPosition() == 1) {
                         side = "R";
-                    }
-                    else if(Side.getSelectedItemPosition()==2){
+                    } else if (Side.getSelectedItemPosition() == 2) {
                         side = "N";
-                    }
-                    else if(Side.getSelectedItemPosition()==3){
+                    } else if (Side.getSelectedItemPosition() == 3) {
                         side = "NE";
-                    }
-                    else if(Side.getSelectedItemPosition()==4){
+                    } else if (Side.getSelectedItemPosition() == 4) {
                         side = "E";
-                    }
-                    else if(Side.getSelectedItemPosition()==5){
+                    } else if (Side.getSelectedItemPosition() == 5) {
                         side = "SE";
-                    }
-                    else if(Side.getSelectedItemPosition()==6){
+                    } else if (Side.getSelectedItemPosition() == 6) {
                         side = "S";
-                    }
-                    else if(Side.getSelectedItemPosition()==7){
+                    } else if (Side.getSelectedItemPosition() == 7) {
                         side = "SW";
-                    }
-                    else if(Side.getSelectedItemPosition()==8){
+                    } else if (Side.getSelectedItemPosition() == 8) {
                         side = "W";
                     }
-                    if(Side.getSelectedItemPosition()==9){
+                    if (Side.getSelectedItemPosition() == 9) {
                         side = "NW";
                     }
 
@@ -3471,14 +3461,14 @@ public class LandslideActivity extends AppCompatActivity
                     //todo: slope hazard here (2)
 
                     String temp = "Landslide - ";
-                    if(HazardType1.getSelectedItem().toString() != "") {
+                    if (HazardType1.getSelectedItem().toString() != "") {
                         temp = temp.concat(HazardType1.getSelectedItem().toString());
                     }
-                    if(HazardType2.getSelectedItem().toString() != "") {
+                    if (HazardType2.getSelectedItem().toString() != "") {
                         temp = temp.concat(",");
                         temp = temp.concat(HazardType2.getSelectedItem().toString());
                     }
-                    if(HazardType3.getSelectedItem().toString() != "") {
+                    if (HazardType3.getSelectedItem().toString() != "") {
                         temp = temp.concat(",");
                         temp = temp.concat(HazardType3.getSelectedItem().toString());
                     }
@@ -3505,12 +3495,12 @@ public class LandslideActivity extends AppCompatActivity
                     String end_annual_rainfall = String.valueOf(AnnualRain2.getText());
 
                     String sole_access_route = "N";
-                    if(SoleAccess.getSelectedItemPosition()==1){
-                        sole_access_route ="Y";
+                    if (SoleAccess.getSelectedItemPosition() == 1) {
+                        sole_access_route = "Y";
                     }
 
                     String fixes_present = "N";
-                    if(Mitigation.getSelectedItemPosition()==1){
+                    if (Mitigation.getSelectedItemPosition() == 1) {
                         fixes_present = "Y";
                     }
 
@@ -3526,25 +3516,21 @@ public class LandslideActivity extends AppCompatActivity
                     //PRELIMINARY RATING
 
                     String road_width_affected = "3";
-                    if(RWidthAffected.getSelectedItemPosition()==1){
+                    if (RWidthAffected.getSelectedItemPosition() == 1) {
                         road_width_affected = "9";
-                    }
-                    else if(RWidthAffected.getSelectedItemPosition()==2){
+                    } else if (RWidthAffected.getSelectedItemPosition() == 2) {
                         road_width_affected = "27";
-                    }
-                    else if(RWidthAffected.getSelectedItemPosition()==3){
+                    } else if (RWidthAffected.getSelectedItemPosition() == 3) {
                         road_width_affected = "81";
                     }
 
                     String slide_erosion_effects = "3";
-                    if(SlideErosion.getSelectedItemPosition()==1){
-                        slide_erosion_effects="9";
-                    }
-                    else if(SlideErosion.getSelectedItemPosition()==2){
-                        slide_erosion_effects="27";
-                    }
-                    else if(SlideErosion.getSelectedItemPosition()==3){
-                        slide_erosion_effects="81";
+                    if (SlideErosion.getSelectedItemPosition() == 1) {
+                        slide_erosion_effects = "9";
+                    } else if (SlideErosion.getSelectedItemPosition() == 2) {
+                        slide_erosion_effects = "27";
+                    } else if (SlideErosion.getSelectedItemPosition() == 3) {
+                        slide_erosion_effects = "81";
                     }
 
                     String l_length_affected = String.valueOf(RLengthAffected.getText());
@@ -3553,18 +3539,16 @@ public class LandslideActivity extends AppCompatActivity
 
                     //for all
                     String impact_on_use = "3";
-                    if(ImpactOU.getSelectedItemPosition() == 1){
+                    if (ImpactOU.getSelectedItemPosition() == 1) {
                         impact_on_use = "9";
-                    }
-                    else if(ImpactOU.getSelectedItemPosition() == 2){
+                    } else if (ImpactOU.getSelectedItemPosition() == 2) {
                         impact_on_use = "27";
-                    }
-                    else if(ImpactOU.getSelectedItemPosition() == 3){
+                    } else if (ImpactOU.getSelectedItemPosition() == 3) {
                         impact_on_use = "81";
                     }
 
                     String aadt_usage_calc_checkbox = "0";
-                    if(CheckAadt.isChecked()){
+                    if (CheckAadt.isChecked()) {
                         aadt_usage_calc_checkbox = "1";
                     }
 
@@ -3576,13 +3560,11 @@ public class LandslideActivity extends AppCompatActivity
 
                     //for all
                     String slope_drainage = "3";
-                    if(SlopeDrainage.getSelectedItemPosition() == 1){
+                    if (SlopeDrainage.getSelectedItemPosition() == 1) {
                         slope_drainage = "9";
-                    }
-                    else if(SlopeDrainage.getSelectedItemPosition() == 2){
+                    } else if (SlopeDrainage.getSelectedItemPosition() == 2) {
                         slope_drainage = "27";
-                    }
-                    else if(SlopeDrainage.getSelectedItemPosition() == 3){
+                    } else if (SlopeDrainage.getSelectedItemPosition() == 3) {
                         slope_drainage = "81";
                     }
 
@@ -3591,35 +3573,29 @@ public class LandslideActivity extends AppCompatActivity
 
                     //landslide
                     String thaw_stability = "3";
-                    if(ThawStability.getSelectedItemPosition()==1){
+                    if (ThawStability.getSelectedItemPosition() == 1) {
                         thaw_stability = "9";
-                    }
-                    else if(ThawStability.getSelectedItemPosition()==2){
+                    } else if (ThawStability.getSelectedItemPosition() == 2) {
                         thaw_stability = "27";
-                    }
-                    else if(ThawStability.getSelectedItemPosition()==3){
+                    } else if (ThawStability.getSelectedItemPosition() == 3) {
                         thaw_stability = "81";
                     }
 
                     String maint_freq = "3";
-                    if(InstabilityRMF.getSelectedItemPosition()==1){
+                    if (InstabilityRMF.getSelectedItemPosition() == 1) {
                         maint_freq = "9";
-                    }
-                    else if(InstabilityRMF.getSelectedItemPosition()==2){
+                    } else if (InstabilityRMF.getSelectedItemPosition() == 2) {
                         maint_freq = "27";
-                    }
-                    else if(InstabilityRMF.getSelectedItemPosition()==3){
+                    } else if (InstabilityRMF.getSelectedItemPosition() == 3) {
                         maint_freq = "81";
                     }
 
                     String movement_history = "3";
-                    if(MovementHistory.getSelectedItemPosition() == 1){
+                    if (MovementHistory.getSelectedItemPosition() == 1) {
                         movement_history = "9";
-                    }
-                    else if(MovementHistory.getSelectedItemPosition() == 2){
+                    } else if (MovementHistory.getSelectedItemPosition() == 2) {
                         movement_history = "27";
-                    }
-                    else if(MovementHistory.getSelectedItemPosition() == 3){
+                    } else if (MovementHistory.getSelectedItemPosition() == 3) {
                         movement_history = "81";
                     }
 
@@ -3634,46 +3610,38 @@ public class LandslideActivity extends AppCompatActivity
                     String percent_dsd = String.valueOf(PercentDSD.getText());
 
                     String r_w_impacts = "3";
-                    if(RightOWI.getSelectedItemPosition() == 1){
+                    if (RightOWI.getSelectedItemPosition() == 1) {
                         r_w_impacts = "9";
-                    }
-                    else if(RightOWI.getSelectedItemPosition() == 2){
+                    } else if (RightOWI.getSelectedItemPosition() == 2) {
                         r_w_impacts = "27";
-                    }
-                    else if(RightOWI.getSelectedItemPosition() == 3){
+                    } else if (RightOWI.getSelectedItemPosition() == 3) {
                         r_w_impacts = "81";
                     }
 
                     String enviro_cult_impacts = "3";
-                    if(ECImpact.getSelectedItemPosition() == 1){
+                    if (ECImpact.getSelectedItemPosition() == 1) {
                         enviro_cult_impacts = "9";
-                    }
-                    else if(ECImpact.getSelectedItemPosition() == 2){
+                    } else if (ECImpact.getSelectedItemPosition() == 2) {
                         enviro_cult_impacts = "27";
-                    }
-                    else if(ECImpact.getSelectedItemPosition() == 3){
+                    } else if (ECImpact.getSelectedItemPosition() == 3) {
                         enviro_cult_impacts = "81";
                     }
 
                     String maint_complexity = "3";
-                    if(MaintComplexity.getSelectedItemPosition() == 1){
+                    if (MaintComplexity.getSelectedItemPosition() == 1) {
                         maint_complexity = "9";
-                    }
-                    else if(MaintComplexity.getSelectedItemPosition() == 2){
+                    } else if (MaintComplexity.getSelectedItemPosition() == 2) {
                         maint_complexity = "27";
-                    }
-                    else if(MaintComplexity.getSelectedItemPosition() == 3){
+                    } else if (MaintComplexity.getSelectedItemPosition() == 3) {
                         maint_complexity = "81";
                     }
 
                     String event_cost = "3";
-                    if(EventCost.getSelectedItemPosition() == 1){
+                    if (EventCost.getSelectedItemPosition() == 1) {
                         event_cost = "9";
-                    }
-                    else if(EventCost.getSelectedItemPosition() == 2){
+                    } else if (EventCost.getSelectedItemPosition() == 2) {
                         event_cost = "27";
-                    }
-                    else if(EventCost.getSelectedItemPosition() == 3){
+                    } else if (EventCost.getSelectedItemPosition() == 3) {
                         event_cost = "81";
                     }
 
@@ -3684,28 +3652,28 @@ public class LandslideActivity extends AppCompatActivity
                     String old_site_id = "0";
 
                     //todo: slope hazard (3) (after aadt)
-                    writer.write("old_site_id="+old_site_id+"&umbrella_agency="+umbrella_agency+"&regional_admin="+regional_admin+"&local_admin="+local_admin+"&road_trail_number="+road_trail_number+"&road_trail_class="+road_trail_class+
-                            "&begin_mile_marker="+begin_mile_marker+"&end_mile_marker="+end_mile_marker+"&road_or_trail="+road_or_trail+"&side="+
-                            side +"&rater="+l_rater+"&weather="+weather+"&begin_coordinate_latitude="+begin_coordinate_lat+"&begin_coordinate_longitude="+
-                            begin_coordinate_long+"&end_coordinate_latitude="+end_coordinate_latitude+"&end_coordinate_longitude="+end_coordinate_longitude+
-                            "&datum="+datum+"&aadt="+aadt+"&hazard_type="+hazard_type+"&length_affected="+length_affected+"&slope_height_axial_length="+
-                            slope_height_axial_length+"&slope_angle="+slope_angle+"&sight_distance="+sight_distance+"&road_trail_width="+road_trail_width+
-                            "&speed_limit="+speed_limit+"&minimum_ditch_width="+minimum_ditch_width+"&maximum_ditch_width="+maximum_ditch_width+
-                            "&minimum_ditch_depth="+minimum_ditch_depth+"&maximum_ditch_depth="+maximum_ditch_depth+"&first_begin_ditch_slope="+first_begin_ditch_slope+
-                            "&first_end_ditch_slope="+first_end_ditch_slope+"&second_begin_ditch_slope="+second_begin_ditch_slope+"&second_end_ditch_slope="+
-                            second_end_ditch_slope+"&start_annual_rainfall="+start_annual_rainfall+"&end_annual_rainfall="+end_annual_rainfall+
-                            "&sole_access_route="+sole_access_route+"&fixes_present="+fixes_present+"&blk_size= &volume= &prelim_landslide_road_width_affected="+
-                            road_width_affected+"&prelim_landslide_slide_erosion_effects="+slide_erosion_effects+"&prelim_landslide_slide_erosion_effects="+
-                            slide_erosion_effects+"&prelim_landslide_length_affected="+length_affected+"&prelim_rockfall_ditch_eff= &prelim_rockfall_rockfall_history= " +
-                            "&prelim_rockfall_block_size_event_vol= &impact_on_use="+impact_on_use+"&aadt_usage_calc_checkbox="+
-                            aadt_usage_calc_checkbox+"&aadt_usage="+aadt_usage+"&prelim_rating="+prelim_rating+"&slope_drainage="+
-                            slope_drainage+"&hazard_rating_annual_rainfall="+annual_rainfall+"&hazard_rating_slope_height_axial_length="+axial_los+
-                            "&hazard_landslide_thaw_stability="+thaw_stability+"&hazard_landslide_maint_frequency="+maint_freq+"&hazard_landslide_movement_history="+
-                            movement_history+"&hazard_rockfall_maint_frequency= &case_one_struc_cond= &case_one_rock_friction= &case_two_struc_condition= &case_two_diff_erosion= "+
-                            "&route_trail_width="+route_trail_width+"&human_ex_factor="+human_ex_factor+"&percent_dsd="+percent_dsd+"&r_w_impacts="+
-                            r_w_impacts+"&enviro_cult_impacts="+enviro_cult_impacts+"&maint_complexity="+maint_complexity+"&event_cost="+event_cost+
-                            "&hazard_rating_landslide_total="+hazard_total+"&hazard_rating_rockfall_total= &risk_total="+risk_total+"&total_score="+total_score+"&comments="+
-                            comments +"&fmla_id="+flma_id+"&fmla_name="+flma_name+"&fmla_description="+flma_description);
+                    writer.write("old_site_id=" + old_site_id + "&umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
+                            "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
+                            side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
+                            begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
+                            "&datum=" + datum + "&aadt=" + aadt + "&hazard_type=" + hazard_type + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                            slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
+                            "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width=" + maximum_ditch_width +
+                            "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
+                            "&first_end_ditch_slope=" + first_end_ditch_slope + "&second_begin_ditch_slope=" + second_begin_ditch_slope + "&second_end_ditch_slope=" +
+                            second_end_ditch_slope + "&start_annual_rainfall=" + start_annual_rainfall + "&end_annual_rainfall=" + end_annual_rainfall +
+                            "&sole_access_route=" + sole_access_route + "&fixes_present=" + fixes_present + "&blk_size= &volume= &prelim_landslide_road_width_affected=" +
+                            road_width_affected + "&prelim_landslide_slide_erosion_effects=" + slide_erosion_effects + "&prelim_landslide_slide_erosion_effects=" +
+                            slide_erosion_effects + "&prelim_landslide_length_affected=" + length_affected + "&prelim_rockfall_ditch_eff= &prelim_rockfall_rockfall_history= " +
+                            "&prelim_rockfall_block_size_event_vol= &impact_on_use=" + impact_on_use + "&aadt_usage_calc_checkbox=" +
+                            aadt_usage_calc_checkbox + "&aadt_usage=" + aadt_usage + "&prelim_rating=" + prelim_rating + "&slope_drainage=" +
+                            slope_drainage + "&hazard_rating_annual_rainfall=" + annual_rainfall + "&hazard_rating_slope_height_axial_length=" + axial_los +
+                            "&hazard_landslide_thaw_stability=" + thaw_stability + "&hazard_landslide_maint_frequency=" + maint_freq + "&hazard_landslide_movement_history=" +
+                            movement_history + "&hazard_rockfall_maint_frequency= &case_one_struc_cond= &case_one_rock_friction= &case_two_struc_condition= &case_two_diff_erosion= " +
+                            "&route_trail_width=" + route_trail_width + "&human_ex_factor=" + human_ex_factor + "&percent_dsd=" + percent_dsd + "&r_w_impacts=" +
+                            r_w_impacts + "&enviro_cult_impacts=" + enviro_cult_impacts + "&maint_complexity=" + maint_complexity + "&event_cost=" + event_cost +
+                            "&hazard_rating_landslide_total=" + hazard_total + "&hazard_rating_rockfall_total= &risk_total=" + risk_total + "&total_score=" + total_score + "&comments=" +
+                            comments + "&fmla_id=" + flma_id + "&fmla_name=" + flma_name + "&fmla_description=" + flma_description);
                     writer.flush();
                     String line;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -3728,11 +3696,10 @@ public class LandslideActivity extends AppCompatActivity
     public void LSubmit(View view) throws Exception {
 
         //EDIT
-        if(getIntent().getStringExtra("editing") != null){
+        if (getIntent().getStringExtra("editing") != null) {
             System.out.println("yay! please do EDIT SUBMIT");
             editSubmit();
-        }
-        else {
+        } else {
             Thread thread = new Thread(new Runnable() {
 
                 @Override
@@ -3796,14 +3763,14 @@ public class LandslideActivity extends AppCompatActivity
                         String aadt = String.valueOf(Aadt.getText());
                         //todo: hazard type here (4)
                         String temp = "Landslide - ";
-                        if(HazardType1.getSelectedItem().toString() != "") {
+                        if (HazardType1.getSelectedItem().toString() != "") {
                             temp = temp.concat(HazardType1.getSelectedItem().toString());
                         }
-                        if(HazardType2.getSelectedItem().toString() != "") {
+                        if (HazardType2.getSelectedItem().toString() != "") {
                             temp = temp.concat(",");
                             temp = temp.concat(HazardType2.getSelectedItem().toString());
                         }
-                        if(HazardType3.getSelectedItem().toString() != "") {
+                        if (HazardType3.getSelectedItem().toString() != "") {
                             temp = temp.concat(",");
                             temp = temp.concat(HazardType3.getSelectedItem().toString());
                         }
@@ -3987,11 +3954,11 @@ public class LandslideActivity extends AppCompatActivity
                         //flma problem
 
                         //todo: hazard type (5) (after aadt)
-                        writer.write("mgmt_area=" + "&umbrella_agency="+umbrella_agency+"&regional_admin="+regional_admin+"&local_admin="+local_admin+"&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
+                        writer.write("mgmt_area=" + "&umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
                                 "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
                                 side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
                                 begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
-                                "&datum=" + datum + "&aadt=" +aadt+ "&hazard_type="+hazard_type + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                                "&datum=" + datum + "&aadt=" + aadt + "&hazard_type=" + hazard_type + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
                                 slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
                                 "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width=" + maximum_ditch_width +
                                 "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
@@ -4017,6 +3984,8 @@ public class LandslideActivity extends AppCompatActivity
                         }
                         writer.close();
                         reader.close();
+                        uploadImage(); //here
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -4026,9 +3995,10 @@ public class LandslideActivity extends AppCompatActivity
             thread.start();
         }
 
+
     }
 
-    public void newLandslide(View view){
+    public void newLandslide(View view) {
         LandslideDBHandler dbHandler = new LandslideDBHandler(this, null, null, 1);
         //id
         int umbrella_agency = Agency.getSelectedItemPosition();
@@ -4043,22 +4013,21 @@ public class LandslideActivity extends AppCompatActivity
         String end_mile_marker = EndMile.getText().toString();
         int side = Side.getSelectedItemPosition();
         int weather = Weather.getSelectedItemPosition();
-       // todo: hazard type (6)
-       // String hazard_type = HazardType.getText().toString();
+        // todo: hazard type (6)
+        // String hazard_type = HazardType.getText().toString();
         String temp = "Landslide - ";
-        if(HazardType1.getSelectedItem().toString() != "") {
+        if (HazardType1.getSelectedItem().toString() != "") {
             temp = temp.concat(HazardType1.getSelectedItem().toString());
         }
-        if(HazardType2.getSelectedItem().toString() != "") {
+        if (HazardType2.getSelectedItem().toString() != "") {
             temp = temp.concat(",");
             temp = temp.concat(HazardType2.getSelectedItem().toString());
         }
-        if(HazardType3.getSelectedItem().toString() != "") {
+        if (HazardType3.getSelectedItem().toString() != "") {
             temp = temp.concat(",");
             temp = temp.concat(HazardType3.getSelectedItem().toString());
         }
         String hazard_type = temp;
-
 
 
         String begin_coordinate_lat = BeginLat.getText().toString();
@@ -4069,7 +4038,7 @@ public class LandslideActivity extends AppCompatActivity
         String aadt = Aadt.getText().toString();
         String length_affected = LengthAffected.getText().toString();
         String slope_height_axial_length = AxialLength.getText().toString();
-        String slope_angle=SlopeAngle.getText().toString();
+        String slope_angle = SlopeAngle.getText().toString();
         String sight_distance = SightDistance.getText().toString();
         String road_trail_width = RtWidth.getText().toString();
         int speed_limit = Speed.getSelectedItemPosition();
@@ -4081,7 +4050,7 @@ public class LandslideActivity extends AppCompatActivity
         String first_end_ditch_slope = DitchSlope2.getText().toString();
         String second_begin_ditch_slope = DitchSlope3.getText().toString();
         String second_end_ditch_slope = DitchSlope4.getText().toString();
-        String start_annual_rainfall =AnnualRain1.getText().toString();
+        String start_annual_rainfall = AnnualRain1.getText().toString();
         String end_annual_rainfall = AnnualRain2.getText().toString();
         int sole_access_route = SoleAccess.getSelectedItemPosition();
         int fixes_present = Mitigation.getSelectedItemPosition();
@@ -4092,27 +4061,27 @@ public class LandslideActivity extends AppCompatActivity
         String flma_description = FlmaDescription.getText().toString();
 
         //Preliminary Rating
-            //landslide only
+        //landslide only
         int prelim_landslide_road_width_affected = RWidthAffected.getSelectedItemPosition();
         int prelim_landslide_slide_erosion_effects = SlideErosion.getSelectedItemPosition();
         String prelim_landslide_length_affected = RLengthAffected.getText().toString();
-            //for all
+        //for all
         int impact_on_use = ImpactOU.getSelectedItemPosition();
         //0 is unchecked...1 is checked
         int aadt_usage_calc_checkbox = 0;
-        if(CheckAadt.isChecked()){
-            aadt_usage_calc_checkbox=1;
+        if (CheckAadt.isChecked()) {
+            aadt_usage_calc_checkbox = 1;
         }
         String aadt_usage = AadtEtc.getText().toString();
         String prelim_rating = PrelimRating.getText().toString();
 
         //Hazard Rating
-            //for all
+        //for all
         int slope_drainage = SlopeDrainage.getSelectedItemPosition();
         String hazard_rating_annual_rainfall = AnnualRainfall.getText().toString();
         String hazard_rating_slope_height_axial_length = AxialLOS.getText().toString();
         String hazard_rating_total = HazardTotal.getText().toString();
-            //landslide only
+        //landslide only
         int hazard_landslide_thaw_stability = ThawStability.getSelectedItemPosition();
         int hazard_landslide_maint_freq = InstabilityRMF.getSelectedItemPosition();
         int hazard_landslide_movement_history = MovementHistory.getSelectedItemPosition();
@@ -4130,20 +4099,20 @@ public class LandslideActivity extends AppCompatActivity
         String total_score = Total.getText().toString();
 
         Landslide landslide =
-                new Landslide(umbrella_agency,regional_admin,local_admin,date,road_trail_number,road_or_trail,road_trail_class,
-                        rater,begin_mile_marker,end_mile_marker,side,weather,hazard_type,
-                        begin_coordinate_lat,begin_coordinate_long,end_coordinate_latitude,
-                        end_coordinate_longitude,datum,aadt,length_affected,slope_height_axial_length,
-                        slope_angle,sight_distance,road_trail_width,speed_limit,minimum_ditch_width,
-                        maximum_ditch_width,minimum_ditch_depth,maximum_ditch_Depth,first_begin_ditch_slope,
-                        first_end_ditch_slope,second_begin_ditch_slope,second_end_ditch_slope,start_annual_rainfall,
-                        end_annual_rainfall,sole_access_route,fixes_present,photos,comments,flma_name,flma_id,
-                        flma_description,prelim_landslide_road_width_affected,prelim_landslide_slide_erosion_effects,
-                        prelim_landslide_length_affected,impact_on_use,aadt_usage_calc_checkbox,aadt_usage,
-                        prelim_rating,slope_drainage,hazard_rating_annual_rainfall,hazard_rating_slope_height_axial_length,
-                        hazard_rating_total,hazard_landslide_thaw_stability,hazard_landslide_maint_freq,
-                        hazard_landslide_movement_history,route_trail_width,human_ex_factor,percent_dsd,r_w_impacts,
-                        enviro_cult_impacts,maint_complexity,event_cost,risk_total,total_score);
+                new Landslide(umbrella_agency, regional_admin, local_admin, date, road_trail_number, road_or_trail, road_trail_class,
+                        rater, begin_mile_marker, end_mile_marker, side, weather, hazard_type,
+                        begin_coordinate_lat, begin_coordinate_long, end_coordinate_latitude,
+                        end_coordinate_longitude, datum, aadt, length_affected, slope_height_axial_length,
+                        slope_angle, sight_distance, road_trail_width, speed_limit, minimum_ditch_width,
+                        maximum_ditch_width, minimum_ditch_depth, maximum_ditch_Depth, first_begin_ditch_slope,
+                        first_end_ditch_slope, second_begin_ditch_slope, second_end_ditch_slope, start_annual_rainfall,
+                        end_annual_rainfall, sole_access_route, fixes_present, photos, comments, flma_name, flma_id,
+                        flma_description, prelim_landslide_road_width_affected, prelim_landslide_slide_erosion_effects,
+                        prelim_landslide_length_affected, impact_on_use, aadt_usage_calc_checkbox, aadt_usage,
+                        prelim_rating, slope_drainage, hazard_rating_annual_rainfall, hazard_rating_slope_height_axial_length,
+                        hazard_rating_total, hazard_landslide_thaw_stability, hazard_landslide_maint_freq,
+                        hazard_landslide_movement_history, route_trail_width, human_ex_factor, percent_dsd, r_w_impacts,
+                        enviro_cult_impacts, maint_complexity, event_cost, risk_total, total_score);
 
         dbHandler.addLandslide(landslide);
         //Message to the user that it worked....
@@ -4198,25 +4167,25 @@ public class LandslideActivity extends AppCompatActivity
         FlmaDescription.setText("");
 
         //Preliminary Rating
-            //landslide only
+        //landslide only
         RWidthAffected.setSelection(0);
         SlideErosion.setSelection(0);
         LengthAffected.setSelection(0);
-            //for all
+        //for all
         ImpactOU.setSelection(0);
-        if(CheckAadt.isChecked()){
+        if (CheckAadt.isChecked()) {
             CheckAadt.toggle();
         }
         AadtEtc.setText("");
         PrelimRating.setText("");
 
         //Hazard Rating
-            //for all
+        //for all
         SlopeDrainage.setSelection(0);
         AnnualRainfall.setText("");
         AxialLOS.setText("");
         HazardTotal.setText("");
-            //landslide only
+        //landslide only
         ThawStability.setSelection(0);
         InstabilityRMF.setSelection(0);
         MovementHistory.setSelection(0);
@@ -4259,27 +4228,27 @@ public class LandslideActivity extends AppCompatActivity
             //todo hazard type (9)
             String hazardString = landslide.getHazard_type();
 
-            if(hazardString.contains("-")) {
+            if (hazardString.contains("-")) {
                 //example entry is "Landslide - Shallow Slump, Below Route"
 
                 int start = hazardString.indexOf("-");
-                hazardString = hazardString.substring(start+2);
-                String [] hazards = hazardString.split(",");
+                hazardString = hazardString.substring(start + 2);
+                String[] hazards = hazardString.split(",");
 
                 ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
 
 
-                for(int i = 0; i<hazardTypeList.size(); i++){
-                    if(i==3){ //can't have more than 3
+                for (int i = 0; i < hazardTypeList.size(); i++) {
+                    if (i == 3) { //can't have more than 3
                         break;
                     }
                     //if it's in the list, set the spinner to it
-                    if(hazardTypeList.contains(hazards[i])){
-                        if(i == 0){
+                    if (hazardTypeList.contains(hazards[i])) {
+                        if (i == 0) {
                             HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
-                        }else if(i == 1){
+                        } else if (i == 1) {
                             HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
-                        }else{
+                        } else {
                             HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
                         }
                     }
@@ -4359,8 +4328,8 @@ public class LandslideActivity extends AppCompatActivity
 
             Total.setText(landslide.getTotal_score());
 
-            if(OfflineList.should_submit==true){
-                OfflineList.should_submit=false;
+            if (OfflineList.should_submit == true) {
+                OfflineList.should_submit = false;
                 //submit button perform click...
                 SubmitButton.performClick();
 
@@ -4375,7 +4344,7 @@ public class LandslideActivity extends AppCompatActivity
     }
 
     //Load as an Offline Site
-    public void loadFromOffline(){
+    public void loadFromOffline() {
         System.out.println("Load From Offline");
 
         String offline_clicked = getIntent().getStringExtra("offline");
@@ -4413,33 +4382,32 @@ public class LandslideActivity extends AppCompatActivity
                 //todo: hazard type (10)
                 String hazardString = offlineSite.getHazard_type();
 
-                if(hazardString.contains("-")) {
+                if (hazardString.contains("-")) {
                     //example entry is "Landslide - Shallow Slump, Below Route"
                     int start = hazardString.indexOf("-");
-                    hazardString = hazardString.substring(start+2);
-                    String [] hazards = hazardString.split(",");
+                    hazardString = hazardString.substring(start + 2);
+                    String[] hazards = hazardString.split(",");
 
                     ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
 
 
-                    for(int j = 0; j<hazardTypeList.size(); j++){
-                        if(j==3){ //can't have more than 3
+                    for (int j = 0; j < hazardTypeList.size(); j++) {
+                        if (j == 3) { //can't have more than 3
                             break;
                         }
                         //if it's in the list, set the spinner to it
-                        if(hazardTypeList.contains(hazards[j])){
-                            if(j == 0){
+                        if (hazardTypeList.contains(hazards[j])) {
+                            if (j == 0) {
                                 HazardType1.setSelection(hazardTypeList.indexOf(hazards[j]));
-                            }else if(j == 1){
+                            } else if (j == 1) {
                                 HazardType2.setSelection(hazardTypeList.indexOf(hazards[j]));
-                            }else{
+                            } else {
                                 HazardType3.setSelection(hazardTypeList.indexOf(hazards[j]));
                             }
                         }
                     }
 
                 }
-
 
 
                 BeginLat.setText(offlineSite.getBegin_coordinate_lat());
@@ -4485,12 +4453,12 @@ public class LandslideActivity extends AppCompatActivity
                 ArrayList<String> ratingList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.ratingList)));
 
                 String roadway_width_affected = String.valueOf(offlineSite.getPrelim_landslide_road_width_affected());
-                if(ratingList.contains(roadway_width_affected)){
+                if (ratingList.contains(roadway_width_affected)) {
                     RWidthAffected.setSelection(ratingList.indexOf(roadway_width_affected));
                 }
 
                 String slide_erosion_effects = String.valueOf(offlineSite.getPrelim_landslide_slide_erosion_effects());
-                if(ratingList.contains(slide_erosion_effects)){
+                if (ratingList.contains(slide_erosion_effects)) {
                     SlideErosion.setSelection(ratingList.indexOf(slide_erosion_effects));
                 }
 
@@ -4498,7 +4466,7 @@ public class LandslideActivity extends AppCompatActivity
 
                 //all
                 String impact_on_use = String.valueOf(offlineSite.getImpact_on_use());
-                if(ratingList.contains(impact_on_use)){
+                if (ratingList.contains(impact_on_use)) {
                     ImpactOU.setSelection(ratingList.indexOf(impact_on_use));
                 }
 
@@ -4526,16 +4494,16 @@ public class LandslideActivity extends AppCompatActivity
 
                 //Landslide Only
                 String thaw_stability = String.valueOf(offlineSite.getHazard_landslide_thaw_stability());
-                if(ratingList.contains(thaw_stability)){
+                if (ratingList.contains(thaw_stability)) {
                     ThawStability.setSelection(ratingList.indexOf(thaw_stability));
                 }
 
                 String instability_rmf = String.valueOf(offlineSite.getHazard_landslide_maint_frequency());
-                if(ratingList.contains(instability_rmf)){
+                if (ratingList.contains(instability_rmf)) {
                     InstabilityRMF.setSelection(ratingList.indexOf(instability_rmf));
                 }
                 String movement_history = String.valueOf(offlineSite.getHazard_landslide_movement_history());
-                if(ratingList.contains(movement_history)){
+                if (ratingList.contains(movement_history)) {
                     MovementHistory.setSelection(ratingList.indexOf(movement_history));
                 }
 
@@ -4573,6 +4541,7 @@ public class LandslideActivity extends AppCompatActivity
         }
 
     }
+
     //image picker
     public void chooseImages(View view) {
         Intent intent = new Intent(this, AlbumSelectActivity.class);
@@ -4598,7 +4567,7 @@ public class LandslideActivity extends AppCompatActivity
 
     //need to be able to view multiple images
     //need to save the uri string, when saving offline
-    public void viewChosen(View view){
+    public void viewChosen(View view) {
         System.out.println(imageUri);
         Dialog builder = new Dialog(this);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -4612,12 +4581,12 @@ public class LandslideActivity extends AppCompatActivity
         });
 
 
-        if(selectedImages.size() > 0) {
+        if (selectedImages.size() > 0) {
             ScrollView scroller = new ScrollView(this);
             LinearLayout ll = new LinearLayout(this);
 
             for (int i = 0; i < selectedImages.size(); i++) {
-                Uri currentImage =  Uri.fromFile(new File(selectedImages.get(i).path));
+                Uri currentImage = Uri.fromFile(new File(selectedImages.get(i).path));
                 ImageView imageView = new ImageView(this);
                 imageView.setImageURI(currentImage);
                 ll.addView(imageView);
@@ -4632,6 +4601,60 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
+    public void uploadImage() throws  Exception {
+        class Run extends AsyncTask<String, Void, String> {
 
 
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                //String IMGUR_CLIENT_ID = "...";
+                final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+                final OkHttpClient client = new OkHttpClient();
+
+
+            // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
+                RequestBody requestBody = new MultipartBuilder()
+                        .type(MultipartBuilder.FORM)
+                        .addPart(
+                                Headers.of("Content-Disposition", "form-data; name=\"title\""),
+                                RequestBody.create(null, "Square Logo"))
+                        .addPart(
+                                Headers.of("Content-Disposition", "form-data; name=\"image\""),
+                                RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImages.get(0).path)))
+                        .build();
+
+                Request request = new Request.Builder()
+                        //.header("Authorization", "Client-ID " + IMGUR_CLIENT_ID)
+                        .url("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
+                        .post(requestBody)
+                        .build();
+
+                Response response = null;
+
+
+                response = client.newCall(request).execute();
+
+
+                if (!response.isSuccessful()) try {
+                    throw new IOException("Unexpected code " + response);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                    System.out.println(response.body().string());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+    }
+        Run r = new Run();
+        r.execute();
+}
 }

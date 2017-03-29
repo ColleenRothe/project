@@ -1274,7 +1274,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
         });
 
 
-        if(selectedImages.size() > 0) {
+        if(selectedImages != null) {
             ScrollView scroller = new ScrollView(this);
             LinearLayout ll = new LinearLayout(this);
 
