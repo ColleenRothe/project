@@ -103,13 +103,6 @@ public class MapActivity extends AppCompatActivity
     String[] sites;
     String[] tempSites; //could bring down?
     String[][] finalSites; //final 2d array that the site information is kept in
-    Double l25 = 0.0;
-    Double l50 = 0.0;
-    Double l75 = 0.0;
-    Double r25 = 0.0;
-    Double r50 = 0.0;
-    Double r75 = 0.0;
-    String[] percentages;
     static String ALoad_id = "0";
 
     //Menu stuff
@@ -153,6 +146,7 @@ public class MapActivity extends AppCompatActivity
 
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        getJSON(JSON_URL); //used to be with percentiles...
 
 
     }
@@ -1235,14 +1229,6 @@ public class MapActivity extends AppCompatActivity
                     map = mapboxMap;
                     // Set up the offlineManager
                     offlineManager = OfflineManager.getInstance(MapActivity.this);
-
-                    //assign the percentages
-                    l25 = Double.parseDouble(percentages[0]); //string to double...
-                    l50 = Double.parseDouble(percentages[1]);
-                    l75 = Double.parseDouble(percentages[2]);
-                    r25 = Double.parseDouble(percentages[3]);
-                    r50 = Double.parseDouble(percentages[4]);
-                    r75 = Double.parseDouble(percentages[5]);
 
                     //create icon for the custom marker to use
                     IconFactory iconFactory = IconFactory.getInstance(MapActivity.this);

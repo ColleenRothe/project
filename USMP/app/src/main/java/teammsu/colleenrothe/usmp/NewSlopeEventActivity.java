@@ -29,6 +29,8 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -1271,12 +1273,26 @@ public class NewSlopeEventActivity extends AppCompatActivity
             }
         });
 
-        ImageView imageView = new ImageView(this);
-        imageView.setImageURI(imageUri);
-        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        builder.show();
+
+        if(selectedImages.size() > 0) {
+            ScrollView scroller = new ScrollView(this);
+            LinearLayout ll = new LinearLayout(this);
+
+            for (int i = 0; i < selectedImages.size(); i++) {
+                System.out.println("add images");
+                Uri currentImage =  Uri.fromFile(new File(selectedImages.get(i).path));
+                ImageView imageView = new ImageView(this);
+                imageView.setImageURI(currentImage);
+                ll.addView(imageView);
+            }
+            scroller.addView(ll);
+            builder.addContentView(scroller, new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            builder.show();
+
+        }
+
     }
 
 

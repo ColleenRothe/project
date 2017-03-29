@@ -7,18 +7,18 @@ package teammsu.colleenrothe.usmp;
 //http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
 
 
-
-
-
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Region;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -33,14 +33,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -63,7 +70,9 @@ import java.io.StringReader;
 import java.util.*;
 
 
-
+import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
+import com.darsh.multipleimageselect.helpers.Constants;
+import com.darsh.multipleimageselect.models.Image;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.event.Event;
@@ -176,6 +185,12 @@ public class LandslideActivity extends AppCompatActivity
     //edit site
     private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php"; //to place the sites
     Map<String, String> map;
+
+    //images
+    ArrayList<Image> selectedImages;
+    Uri imageUri;
+
+
 
 
     @Override
@@ -4558,4 +4573,65 @@ public class LandslideActivity extends AppCompatActivity
         }
 
     }
+    //image picker
+    public void chooseImages(View view) {
+        Intent intent = new Intent(this, AlbumSelectActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 10);
+        startActivityForResult(intent, Constants.REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            selectedImages = data.getParcelableArrayListExtra(Constants.INTENT_EXTRA_IMAGES);
+            StringBuffer stringBuffer = new StringBuffer();
+            for (int i = 0, l = selectedImages.size(); i < l; i++) {
+                stringBuffer.append(selectedImages.get(i).path + "\n");
+            }
+            System.out.println(stringBuffer.toString());
+        }
+
+        imageUri = Uri.fromFile(new File(selectedImages.get(0).path));
+
+
+    }
+
+    //need to be able to view multiple images
+    //need to save the uri string, when saving offline
+    public void viewChosen(View view){
+        System.out.println(imageUri);
+        Dialog builder = new Dialog(this);
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(
+                new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
+
+
+        if(selectedImages.size() > 0) {
+            ScrollView scroller = new ScrollView(this);
+            LinearLayout ll = new LinearLayout(this);
+
+            for (int i = 0; i < selectedImages.size(); i++) {
+                Uri currentImage =  Uri.fromFile(new File(selectedImages.get(i).path));
+                ImageView imageView = new ImageView(this);
+                imageView.setImageURI(currentImage);
+                ll.addView(imageView);
+            }
+            scroller.addView(ll);
+            builder.addContentView(scroller, new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            builder.show();
+
+        }
+
+    }
+
+
+
 }

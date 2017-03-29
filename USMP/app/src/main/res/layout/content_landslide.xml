@@ -651,7 +651,15 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="chooseImages"
             android:text="Choose Files"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="viewChosen"
+            android:text = "View Chosen Images"
             />
 
         <TextView
