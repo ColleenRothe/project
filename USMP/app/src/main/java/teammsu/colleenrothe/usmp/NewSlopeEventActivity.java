@@ -147,10 +147,8 @@ public class NewSlopeEventActivity extends AppCompatActivity
     Button SubmitButton;
 
     ArrayList<Image> selectedImages;
-
-    public static final int REQUEST_CODE_CHOOSE = 1;
-    private List<Uri> mSelected;
     Uri imageUri;
+    String [] savedImagePaths;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -746,7 +744,24 @@ public class NewSlopeEventActivity extends AppCompatActivity
         String dateInput = dateView.getText().toString(); //??
         int hazard_type = NSEHazardType.getSelectedItemPosition();
         int state = State.getSelectedItemPosition();
-        String photos = "photos";//??
+
+        String tempPhotos = "";
+
+        if(selectedImages != null){
+            for(int i=0; i<selectedImages.size(); i++){
+                if(i==0){
+                    tempPhotos = tempPhotos.concat(selectedImages.get(i).path);
+                }
+                else{
+                    tempPhotos = tempPhotos.concat(",");
+                    tempPhotos = tempPhotos.concat(selectedImages.get(i).path);
+                }
+            }
+        }
+
+
+        String photos = tempPhotos;
+
         String road_trail_number = NSEroadTrailNo.getText().toString();
         int rt_type = NSERoadTrail.getSelectedItemPosition();
         String begin_mile_marker = NSEbeginMile.getText().toString();
@@ -1105,6 +1120,10 @@ public class NewSlopeEventActivity extends AppCompatActivity
             dateView.setText(nse.getDateinput());
             NSEHazardType.setSelection(nse.getHazard_type());
             State.setSelection(nse.getState());
+
+            String tempPhoto = nse.getPhotos();
+            savedImagePaths = tempPhoto.split(",");
+
             //photos....?
             NSEroadTrailNo.setText(nse.getRoad_trail_number());
             NSERoadTrail.setSelection(nse.getRt_type());
@@ -1271,7 +1290,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
     //need to be able to view multiple images
     //need to save the uri string, when saving offline
     public void viewChosen(View view){
-        System.out.println(imageUri);
         Dialog builder = new Dialog(this);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
         builder.getWindow().setBackgroundDrawable(
@@ -1300,6 +1318,25 @@ public class NewSlopeEventActivity extends AppCompatActivity
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
             builder.show();
+
+        }
+        else if(savedImagePaths != null){
+            ScrollView scroller = new ScrollView(this);
+            LinearLayout ll = new LinearLayout(this);
+
+            for (int i = 0; i < savedImagePaths.length; i++) {
+                System.out.println("add images");
+                Uri currentImage =  Uri.fromFile(new File(savedImagePaths[i]));
+                ImageView imageView = new ImageView(this);
+                imageView.setImageURI(currentImage);
+                ll.addView(imageView);
+            }
+            scroller.addView(ll);
+            builder.addContentView(scroller, new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            builder.show();
+
 
         }
 

@@ -200,6 +200,8 @@ public class LandslideActivity extends AppCompatActivity
     //images
     ArrayList<Image> selectedImages;
     Uri imageUri;
+    String [] savedImagePaths;
+
 
 
     @Override
@@ -4054,7 +4056,25 @@ public class LandslideActivity extends AppCompatActivity
         String end_annual_rainfall = AnnualRain2.getText().toString();
         int sole_access_route = SoleAccess.getSelectedItemPosition();
         int fixes_present = Mitigation.getSelectedItemPosition();
-        String photos = "";
+
+        String tempPhotos = "";
+
+        if(selectedImages != null){
+            for(int i=0; i<selectedImages.size(); i++){
+                if(i==0){
+                    tempPhotos = tempPhotos.concat(selectedImages.get(i).path);
+                }
+                else{
+                    tempPhotos = tempPhotos.concat(",");
+                    tempPhotos = tempPhotos.concat(selectedImages.get(i).path);
+                }
+            }
+        }
+
+
+        String photos = tempPhotos;
+
+
         String comments = Comments.getText().toString();
         String flma_name = FlmaName.getText().toString();
         String flma_id = FlmaId.getText().toString();
@@ -4238,20 +4258,22 @@ public class LandslideActivity extends AppCompatActivity
                 ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
 
 
-                for (int i = 0; i < hazardTypeList.size(); i++) {
-                    if (i == 3) { //can't have more than 3
-                        break;
-                    }
-                    //if it's in the list, set the spinner to it
-                    if (hazardTypeList.contains(hazards[i])) {
-                        if (i == 0) {
-                            HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
-                        } else if (i == 1) {
-                            HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
-                        } else {
-                            HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
+                if(hazards.length != 0) {
+                    for (int i = 0; i < hazardTypeList.size(); i++) {
+                        if (i == 3) { //can't have more than 3
+                            break;
                         }
-                    }
+                        //if it's in the list, set the spinner to it
+                        if (hazardTypeList.contains(hazards[i])) {
+                            if (i == 0) {
+                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            } else if (i == 1) {
+                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            } else {
+                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            }
+                        }
+                    } // end for
                 }
 
             }
@@ -4282,6 +4304,9 @@ public class LandslideActivity extends AppCompatActivity
             SoleAccess.setSelection(landslide.getSole_access_route());
             Mitigation.setSelection(landslide.getFixes_Present());
             //photos
+            String tempPhoto = landslide.getphotos();
+            savedImagePaths = tempPhoto.split(",");
+
             Comments.setText(landslide.getComments());
             FlmaName.setText(landslide.getFlma_name());
             FlmaId.setText(landslide.getFlma_id());
@@ -4560,9 +4585,6 @@ public class LandslideActivity extends AppCompatActivity
             System.out.println(stringBuffer.toString());
         }
 
-        imageUri = Uri.fromFile(new File(selectedImages.get(0).path));
-
-
     }
 
     //need to be able to view multiple images
@@ -4581,7 +4603,7 @@ public class LandslideActivity extends AppCompatActivity
         });
 
 
-        if (selectedImages.size() > 0) {
+        if (selectedImages != null) {
             ScrollView scroller = new ScrollView(this);
             LinearLayout ll = new LinearLayout(this);
 
@@ -4597,6 +4619,26 @@ public class LandslideActivity extends AppCompatActivity
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
             builder.show();
+
+        }
+        else if(savedImagePaths != null){
+            ScrollView scroller = new ScrollView(this);
+            LinearLayout ll = new LinearLayout(this);
+
+            for (int i = 0; i < savedImagePaths.length; i++) {
+                System.out.println("add images");
+                System.out.println(savedImagePaths[i]);
+                Uri currentImage =  Uri.fromFile(new File(savedImagePaths[i]));
+                ImageView imageView = new ImageView(this);
+                imageView.setImageURI(currentImage);
+                ll.addView(imageView);
+            }
+            scroller.addView(ll);
+            builder.addContentView(scroller, new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            builder.show();
+
 
         }
 

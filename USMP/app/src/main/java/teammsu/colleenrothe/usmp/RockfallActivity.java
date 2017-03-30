@@ -192,6 +192,7 @@ public class RockfallActivity extends AppCompatActivity
     //images
     ArrayList<Image> selectedImages;
     Uri imageUri;
+    String [] savedImagePaths;
 
 
 
@@ -4279,7 +4280,24 @@ public class RockfallActivity extends AppCompatActivity
         String end_annual_rainfall = AnnualRain2.getText().toString();
         int sole_access_route = SoleAccess.getSelectedItemPosition();
         int fixes_present = Mitigation.getSelectedItemPosition();
-        String photos = "";
+
+        String tempPhotos = "";
+
+        if(selectedImages != null){
+            for(int i=0; i<selectedImages.size(); i++){
+                if(i==0){
+                    tempPhotos = tempPhotos.concat(selectedImages.get(i).path);
+                }
+                else{
+                    tempPhotos = tempPhotos.concat(",");
+                    tempPhotos = tempPhotos.concat(selectedImages.get(i).path);
+                }
+            }
+        }
+
+
+        String photos = tempPhotos;
+
         String comments = Comments.getText().toString();
         String flma_name = FlmaName.getText().toString();
         String flma_id = FlmaId.getText().toString();
@@ -4467,20 +4485,22 @@ public class RockfallActivity extends AppCompatActivity
                 ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
 
 
-                for(int i = 0; i<hazardTypeList.size(); i++){
-                    if(i==3){ //can't have more than 3
-                        break;
-                    }
-                    //if it's in the list, set the spinner to it
-                    if(hazardTypeList.contains(hazards[i])){
-                        if(i == 0){
-                            HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
-                        }else if(i == 1){
-                            HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
-                        }else{
-                            HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
+                if(hazards.length != 0) {
+                    for (int i = 0; i < hazardTypeList.size(); i++) {
+                        if (i == 3) { //can't have more than 3
+                            break;
                         }
-                    }
+                        //if it's in the list, set the spinner to it
+                        if (hazardTypeList.contains(hazards[i])) {
+                            if (i == 0) {
+                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            } else if (i == 1) {
+                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            } else {
+                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
+                            }
+                        }
+                    }//end for
                 }
 
             }
@@ -4512,6 +4532,9 @@ public class RockfallActivity extends AppCompatActivity
             SoleAccess.setSelection(rockfall.getSole_access_route());
             Mitigation.setSelection(rockfall.getFixes_Present());
             //photos
+            String tempPhoto = rockfall.getphotos();
+            savedImagePaths = tempPhoto.split(",");
+
             Comments.setText(rockfall.getComments());
             FlmaName.setText(rockfall.getFlma_name());
             FlmaId.setText(rockfall.getFlma_id());
@@ -4824,7 +4847,7 @@ public class RockfallActivity extends AppCompatActivity
         });
 
 
-        if(selectedImages.size() > 0) {
+        if(selectedImages != null) {
             ScrollView scroller = new ScrollView(this);
             LinearLayout ll = new LinearLayout(this);
 
@@ -4839,6 +4862,24 @@ public class RockfallActivity extends AppCompatActivity
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
             builder.show();
+
+        }
+        else if(savedImagePaths != null){
+            ScrollView scroller = new ScrollView(this);
+            LinearLayout ll = new LinearLayout(this);
+
+            for (int i = 0; i < savedImagePaths.length; i++) {
+                Uri currentImage =  Uri.fromFile(new File(savedImagePaths[i]));
+                ImageView imageView = new ImageView(this);
+                imageView.setImageURI(currentImage);
+                ll.addView(imageView);
+            }
+            scroller.addView(ll);
+            builder.addContentView(scroller, new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT));
+            builder.show();
+
 
         }
 
