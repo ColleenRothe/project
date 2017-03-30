@@ -1,12 +1,11 @@
 package teammsu.colleenrothe.usmp;
 
-/**
- * Created by colleenrothe on 1/23/17.
+/*
+    Class represents an object holding all of the information on a rockfall slope event form
  */
 
 public class Rockfall extends Object {
     private int id;
-    //private String mgmt_area;
     private int agency;
     private int regional;
     private int local;
@@ -92,6 +91,7 @@ public class Rockfall extends Object {
 
     }
 
+    //construcor w/ id
     public Rockfall(int id, int agency, int regional, int local, String date, String road_trail_number, int road_or_trail,
                     String road_trail_class,String rater, String begin_mile_marker, String end_mile_marker,
                     int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long,
@@ -184,6 +184,7 @@ public class Rockfall extends Object {
 
     }
 
+    //constructor no id
     public Rockfall(int agency, int regional, int local, String date, String road_trail_number, int road_or_trail,
                     String road_trail_class,String rater, String begin_mile_marker, String end_mile_marker,
                     int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long,
@@ -276,6 +277,7 @@ public class Rockfall extends Object {
 
 
     }
+    //all the getter/setter methods
 
     public int getId(){return id;}
     public void setId(int id){this.id=id;}

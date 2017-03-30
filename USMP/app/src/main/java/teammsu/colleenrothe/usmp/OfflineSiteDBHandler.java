@@ -1,7 +1,5 @@
 package teammsu.colleenrothe.usmp;
 
-//http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by colleenrothe on 2/28/17.
+ * Class that implements a DB to save full offline landslide or rockfall site from map
+ * Combo of the landslide and rockfall DB handlers
+ * CREDITS:
+ *      (1)Idea/Code from: http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
  */
 
 public class OfflineSiteDBHandler extends SQLiteOpenHelper {
@@ -18,6 +19,7 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "offlineSiteDB.db";
     public static final String TABLE_OFFLINE_SITE = "offlineSite";
 
+    //column names
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_UMBRELLA_AGENCY = "umbrella_agency";
     public static final String COLUMN_REGIONAL_ADMIN = "regional_admin";
@@ -117,6 +119,7 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    //create offline table in the database
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -157,9 +160,11 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //add a new offline site
     public void addOfflineSite(OfflineSite form){
         ContentValues values = new ContentValues();
 
+        //make sure that the id# is unique, make it bigger than any of the others in the db
         int maxID = 1;
         if(getNumRows()>0) {
             String query = "Select "+ COLUMN_ID + " FROM " + TABLE_OFFLINE_SITE;
@@ -183,6 +188,7 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
 
 
         values.put(COLUMN_ID, String.valueOf(maxID));
+        //get the rest of the values from the offline form
 
         values.put(COLUMN_UMBRELLA_AGENCY, form.getAgency());
         values.put(COLUMN_REGIONAL_ADMIN, form.getRegional());
@@ -285,6 +291,7 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    //find the offline form in the database that you want, search by unique id #
     public OfflineSite findOfflineSite(int id){
         String query = "Select * FROM " + TABLE_OFFLINE_SITE + " WHERE " + COLUMN_ID + " =  \"" + id + "\"";
 
@@ -404,12 +411,13 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
 
 
 
-    //search by what?..do more?
+    //delete a offline form in db, found by unique id #
     public void deleteOfflineSite(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_OFFLINE_SITE, COLUMN_ID + "=" + id, null);
     }
 
+    //get the number of rows in the offline table
     public int getNumRows(){
         SQLiteDatabase db = this.getReadableDatabase();
         long row = DatabaseUtils.queryNumEntries(db, TABLE_OFFLINE_SITE);
@@ -419,6 +427,7 @@ public class OfflineSiteDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //get an array of the unique ids in the landslide table
     public int [] getIds(){
         int [] ids = new int [getNumRows()];
 

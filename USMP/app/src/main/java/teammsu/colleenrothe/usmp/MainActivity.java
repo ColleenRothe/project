@@ -16,7 +16,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //use crashlytics
         Fabric.with(this, new Crashlytics());
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -51,16 +54,17 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //action to open the rating manul
     public void gotoManual(View view){
         Intent intent = new Intent(this, manualActivity.class);
         startActivity(intent);
     }
-
+    //action to open the credits page
     public void gotoCredits(View view){
         Intent intent = new Intent(this, CreditsActivity.class);
         startActivity(intent);
     }
-
+    //action to go to the login page
     public void gotoLogin(View view){
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);

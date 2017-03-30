@@ -11,6 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+/* This is a class for the credits page that shows images for all of the entities
+   involved with the project. Most of this page is implemented on the content_credits.xml
+ */
 
 public class CreditsActivity extends AppCompatActivity {
 
@@ -20,11 +23,9 @@ public class CreditsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_credits);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
     }
 
+    //to open up the menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -33,6 +34,7 @@ public class CreditsActivity extends AppCompatActivity {
         return true;
     }
 
+    //for the top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();

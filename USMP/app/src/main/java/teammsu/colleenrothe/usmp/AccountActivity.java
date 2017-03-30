@@ -18,7 +18,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.content.Context;
 
-
+/* This is a class for the accounts page of the app */
 
 public class AccountActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -64,6 +64,7 @@ public class AccountActivity extends AppCompatActivity
         }
     }
 
+    //to open the menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -72,11 +73,9 @@ public class AccountActivity extends AppCompatActivity
         return true;
     }
 
+   //for the top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -91,6 +90,7 @@ public class AccountActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //for the sidebar menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

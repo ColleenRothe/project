@@ -1,11 +1,5 @@
 package teammsu.colleenrothe.usmp;
 
-//http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
-
-/**
- * Created by colleenrothe on 1/17/17.
- */
-
 import android.database.DatabaseUtils;
 import android.database.sqlite.*;
 import android.content.Context;
@@ -14,12 +8,19 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import java.lang.Long;
 
+/**
+ * Class that implements a DB to save maintenance forms offline
+ * CREDITS:
+ *      (1)Idea/Code from: http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
+ */
+
 public class MaintenanceDBHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "maintenanceDB.db";
     public static final String TABLE_MAINTENANCE = "maintenance";
 
+    //column names
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_SITE_ID = "site_id";
     public static final String COLUMN_CODE_RELATION = "code_relation";
@@ -68,6 +69,7 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    //create maintenance table in the database
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -98,9 +100,11 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //add a new maintenance form
     public void addMaintenance(Maintenance form) {
-
         ContentValues values = new ContentValues();
+
+        //make sure that the id# is unique, make it bigger than any of the others in the db
         int maxID = 1;
         if(getNumRows()>0) {
 
@@ -126,8 +130,7 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
 
         values.put(COLUMN_ID, String.valueOf(maxID));
 
-
-        //values.put(COLUMN_ID, form.getID());
+        //get the rest of the values from the maintenance form
         values.put(COLUMN_SITE_ID, form.getSite_id());
         values.put(COLUMN_CODE_RELATION, form.getCode_relation());
         values.put(COLUMN_MAINTENANCE_TYPE, form.getMaintenance_type());
@@ -176,7 +179,7 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    //what should you search by??
+    //find the maintenance form in the database that you want, search by unique id #
     public Maintenance findMaintenance(int id) {
         String query = "Select * FROM " + TABLE_MAINTENANCE + " WHERE " + COLUMN_ID + " =  \"" + id + "\"";
 
@@ -237,12 +240,13 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
         return maintenance;
     }
 
-    //search by what?..do more?
+    //delete a maintenance form in db, found by unique id #
     public void deleteMaintenance(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_MAINTENANCE, COLUMN_ID + "=" + id, null);
     }
 
+    //get the number of rows in the maintenance table
     public int getNumRows(){
         SQLiteDatabase db = this.getReadableDatabase();
         long row = DatabaseUtils.queryNumEntries(db, TABLE_MAINTENANCE);
@@ -252,9 +256,9 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //get an array of the unique ids in the maintenance table
     public int [] getIds(){
         int [] ids = new int [getNumRows()];
-        System.out.println("ROWS="+getNumRows());
 
         String query = "Select "+ COLUMN_ID + " FROM " + TABLE_MAINTENANCE;
         SQLiteDatabase db = this.getWritableDatabase();

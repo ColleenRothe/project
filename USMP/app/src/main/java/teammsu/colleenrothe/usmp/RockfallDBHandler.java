@@ -8,9 +8,10 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 /**
- * Created by colleenrothe on 1/24/17.
+ * Class that implements a DB to save Rockfall Slope Rating forms offline
+ * CREDITS:
+ *      (1)Idea/Code from: http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
  */
 
 public class RockfallDBHandler extends SQLiteOpenHelper {
@@ -18,6 +19,7 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "rockfallDB.db";
     public static final String TABLE_ROCKFALL = "rockfall";
 
+    //column names
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_UMBRELLA_AGENCY = "umbrella_agency";
     public static final String COLUMN_REGIONAL_ADMIN = "regional_admin";
@@ -103,6 +105,7 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    //create rockfall table in the database
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -141,9 +144,11 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //add a new rockfall
     public void addRockfall(Rockfall form) {
         ContentValues values = new ContentValues();
 
+        //make sure that the id# is unique, make it bigger than any of the others in the db
         int maxID = 1;
         if(getNumRows()>0) {
             String query = "Select "+ COLUMN_ID + " FROM " + TABLE_ROCKFALL;
@@ -168,6 +173,7 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
 
         values.put(COLUMN_ID, String.valueOf(maxID));
 
+        //get the rest of the values from the rockfall form
         values.put(COLUMN_UMBRELLA_AGENCY, form.getAgency());
         values.put(COLUMN_REGIONAL_ADMIN, form.getRegional());
         values.put(COLUMN_LOCAL_ADMIN, form.getLocal());
@@ -258,6 +264,7 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //find the rockfall form in the database that you want, search by unique id #
     public Rockfall findRockfall(int id){
         String query = "Select * FROM " + TABLE_ROCKFALL + " WHERE " + COLUMN_ID + " =  \"" + id + "\"";
 
@@ -361,21 +368,22 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
         return rockfall;
     }
 
-    //search by what?..do more?
+    //delete a rockfall form in db, found by unique id #
     public void deleteRockfall(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ROCKFALL, COLUMN_ID + "=" + id, null);
     }
 
+    //get the number of rows in the rockfall table
     public int getNumRows(){
         SQLiteDatabase db = this.getReadableDatabase();
         long row = DatabaseUtils.queryNumEntries(db, TABLE_ROCKFALL);
         int rows = (int)row;
-        System.out.println("rows"+rows);
         return rows;
 
     }
 
+    //get an array of the unique ids in the rockfall table
     public int [] getIds(){
         int [] ids = new int [getNumRows()];
 

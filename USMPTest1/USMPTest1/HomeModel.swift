@@ -29,7 +29,7 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         //let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php")! as URL)
         
         //update to master once merged.....
-          let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/prashanta.saha/server///edit_site_php/get_current_site_information.php")! as URL)
+          let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/edit_site_php/get_current_site_information.php")! as URL)
         
         request.httpMethod = "POST"
         

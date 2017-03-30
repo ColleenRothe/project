@@ -43,8 +43,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-//blue marker from: http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_blue.png
-//white marker from: http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_white.png
+/*Class for the map that shows the maintenance forms
+   CREDITS:
+        (1)blue marker from: http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_blue.png
+        (2)white marker from: http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_white.png
+
+ */
 
 public class MaintenanceMapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,8 +71,6 @@ public class MaintenanceMapActivity extends AppCompatActivity
         //mapbox account
         MapboxAccountManager.start(this, "pk.eyJ1IjoiY29sNTE2IiwiYSI6ImNpbWt0ZzViODAxNzh2YWtnN29ndDBxYzMifQ.dfNXNCfTPXZahyvRrTDU1g");
 
-
-
         //provided
         setContentView(R.layout.activity_maintenance_map);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,18 +85,14 @@ public class MaintenanceMapActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //map new stuff
+        //Connection to UI
         MaintenanceMapView = (MapView) findViewById(R.id.MaintenanceMapView);
 
         MaintenanceMapView.onCreate(savedInstanceState);
 
+        //Call to php/db
         getJSON(JSON_URL);
-
-
     }
-
-
-
 
     // Add the mapView lifecycle to the activity's lifecycle methods
     @Override
@@ -127,7 +125,7 @@ public class MaintenanceMapActivity extends AppCompatActivity
         MaintenanceMapView.onSaveInstanceState(outState);
     }
 
-
+    //go back
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -138,6 +136,7 @@ public class MaintenanceMapActivity extends AppCompatActivity
         }
     }
 
+    //open menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -147,14 +146,11 @@ public class MaintenanceMapActivity extends AppCompatActivity
         return true;
     }
 
+    //top menus
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_mmLegend) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             final TextView tv = new TextView(this);
@@ -181,6 +177,7 @@ public class MaintenanceMapActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //side menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -201,7 +198,7 @@ public class MaintenanceMapActivity extends AppCompatActivity
             Intent intent = new Intent(this, NewSlopeEventActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.maintenaceForm) {
+        } else if (id == R.id.maintenaceForm) {  //don't go anywhere...already here
             //Intent intent = new Intent(this, MaintenanceActivity.class);
             //startActivity(intent);
 
@@ -223,15 +220,13 @@ public class MaintenanceMapActivity extends AppCompatActivity
         return true;
     }
 
-
+    //get the info from the db
     private void getJSON(String url) {
         class GetJSON extends AsyncTask<String, Void, String> {
-            //ProgressDialog loading; //just to tell the user that the map is in progress...all good
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                //loading = ProgressDialog.show(MaintenanceMapActivity.this, "Please Wait...",null,true,true);
             }
 
             @Override
@@ -265,8 +260,7 @@ public class MaintenanceMapActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                //loading.dismiss(); //dismiss the "loading" message
-                //System.out.println(s);  //testing
+
             }
         }
         GetJSON gj = new GetJSON();
@@ -303,49 +297,48 @@ public class MaintenanceMapActivity extends AppCompatActivity
                 IconFactory iconFactory = IconFactory.getInstance(MaintenanceMapActivity.this);
 
                 //no slope rating associated (site id = 0)
+
+                //Credits(2)
                 Drawable iconDrawable = ContextCompat.getDrawable(MaintenanceMapActivity.this, R.mipmap.ic_mmwhite);
                 Icon whiteIcon = iconFactory.fromDrawable(iconDrawable);
 
                 //slope rating associated
+
+                //Credits(1)
                 Drawable iconDrawable2 = ContextCompat.getDrawable(MaintenanceMapActivity.this, R.mipmap.ic_mmblue);
                 Icon blueIcon = iconFactory.fromDrawable(iconDrawable2);
 
-
-
-                for(int k = 0; k<finalSites.length; k++) { //finalSites.length
-                    Icon chosenIcon = blueIcon;
-
-
+                //for all of the sites....
+                for(int k = 0; k<finalSites.length; k++) {
+                    Icon chosenIcon = blueIcon;  //automatically set to be associated
                     //need to convert lat/long values from string -> double to be used to place site
                     double latitude = Double.parseDouble(finalSites[k][2]);
                     double longitude = Double.parseDouble(finalSites[k][3]);
-
+                    //no slope rating associated
                     if(finalSites[k][1].equals("0")){
                         chosenIcon = whiteIcon;
-                    }else{
-                        System.out.println("test: "+finalSites[k][1]);
-
+                    // else yes slope rating associated
                     }
 
-
                     //String finalScore = finalSites[k][4];
-                    //the first site...should be somewhere near ghana
+                    //add a new marker
                     mapboxMap.addMarker(new MarkerOptions()
                             .position(new LatLng(latitude, longitude))
+                            //set title as site_id
                             .title(finalSites[k][1])
                             .setIcon(chosenIcon)
                             //.snippet("Code" + finalSites[k][4]));
+                            //set snippet as id
                             .snippet(finalSites[k][0]));
                             //.icon(icon0));
 
                 }
 
-
+                //long click on the map
                 mapboxMap.setOnMapLongClickListener(new MapboxMap.OnMapLongClickListener() {
                     @Override
                     public void onMapLongClick(@NonNull LatLng point) {
-//
-
+                        //add a new marker to create a new maintenance form
                         mapboxMap.addMarker(new MarkerOptions()
                             .position(point)
                             .title("New Maintenance Form")
@@ -355,8 +348,8 @@ public class MaintenanceMapActivity extends AppCompatActivity
 
                     }
 
-                }); //LongClick
-
+                });
+                //long click on info window on existing site
                 mapboxMap.setOnInfoWindowLongClickListener(new MapboxMap.OnInfoWindowLongClickListener() {
                     @Override
                     public void onInfoWindowLongClick(Marker marker) {
@@ -367,19 +360,14 @@ public class MaintenanceMapActivity extends AppCompatActivity
                             //newOld = true;
                             load_id=marker.getSnippet();
                         }
+                        //pull up the maintenance form
                         Intent intent = new Intent(MaintenanceMapActivity.this, MaintenanceActivity.class);
                         startActivity(intent);
-
-
-
                     }
                 }
                 );
-
-
             }
 
         });
-
     }
 }

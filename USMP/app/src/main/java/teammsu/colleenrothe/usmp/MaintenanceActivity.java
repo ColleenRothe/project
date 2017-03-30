@@ -1,15 +1,6 @@
 package teammsu.colleenrothe.usmp;
-//Sources:
-//http://androidexample.com/How_To_Make_HTTP_POST_Request_To_Server_-_Android_Example/index.php?view=article_discription&aid=64
-//http://pulse7.net/android/android-spinner-drop-down-list-example-in-android-studio-2-0/
-
-//how to check internet connectivity:
-//http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
-
-
 
 import android.app.ProgressDialog;
-import android.app.usage.UsageEvents;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -18,7 +9,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,7 +27,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.Button;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -45,30 +34,23 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import android.content.Context;
 import android.widget.Toast;
-
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-
-import java.net.HttpURLConnection;
-import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.*;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
-import android.content.*;
-
-
-
-
-
+/* Class for Maintenance Form
+    CREDITS:
+        (1) Check internet connectivity
+              http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
+        (2) Picker listener...programatically change the options
+              http://pulse7.net/android/android-spinner-drop-down-list-example-in-android-studio-2-0/
+        (3) POST request from android studio
+            http://androidexample.com/How_To_Make_HTTP_POST_Request_To_Server_-_Android_Example/index.php?view=article_discription&aid=64
+ */
 
 public class MaintenanceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -131,23 +113,22 @@ public class MaintenanceActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("CLICKED ON:"+MaintenanceMapActivity.load_id);
+        //provided
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //holds the running percentage that the user has added
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fabText = (TextView) findViewById(R.id.fabText);
         fabText.setText("%");
-
+        //click on the percentage, more detailed view popup
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MaintenanceActivity.this);
                 final TextView tv = new TextView(MaintenanceActivity.this);
                 tv.setText("Total Percent used:" + RunningTotal.getText() + "%");
-
 
                 alertDialogBuilder.setView(tv);
                 alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -163,6 +144,7 @@ public class MaintenanceActivity extends AppCompatActivity
             }
         });
 
+        //provided
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -172,6 +154,7 @@ public class MaintenanceActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Connect to UI
         SubmitButton = (Button) findViewById(R.id.MSubmitButton);
 
         MaintenanceID = (Spinner) findViewById(R.id.MaintenanceID);
@@ -191,6 +174,7 @@ public class MaintenanceActivity extends AppCompatActivity
         Agency.setFocusable(true);
         Agency.setFocusableInTouchMode(true);
 
+        //Watch to see if the user changes the agency, update the regional spinner accordingly
         Agency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
@@ -232,8 +216,6 @@ public class MaintenanceActivity extends AppCompatActivity
                     adapterRegional.notifyDataSetChanged();
                 }
 
-//                Toast.makeText(getApplicationContext(),
-//                        "Selected Agency : " + agency, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -246,7 +228,7 @@ public class MaintenanceActivity extends AppCompatActivity
         Regional.setFocusable(true);
         Regional.setFocusableInTouchMode(true);
 
-
+        //watch to see if the user changes the regional spinner...update the local spinner accordingly
         Regional.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
@@ -407,13 +389,10 @@ public class MaintenanceActivity extends AppCompatActivity
         adapterRegional.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Regional.setAdapter(adapterRegional);
 
-
-
         fs_local1 = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.RegionalList)));
         adapterLocal = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fs_local1);
         adapterLocal.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Local.setAdapter(adapterLocal);
-
 
         EventType = (Spinner) findViewById(R.id.EventType);
         EventType.setFocusable(true);
@@ -473,26 +452,23 @@ public class MaintenanceActivity extends AppCompatActivity
 
         //MaintenanceMapActivity.newOld =false;
 
+        //looking at an already created form
         if (MaintenanceMapActivity.newOld == true) {
+            getJSON(JSON_URL); //call to get info from the db
+        }
+        //creating a new form
+        else {
             Context context = getApplicationContext();
             int duration = Toast.LENGTH_SHORT;
-            //Toast toast = Toast.makeText(context, "True Old Form", duration);
-            //toast.show();
-            getJSON(JSON_URL);
-        } else {
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-            //Toast toast = Toast.makeText(context, "False New Form", duration);
-            //toast.show();
+
         }
 
-
-        //LOAD
+        //LOAD from an offline list
         if (OfflineList.selected_row!=-1 && OfflineList.should_load==true){
             OfflineList.should_load=false;
             lookupMaintenance(OfflineList.selected_row);
         }
-
+        //if no network connection...can't submit
         if(!isNetworkAvailable()){
             SubmitButton.setBackgroundColor(Color.DKGRAY);
             SubmitButton.setClickable(false);
@@ -500,7 +476,7 @@ public class MaintenanceActivity extends AppCompatActivity
 
     }
 
-    // Check all connectivities whether available or not
+    //CREDITS(1)
     public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -513,6 +489,7 @@ public class MaintenanceActivity extends AppCompatActivity
         return false;
     }
 
+    //get info from the db
     public void GetText() throws UnsupportedEncodingException {
         //String data = URLEncoder.encode("id=355", "UTF-8");
         String data="id="+MaintenanceMapActivity.load_id;
@@ -560,13 +537,14 @@ public class MaintenanceActivity extends AppCompatActivity
         dealWithText(text);
 
     }
-
+    //parse the response
     public void dealWithText(String text){
         text = text.replace("[",""); //old,new
         text = text.replace("]",""); //old,new
         Map<String, String> map = new Gson().fromJson(text, new TypeToken<HashMap<String, String>>() {}.getType());
         System.out.println(map);
 
+        //Set information on the maintenance form
         Mcode.setText(map.get("CODE_RELATION"));
         String maintenance_type = map.get("MAINTENANCE_TYPE");
         if(maintenance_type == "N"){
@@ -722,6 +700,7 @@ public class MaintenanceActivity extends AppCompatActivity
 
     }
 
+    //first call to get db info
     private void getJSON(String url) {
         class GetJSON extends AsyncTask<String, Void, String>{
             ProgressDialog loading; //just to tell the user that the map is in progress...all good
@@ -753,6 +732,7 @@ public class MaintenanceActivity extends AppCompatActivity
         gj.execute(url);
     }
 
+    //go back
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -763,6 +743,7 @@ public class MaintenanceActivity extends AppCompatActivity
         }
     }
 
+    //open menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -772,11 +753,9 @@ public class MaintenanceActivity extends AppCompatActivity
         return true;
     }
 
+    //top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -792,6 +771,7 @@ public class MaintenanceActivity extends AppCompatActivity
     }
 
 
+    //side menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -839,6 +819,7 @@ public class MaintenanceActivity extends AppCompatActivity
         return true;
     }
 
+    //calculate the running percent total
     public void calcPercent(){
         int total = 0;
         if(Percent1.getText().length() != 0){
@@ -932,6 +913,7 @@ public class MaintenanceActivity extends AppCompatActivity
         RunningTotal.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         fabText.setText(totalS+"%");
 
+        //the running percentage should not be more than 100....warn the user
         if(total > 100) {
             RunningTotal.setBackgroundColor(getResources().getColor(android.R.color.holo_red_dark));
 
@@ -951,6 +933,7 @@ public class MaintenanceActivity extends AppCompatActivity
 
     }
 
+    //if text changes, re-calculate the percentages
     private final TextWatcher totalWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -964,19 +947,7 @@ public class MaintenanceActivity extends AppCompatActivity
         }
     };
 
-    //USE TO MAKE SURE EACH INDIVIDUALLY IS NOT > 100
-    private final View.OnFocusChangeListener volumeWatcher = new View.OnFocusChangeListener() {
-        public void onFocusChange(View v, boolean hasFocus) {
-
-            if (!hasFocus) {
-                System.out.println("VIEW IS" + v.getId());
-                }
-
-
-            }
-
-    };
-
+    //informational popup
     public void popup1(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final TextView tv = new TextView(this);
@@ -997,11 +968,13 @@ public class MaintenanceActivity extends AppCompatActivity
 
     }
 
+    //go to the list of offline sites
     public void goOfflineSites(View view){
         Intent intent = new Intent(this, OfflineList.class);
         startActivity(intent);
     }
 
+    //submit the maintenance form
     public void M_Submit(View view) throws Exception{
         Thread thread = new Thread(new Runnable() {
 
@@ -1086,11 +1059,6 @@ public class MaintenanceActivity extends AppCompatActivity
 
                     }
 
-
-
-
-                    //site id
-                    //lat/long
                     writer.write("code_relation="+code+"&maintenance_type="+maintenanceType+"&road_trail_no="+rtnum+"&begin_mile_marker="+beginMile+"&end_mile_marker=" +
                             endMile+"&umbrella_agency="+agency+"&regional_admin="+regional+"&local_admin="+local+"&us_event="+usEvent+"&event_desc="+MDescriptionText+
                     "&design_pse_val="+Percent1Text+"&remove_ditch_val="+Percent2Text+"&remove_road_trail_val="+Percent3Text+"&relevel_aggregate_val="+Percent4Text+
@@ -1120,7 +1088,7 @@ public class MaintenanceActivity extends AppCompatActivity
 
     }
 
-    //SQL Save
+    //create a new maintenance form to save offline
     public void newMaintenance(View view){
         MaintenanceDBHandler dbHandler = new MaintenanceDBHandler(this, null, null, 1);
 
@@ -1149,8 +1117,6 @@ public class MaintenanceActivity extends AppCompatActivity
         if(!Percent2.getText().toString().isEmpty()) {
             p2 = Integer.parseInt(Percent2.getText().toString());
         }
-
-        System.out.println("P2 IS: "+p2);
 
         int p3=0;
         if(!Percent3.getText().toString().isEmpty()) {
@@ -1247,7 +1213,8 @@ public class MaintenanceActivity extends AppCompatActivity
                         others4_desc,others5_desc,total_percent);
 
         dbHandler.addMaintenance(maintenance);
-        //Message to the user that it worked....
+
+        //saved....zero out the fields to start over
 
         //MaintenanceID.setSelection(0);
         Mcode.setText("");
@@ -1288,10 +1255,9 @@ public class MaintenanceActivity extends AppCompatActivity
         Other5.setText("");
         RunningTotal.setText("");
 
-        System.out.println("US EVENT IS"+us_event);
-
     }
 
+    //find a maintenance form by unique site id #
     public void lookupMaintenance (int finder) {
         MaintenanceDBHandler dbHandler = new MaintenanceDBHandler(this, null, null, 1);
 
@@ -1300,7 +1266,6 @@ public class MaintenanceActivity extends AppCompatActivity
 
         //set everything...
         if (maintenance != null) {
-            //site id
             Mcode.setText(maintenance.getCode_relation());
             MaintenanceType.setSelection(maintenance.getMaintenance_type());
             RTNumber.setText(maintenance.getRt_num());

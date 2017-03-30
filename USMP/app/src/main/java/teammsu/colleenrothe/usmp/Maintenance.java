@@ -1,7 +1,7 @@
 package teammsu.colleenrothe.usmp;
 
-/**
- * Created by colleenrothe on 1/17/17.
+/*
+    Class represents an object holding all of the information on a maintenance form
  */
 
 public class Maintenance extends Object {
@@ -9,9 +9,9 @@ public class Maintenance extends Object {
     private int site_id;
     private String code_relation;
     private int maintenance_type;
-    private String rt_num; //int?
-    private String begin_mile; //int?
-    private String end_mile; //int?
+    private String rt_num;
+    private String begin_mile;
+    private String end_mile;
     private int agency;
     private int regional;
     private int local;
@@ -51,7 +51,7 @@ public class Maintenance extends Object {
     public Maintenance(){
 
     }
-
+    //constructor w/ id
     public Maintenance(int id, int site_id, String code_relation, int maintenance_type, String rt_num ,
                        String begin_mile, String end_mile, int agency, int regional, int local, int us_event,
                        String event_desc, int total, int p1, int p2,int p3,int p4,int p4_5,int p5,int p6,int p7,
@@ -102,7 +102,7 @@ public class Maintenance extends Object {
 
 
     }
-
+    //constructor no id
     public Maintenance(int site_id, String code_relation, int maintenance_type, String rt_num ,
                        String begin_mile, String end_mile, int agency, int regional, int local, int us_event,
                        String event_desc, int total, int p1, int p2,int p3,int p4,int p4_5,int p5,int p6,int p7,
@@ -151,6 +151,7 @@ public class Maintenance extends Object {
         this.total_percent=total_percent;
 
     }
+    //all the getter/setter methods
 
     public int getID(){return id;}
     public void setID(int id){this.id=id;}

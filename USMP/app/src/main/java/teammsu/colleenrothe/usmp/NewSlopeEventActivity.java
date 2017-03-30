@@ -1,9 +1,18 @@
 package teammsu.colleenrothe.usmp;
 
-//how to check internet connectivity:
-//http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
-
-
+/* Class for the new slope event form
+CREDITS:
+    (1) Check network connectivity
+        http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
+    (2) Image dialog popup
+        http://stackoverflow.com/questions/7693633/android-image-dialog-popup
+    (3) Upload an image
+        https://github.com/square/okhttp/wiki/Recipes
+    (4) Compress image size
+        http://www.android-examples.com/compress-bitmap-image-in-android-and-reduce-image-size/
+    (5) Image picker library
+        https://github.com/darsh2/MultipleImageSelect
+*/
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -15,8 +24,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -37,10 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.CheckBox;
 import android.widget.Button;
-
-
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -50,20 +54,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.io.IOException;
-
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.content.SharedPreferences;
-
 import android.widget.ImageView;
 import android.view.ViewGroup;
 import android.graphics.drawable.*;
 import android.widget.RelativeLayout;
-
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
-import com.darsh.multipleimageselect.activities.ImageSelectActivity;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
@@ -71,17 +70,10 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-
 import java.util.ArrayList;
-import java.util.List;
-
 import java.io.ByteArrayOutputStream;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-
-
 
 public class NewSlopeEventActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,12 +88,9 @@ public class NewSlopeEventActivity extends AppCompatActivity
     private Calendar calendar;
     private TextView dateView;
     private int year, month, day;
-
     Spinner dateApprox;
-
     Spinner NSEHazardType;
     Spinner State;
-    //pictures
     EditText NSEroadTrailNo;
     Spinner NSERoadTrail;
     EditText NSEbeginMile;
@@ -153,17 +142,20 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
     Button SubmitButton;
 
+    //Images
     ArrayList<Image> selectedImages;
     Uri imageUri;
     String [] savedImagePaths;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //provided
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_slope_event);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //UI Connection
         SubmitButton = (Button) findViewById(R.id.NSESubmitButton);
 
         ObserverName = (EditText) findViewById(R.id.ObserverName);
@@ -259,7 +251,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
         Damages = (Spinner) findViewById(R.id.Damages);
         DamagesComments = (TextView) findViewById(R.id.DamagesComments);
 
-
+        //provided
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -274,14 +266,14 @@ public class NewSlopeEventActivity extends AppCompatActivity
             OfflineList.should_load=false;
             lookupNSE(OfflineList.selected_row);
         }
-
+        //if no connnectivity...can't submit
         if(!isNetworkAvailable()){
             SubmitButton.setBackgroundColor(Color.DKGRAY);
             SubmitButton.setClickable(false);
         }
     }
 
-    // Check all connectivities whether available or not
+    //CREDITS(1)
     public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -294,6 +286,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
         return false;
     }
 
+    //go back
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -304,6 +297,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
         }
     }
 
+    //open menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -313,14 +307,10 @@ public class NewSlopeEventActivity extends AppCompatActivity
         return true;
     }
 
+    //top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -332,7 +322,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-
+    //side menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -380,6 +370,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
         return true;
     }
 
+    //date picker auto-generated
     @SuppressWarnings("deprecation")
     public void setDate(View view) {
         showDialog(999);
@@ -412,6 +403,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
                 .append(month).append("/").append(year));
     }
 
+    //information popup
     public void popup1(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final TextView tv = new TextView(this);
@@ -436,6 +428,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    //Submit NSE form
     public void NSE_Submit(View view) throws Exception {
 
         Thread thread = new Thread(new Runnable() {
@@ -443,12 +436,12 @@ public class NewSlopeEventActivity extends AppCompatActivity
             @Override
             public void run() {
                 try  {
+                    //new connection
                     URL url = new URL("http://nl.cs.montana.edu/usmp/server/new_slope_event/add_new_slope_event.php");
                     URLConnection conn = url.openConnection();
                     conn.setDoOutput(true);
                     OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
-
-
+                    //get all fo the values
                     String observer_name = String.valueOf(ObserverName.getText());
                     String email = String.valueOf(Email.getText());
                     String phone_no = String.valueOf(PhoneNo.getText());
@@ -518,7 +511,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
                     }
 
                     String lengthAffected = String.valueOf(NSELengthAffected.getText());
-                    //what should these be? INT
                     String size_rock = "";
                     if(largestRock.getSelectedItemPosition()==0){
                         size_rock=">3in";
@@ -536,7 +528,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
                     }
 
-                    //what should these be? INT
                     String num_fallen_rocks = "";
                     if(NumFallen.getSelectedItemPosition() == 0){
                         num_fallen_rocks = "1";
@@ -553,7 +544,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
                     else if(NumFallen.getSelectedItemPosition() == 4){
                         num_fallen_rocks = "10+";
                     }
-                    //what should these be? INT???
                     String vol_debris = "";
                     if(Debris.getSelectedItemPosition()==0){
                         vol_debris = "<5ft^3";
@@ -738,8 +728,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
     }
 
-
-
+    //create a new NSE form to save offline
     public void newNSE(View view){
         NewSlopeEventDBHandler dbHandler = new NewSlopeEventDBHandler(this, null, null, 1);
 
@@ -751,6 +740,8 @@ public class NewSlopeEventActivity extends AppCompatActivity
         String dateInput = dateView.getText().toString(); //??
         int hazard_type = NSEHazardType.getSelectedItemPosition();
         int state = State.getSelectedItemPosition();
+
+        //save photos
 
         String tempPhotos = "";
 
@@ -765,8 +756,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
                 }
             }
         }
-
-
         String photos = tempPhotos;
 
         String road_trail_number = NSEroadTrailNo.getText().toString();
@@ -957,7 +946,8 @@ public class NewSlopeEventActivity extends AppCompatActivity
                 not_obvious_checkbox,unknown_checkbox,other_checkbox,damages_y_n,damages);
         dbHandler.addNewSlopeEvent(nse);
 
-        //set everything empty
+        //set everything empty to start over
+
         ObserverName.setText("");
         Email.setText("");
         PhoneNo.setText("");
@@ -1112,17 +1102,18 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
     }
 
+    //find an nse form by unique id
     public void lookupNSE(int finder){
         NewSlopeEventDBHandler dbHandler = new NewSlopeEventDBHandler(this, null, null, 1);
 
-        NewSlopeEvent nse = dbHandler.findNSE(finder); //fill how?
+        NewSlopeEvent nse = dbHandler.findNSE(finder);
 
         //set everything
         if (nse != null) {
             ObserverName.setText(nse.getObserver_name());
             Email.setText(nse.getEmail());
             PhoneNo.setText(nse.getPhone_no());
-            TodaysDate.setText(nse.getDate()); //???
+            TodaysDate.setText(nse.getDate());
             dateApprox.setSelection(nse.getDate_approximator());
             dateView.setText(nse.getDateinput());
             NSEHazardType.setSelection(nse.getHazard_type());
@@ -1131,7 +1122,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
             String tempPhoto = nse.getPhotos();
             savedImagePaths = tempPhoto.split(",");
 
-            //photos....?
             NSEroadTrailNo.setText(nse.getRoad_trail_number());
             NSERoadTrail.setSelection(nse.getRt_type());
             NSEbeginMile.setText(nse.getBegin_mile_marker());
@@ -1254,48 +1244,31 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
             }
 
-        } else {
+        } else { //can't find unique id in the database
         ObserverName.setText("No Match Found"); //or something else....
     }
 
     }
-    //image picker
+    //When you click on the choose files button
+    //CREDITS(5)
     public void chooseImages(View view) {
         Intent intent = new Intent(this, AlbumSelectActivity.class);
                 intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 10);
                 startActivityForResult(intent, Constants.REQUEST_CODE);
-                if(selectedImages != null) {
-                    for (int j = 0; j < selectedImages.size(); j++) {
-                        System.out.println("called here" + selectedImages.get(j).name);
-
-                    }
-                }
-        System.out.println("Clicked image button");
-
-
-
-
     }
 
+    //called from the choose files button
+    //CREDITS(5)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            //holds the images you selected
             selectedImages = data.getParcelableArrayListExtra(Constants.INTENT_EXTRA_IMAGES);
-            StringBuffer stringBuffer = new StringBuffer();
-            for (int i = 0, l = selectedImages.size(); i < l; i++) {
-                stringBuffer.append(selectedImages.get(i).path + "\n");
-            }
-            System.out.println(stringBuffer.toString());
         }
-
-        imageUri = Uri.fromFile(new File(selectedImages.get(0).path));
-        System.out.println("test uri");
-        System.out.println(imageUri);
-
     }
 
-    //need to be able to view multiple images
-    //need to save the uri string, when saving offline
+    //CREDITS(2)
+    //called when you view the chosen images
     public void viewChosen(View view){
         Dialog builder = new Dialog(this);
         builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1308,47 +1281,59 @@ public class NewSlopeEventActivity extends AppCompatActivity
             }
         });
 
-
+        //if there are some images to view....
         if(selectedImages != null) {
+            //scroll view is the parent view
             ScrollView scroller = new ScrollView(this);
+            //linear layout is child of scroll
             LinearLayout ll = new LinearLayout(this);
-
+            //for each of the selected images....
             for (int i = 0; i < selectedImages.size(); i++) {
-                System.out.println("add images");
                 Uri currentImage =  Uri.fromFile(new File(selectedImages.get(i).path));
+                //create a new imageview
                 ImageView imageView = new ImageView(this);
                 imageView.setImageURI(currentImage);
+                //add image view to the linear layout
                 ll.addView(imageView);
             }
+            //add linear layout with all the images to the scrollview
             scroller.addView(ll);
+            //add the scroll view to the builder
             builder.addContentView(scroller, new RelativeLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
+            //display
             builder.show();
 
         }
+        //else viewing from a saved offline site
         else if(savedImagePaths != null){
+            //parent scrollview
             ScrollView scroller = new ScrollView(this);
+            //child linear layout
             LinearLayout ll = new LinearLayout(this);
 
             for (int i = 0; i < savedImagePaths.length; i++) {
-                System.out.println("add images");
                 Uri currentImage =  Uri.fromFile(new File(savedImagePaths[i]));
+                //create a new imageview
                 ImageView imageView = new ImageView(this);
                 imageView.setImageURI(currentImage);
+                //add image view to linear layout
                 ll.addView(imageView);
             }
+            //add linear layout with all the images to the scrollview
             scroller.addView(ll);
+            //add scroll view to the builder
             builder.addContentView(scroller, new RelativeLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
+            //display
             builder.show();
-
-
         }
-
     }
 
+    //CREDITS(3)
+    //upload image to server/db
     public void uploadImage() throws  Exception {
         class Run extends AsyncTask<String, Void, String> {
 
@@ -1356,11 +1341,10 @@ public class NewSlopeEventActivity extends AppCompatActivity
             protected String doInBackground(String... params) {
 
                 try {
-
+                    //if there is an image to upload
                     if(selectedImages.size() != 0){
                         smallerImage();
                         for(int i = 0; i<selectedImages.size(); i++) {
-
                             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
                             final OkHttpClient client = new OkHttpClient();
                             String imageName = selectedImages.get(i).name;
@@ -1408,6 +1392,8 @@ public class NewSlopeEventActivity extends AppCompatActivity
         r.execute();
     }
 
+    //CREDITS(4)
+    //Manipulate the size of an image
     public void smallerImage(){
         ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
         Bitmap bitmap1;
@@ -1420,7 +1406,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-
         byte [] BYTE = bytearrayoutputstream.toByteArray();
         Bitmap bitmap2 = BitmapFactory.decodeByteArray(BYTE,0,BYTE.length);
         ImageView imageView = new ImageView(this);
@@ -1429,13 +1414,9 @@ public class NewSlopeEventActivity extends AppCompatActivity
         String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap2, "Title", null);
         Uri uri2 = Uri.parse(path);
 
-
-
-
     }
 
-
-    }
+}
 
 
 

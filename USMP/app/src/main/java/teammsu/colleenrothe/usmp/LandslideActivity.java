@@ -6,6 +6,9 @@ package teammsu.colleenrothe.usmp;
 //how to check internet connectivity:
 //http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
 
+//image compression:
+//http://www.android-examples.com/compress-bitmap-image-in-android-and-reduce-image-size/
+
 
 import android.app.Dialog;
 import android.content.Context;

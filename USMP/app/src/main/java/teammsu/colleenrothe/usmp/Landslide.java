@@ -1,12 +1,11 @@
 package teammsu.colleenrothe.usmp;
 
-/**
- * Created by colleenrothe on 1/22/17.
+/*
+    Class represents an object holding all of the information on a landslide slope event form
  */
 
 public class Landslide extends Object {
     private int id;
-    //private String mgmt_area;
     private int agency;
     private int regional;
     private int local;
@@ -89,6 +88,7 @@ public class Landslide extends Object {
 
     }
 
+    //constructor w/ id
     public Landslide(int id, int agency,int regional, int local, String date, String road_trail_number, int road_or_trail,
                      String road_trail_class,String rater, String begin_mile_marker, String end_mile_marker,
                      int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long,
@@ -179,7 +179,7 @@ public class Landslide extends Object {
 
 
     }
-
+    //constructor no id
     public Landslide(int agency,int regional, int local, String date, String road_trail_number, int road_or_trail,
                      String road_trail_class,String rater, String begin_mile_marker, String end_mile_marker,
                      int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long,
@@ -269,6 +269,7 @@ public class Landslide extends Object {
 
     }
 
+    //all of the getter/setter methods
     public int getId(){return id;}
     public void setId(int id){this.id=id;}
 

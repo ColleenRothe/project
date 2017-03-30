@@ -72,8 +72,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
-//https://www.mapbox.com/android-sdk/examples/offline-map/
-//https://www.mapbox.com/android-sdk/examples/offline-manager/
+/* Class that represents the map for the slope rating forms
+    CREDITS:
+        (1)https://www.mapbox.com/android-sdk/examples/offline-map/
+        (2)https://www.mapbox.com/android-sdk/examples/offline-manager/
+        (3)Network Connectivity:
+            http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
+*/
 
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -99,27 +104,20 @@ public class MapActivity extends AppCompatActivity
     public static final String JSON_FIELD_REGION_NAME = "FIELD_REGION_NAME";
     private static final String TAG = "MapActivity";
 
-
     String[] sites;
     String[] tempSites; //could bring down?
     String[][] finalSites; //final 2d array that the site information is kept in
     static String ALoad_id = "0";
 
-    //Menu stuff
-    MenuItem cache_map;
-    MenuItem load_offline;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //provided
         super.onCreate(savedInstanceState);
         MapboxAccountManager.start(this, "pk.eyJ1IjoiY29sNTE2IiwiYSI6ImNpbWt0ZzViODAxNzh2YWtnN29ndDBxYzMifQ.dfNXNCfTPXZahyvRrTDU1g");
 
         setContentView(R.layout.activity_map);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        ;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -130,9 +128,10 @@ public class MapActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //connect to UI
         mapView = (MapView) findViewById(R.id.mapView);
 
-
+            //create map
             mapView.onCreate(savedInstanceState);
 
             mapView.getMapAsync(new OnMapReadyCallback() {
@@ -146,9 +145,8 @@ public class MapActivity extends AppCompatActivity
 
 
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        getJSON(JSON_URL); //used to be with percentiles...
-
-
+        //call to db to place sites (used to be in percentiles call)
+        getJSON(JSON_URL);
     }
 
 
@@ -183,7 +181,7 @@ public class MapActivity extends AppCompatActivity
         mapView.onSaveInstanceState(outState);
     }
 
-
+    //go back
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -194,6 +192,7 @@ public class MapActivity extends AppCompatActivity
         }
     }
 
+    //open menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -211,46 +210,24 @@ public class MapActivity extends AppCompatActivity
             cache_map.setEnabled(false);
         }
         //if you dont have points saved, can't load any, can't load if you have service
-//        prog
 
         getMenuInflater().inflate(R.menu.menu_main, menu); //top
-
 
         return true;
     }
 
-
+    //top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        int id = item.getItemId();
+        //click on cache map
         if (id == R.id.action_cache_map) {
             Context context = mapView.getContext();
             LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.VERTICAL);
-
+            //user prompts
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-//            final TextView tv = new TextView(this);
-//            tv.setText("Corner Coordinates for saved map area", TextView.BufferType.NORMAL);
-//            final EditText neLat = new EditText(this);
-//            neLat.setHint("NE Corner latitude");
-//            final EditText neLong = new EditText(this);
-//            neLong.setHint("NE Corner longitude");
-//            final EditText swLat = new EditText(this);
-//            swLat.setHint("SW Corner Latitude");
-//            final EditText swLong = new EditText(this);
-//            swLong.setHint("SW Corner Longitude");
-//
-//            layout.addView(tv);
-//            layout.addView(neLat);
-//            layout.addView(neLong);
-//            layout.addView(swLat);
-//            layout.addView(swLong);
-
             final TextView tv = new TextView(this);
             tv.setText("Enter name for saved map area");
             final EditText et = new EditText(this);
@@ -283,9 +260,11 @@ public class MapActivity extends AppCompatActivity
             alertDialog.show();
         }
 
+        //clicked on cache status
         if (id == R.id.action_cache_status) {
             downloadedRegionList();
         }
+        //clicked on map legend
         if (id == R.id.mapLegend) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
             final TextView tv = new TextView(this);
@@ -305,15 +284,16 @@ public class MapActivity extends AppCompatActivity
             // show it
             alertDialog.show();
         }
+        //clicked load offline points
         if (id == R.id.action_load_offline_points) {
             OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
             int[] ids = dbHandler.getIds();
 
+            //for each of teh offlien sites
             for (int i = 0; i < ids.length; i++) {
                 OfflineSite offlineSite = new OfflineSite();
                 offlineSite = dbHandler.findOfflineSite(ids[i]);
-                System.out.println("site id is " + offlineSite.getSite_id());
-
+                //add a new marker for the offline site
                 map.addMarker(new MarkerOptions()
                         .position(new LatLng(Double.parseDouble(offlineSite.getBegin_coordinate_lat()), Double.parseDouble(offlineSite.getBegin_coordinate_long())))
                         .title(offlineSite.getSite_id()));
@@ -324,13 +304,13 @@ public class MapActivity extends AppCompatActivity
 
             }
 
+            //if you long click on the info window
             map.setOnInfoWindowLongClickListener(new MapboxMap.OnInfoWindowLongClickListener() {
                                                      @Override
                                                      public void onInfoWindowLongClick(Marker marker) {
                                                          //go to the annotation's info
-                                                         //pass site id....
-                                                         //ALoad_id = marker.getTitle();
                                                          Intent intent = new Intent(MapActivity.this, AnnotationInfoActivity.class);
+                                                         //pass site id....
                                                          intent.putExtra("offline", marker.getTitle());
                                                          startActivity(intent);
 
@@ -340,6 +320,7 @@ public class MapActivity extends AppCompatActivity
 
 
         }
+        //clicked on the info button
         if (id == R.id.action_info) {
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -374,18 +355,19 @@ public class MapActivity extends AppCompatActivity
 
     // START OFFLINE SITE INFORMATION METHODS
 
+    //for each of the offline forms, call to db to save their info offline
     public void saveOfflineSites() {
         for (int i = 0; i < offline_ids.size(); i++) {
             getJSONO(JSON_URL3, offline_ids.get(i));
         }
     }
 
+    //post request w/ id of form to get data
     public void GetTextO(String id) throws UnsupportedEncodingException {
         String data = "id=" + id;
         String text = "";
         BufferedReader reader = null;
         try {
-            System.out.println("TRY Offline");
 
             // Defined URL  where to send data
             URL url = new URL(JSON_URL3);
@@ -427,6 +409,7 @@ public class MapActivity extends AppCompatActivity
 
     }
 
+    //parse the repsponse
     public void dealWithTextO(final String text) {
         runOnUiThread(new Runnable() {
             String text2 = text;
@@ -791,17 +774,15 @@ public class MapActivity extends AppCompatActivity
                 risk_total, total_score, site_id, prelim_rating_landslide_id);
 
         dbHandler.addOfflineSite(offlineSite);
-        System.out.println("CREATED");
 
     }
 
+    //before going offline....get appropriate info for the slope ratings
     private void getJSONO(String url, final String id) {
         class GetJSON extends AsyncTask<String, Void, String> {
-            //ProgressDialog loading; //just to tell the user that the map is in progress...all good
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                //loading = ProgressDialog.show(AnnotationInfoActivity.this, "Please Wait...",null,true,true);
             }
 
             @Override
@@ -818,8 +799,6 @@ public class MapActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                //loading.dismiss(); //dismiss the "loading" message
-                //System.out.println(s);  //testing
             }
         }
         GetJSON gj = new GetJSON();
@@ -829,6 +808,7 @@ public class MapActivity extends AppCompatActivity
     // END OFFLINE SITE INFORMATION METHODS
 
 
+    //Download map tiles for offline region
     private class DownloadRegion extends AsyncTask<String, Void, String> {
 
         @Override
@@ -838,10 +818,7 @@ public class MapActivity extends AppCompatActivity
 
         @Override
         protected String doInBackground(String... params) {
-            // Assign progressBar for later use
             ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
-            System.out.println("call do in background");
             downloadHelper();
 
             return null;
@@ -850,14 +827,10 @@ public class MapActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            //loading.dismiss(); //dismiss the "loading" message
-            //System.out.println(s);  //testing
         }
 }
 
     public void downloadHelper(){
-        System.out.println("DOWNLOAD");
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -873,7 +846,7 @@ public class MapActivity extends AppCompatActivity
         for(
                 int i = 0; i<markers.size();i++)
 
-        {
+        {   //if the site is in the map bounds, add it to list
             if (bounds.contains(markers.get(i).getPosition())) {
                 System.out.println(markers.get(i).getTitle());
                 offline_ids.add(markers.get(i).getTitle());
@@ -882,17 +855,14 @@ public class MapActivity extends AppCompatActivity
 
         saveOfflineSites();
 
-        //        // Create offline definition using the current
-//        // style and boundaries of visible map area
+        // Create offline definition using the current
+        // style and boundaries of visible map area
         String styleUrl = map.getStyleUrl();
         double minZoom = map.getCameraPosition().zoom;
         double maxZoom = map.getMaxZoom();
         float pixelRatio = this.getResources().getDisplayMetrics().density;
         OfflineTilePyramidRegionDefinition definition = new OfflineTilePyramidRegionDefinition(
                 styleUrl, bounds, minZoom, maxZoom, pixelRatio);
-        // Build a JSONObject using the user-defined offline region title,
-        // convert it into string, and use it to create a metadata variable.
-        // The metadata varaible will later be passed to createOfflineRegion()
         byte[] metadata;
         try
 
@@ -1101,9 +1071,7 @@ public class MapActivity extends AppCompatActivity
         return regionName;
     }
 
-
-
-
+    //side menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -1151,6 +1119,8 @@ public class MapActivity extends AppCompatActivity
 
 
     //DATABASE STUFF (MARKER)
+
+    //method to db to place sites
     private void getJSON(String url) {
         class GetJSON extends AsyncTask<String, Void, String>{
             ProgressDialog loading; //just to tell the user that the map is in progress...all good
@@ -1303,16 +1273,14 @@ public class MapActivity extends AppCompatActivity
                         double longitude = Double.parseDouble(finalSites[k][3]);
 
                         //String finalScore = finalSites[k][4];
-                        //the first site...should be somewhere near ghana
                         mapboxMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(latitude, longitude))
                                 .title(finalSites[k][1])
-                                //.snippet("Total Score:" + finalSites[k][4])
                                 .snippet(finalSites[k][0])
                                 .icon(icon0));
                     }
 
-
+                    //long click on the info window, go to annotation info page
                     mapboxMap.setOnInfoWindowLongClickListener(new MapboxMap.OnInfoWindowLongClickListener() {
                         @Override
                         public void onInfoWindowLongClick(Marker marker) {
@@ -1325,10 +1293,8 @@ public class MapActivity extends AppCompatActivity
                         }
                     }
                     );
-
                 }
             });
-
     }
 
     // Progress bar methods
@@ -1367,7 +1333,7 @@ public class MapActivity extends AppCompatActivity
         Toast.makeText(MapActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
-    // Check all connectivities whether available or not
+    //CREDITS(3)
     public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);

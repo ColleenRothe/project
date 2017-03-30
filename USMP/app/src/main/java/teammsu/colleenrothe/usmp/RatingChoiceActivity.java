@@ -19,27 +19,24 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
-//how to check internet connectivity
-//http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
+/* Class for the page that lets you choose between landslide or rockfall slope rating form
+
+ */
+
 
 
 
 public class RatingChoiceActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    Button submit;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //all provided
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rating_choice);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setBackgroundColor(Color.rgb(0,90,49));
-
-
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -49,26 +46,10 @@ public class RatingChoiceActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(!isNetworkAvailable()){
-            submit.setBackgroundColor(Color.DKGRAY);
-            submit.setClickable(false);
-        }
 
     }
 
-    // Check all connectivities whether available or not
-    public boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        // if no network is available networkInfo will be null
-        // otherwise check if we are connected
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        }
-        return false;
-    }
-
+    //go back
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -79,6 +60,7 @@ public class RatingChoiceActivity extends AppCompatActivity
         }
     }
 
+    //open menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -87,14 +69,11 @@ public class RatingChoiceActivity extends AppCompatActivity
         return true;
     }
 
+   //top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -106,6 +85,7 @@ public class RatingChoiceActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //side menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -151,11 +131,13 @@ public class RatingChoiceActivity extends AppCompatActivity
         return true;
     }
 
+    //Want a landslide form
     public void goLandslide(View view){
         Intent intent = new Intent(this, LandslideActivity.class);
         startActivity(intent);
     }
 
+    //Want a rockfall form
     public void goRockfall(View view){
         Intent intent = new Intent(this, RockfallActivity.class);
         startActivity(intent);

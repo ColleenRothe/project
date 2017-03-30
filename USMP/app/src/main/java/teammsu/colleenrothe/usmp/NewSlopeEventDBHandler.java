@@ -1,6 +1,5 @@
 package teammsu.colleenrothe.usmp;
 
-//http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,14 +9,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by colleenrothe on 1/20/17.
+ * Class that implements a DB to save NSE forms offline
+ * CREDITS:
+ *      (1)Idea/Code from: http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
  */
+
 
 public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "newSlopeEventDB.db";
     public static final String TABLE_NEW_SLOPE_EVENT = "newSlopeEvent";
 
+    //column names
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_OBSERVER_NAME = "observer_name";
     public static final String COLUMN_EMAIL = "email";
@@ -28,8 +31,6 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_HAZARD_TYPE= "hazard_type";
     public static final String COLUMN_STATE = "state";
     public static final String COLUMN_PHOTOS = "photos";
-
-    //photos?
     public static final String COLUMN_ROAD_TRAIL_NUMBER="road_trail_number";
     public static final String COLUMN_RT_TYPE="rt_type";
     public static final String COLUMN_BEGIN_MILE_MARKER="begin_mile_marker";
@@ -86,6 +87,7 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    //create the nse table in the database
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -122,9 +124,11 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //add a new nse
     public void addNewSlopeEvent(NewSlopeEvent form){
         ContentValues values = new ContentValues();
 
+        //make sure that the id# is unique, make it bigger than any of the others in the db
         int maxID = 1;
         if(getNumRows()>0) {
 
@@ -150,6 +154,7 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
 
         values.put(COLUMN_ID, String.valueOf(maxID));
 
+        //get the rest of the values from the nse form
         values.put(COLUMN_OBSERVER_NAME, form.getObserver_name());
         values.put(COLUMN_EMAIL, form.getEmail());
         values.put(COLUMN_PHONE_NO, form.getPhone_no());
@@ -215,7 +220,7 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
 
     }
 
-    //what should you search by??
+    //find the nse form in the database that you want, search by unique id #
     public NewSlopeEvent findNSE(int id) {
         String query = "Select * FROM " + TABLE_NEW_SLOPE_EVENT + " WHERE " + COLUMN_ID + " =  \"" + id + "\"";
 
@@ -295,12 +300,13 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
         return nse;
     }
 
-    //search by what?...do more?
+    //delete a nse from in db, found by unique id #
     public void deleteNSE(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NEW_SLOPE_EVENT, COLUMN_ID + "=" + id, null);
     }
 
+    //get the number of rows in the nse table
     public int getNumRows(){
         SQLiteDatabase db = this.getReadableDatabase();
         long row = DatabaseUtils.queryNumEntries(db, TABLE_NEW_SLOPE_EVENT);
@@ -310,9 +316,9 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //get an array of the unique ids in the nse table
     public int [] getIds(){
         int [] ids = new int [getNumRows()];
-        System.out.println("ROWS="+getNumRows());
 
         String query = "Select "+ COLUMN_ID + " FROM " + TABLE_NEW_SLOPE_EVENT;
         SQLiteDatabase db = this.getWritableDatabase();

@@ -1,7 +1,5 @@
 package teammsu.colleenrothe.usmp;
 
-//http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by colleenrothe on 1/22/17.
+ * Class that implements a DB to save Landslide Slope Rating forms offline
+ * CREDITS:
+ *      (1)Idea/Code from: http://www.techotopia.com/index.php/An_Android_SQLite_Database_Tutorial
  */
 
 public class LandslideDBHandler extends SQLiteOpenHelper {
@@ -18,6 +18,7 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "landslideDB.db";
     public static final String TABLE_LANDSLIDE = "landslide";
 
+    //column names
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_UMBRELLA_AGENCY = "umbrella_agency";
     public static final String COLUMN_REGIONAL_ADMIN = "regional_admin";
@@ -99,6 +100,7 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
+    //create the landslide table in the database
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
@@ -137,9 +139,11 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
 
     }
 
+    //add a new landslide
     public void addLandslide(Landslide form){
         ContentValues values = new ContentValues();
 
+        //make sure that the id# is unique, make it bigger than any of the others in the db
         int maxID = 1;
         if(getNumRows()>0) {
             String query = "Select "+ COLUMN_ID + " FROM " + TABLE_LANDSLIDE;
@@ -164,10 +168,10 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
 
         values.put(COLUMN_ID, String.valueOf(maxID));
 
+        //get the rest of the values from the landslide form
         values.put(COLUMN_UMBRELLA_AGENCY, form.getAgency());
         values.put(COLUMN_REGIONAL_ADMIN, form.getRegional());
         values.put(COLUMN_LOCAL_ADMIN, form.getLocal());
-
         values.put(COLUMN_DATE, form.getDate());
         values.put(COLUMN_ROAD_TRAIL_NUMBER, form.getRoad_trail_number());
         values.put(COLUMN_ROAD_OR_TRAIL, form.getRoad_or_Trail());
@@ -247,6 +251,7 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    //find the landslide form in the database that you want, search by unique id #
     public Landslide findLandslide(int id){
         String query = "Select * FROM " + TABLE_LANDSLIDE + " WHERE " + COLUMN_ID + " =  \"" + id + "\"";
 
@@ -345,22 +350,23 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
         return landslide;
     }
 
-    //search by what?..do more?
+    //delete a landslide form in db, found by unique id #
     public void deleteLandslide(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_LANDSLIDE, COLUMN_ID + "=" + id, null);
 
     }
 
+    //get the number of rows in the landslide table
     public int getNumRows(){
         SQLiteDatabase db = this.getReadableDatabase();
         long row = DatabaseUtils.queryNumEntries(db, TABLE_LANDSLIDE);
         int rows = (int)row;
-        //System.out.println("rows"+rows);
         return rows;
 
     }
 
+    //get an array of the unique ids in the landslide table
     public int [] getIds(){
         int [] ids = new int [getNumRows()];
 

@@ -1,7 +1,7 @@
 package teammsu.colleenrothe.usmp;
 
-/**
- * Created by colleenrothe on 1/20/17.
+/*
+    Class represents an object holding all of the information on a new slope event form
  */
 
 public class NewSlopeEvent extends Object {
@@ -15,7 +15,6 @@ public class NewSlopeEvent extends Object {
     private String dateinput; //? DATE
     private int hazard_type;
     private int state;
-    //photos?
     private String photos;
     private String road_trail_number;
     private int rt_type;
@@ -71,6 +70,7 @@ public class NewSlopeEvent extends Object {
 
     }
 
+    //constructor w/ id
     public NewSlopeEvent(int id, String observer_name, String email, String phone_no, String date,
                          int date_approximator, String dateinput, int hazard_type, int state, String photos, String road_trail_number,
                          int rt_type, String begin_mile_marker, String end_mile_marker, String datum,
@@ -140,7 +140,7 @@ public class NewSlopeEvent extends Object {
         this.damages = damages;
 
     }
-
+    //constructor no id
     public NewSlopeEvent(String observer_name, String email, String phone_no, String date,
                          int date_approximator, String dateinput, int hazard_type, int state, String photos, String road_trail_number,
                          int rt_type, String begin_mile_marker, String end_mile_marker, String datum,
@@ -210,6 +210,7 @@ public class NewSlopeEvent extends Object {
         this.damages = damages;
 
     }
+    //getter and setter methods
 
     public int getId(){return id;}
     public void setId(int id){this.id=id;}

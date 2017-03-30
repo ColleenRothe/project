@@ -37,6 +37,10 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/* This is a class for the limited information (aka annotation) shown after clicking on
+   a site on the main map (either landslide or rockfall)
+ */
+
 public class AnnotationInfoActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -53,14 +57,13 @@ public class AnnotationInfoActivity extends AppCompatActivity
     TextView totalScore;
     TextView photos;
     TextView comments;
+
     Map<String, String> map;
     String clicked_id = "0";
     String offline_clicked = "0";
     String offline_landslide_id = "";
 
     private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php"; //to place the sites
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,8 @@ public class AnnotationInfoActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //new
+
+        //to connect to items on the UI
         siteId = (TextView) findViewById(R.id.AISiteid);
         coordinates = (TextView) findViewById(R.id.AICoordinates);
         date = (TextView) findViewById(R.id.AIDate);
@@ -94,18 +99,20 @@ public class AnnotationInfoActivity extends AppCompatActivity
         photos = (TextView) findViewById(R.id.AIPhotos);
         comments = (TextView) findViewById(R.id.AIComments);
 
+        //if you are viewing a site in offline mode....
         if(getIntent().getStringExtra("offline")!=null){
             offline_clicked = getIntent().getStringExtra("offline");
             loadFromOffline();
 
-
+        //you are viewing a site while having internet connection
         }else{
-            getJSON(JSON_URL);
+            getJSON(JSON_URL); //call to populate
         }
 
 
     }
 
+    //back button
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -116,6 +123,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
         }
     }
 
+    //to open the menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -124,6 +132,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
         return true;
     }
 
+    //top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -143,6 +152,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //side menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -187,12 +197,17 @@ public class AnnotationInfoActivity extends AppCompatActivity
 
     //LOAD FROM AN OFFLINE SAVED SITE
     public void loadFromOffline(){
+        //database handler
         OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
+        //ids of the saved sites
         int [] ids = dbHandler.getIds();
         for(int i = 0; i<ids.length; i++){
+            //create a new offline site
             OfflineSite offlineSite = new OfflineSite();
             offlineSite = dbHandler.findOfflineSite(ids[i]);
+            //if it is the one we are looking for
             if(offlineSite.getSite_id().equals(offline_clicked)){
+                //set all the values on the UI to the saved ones we want
                 siteId.setText(offlineSite.getSite_id());
                 coordinates.setText(offlineSite.getBegin_coordinate_lat()+","+offlineSite.getBegin_coordinate_long());
                 date.setText(offlineSite.getDate());
@@ -225,8 +240,8 @@ public class AnnotationInfoActivity extends AppCompatActivity
 
     }
 
+        //send post request and get data back from db
     public void GetText() throws UnsupportedEncodingException {
-        //String data = URLEncoder.encode("id=355", "UTF-8");
         String data="id="+MapActivity.ALoad_id;
         String text = "";
         BufferedReader reader = null;
@@ -274,25 +289,20 @@ public class AnnotationInfoActivity extends AppCompatActivity
     }
 
 
-
+    //parse the response
     public void dealWithText(final String text){
         runOnUiThread(new Runnable() {
             String text2 = text;
             @Override
             public void run() {
-                System.out.println("Deal with it");
-
-                System.out.println(text2);
-
                 text2 = text2.replace("[",""); //old,new
                 text2 = text2.replace("]",""); //old,new
 
                 //Map<String, String> map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
                 map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
                 System.out.println(map);
-                System.out.println(map.get("ID"));
 
-                //0 is the id
+                //fill-in values on the UI
                 siteId.setText(map.get("SITE_ID"));
                 coordinates.setText(map.get("COORDINATES"));
                 date.setText(map.get("DATE"));
@@ -312,14 +322,13 @@ public class AnnotationInfoActivity extends AppCompatActivity
 
     }
 
+    //call method to start the post-response and get the data
     private void getJSON(String url) {
         class GetJSON extends AsyncTask<String, Void, String>{
-            //ProgressDialog loading; //just to tell the user that the map is in progress...all good
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                //loading = ProgressDialog.show(AnnotationInfoActivity.this, "Please Wait...",null,true,true);
             }
 
             @Override
@@ -336,44 +345,46 @@ public class AnnotationInfoActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                //loading.dismiss(); //dismiss the "loading" message
-                //System.out.println(s);  //testing
             }
         }
         GetJSON gj = new GetJSON();
         gj.execute(url);
     }
 
+    //call to open the correct type of form and edit the site
     public void editSite(View view){
+        //if working in offline mode...
         if(getIntent().getStringExtra("offline")!=null){
             //landslide
             System.out.println("offline landslide id is:"+offline_landslide_id);
             if(!offline_landslide_id.equals("0")){
                 Intent intent = new Intent(this, LandslideActivity.class);
+                //tell form you are working in offline mode
                 intent.putExtra("offline", offline_clicked);
                 startActivity(intent);
             }
             //rockfall
             else{
                 Intent intent = new Intent(this, RockfallActivity.class);
+                //tell form you are working in offline mode
                 intent.putExtra("offline", offline_clicked);
                 startActivity(intent);
             }
-
+         //working with internet connectivity
         }else {
-
-
             clicked_id = map.get("ID");
             String type = map.get("HAZARD_RATING_ROCKFALL_ID");
             //landslide
             if (type.equals("0")) {
                 Intent intent = new Intent(this, LandslideActivity.class);
+                //tell form you are working in editing mode
                 intent.putExtra("editing", clicked_id);
                 startActivity(intent);
             }
             //rockfall
             else {
                 Intent intent = new Intent(this, RockfallActivity.class);
+                //tell form you are working in editing mode
                 intent.putExtra("editing", clicked_id);
                 startActivity(intent);
             }
