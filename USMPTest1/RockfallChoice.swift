@@ -37,6 +37,8 @@ import BSImagePicker
 
 
 
+
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -3909,6 +3911,8 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     thumbnail = result!
                 })
                 
+                let imageData = thumbnail.lowQualityJPEGNSData
+                thumbnail = UIImage(data: imageData as Data)!
                 
                 let image_data = UIImagePNGRepresentation(thumbnail)
                 

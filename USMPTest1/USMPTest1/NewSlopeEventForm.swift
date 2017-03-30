@@ -1222,7 +1222,8 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 manager.requestImage(for: images[i], targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
                     thumbnail = result!
                 })
-                
+                let imageData = thumbnail.lowQualityJPEGNSData
+                thumbnail = UIImage(data: imageData as Data)!
                 
                 let image_data = UIImagePNGRepresentation(thumbnail)
                 

@@ -36,6 +36,15 @@ import SystemConfiguration
 import BSImagePicker
 
 
+extension UIImage
+{
+    var highestQualityJPEGNSData: NSData { return UIImageJPEGRepresentation(self, 1.0)! as NSData }
+    var highQualityJPEGNSData: NSData    { return UIImageJPEGRepresentation(self, 0.75)! as NSData}
+    var mediumQualityJPEGNSData: NSData  { return UIImageJPEGRepresentation(self, 0.5)! as NSData }
+    var lowQualityJPEGNSData: NSData     { return UIImageJPEGRepresentation(self, 0.25)! as NSData}
+    var lowestQualityJPEGNSData: NSData  { return UIImageJPEGRepresentation(self, 0.0)! as NSData }
+}
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -3747,6 +3756,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             thumbnail = result!
         })
         
+        let imageData = thumbnail.lowQualityJPEGNSData
+        thumbnail = UIImage(data: imageData as Data)!
+
         
         let image_data = UIImagePNGRepresentation(thumbnail)
         
@@ -4999,7 +5011,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         
     }
-
     
     
 }
