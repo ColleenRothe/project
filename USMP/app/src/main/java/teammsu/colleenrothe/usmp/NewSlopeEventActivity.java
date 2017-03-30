@@ -75,6 +75,13 @@ import com.squareup.okhttp.Response;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.ByteArrayOutputStream;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+
+
 
 public class NewSlopeEventActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -1351,6 +1358,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
                 try {
 
                     if(selectedImages.size() != 0){
+                        smallerImage();
                         for(int i = 0; i<selectedImages.size(); i++) {
 
                             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
@@ -1398,6 +1406,32 @@ public class NewSlopeEventActivity extends AppCompatActivity
         }
         Run r = new Run();
         r.execute();
+    }
+
+    public void smallerImage(){
+        ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
+        Bitmap bitmap1;
+        Uri uri = Uri.fromFile(new File(selectedImages.get(0).path));
+        try {
+            bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            bitmap1.compress(Bitmap.CompressFormat.JPEG,40,bytearrayoutputstream);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+        byte [] BYTE = bytearrayoutputstream.toByteArray();
+        Bitmap bitmap2 = BitmapFactory.decodeByteArray(BYTE,0,BYTE.length);
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(bitmap2);
+
+        String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap2, "Title", null);
+        Uri uri2 = Uri.parse(path);
+
+
+
+
     }
 
 

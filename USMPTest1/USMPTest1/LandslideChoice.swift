@@ -25,6 +25,9 @@
 //file upload
 //http://www.kaleidosblog.com/how-to-upload-images-using-swift-2-send-multipart-post-request
 
+//image resizing
+//http://stackoverflow.com/questions/29726643/how-to-compress-of-reduce-the-size-of-an-image-before-uploading-to-parse-as-pffi
+
 
 import Foundation
 import UIKit
