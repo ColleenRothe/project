@@ -47,6 +47,7 @@ import android.widget.Button;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
@@ -71,6 +72,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 
 public class RockfallActivity extends AppCompatActivity
@@ -4198,6 +4206,7 @@ public class RockfallActivity extends AppCompatActivity
                         }
                         writer.close();
                         reader.close();
+                        uploadImage(); //here
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -4833,6 +4842,64 @@ public class RockfallActivity extends AppCompatActivity
 
         }
 
+    }
+
+    public void uploadImage() throws  Exception {
+        class Run extends AsyncTask<String, Void, String> {
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                try {
+
+                    if(selectedImages.size() != 0){
+                        for(int i = 0; i<selectedImages.size(); i++) {
+
+                            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+                            final OkHttpClient client = new OkHttpClient();
+                            String imageName = selectedImages.get(i).name;
+
+                            RequestBody requestBody = new MultipartBuilder()
+                                    .type(MultipartBuilder.FORM)
+
+                                    .addPart(
+                                            Headers.of("Content-Disposition", "form-data; name=\"" +
+                                                    imageName +
+                                                    "\"; filename=\"" +
+                                                    imageName +
+                                                    "\""),
+                                            RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImages.get(i).path)))
+                                    .build();
+
+                            Request request = new Request.Builder()
+                                    .url("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
+                                    .post(requestBody)
+                                    .build();
+
+                            Response response = null;
+
+                            response = client.newCall(request).execute();
+
+                            if (!response.isSuccessful()) try {
+                                throw new IOException("Unexpected code " + response);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            System.out.println(response.body().string());
+
+                        }
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+        }
+        Run r = new Run();
+        r.execute();
     }
 }
 

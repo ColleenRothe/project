@@ -4586,9 +4586,7 @@ public class LandslideActivity extends AppCompatActivity
             LinearLayout ll = new LinearLayout(this);
 
             for (int i = 0; i < selectedImages.size(); i++) {
-                System.out.println("ID: "+ selectedImages.get(i).id);
-                System.out.println("Name" + selectedImages.get(i).name);
-                System.out.println("path: "+selectedImages.get(i).path);
+
                 Uri currentImage = Uri.fromFile(new File(selectedImages.get(i).path));
                 ImageView imageView = new ImageView(this);
                 imageView.setImageURI(currentImage);
@@ -4617,14 +4615,17 @@ public class LandslideActivity extends AppCompatActivity
 
                         final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
                         final OkHttpClient client = new OkHttpClient();
-
-
+                        String imageName = selectedImages.get(i).name;
 
                         RequestBody requestBody = new MultipartBuilder()
                                 .type(MultipartBuilder.FORM)
 
                                 .addPart(
-                                        Headers.of("Content-Disposition", "form-data; name=\"androidimage.jpg\"; filename=\"androidimage.jpg\""),
+                                        Headers.of("Content-Disposition", "form-data; name=\"" +
+                                                imageName +
+                                                "\"; filename=\"" +
+                                                imageName +
+                                                "\""),
                                         RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImages.get(i).path)))
                                 .build();
 
@@ -4635,9 +4636,7 @@ public class LandslideActivity extends AppCompatActivity
 
                         Response response = null;
 
-
                         response = client.newCall(request).execute();
-
 
                         if (!response.isSuccessful()) try {
                             throw new IOException("Unexpected code " + response);
@@ -4648,7 +4647,6 @@ public class LandslideActivity extends AppCompatActivity
                         System.out.println(response.body().string());
 
                     }
-                    //end try
                 }
 
             } catch (IOException e) {
@@ -4657,9 +4655,9 @@ public class LandslideActivity extends AppCompatActivity
             return null;
         }
 
-
     }
         Run r = new Run();
         r.execute();
 }
+
 }
