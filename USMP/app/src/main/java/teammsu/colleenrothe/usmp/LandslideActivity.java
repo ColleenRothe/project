@@ -4586,6 +4586,9 @@ public class LandslideActivity extends AppCompatActivity
             LinearLayout ll = new LinearLayout(this);
 
             for (int i = 0; i < selectedImages.size(); i++) {
+                System.out.println("ID: "+ selectedImages.get(i).id);
+                System.out.println("Name" + selectedImages.get(i).name);
+                System.out.println("path: "+selectedImages.get(i).path);
                 Uri currentImage = Uri.fromFile(new File(selectedImages.get(i).path));
                 ImageView imageView = new ImageView(this);
                 imageView.setImageURI(currentImage);
@@ -4604,47 +4607,49 @@ public class LandslideActivity extends AppCompatActivity
     public void uploadImage() throws  Exception {
         class Run extends AsyncTask<String, Void, String> {
 
-
         @Override
         protected String doInBackground(String... params) {
 
             try {
-                //String IMGUR_CLIENT_ID = "...";
-                final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-                final OkHttpClient client = new OkHttpClient();
+
+                if(selectedImages.size() != 0){
+                    for(int i = 0; i<selectedImages.size(); i++) {
+
+                        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+                        final OkHttpClient client = new OkHttpClient();
 
 
-            // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
-                RequestBody requestBody = new MultipartBuilder()
-                        .type(MultipartBuilder.FORM)
-                        .addPart(
-                                Headers.of("Content-Disposition", "form-data; name=\"title\""),
-                                RequestBody.create(null, "Square Logo"))
-                        .addPart(
-                                Headers.of("Content-Disposition", "form-data; name=\"image\""),
-                                RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImages.get(0).path)))
-                        .build();
 
-                Request request = new Request.Builder()
-                        //.header("Authorization", "Client-ID " + IMGUR_CLIENT_ID)
-                        .url("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
-                        .post(requestBody)
-                        .build();
+                        RequestBody requestBody = new MultipartBuilder()
+                                .type(MultipartBuilder.FORM)
 
-                Response response = null;
+                                .addPart(
+                                        Headers.of("Content-Disposition", "form-data; name=\"androidimage.jpg\"; filename=\"androidimage.jpg\""),
+                                        RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImages.get(i).path)))
+                                .build();
+
+                        Request request = new Request.Builder()
+                                .url("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
+                                .post(requestBody)
+                                .build();
+
+                        Response response = null;
 
 
-                response = client.newCall(request).execute();
+                        response = client.newCall(request).execute();
 
 
-                if (!response.isSuccessful()) try {
-                    throw new IOException("Unexpected code " + response);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        if (!response.isSuccessful()) try {
+                            throw new IOException("Unexpected code " + response);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        System.out.println(response.body().string());
+
+                    }
+                    //end try
                 }
-
-
-                    System.out.println(response.body().string());
 
             } catch (IOException e) {
                 e.printStackTrace();
