@@ -1,24 +1,12 @@
 package teammsu.colleenrothe.usmp;
-//source: post request
-//http://www.java2blog.com/2016/07/how-to-send-http-request-getpost-in-java.html
-//http://stackoverflow.com/questions/6343166/how-to-fix-android-os-networkonmainthreadexception
-
-//how to check internet connectivity:
-//http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
-
-//image compression:
-//http://www.android-examples.com/compress-bitmap-image-in-android-and-reduce-image-size/
-
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Region;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -52,48 +40,33 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
-
 import android.widget.AdapterView.OnItemSelectedListener;
-
 import java.io.OutputStreamWriter;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import java.net.URL;
 import java.net.URLConnection;
-import java.io.StringReader;
-
 import java.util.*;
-
-
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.games.event.Event;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-
 import android.view.View.OnFocusChangeListener;
-
-//import javax.ws.rs.core.MediaType.*;
-//import javax.ws.rs.core.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -101,6 +74,21 @@ import com.squareup.okhttp.Response;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.Headers;
 import  com.squareup.okhttp.MediaType;
+
+/* Class for the Landslide Slope Rating Form
+    CREDITS:
+    (1) Post Request
+            http://www.java2blog.com/2016/07/how-to-send-http-request-getpost-in-java.html
+            http://stackoverflow.com/questions/6343166/how-to-fix-android-os-networkonmainthreadexception
+    (2) Internet Connectivity
+            http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
+    (3) Image Compression
+            http://www.android-examples.com/compress-bitmap-image-in-android-and-reduce-image-size/
+    (4) Image picker library
+        https://github.com/darsh2/MultipleImageSelect
+    (5) Upload an image
+        https://github.com/square/okhttp/wiki/Recipes
+ */
 
 public class LandslideActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -144,12 +132,10 @@ public class LandslideActivity extends AppCompatActivity
     EditText AnnualRain2;
     Spinner SoleAccess;
     Spinner Mitigation;
-    //photos go here
     EditText Comments;
     EditText FlmaName;
     EditText FlmaId;
     EditText FlmaDescription;
-
 
     //<<<PRELIMINARY RATINGS>>
     Spinner RWidthAffected; //A
@@ -209,16 +195,16 @@ public class LandslideActivity extends AppCompatActivity
     Uri imageUri;
     String [] savedImagePaths;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("Landslide");
+        //provided
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landslide);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        //UI connection
         SubmitButton = (Button) findViewById(R.id.LSubmitButton);
 
         //<<<SITE INFORMATION>>>
@@ -232,6 +218,7 @@ public class LandslideActivity extends AppCompatActivity
         Local.setFocusable(true);
         Local.setFocusableInTouchMode(true);
 
+        //watch choice on the agency spinner, update regional
         Agency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
@@ -273,8 +260,6 @@ public class LandslideActivity extends AppCompatActivity
                     adapterRegional.notifyDataSetChanged();
                 }
 
-//                Toast.makeText(getApplicationContext(),
-//                        "Selected Agency : " + agency, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -283,7 +268,7 @@ public class LandslideActivity extends AppCompatActivity
             }
         });
 
-
+        //watch the regional spinner, update local accordingly
         Regional.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
@@ -565,8 +550,6 @@ public class LandslideActivity extends AppCompatActivity
         Mitigation.setFocusableInTouchMode(true);
         Mitigation.setFocusable(true);
 
-        //Photos here
-
         Comments = (EditText) findViewById(R.id.L_Comments);
         FlmaName = (EditText) findViewById(R.id.L_FlmaName);
         FlmaId = (EditText) findViewById(R.id.L_FlmaId);
@@ -685,7 +668,7 @@ public class LandslideActivity extends AppCompatActivity
             loadFromOffline();
         }
 
-
+        //if connection not available, can't submit
         if (!isNetworkAvailable()) {
             SubmitButton.setBackgroundColor(Color.DKGRAY);
             SubmitButton.setClickable(false);
@@ -718,7 +701,7 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
-    // Check all connectivities whether available or not
+    //CREDITS (2)
     public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -731,6 +714,7 @@ public class LandslideActivity extends AppCompatActivity
         return false;
     }
 
+    //Location Methods
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(20000);
@@ -753,16 +737,9 @@ public class LandslideActivity extends AppCompatActivity
     public void onConnected(Bundle bundle) {
         //permissions...
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (mLastLocation != null) {
-//            System.out.println("weird toast stuff");
-//
-//            Toast.makeText(this, "Latitude:" + mLastLocation.getLatitude() + ", Longitude:" + mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
-//
-//        }
-
     }
 
-    //HERE Location
+    //Set beginning lat/long coords on button press
     public void setBeginCoords(View view) {
         if (mLastLocation != null) {
             BeginLat.setText(String.valueOf(mLastLocation.getLatitude()));
@@ -771,7 +748,7 @@ public class LandslideActivity extends AppCompatActivity
         }
 
     }
-
+    //set ending lat/long coords on button press
     public void setEndCoords(View view) {
         if (mLastLocation != null) {
             EndLat.setText(String.valueOf(mLastLocation.getLatitude()));
@@ -810,6 +787,7 @@ public class LandslideActivity extends AppCompatActivity
         //Toast.makeText(this, "Latitude:" + mLastLocation.getLatitude()+", Longitude:"+mLastLocation.getLongitude(),Toast.LENGTH_LONG).show();
     }
 
+    /////////////End location methods
 
     //EDIT FORM
     public void GetText() throws UnsupportedEncodingException {
@@ -861,7 +839,7 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
-
+    //parse response
     public void dealWithText(final String text) {
         runOnUiThread(new Runnable() {
             String text2 = text;
@@ -883,6 +861,8 @@ public class LandslideActivity extends AppCompatActivity
                 map = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {
                 }.getType());
                 System.out.println(map);
+
+                //Fill the form
 
                 String agency = (map.get("UMBRELLA_AGENCY"));
                 String[] agencyArray = getResources().getStringArray(R.array.AgencyList);
@@ -1199,6 +1179,7 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
+    //get db info
     private void getJSON(String url) {
         class GetJSON extends AsyncTask<String, Void, String> {
             //ProgressDialog loading; //just to tell the user that the map is in progress...all good
@@ -1386,8 +1367,6 @@ public class LandslideActivity extends AppCompatActivity
 
 
     //Latitude Validation
-
-
     private final OnFocusChangeListener beginLatWatcher = new OnFocusChangeListener() {
         public void onFocusChange(View v, boolean hasFocus) {
 
@@ -1867,6 +1846,7 @@ public class LandslideActivity extends AppCompatActivity
     };
 
 
+   //Call to calculate the preliminary rating on changes
     private final OnItemSelectedListener prelimWatcher = new OnItemSelectedListener() {
 
         @Override
@@ -2122,6 +2102,7 @@ public class LandslideActivity extends AppCompatActivity
     };
 
 
+    //calculate the slope hazard calculation on change
     private final OnItemSelectedListener slopeHazardWatcher = new OnItemSelectedListener() {
 
         @Override
@@ -2710,6 +2691,7 @@ public class LandslideActivity extends AppCompatActivity
 
     };
 
+    //watch if they change the speed...
     private final OnItemSelectedListener speedWatcher = new OnItemSelectedListener() {
 
         @Override
@@ -2770,6 +2752,7 @@ public class LandslideActivity extends AppCompatActivity
 
     };
 
+    //calculate risk total on changes
     private final OnItemSelectedListener riskWatcher = new OnItemSelectedListener() {
 
         @Override
@@ -2784,6 +2767,7 @@ public class LandslideActivity extends AppCompatActivity
 
     };
 
+    //calculate the risk total
     public void calcRiskTotal() {
         int score = 0;
         int g = 0;
@@ -2893,6 +2877,7 @@ public class LandslideActivity extends AppCompatActivity
         RiskTotal.setText(scoreS);
     }
 
+    //calculate the total on change
     private final TextWatcher totalWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -2927,7 +2912,7 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
-
+    //go back
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -2938,6 +2923,7 @@ public class LandslideActivity extends AppCompatActivity
         }
     }
 
+    //open menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -2948,14 +2934,11 @@ public class LandslideActivity extends AppCompatActivity
         return true;
     }
 
+    //top menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -2968,6 +2951,7 @@ public class LandslideActivity extends AppCompatActivity
     }
 
 
+    //side menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -3398,18 +3382,13 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
-    public void goOfflineSites(View view) {
-        Intent intent = new Intent(this, OfflineList.class);
-        startActivity(intent);
-    }
-
+    //Submit edited form
     public void editSubmit() throws Exception {
         Thread thread = new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try {
-                    //REALLY??
                     URL url = new URL("http://nl.cs.montana.edu/test_sites/colleen.rothe/editSite.php");
                     URLConnection conn = url.openConnection();
                     conn.setDoOutput(true);
@@ -3513,10 +3492,6 @@ public class LandslideActivity extends AppCompatActivity
                         fixes_present = "Y";
                     }
 
-                    //blk size
-                    //volume
-                    //photos
-
                     String comments = String.valueOf(Comments.getText());
                     String flma_id = String.valueOf(FlmaId.getText());
                     String flma_name = String.valueOf(FlmaName.getText());
@@ -3543,8 +3518,6 @@ public class LandslideActivity extends AppCompatActivity
                     }
 
                     String l_length_affected = String.valueOf(RLengthAffected.getText());
-
-                    //rockfall stuff here
 
                     //for all
                     String impact_on_use = "3";
@@ -3607,8 +3580,6 @@ public class LandslideActivity extends AppCompatActivity
                     } else if (MovementHistory.getSelectedItemPosition() == 3) {
                         movement_history = "81";
                     }
-
-                    //rockfall fields here
 
                     //all
                     String hazard_total = String.valueOf(HazardTotal.getText());
@@ -3815,9 +3786,6 @@ public class LandslideActivity extends AppCompatActivity
                             fixes_present = "Y";
                         }
 
-                        //blk size
-                        //volume
-                        //photos
 
                         String comments = String.valueOf(Comments.getText());
                         String flma_id = String.valueOf(FlmaId.getText());
@@ -3910,8 +3878,6 @@ public class LandslideActivity extends AppCompatActivity
                             movement_history = "81";
                         }
 
-                        //rockfall fields here
-
                         //all
                         String hazard_total = String.valueOf(HazardTotal.getText());
 
@@ -3963,7 +3929,7 @@ public class LandslideActivity extends AppCompatActivity
                         //flma problem
 
                         //todo: hazard type (5) (after aadt)
-                        writer.write("mgmt_area=" + "&umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
+                        writer.write("&umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
                                 "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
                                 side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
                                 begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
@@ -4007,6 +3973,7 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
+    //create new landslide in the db
     public void newLandslide(View view) {
         LandslideDBHandler dbHandler = new LandslideDBHandler(this, null, null, 1);
         //id
@@ -4037,8 +4004,6 @@ public class LandslideActivity extends AppCompatActivity
             temp = temp.concat(HazardType3.getSelectedItem().toString());
         }
         String hazard_type = temp;
-
-
         String begin_coordinate_lat = BeginLat.getText().toString();
         String begin_coordinate_long = BeginLong.getText().toString();
         String end_coordinate_latitude = EndLat.getText().toString();
@@ -4143,9 +4108,8 @@ public class LandslideActivity extends AppCompatActivity
 
         dbHandler.addLandslide(landslide);
         //Message to the user that it worked....
-        //set = 0
 
-        //id
+        //reset all the fields
         Agency.setSelection(0);
         Regional.setSelection(0);
         Local.setSelection(0);
@@ -4231,6 +4195,7 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
+    //find a landslide in the database
     public void lookupLandslide(int finder) {
         LandslideDBHandler dbHandler = new LandslideDBHandler(this, null, null, 1);
         System.out.println("Lookup landslide");
@@ -4441,7 +4406,6 @@ public class LandslideActivity extends AppCompatActivity
 
                 }
 
-
                 BeginLat.setText(offlineSite.getBegin_coordinate_lat());
                 EndLat.setText(offlineSite.getEnd_coordinate_latitude());
                 BeginLong.setText(offlineSite.getEnd_coordinate_longitude());
@@ -4574,28 +4538,24 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
-    //image picker
+    //CREDITS(4)
+    //calls image picker
     public void chooseImages(View view) {
         Intent intent = new Intent(this, AlbumSelectActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 10);
         startActivityForResult(intent, Constants.REQUEST_CODE);
     }
 
+    //CREDITS(4)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+            //sets as images you selected
             selectedImages = data.getParcelableArrayListExtra(Constants.INTENT_EXTRA_IMAGES);
-            StringBuffer stringBuffer = new StringBuffer();
-            for (int i = 0, l = selectedImages.size(); i < l; i++) {
-                stringBuffer.append(selectedImages.get(i).path + "\n");
-            }
-            System.out.println(stringBuffer.toString());
         }
-
     }
 
-    //need to be able to view multiple images
-    //need to save the uri string, when saving offline
+    //view chosen images
     public void viewChosen(View view) {
         System.out.println(imageUri);
         Dialog builder = new Dialog(this);
@@ -4609,7 +4569,7 @@ public class LandslideActivity extends AppCompatActivity
             }
         });
 
-
+        //if you have selected some images...
         if (selectedImages != null) {
             ScrollView scroller = new ScrollView(this);
             LinearLayout ll = new LinearLayout(this);
@@ -4628,12 +4588,12 @@ public class LandslideActivity extends AppCompatActivity
             builder.show();
 
         }
+        //else if you are loading an offline site and have some images saved...
         else if(savedImagePaths != null){
             ScrollView scroller = new ScrollView(this);
             LinearLayout ll = new LinearLayout(this);
 
             for (int i = 0; i < savedImagePaths.length; i++) {
-                System.out.println("add images");
                 System.out.println(savedImagePaths[i]);
                 Uri currentImage =  Uri.fromFile(new File(savedImagePaths[i]));
                 ImageView imageView = new ImageView(this);
@@ -4651,6 +4611,8 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
+    //CREDITS (5)
+    //upload image to server
     public void uploadImage() throws  Exception {
         class Run extends AsyncTask<String, Void, String> {
 
@@ -4709,7 +4671,8 @@ public class LandslideActivity extends AppCompatActivity
         Run r = new Run();
         r.execute();
 }
-
+    //CREDITS(3)
+    //compress image size
     public void smallerImage(){
         ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
         Bitmap bitmap1;
@@ -4722,7 +4685,6 @@ public class LandslideActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-
         byte [] BYTE = bytearrayoutputstream.toByteArray();
         Bitmap bitmap2 = BitmapFactory.decodeByteArray(BYTE,0,BYTE.length);
         ImageView imageView = new ImageView(this);
@@ -4730,10 +4692,6 @@ public class LandslideActivity extends AppCompatActivity
 
         String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap2, "Title", null);
         Uri uri2 = Uri.parse(path);
-
-
-
-
     }
 
 }

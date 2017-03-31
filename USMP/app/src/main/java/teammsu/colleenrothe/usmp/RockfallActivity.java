@@ -1,16 +1,11 @@
 package teammsu.colleenrothe.usmp;
 
-//source: post request
-//http://www.java2blog.com/2016/07/how-to-send-http-request-getpost-in-java.html
-//http://stackoverflow.com/questions/6343166/how-to-fix-android-os-networkonmainthreadexception
-
-//how to check internet connectivity:
-//http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
-
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
@@ -19,6 +14,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,8 +40,8 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Button;
-
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -62,7 +58,6 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 import android.widget.AdapterView.OnItemSelectedListener;
-
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
@@ -79,6 +74,21 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+
+/* Class for the Rockfall Slope Rating Form
+    CREDITS:
+    (1) Post Request
+            http://www.java2blog.com/2016/07/how-to-send-http-request-getpost-in-java.html
+            http://stackoverflow.com/questions/6343166/how-to-fix-android-os-networkonmainthreadexception
+    (2) Internet Connectivity
+            http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
+    (3) Image Compression
+            http://www.android-examples.com/compress-bitmap-image-in-android-and-reduce-image-size/
+    (4) Image picker library
+        https://github.com/darsh2/MultipleImageSelect
+    (5) Upload an image
+        https://github.com/square/okhttp/wiki/Recipes
+ */
 
 
 public class RockfallActivity extends AppCompatActivity
@@ -128,12 +138,10 @@ public class RockfallActivity extends AppCompatActivity
     EditText AnnualRain2;
     Spinner SoleAccess;
     Spinner Mitigation;
-    //photos go here
     EditText Comments;
     EditText FlmaName;
     EditText FlmaId;
     EditText FlmaDescription;
-
 
     //<<<PRELIMINARY RATINGS>>
     Spinner DitchEffectiveness; //E
@@ -194,10 +202,9 @@ public class RockfallActivity extends AppCompatActivity
     Uri imageUri;
     String [] savedImagePaths;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //provided
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rockfall);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -212,6 +219,7 @@ public class RockfallActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //UI Connection
         SubmitButton = (Button)findViewById(R.id.RSubmitButton);
 
         //<<<SITE INFORMATION>>>
@@ -225,6 +233,7 @@ public class RockfallActivity extends AppCompatActivity
         Local.setFocusable(true);
         Local.setFocusableInTouchMode(true);
 
+        //listen if they change agency choice, update regional accordingly
         Agency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
@@ -266,8 +275,6 @@ public class RockfallActivity extends AppCompatActivity
                     adapterRegional.notifyDataSetChanged();
                 }
 
-//                Toast.makeText(getApplicationContext(),
-//                        "Selected Agency : " + agency, Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -276,9 +283,7 @@ public class RockfallActivity extends AppCompatActivity
             }
         });
 
-
-
-
+        //listen if they change regional option, update local accordingly
         Regional.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
@@ -431,21 +436,15 @@ public class RockfallActivity extends AppCompatActivity
         });
 
 
-
         fs_regions = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.RegionalList)));
         adapterRegional = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fs_regions);
         adapterRegional.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Regional.setAdapter(adapterRegional);
 
-
-
         fs_local1 = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.RegionalList)));
         adapterLocal = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, fs_local1);
         adapterLocal.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Local.setAdapter(adapterLocal);
-
-
-
 
         Date = (EditText) findViewById(R.id.R_Date);
         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
@@ -521,8 +520,6 @@ public class RockfallActivity extends AppCompatActivity
 
         SightDistance = (EditText) findViewById(R.id.R_SightDistance);
         SightDistance.setOnFocusChangeListener(sightDistanceWatcher);
-        //dsd watcher?
-
 
         RtWidth = (EditText) findViewById(R.id.R_RtWidth);
         RtWidth.setOnFocusChangeListener(rtWidthWatcher);
@@ -568,8 +565,6 @@ public class RockfallActivity extends AppCompatActivity
         Mitigation.setFocusableInTouchMode(true);
         Mitigation.setFocusable(true);
 
-        //Photos here
-
         Comments= (EditText) findViewById(R.id.R_Comments);
         FlmaName= (EditText) findViewById(R.id.R_FlmaName);
         FlmaId= (EditText) findViewById(R.id.R_FlmaId);
@@ -582,18 +577,15 @@ public class RockfallActivity extends AppCompatActivity
         DitchEffectiveness.setFocusable(true);
         DitchEffectiveness.setFocusableInTouchMode(true);
 
-
         RockfallHistory = (Spinner) findViewById(R.id.R_RockfallHistory); //E
         RockfallHistory.setOnItemSelectedListener(prelimWatcher);
         RockfallHistory.setFocusable(true);
         RockfallHistory.setFocusableInTouchMode(true);
         DitchEffectiveness.setOnItemSelectedListener(slopeHazardWatcher); //??????PROB
 
-
         BSVperEvent = (EditText) findViewById(R.id.R_BSVperEvent); //F
         BSVperEvent.setOnFocusChangeListener(BSVperEventWatcher);
         DitchEffectiveness.setOnItemSelectedListener(slopeHazardWatcher); //????PROB
-
 
         ImpactOU = (Spinner) findViewById(R.id.R_ImpactOU); //G
         ImpactOU.setOnItemSelectedListener(prelimWatcher);
@@ -681,7 +673,6 @@ public class RockfallActivity extends AppCompatActivity
         RiskTotal = (EditText) findViewById(R.id.R_RiskTotal);
         RiskTotal.addTextChangedListener(totalWatcher);
 
-
         //FINAL TOTAL
         Total = (EditText) findViewById(R.id.R_TotalScore);
 
@@ -719,7 +710,7 @@ public class RockfallActivity extends AppCompatActivity
         createLocationRequest();
     }
 
-    // Check all connectivities whether available or not
+    //CREDITS (2)
     public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -732,8 +723,9 @@ public class RockfallActivity extends AppCompatActivity
         return false;
     }
 
+    //location methods...
+
     protected void createLocationRequest() {
-        System.out.println("create Location Request");
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(20000);
         mLocationRequest.setFastestInterval(5000);
@@ -750,21 +742,13 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
-
     @Override
     public void onConnected(Bundle bundle) {
         //permissions...
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-//        if (mLastLocation != null) {
-//            System.out.println("weird toast stuff");
-//
-//            Toast.makeText(this, "Latitude:" + mLastLocation.getLatitude() + ", Longitude:" + mLastLocation.getLongitude(), Toast.LENGTH_LONG).show();
-//
-//        }
-
     }
 
-    //HERE Location
+    //Set current location for beginning latitude/longitude
     public void setBeginCoords(View view) {
         if(mLastLocation!=null){
             BeginLat.setText(String.valueOf(mLastLocation.getLatitude()));
@@ -774,6 +758,7 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
+    //set current location for ending latitude/longitude
     public void setEndCoords(View view) {
         if(mLastLocation!=null){
             EndLat.setText(String.valueOf(mLastLocation.getLatitude()));
@@ -792,13 +777,6 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
-//    protected void startLocationUpdates() {
-//        //LocationServices.FusedLocationApi.requestLocationUpdates(
-//                //mGoogleApiClient, mLocationRequest, this);
-//        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,this);
-//    }
-
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -807,13 +785,9 @@ public class RockfallActivity extends AppCompatActivity
         }
     }
 
-    public void onLocationChanged(Location location) {
-        mLastLocation = location;
-        //Toast.makeText(this, "Latitude:" + mLastLocation.getLatitude()+", Longitude:"+mLastLocation.getLongitude(),Toast.LENGTH_LONG).show();
-        System.out.println("made it here finally");
-    }
+    //////////End location methods
 
-
+    //go back
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -824,6 +798,7 @@ public class RockfallActivity extends AppCompatActivity
         }
     }
 
+    //open menus
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -833,14 +808,10 @@ public class RockfallActivity extends AppCompatActivity
         return true;
     }
 
+    //side menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -853,6 +824,7 @@ public class RockfallActivity extends AppCompatActivity
     }
 
 
+    //top menu
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -964,15 +936,11 @@ public class RockfallActivity extends AppCompatActivity
                 text3 = text3.concat(text2);
                 text3 =text3.concat("}");
 
-                //System.out.println(text3);
-
-
-
                 //Map<String, String> map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
                 map = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {}.getType());
                 System.out.println(map);
-                //System.out.println(map.get("ID"));
 
+                //Set form fields
 
                 String agency = (map.get("UMBRELLA_AGENCY"));
                 String [] agencyArray = getResources().getStringArray(R.array.AgencyList);
@@ -1151,10 +1119,8 @@ public class RockfallActivity extends AppCompatActivity
                 DitchSlope3.setText(map.get("MINIMUM_DITCH_SLOPE_SECOND"));
                 DitchSlope4.setText(map.get("MAXIMUM_DITCH_SLOPE_SECOND"));
 
-
                 BlkSize.setText(map.get("BLK_SIZE"));
                 Volume.setText(map.get("VOLUME"));
-
 
                 AnnualRain1.setText(map.get("BEGIN_ANNUAL_RAINFALL"));
                 AnnualRain2.setText(map.get("END_ANNUAL_RAINFALL"));
@@ -1218,7 +1184,6 @@ public class RockfallActivity extends AppCompatActivity
                 PrelimRating.setText(map.get("PRELIMINARY_RATING"));
 
                 //Slope Hazard Ratings ALL
-
                 String hazard_rating_slope_drainage = map.get("HAZARD_RATING_SLOPE_DRAINAGE");
                 for(int i = 0; i< ratingArray.length; i++){
                     if(ratingArray[i].equals(hazard_rating_slope_drainage)){
@@ -1306,14 +1271,13 @@ public class RockfallActivity extends AppCompatActivity
 
 
     }
+    //call to get info from db
     private void getJSON(String url) {
         class GetJSON extends AsyncTask<String, Void, String> {
-            //ProgressDialog loading; //just to tell the user that the map is in progress...all good
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                //loading = ProgressDialog.show(AnnotationInfoActivity.this, "Please Wait...",null,true,true);
             }
 
             @Override
@@ -1330,8 +1294,7 @@ public class RockfallActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                //loading.dismiss(); //dismiss the "loading" message
-                //System.out.println(s);  //testing
+
             }
         }
         GetJSON gj = new GetJSON();
@@ -1491,12 +1454,7 @@ public class RockfallActivity extends AppCompatActivity
 
     };
 
-
-
-
     //Latitude Validation
-
-
     private final View.OnFocusChangeListener beginLatWatcher = new View.OnFocusChangeListener() {
         public void onFocusChange(View v, boolean hasFocus) {
 
@@ -1629,7 +1587,6 @@ public class RockfallActivity extends AppCompatActivity
     //H: when the site info aadt is changed, update aadt etc.
 
     //checkbox click
-
     public void aadtChecked(View view) {
         if (CheckAadt.isChecked()) {
             aadtCheckmark = true;
@@ -1681,7 +1638,6 @@ public class RockfallActivity extends AppCompatActivity
                     AlertDialog dialog = builder.create();
 
                     dialog.show();
-
 
                 }
 
@@ -1752,9 +1708,7 @@ public class RockfallActivity extends AppCompatActivity
                     calcRiskTotal();
 
                 }
-
             }
-
         }
 
     };
@@ -1789,7 +1743,6 @@ public class RockfallActivity extends AppCompatActivity
 
                 }
             }
-
         }
 
     };
@@ -1843,14 +1796,10 @@ public class RockfallActivity extends AppCompatActivity
 
                 }
 
-
             }
-
         }
 
     };
-
-
 
     //Validation: Slope Angle
     private final View.OnFocusChangeListener slopeAngleWatcher = new View.OnFocusChangeListener() {
@@ -1882,13 +1831,10 @@ public class RockfallActivity extends AppCompatActivity
                     SlopeAngle.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                 }
-
             }
-
         }
 
     };
-
 
     //Validation: Sight Distance
     private final View.OnFocusChangeListener sightDistanceWatcher = new View.OnFocusChangeListener() {
@@ -1962,14 +1908,10 @@ public class RockfallActivity extends AppCompatActivity
 
                 }
 
-
             }
-
         }
 
     };
-
-
 
     private final View.OnFocusChangeListener BSVperEventWatcher = new View.OnFocusChangeListener() {
         public void onFocusChange(View v, boolean hasFocus) {
@@ -2000,14 +1942,13 @@ public class RockfallActivity extends AppCompatActivity
                 else {
                     calcPrelim();
                     BSVperEvent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-
                 }
             }
         }
     };
 
 
+    //calculate prelim rating on change
     private final OnItemSelectedListener prelimWatcher = new OnItemSelectedListener() {
 
         @Override
@@ -2247,16 +2188,10 @@ public class RockfallActivity extends AppCompatActivity
                 }
                 //if not empty...
                 else{
-
                     slopeHazardCalc();
                     AnnualRainfall.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-
                 }
-
-
             }
-
         }
 
     };
@@ -2368,10 +2303,6 @@ public class RockfallActivity extends AppCompatActivity
 
     };
 
-
-
-
-
     //Validation: if they were to manually change axial los
     private final View.OnFocusChangeListener slopeHeightCalcWatcher = new View.OnFocusChangeListener() {
         public void onFocusChange(View v, boolean hasFocus) {
@@ -2402,15 +2333,10 @@ public class RockfallActivity extends AppCompatActivity
                 }
                 //if not empty...
                 else {
-
                     slopeHazardCalc();
                     SlopeHeightCalc.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
-
                 }
-
             }
-
         }
 
     };
@@ -2429,7 +2355,6 @@ public class RockfallActivity extends AppCompatActivity
         }
 
     };
-
 
     //slope hazard calc: D+E+F+I+J+K+O+(>(P+Q || (R+S)
     public void slopeHazardCalc() {
@@ -2644,11 +2569,8 @@ public class RockfallActivity extends AppCompatActivity
                     calcRiskTotal();
                     RtWidth.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
-
                 }
-
             }
-
         }
 
     };
@@ -2724,7 +2646,6 @@ public class RockfallActivity extends AppCompatActivity
 
                     dialog.show();
 
-
                 }
                 //if not empty...
                 else{
@@ -2732,12 +2653,8 @@ public class RockfallActivity extends AppCompatActivity
                     calcRiskTotal();
                     RouteTW.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
-
                 }
-
-
             }
-
         }
 
     };
@@ -2824,8 +2741,6 @@ public class RockfallActivity extends AppCompatActivity
                     AlertDialog dialog = builder.create();
 
                     dialog.show();
-
-
                 }
                 //if not empty...
                 else {
@@ -2836,12 +2751,9 @@ public class RockfallActivity extends AppCompatActivity
                 }
 
             }
-
         }
 
     };
-
-
 
     //Validation If they were to manually change X
     private final View.OnFocusChangeListener percentDsdWatcher = new View.OnFocusChangeListener() {
@@ -2870,19 +2782,14 @@ public class RockfallActivity extends AppCompatActivity
 
                     dialog.show();
 
-
                 }
                 else {
                     PercentDSD.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                     calcRiskTotal();
 
-
                 }
-
-
             }
-
         }
 
     };
@@ -2947,6 +2854,7 @@ public class RockfallActivity extends AppCompatActivity
 
     };
 
+    //on changed, calculate risk total
     private final OnItemSelectedListener riskWatcher = new OnItemSelectedListener() {
 
         @Override
@@ -3071,6 +2979,7 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
+    //on changed, calculate total
     private final TextWatcher totalWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
@@ -3101,12 +3010,10 @@ public class RockfallActivity extends AppCompatActivity
         String scoreS = String.valueOf(score);
         Total.setText(scoreS);
 
-
     }
 
 
     //<<POPUPS>>
-
     public void popup1(View view) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         final TextView tv = new TextView(this);
@@ -3546,11 +3453,7 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
-    public void goOfflineSites(View view){
-        Intent intent = new Intent(this, OfflineList.class);
-        startActivity(intent);
-    }
-
+  //submit edited form
     public void editSubmit() throws Exception{
         Thread thread = new Thread(new Runnable() {
 
@@ -3823,7 +3726,6 @@ public class RockfallActivity extends AppCompatActivity
                     //flma problem
 
                     //todo: hazard type (3) after aadt
-
                     writer.write("umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
                             "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
                             side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
@@ -3863,7 +3765,6 @@ public class RockfallActivity extends AppCompatActivity
                     alertDialog.show();
                     //end success message
 
-
                     writer.flush();
                     String line;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -3883,6 +3784,7 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
+    //Submit rockfall form
     public void RSubmit(View view) throws Exception{
         //EDIT
         if(getIntent().getStringExtra("editing") != null){
@@ -4221,6 +4123,7 @@ public class RockfallActivity extends AppCompatActivity
     }
 
 
+    //add a new rockfall in the database
     public void newRockfall(View view){
         RockfallDBHandler dbHandler = new RockfallDBHandler(this, null, null, 1);
         //id
@@ -4251,8 +4154,6 @@ public class RockfallActivity extends AppCompatActivity
             temp = temp.concat(HazardType3.getSelectedItem().toString());
         }
         String hazard_type = temp;
-
-
 
         String begin_coordinate_lat = BeginLat.getText().toString();
         String begin_coordinate_long = BeginLong.getText().toString();
@@ -4364,6 +4265,7 @@ public class RockfallActivity extends AppCompatActivity
 
         dbHandler.addRockfall(rockfall);
 
+        //clear out the fields
         Agency.setSelection(0);
         Regional.setSelection(0);
         Local.setSelection(0);
@@ -4452,7 +4354,8 @@ public class RockfallActivity extends AppCompatActivity
         Total.setText("");
 
     }
-    
+
+    //find a rockfall in the database
     public void lookupRockfall(int finder) {
         RockfallDBHandler dbHandler = new RockfallDBHandler(this, null, null, 1);
 
@@ -4807,7 +4710,8 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
-    //image picker
+    //Image picker
+    //CREDITS(4)
     public void chooseImages(View view) {
         Intent intent = new Intent(this, AlbumSelectActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_LIMIT, 10);
@@ -4815,6 +4719,7 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
+    //CREDITS(4)
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
@@ -4831,8 +4736,7 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
-    //need to be able to view multiple images
-    //need to save the uri string, when saving offline
+    //view images you have chosen
     public void viewChosen(View view){
         System.out.println(imageUri);
         Dialog builder = new Dialog(this);
@@ -4846,7 +4750,7 @@ public class RockfallActivity extends AppCompatActivity
             }
         });
 
-
+        //if you have chosen an image
         if(selectedImages != null) {
             ScrollView scroller = new ScrollView(this);
             LinearLayout ll = new LinearLayout(this);
@@ -4864,6 +4768,7 @@ public class RockfallActivity extends AppCompatActivity
             builder.show();
 
         }
+        //else if you are loading images from a site saved offline
         else if(savedImagePaths != null){
             ScrollView scroller = new ScrollView(this);
             LinearLayout ll = new LinearLayout(this);
@@ -4880,11 +4785,11 @@ public class RockfallActivity extends AppCompatActivity
                     ViewGroup.LayoutParams.MATCH_PARENT));
             builder.show();
 
-
         }
-
     }
 
+    //CREDITS(5)
+    //upload image
     public void uploadImage() throws  Exception {
         class Run extends AsyncTask<String, Void, String> {
 
@@ -4941,6 +4846,29 @@ public class RockfallActivity extends AppCompatActivity
         }
         Run r = new Run();
         r.execute();
+    }
+
+    //CREDITS(3)
+    //compress image size
+    public void smallerImage(){
+        ByteArrayOutputStream bytearrayoutputstream = new ByteArrayOutputStream();
+        Bitmap bitmap1;
+        Uri uri = Uri.fromFile(new File(selectedImages.get(0).path));
+        try {
+            bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+            bitmap1.compress(Bitmap.CompressFormat.JPEG,40,bytearrayoutputstream);
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        byte [] BYTE = bytearrayoutputstream.toByteArray();
+        Bitmap bitmap2 = BitmapFactory.decodeByteArray(BYTE,0,BYTE.length);
+        ImageView imageView = new ImageView(this);
+        imageView.setImageBitmap(bitmap2);
+
+        String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), bitmap2, "Title", null);
+        Uri uri2 = Uri.parse(path);
     }
 }
 

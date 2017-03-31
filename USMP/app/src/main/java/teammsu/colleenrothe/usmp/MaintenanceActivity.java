@@ -968,12 +968,6 @@ public class MaintenanceActivity extends AppCompatActivity
 
     }
 
-    //go to the list of offline sites
-    public void goOfflineSites(View view){
-        Intent intent = new Intent(this, OfflineList.class);
-        startActivity(intent);
-    }
-
     //submit the maintenance form
     public void M_Submit(View view) throws Exception{
         Thread thread = new Thread(new Runnable() {

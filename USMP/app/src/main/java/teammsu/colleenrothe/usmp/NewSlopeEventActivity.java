@@ -423,10 +423,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
         alertDialog.show();
 
     }
-    public void goOfflineSites(View view){
-        Intent intent = new Intent(this, OfflineList.class);
-        startActivity(intent);
-    }
 
     //Submit NSE form
     public void NSE_Submit(View view) throws Exception {
