@@ -55,6 +55,12 @@ class OptionCell: UITableViewCell{
             coreType = "OfflineMaintenance"
         }
         
+        //permissions!
+        if(shareData.level == 2){
+            submitButton.isEnabled = false
+            submitButton.backgroundColor = UIColor.black
+        }
+        
     }
     
     //go back to the right page

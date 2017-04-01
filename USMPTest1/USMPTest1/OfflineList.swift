@@ -21,6 +21,8 @@ class OfflineList: UITableViewController{
 
     
     override func viewDidLoad(){
+      
+        
         super.viewDidLoad()
         getData()
         print(shareData.OfflineType)

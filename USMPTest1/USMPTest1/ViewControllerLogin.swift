@@ -71,6 +71,10 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
             welcomeLabel.text = "Incorrect username or password. Please try again."
         }
         
+        //set if root, level1, or level2
+        
+        shareData.level = 2;
+        
     }
     
 

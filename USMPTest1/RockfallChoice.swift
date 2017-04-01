@@ -530,6 +530,12 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //permissions!
+        if(shareData.level == 2){
+            submitButton.isEnabled = false
+            submitButton.backgroundColor = UIColor.gray
+        }
+        
         shareData.OfflineType = "rockfall"
         
         //AUTOCOMPLETE STUFF

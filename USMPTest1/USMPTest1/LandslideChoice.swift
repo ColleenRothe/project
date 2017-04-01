@@ -614,8 +614,12 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     
     override func viewDidLoad() {
+        //permissions!
+        if(shareData.level == 2){
+            submitButton.isEnabled = false
+            submitButton.backgroundColor = UIColor.gray
+        }
      
-        
         super.viewDidLoad()
         //Autocomplete
 

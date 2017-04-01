@@ -172,6 +172,11 @@ class ShareData {
     var offline_edit = false
     var offline_edit_site_id = ""
     
+    //login permissions
+        //0=root, 1=level1, 2=level2
+            //level 2 is read-only
+    var level = 2;
+    
 
     
     

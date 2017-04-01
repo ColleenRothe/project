@@ -258,6 +258,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //permissions!
+        if(shareData.level == 2){
+            submitButton.isEnabled = false
+            submitButton.backgroundColor = UIColor.gray
+        }
+        
         shareData.edit_site = false
         
         //fill in today's date
