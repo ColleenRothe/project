@@ -29,7 +29,7 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         //let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php")! as URL)
         
         //update to master once merged.....
-          let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/edit_site_php/get_current_site_information.php")! as URL)
+          let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php")! as URL)
         
         request.httpMethod = "POST"
         
@@ -58,6 +58,12 @@ class HomeModel: NSObject, URLSessionDataDelegate{
             
             self.responseString = self.responseString.replacingOccurrences(of: "[", with: "")
             self.responseString = self.responseString.replacingOccurrences(of: "]", with: "")
+            self.responseString = self.responseString.replacingOccurrences(of: "{", with: "")
+            self.responseString = self.responseString.replacingOccurrences(of: "}", with: "")
+            var tempString = "{"
+            tempString = tempString.appending(self.responseString)
+            tempString.append("}")
+            self.responseString = tempString
             //problem if there are commas in any of the strings people type in
             
             if let data2 = self.responseString.data(using: .utf8){
@@ -110,8 +116,10 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         else{
             thing.site_id=""
         }
-        if(self.JSONDictionary.value(forKey:"COORDINATES") as? String != nil){
-        thing.coordinates = self.JSONDictionary.value(forKey: "COORDINATES")! as? String
+        if(self.JSONDictionary.value(forKey:"BEGIN_COORDINATE_LAT") as? String != nil){
+            var coordinateString = self.JSONDictionary.value(forKey: "BEGIN_COORDINATE_LAT")! as? String
+            coordinateString = coordinateString?.appending((self.JSONDictionary.value(forKey: "BEGIN_COORDINATE_LONG")! as? String)!)
+        thing.coordinates = coordinateString
         }
         else{
             thing.coordinates=""
@@ -149,14 +157,14 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         }else{
             thing.side = ""
         }
-        if(self.JSONDictionary.value(forKey:"HAZARD_TYPE")as? String != nil){
-        thing.hazard_type = self.JSONDictionary.value(forKey: "HAZARD_TYPE")! as? String
+        if(self.JSONDictionary.value(forKey:"HAZARD_TYPE2")as? String != nil){
+        thing.hazard_type = self.JSONDictionary.value(forKey: "HAZARD_TYPE2")! as? String
         }
         else{
             thing.hazard_type = ""
         }
-        if(self.JSONDictionary.value(forKey:"PRELIM_RATING")as? String != nil){
-        thing.prelim_rating = self.JSONDictionary.value(forKey: "PRELIM_RATING")! as? String
+        if(self.JSONDictionary.value(forKey:"PRELIMINARY_RATING")as? String != nil){
+        thing.prelim_rating = self.JSONDictionary.value(forKey: "PRELIMINARY_RATING")! as? String
         }else{
             thing.prelim_rating=""
         }
@@ -170,8 +178,8 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         }else{
             thing.photos=""
         }
-        if(self.JSONDictionary.value(forKey:"COMMENTS")as? String != nil){
-        thing.comments = self.JSONDictionary.value(forKey: "COMMENTS")! as? String
+        if(self.JSONDictionary.value(forKey:"COMMENT")as? String != nil){
+        thing.comments = self.JSONDictionary.value(forKey: "COMMENT")! as? String
         }else{
             thing.comments=""
         }
