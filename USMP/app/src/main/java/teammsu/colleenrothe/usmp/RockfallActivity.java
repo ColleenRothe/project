@@ -28,6 +28,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -181,6 +182,7 @@ public class RockfallActivity extends AppCompatActivity
     EditText Total;
 
     Button SubmitButton;
+    ScrollView RScroll;
 
     //Location Stuff...
     private GoogleApiClient mGoogleApiClient;
@@ -221,6 +223,24 @@ public class RockfallActivity extends AppCompatActivity
 
         //UI Connection
         SubmitButton = (Button)findViewById(R.id.RSubmitButton);
+        RScroll = (ScrollView)findViewById(R.id.RScroll);
+
+        RScroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (!isNetworkAvailable()) {
+                    SubmitButton.setBackgroundColor(Color.DKGRAY);
+                    SubmitButton.setClickable(false);
+                }
+
+                //check for level 2 - read only
+                if(LoginActivity.permissions == 2){
+                    SubmitButton.setBackgroundColor(Color.DKGRAY);
+                    SubmitButton.setClickable(false);
+                }
+
+            }
+        });
 
         //<<<SITE INFORMATION>>>
         Agency = (Spinner) findViewById(R.id.RAgency);

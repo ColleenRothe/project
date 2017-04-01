@@ -568,7 +568,12 @@ public class OfflineList extends AppCompatActivity
         @Override
 
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+            //check for level 2 - read only
+            if(LoginActivity.permissions == 2){
+                submit.setBackgroundColor(Color.DKGRAY);
+                submit.setClickable(false);
+            }
+            
             if (position == 0) { //landslide
                 //no row initially selected
                 selected_row = -1;

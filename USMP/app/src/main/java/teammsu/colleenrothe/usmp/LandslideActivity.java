@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,6 +29,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -174,6 +176,7 @@ public class LandslideActivity extends AppCompatActivity
 
     //Submit Button.....
     Button SubmitButton;
+    ScrollView LScroll;
 
     //Location Stuff...
     private GoogleApiClient mGoogleApiClient;
@@ -195,6 +198,8 @@ public class LandslideActivity extends AppCompatActivity
     Uri imageUri;
     String [] savedImagePaths;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //provided
@@ -206,6 +211,25 @@ public class LandslideActivity extends AppCompatActivity
 
         //UI connection
         SubmitButton = (Button) findViewById(R.id.LSubmitButton);
+
+        //else, the submit button is "null" and cannot be changed
+        LScroll = (ScrollView) findViewById(R.id.LScroll);
+        LScroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (!isNetworkAvailable()) {
+                    SubmitButton.setBackgroundColor(Color.DKGRAY);
+                    SubmitButton.setClickable(false);
+                }
+
+                //check for level 2 - read only
+                if(LoginActivity.permissions == 2){
+                    SubmitButton.setBackgroundColor(Color.DKGRAY);
+                    SubmitButton.setClickable(false);
+                }
+
+            }
+        });
 
         //<<<SITE INFORMATION>>>
         Agency = (Spinner) findViewById(R.id.LAgency);
@@ -668,13 +692,6 @@ public class LandslideActivity extends AppCompatActivity
             loadFromOffline();
         }
 
-        //if connection not available, can't submit
-        if (!isNetworkAvailable()) {
-            SubmitButton.setBackgroundColor(Color.DKGRAY);
-            SubmitButton.setClickable(false);
-        }
-
-
         //PRE-GIVEN STUFF
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -701,6 +718,7 @@ public class LandslideActivity extends AppCompatActivity
 
     }
 
+
     //CREDITS (2)
     public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager)
@@ -716,6 +734,7 @@ public class LandslideActivity extends AppCompatActivity
 
     //Location Methods
     protected void createLocationRequest() {
+
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(20000);
         mLocationRequest.setFastestInterval(5000);

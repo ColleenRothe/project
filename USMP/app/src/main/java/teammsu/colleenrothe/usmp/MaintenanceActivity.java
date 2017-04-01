@@ -21,9 +21,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.Button;
@@ -97,6 +99,7 @@ public class MaintenanceActivity extends AppCompatActivity
     EditText Other5;
 
     Button SubmitButton;
+    ScrollView MScroll;
 
 
     EditText RunningTotal;
@@ -156,6 +159,25 @@ public class MaintenanceActivity extends AppCompatActivity
 
         //Connect to UI
         SubmitButton = (Button) findViewById(R.id.MSubmitButton);
+        MScroll = (ScrollView)findViewById(R.id.MScroll);
+
+        MScroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (!isNetworkAvailable()) {
+                    SubmitButton.setBackgroundColor(Color.DKGRAY);
+                    SubmitButton.setClickable(false);
+                }
+
+                //check for level 2 - read only
+                if(LoginActivity.permissions == 2){
+                    SubmitButton.setBackgroundColor(Color.DKGRAY);
+                    SubmitButton.setClickable(false);
+                }
+
+            }
+        });
+
 
         MaintenanceID = (Spinner) findViewById(R.id.MaintenanceID);
         Mcode = (EditText) findViewById(R.id.Mcode);
@@ -468,12 +490,6 @@ public class MaintenanceActivity extends AppCompatActivity
             OfflineList.should_load=false;
             lookupMaintenance(OfflineList.selected_row);
         }
-        //if no network connection...can't submit
-        if(!isNetworkAvailable()){
-            SubmitButton.setBackgroundColor(Color.DKGRAY);
-            SubmitButton.setClickable(false);
-        }
-
     }
 
     //CREDITS(1)

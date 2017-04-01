@@ -34,6 +34,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -141,6 +142,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
     TextView DamagesComments;
 
     Button SubmitButton;
+    ScrollView NSEScroll;
 
     //Images
     ArrayList<Image> selectedImages;
@@ -157,6 +159,24 @@ public class NewSlopeEventActivity extends AppCompatActivity
 
         //UI Connection
         SubmitButton = (Button) findViewById(R.id.NSESubmitButton);
+        NSEScroll = (ScrollView)findViewById(R.id.NSEScroll);
+
+        NSEScroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (!isNetworkAvailable()) {
+                    SubmitButton.setBackgroundColor(Color.DKGRAY);
+                    SubmitButton.setClickable(false);
+                }
+
+                //check for level 2 - read only
+                if(LoginActivity.permissions == 2){
+                    SubmitButton.setBackgroundColor(Color.DKGRAY);
+                    SubmitButton.setClickable(false);
+                }
+
+            }
+        });
 
         ObserverName = (EditText) findViewById(R.id.ObserverName);
         Email = (EditText) findViewById(R.id.Email);
@@ -266,11 +286,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
             OfflineList.should_load=false;
             lookupNSE(OfflineList.selected_row);
         }
-        //if no connnectivity...can't submit
-        if(!isNetworkAvailable()){
-            SubmitButton.setBackgroundColor(Color.DKGRAY);
-            SubmitButton.setClickable(false);
-        }
+
     }
 
     //CREDITS(1)
