@@ -573,7 +573,7 @@ public class OfflineList extends AppCompatActivity
                 submit.setBackgroundColor(Color.DKGRAY);
                 submit.setClickable(false);
             }
-            
+
             if (position == 0) { //landslide
                 //no row initially selected
                 selected_row = -1;

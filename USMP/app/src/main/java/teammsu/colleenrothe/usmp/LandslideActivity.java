@@ -190,15 +190,13 @@ public class LandslideActivity extends AppCompatActivity
     ArrayList<String> fs_local1;
 
     //edit site
-    private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php"; //to place the sites
+    private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php"; //to place the sites
     Map<String, String> map;
 
     //images
     ArrayList<Image> selectedImages;
     Uri imageUri;
     String [] savedImagePaths;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1008,17 +1006,14 @@ public class LandslideActivity extends AppCompatActivity
                 }
 
                 //TODO: hazard type here (1)
-                String hazardString = map.get("HAZARD_TYPE");
-                if (hazardString.contains("-")) {
-                    //example entry is "Landslide - Shallow Slump, Below Route"
-                    int start = hazardString.indexOf("-");
-                    hazardString = hazardString.substring(start + 2);
+                String hazardString = map.get("HAZARD_TYPE2");
+                System.out.println("hazard string is: "+ hazardString);
+                if(!hazardString.equals("") && !hazardString.equals(null)) {
                     String[] hazards = hazardString.split(",");
-
                     ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
 
 
-                    for (int i = 0; i < hazardTypeList.size(); i++) {
+                    for (int i = 0; i < hazards.length; i++) {
                         if (i == 3) { //can't have more than 3
                             break;
                         }
@@ -1033,7 +1028,6 @@ public class LandslideActivity extends AppCompatActivity
                             }
                         }
                     }
-
                 }
 
 
@@ -3467,15 +3461,15 @@ public class LandslideActivity extends AppCompatActivity
                     String aadt = String.valueOf(Aadt.getText());
                     //todo: slope hazard here (2)
 
-                    String temp = "Landslide - ";
-                    if (HazardType1.getSelectedItem().toString() != "") {
+                    String temp = "";
+                    if (HazardType1.getSelectedItemPosition() != 0) {
                         temp = temp.concat(HazardType1.getSelectedItem().toString());
                     }
-                    if (HazardType2.getSelectedItem().toString() != "") {
+                    if (HazardType2.getSelectedItemPosition() !=0) {
                         temp = temp.concat(",");
                         temp = temp.concat(HazardType2.getSelectedItem().toString());
                     }
-                    if (HazardType3.getSelectedItem().toString() != "") {
+                    if (HazardType3.getSelectedItemPosition() !=0) {
                         temp = temp.concat(",");
                         temp = temp.concat(HazardType3.getSelectedItem().toString());
                     }
@@ -3704,7 +3698,7 @@ public class LandslideActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     try {
-                        URL url = new URL("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php");
+                        URL url = new URL("http://nl.cs.montana.edu/test_sites/colleen.rothe/add_new_site.php");
                         URLConnection conn = url.openConnection();
                         conn.setDoOutput(true);
                         OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
@@ -3761,15 +3755,15 @@ public class LandslideActivity extends AppCompatActivity
                         String datum = String.valueOf(Datum.getText());
                         String aadt = String.valueOf(Aadt.getText());
                         //todo: hazard type here (4)
-                        String temp = "Landslide - ";
-                        if (HazardType1.getSelectedItem().toString() != "") {
+                        String temp = "";
+                        if (HazardType1.getSelectedItemPosition() != 0) {
                             temp = temp.concat(HazardType1.getSelectedItem().toString());
                         }
-                        if (HazardType2.getSelectedItem().toString() != "") {
+                        if (HazardType2.getSelectedItemPosition() != 0) {
                             temp = temp.concat(",");
                             temp = temp.concat(HazardType2.getSelectedItem().toString());
                         }
-                        if (HazardType3.getSelectedItem().toString() != "") {
+                        if (HazardType3.getSelectedItemPosition() != 0) {
                             temp = temp.concat(",");
                             temp = temp.concat(HazardType3.getSelectedItem().toString());
                         }
@@ -3946,13 +3940,15 @@ public class LandslideActivity extends AppCompatActivity
                         String total_score = String.valueOf(Total.getText());
 
                         //flma problem
+                        System.out.println("hazard type input is: "+ hazard_type);
+                        String [] hazardA = {"Shallow Slump"};
 
                         //todo: hazard type (5) (after aadt)
                         writer.write("&umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
                                 "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
                                 side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
                                 begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
-                                "&datum=" + datum + "&aadt=" + aadt + "&hazard_type=" + hazard_type + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                                "&datum=" + datum + "&aadt=" + aadt + "&hazard_type=" + hazardA + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
                                 slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
                                 "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width=" + maximum_ditch_width +
                                 "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
@@ -4010,15 +4006,15 @@ public class LandslideActivity extends AppCompatActivity
         int weather = Weather.getSelectedItemPosition();
         // todo: hazard type (6)
         // String hazard_type = HazardType.getText().toString();
-        String temp = "Landslide - ";
-        if (HazardType1.getSelectedItem().toString() != "") {
+        String temp = "";
+        if (HazardType1.getSelectedItemPosition() != 0) {
             temp = temp.concat(HazardType1.getSelectedItem().toString());
         }
-        if (HazardType2.getSelectedItem().toString() != "") {
+        if (HazardType2.getSelectedItemPosition() != 0) {
             temp = temp.concat(",");
             temp = temp.concat(HazardType2.getSelectedItem().toString());
         }
-        if (HazardType3.getSelectedItem().toString() != "") {
+        if (HazardType3.getSelectedItemPosition() != 0) {
             temp = temp.concat(",");
             temp = temp.concat(HazardType3.getSelectedItem().toString());
         }
@@ -4239,35 +4235,30 @@ public class LandslideActivity extends AppCompatActivity
             //todo hazard type (9)
             String hazardString = landslide.getHazard_type();
 
-            if (hazardString.contains("-")) {
-                //example entry is "Landslide - Shallow Slump, Below Route"
+            String[] hazards = hazardString.split(",");
 
-                int start = hazardString.indexOf("-");
-                hazardString = hazardString.substring(start + 2);
-                String[] hazards = hazardString.split(",");
-
-                ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
+            ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
 
 
-                if(hazards.length != 0) {
-                    for (int i = 0; i < hazardTypeList.size(); i++) {
-                        if (i == 3) { //can't have more than 3
-                            break;
+            if(hazards.length != 0) {
+                for (int i = 0; i < hazards.length; i++) {
+                    if (i == 3) { //can't have more than 3
+                        break;
+                    }
+                    //if it's in the list, set the spinner to it
+                    if (hazardTypeList.contains(hazards[i])) {
+                        if (i == 0) {
+                            HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
+                        } else if (i == 1) {
+                            HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
+                        } else {
+                            HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
                         }
-                        //if it's in the list, set the spinner to it
-                        if (hazardTypeList.contains(hazards[i])) {
-                            if (i == 0) {
-                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            } else if (i == 1) {
-                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            } else {
-                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            }
-                        }
-                    } // end for
-                }
-
+                    }
+                } // end for
             }
+
+
 
 
             BeginLat.setText(landslide.getBegin_coordinate_lat());
@@ -4398,31 +4389,25 @@ public class LandslideActivity extends AppCompatActivity
                 //todo: hazard type (10)
                 String hazardString = offlineSite.getHazard_type();
 
-                if (hazardString.contains("-")) {
-                    //example entry is "Landslide - Shallow Slump, Below Route"
-                    int start = hazardString.indexOf("-");
-                    hazardString = hazardString.substring(start + 2);
-                    String[] hazards = hazardString.split(",");
 
-                    ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
+                String[] hazards = hazardString.split(",");
 
+                ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
 
-                    for (int j = 0; j < hazardTypeList.size(); j++) {
-                        if (j == 3) { //can't have more than 3
-                            break;
-                        }
-                        //if it's in the list, set the spinner to it
-                        if (hazardTypeList.contains(hazards[j])) {
-                            if (j == 0) {
-                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[j]));
-                            } else if (j == 1) {
-                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[j]));
-                            } else {
-                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[j]));
-                            }
+                for (int j = 0; j < hazards.length; j++) {
+                    if (j == 3) { //can't have more than 3
+                        break;
+                    }
+                    //if it's in the list, set the spinner to it
+                    if (hazardTypeList.contains(hazards[j])) {
+                        if (j == 0) {
+                            HazardType1.setSelection(hazardTypeList.indexOf(hazards[j]));
+                        } else if (j == 1) {
+                            HazardType2.setSelection(hazardTypeList.indexOf(hazards[j]));
+                        } else {
+                            HazardType3.setSelection(hazardTypeList.indexOf(hazards[j]));
                         }
                     }
-
                 }
 
                 BeginLat.setText(offlineSite.getBegin_coordinate_lat());
@@ -4640,7 +4625,7 @@ public class LandslideActivity extends AppCompatActivity
 
             try {
 
-                if(selectedImages.size() != 0){
+                if(selectedImages != null){
                     smallerImage();
                     for(int i = 0; i<selectedImages.size(); i++) {
 

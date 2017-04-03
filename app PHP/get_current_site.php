@@ -244,7 +244,7 @@
         while($row = $result->fetch_assoc()) {
                         if($row['ID'] == $search){
             $vals[$count] = array(
-                                  "ID" => $row['ID'],
+                                  "ID2" => $row['ID'],
                                   "HAZARD_TYPE2" => $row['HAZARD_TYPE']
                                   );
             $count++;

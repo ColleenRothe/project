@@ -190,7 +190,7 @@ public class RockfallActivity extends AppCompatActivity
     LocationRequest mLocationRequest;
 
     //edit site
-    private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php"; //to place the sites
+    private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php"; //to place the sites
     Map<String, String> map;
 
     ArrayAdapter<String> adapterRegional;
@@ -959,6 +959,8 @@ public class RockfallActivity extends AppCompatActivity
                 //Map<String, String> map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
                 map = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {}.getType());
                 System.out.println(map);
+                System.out.println("keys");
+                System.out.println(map.keySet());
 
                 //Set form fields
 
@@ -1087,32 +1089,28 @@ public class RockfallActivity extends AppCompatActivity
                 }
 
                 //todo: hazard type (1)
-                String hazardString = map.get("HAZARD_TYPE");
-                if(hazardString.contains("-")) {
-                    //example entry is "Landslide - Shallow Slump, Below Route"
-                    int start = hazardString.indexOf("-");
-                    hazardString = hazardString.substring(start+2);
-                    String [] hazards = hazardString.split(",");
-
+                String hazardString = map.get("HAZARD_TYPE2");
+                System.out.println("hazard string is: "+ hazardString);
+                if(!hazardString.equals("") && !hazardString.equals(null)) {
+                    String[] hazards = hazardString.split(",");
                     ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
 
 
-                    for(int i = 0; i<hazardTypeList.size(); i++){
-                        if(i==3){ //can't have more than 3
+                    for (int i = 0; i < hazards.length; i++) {
+                        if (i == 3) { //can't have more than 3
                             break;
                         }
                         //if it's in the list, set the spinner to it
-                        if(hazardTypeList.contains(hazards[i])){
-                            if(i == 0){
+                        if (hazardTypeList.contains(hazards[i])) {
+                            if (i == 0) {
                                 HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            }else if(i == 1){
+                            } else if (i == 1) {
                                 HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            }else{
+                            } else {
                                 HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
                             }
                         }
                     }
-
                 }
 
 
@@ -3538,7 +3536,7 @@ public class RockfallActivity extends AppCompatActivity
                     String datum = String.valueOf(Datum.getText());
                     String aadt = String.valueOf(Aadt.getText());
                     //todo: hazard type (2)
-                    String temp = "Rockfall - ";
+                    String temp = "";
                     if(HazardType1.getSelectedItem().toString() != "") {
                         temp = temp.concat(HazardType1.getSelectedItem().toString());
                     }
@@ -3875,7 +3873,7 @@ public class RockfallActivity extends AppCompatActivity
                         String datum = String.valueOf(Datum.getText());
                         String aadt = String.valueOf(Aadt.getText());
                         //todo: hazard type (4)
-                        String temp = "Rockfall - ";
+                        String temp = "";
                         if(HazardType1.getSelectedItem().toString() != "") {
                             temp = temp.concat(HazardType1.getSelectedItem().toString());
                         }
@@ -4103,22 +4101,22 @@ public class RockfallActivity extends AppCompatActivity
                                 "&hazard_rating_landslide_total=" + hazard_total + "&hazard_rating_rockfall_total= &risk_total=" + risk_total + "&total_score=" + total_score + "&comments=" +
                                 comments + "&fmla_id=" + flma_id + "&fmla_name=" + flma_name + "&fmla_description=" + flma_description);
 
-                        //success message
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RockfallActivity.this);
-                        final TextView tv = new TextView(RockfallActivity.this);
-                        tv.setText("Form Submitted Successfully", TextView.BufferType.NORMAL);
-
-                        alertDialogBuilder.setView(tv);
-                        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                            }
-                        });
-
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        // show it
-                        alertDialog.show();
-                        //end success message
+//                        //success message
+//                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(RockfallActivity.this);
+//                        final TextView tv = new TextView(RockfallActivity.this);
+//                        tv.setText("Form Submitted Successfully", TextView.BufferType.NORMAL);
+//
+//                        alertDialogBuilder.setView(tv);
+//                        alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                            }
+//                        });
+//
+//                        // create alert dialog
+//                        AlertDialog alertDialog = alertDialogBuilder.create();
+//                        // show it
+//                        alertDialog.show();
+//                        //end success message
 
 
                         writer.flush();
@@ -4161,7 +4159,7 @@ public class RockfallActivity extends AppCompatActivity
         int side = Side.getSelectedItemPosition();
         int weather = Weather.getSelectedItemPosition();
         //todo: hazard type (6)
-        String temp = "Rockfall - ";
+        String temp = "";
         if(HazardType1.getSelectedItem().toString() != "") {
             temp = temp.concat(HazardType1.getSelectedItem().toString());
         }
@@ -4398,18 +4396,13 @@ public class RockfallActivity extends AppCompatActivity
             //todo: hazard type (9)
             String hazardString = rockfall.getHazard_type();
 
-            if(hazardString.contains("-")) {
-                //example entry is "Landslide - Shallow Slump, Below Route"
+            if(hazardString != "") {
 
-                int start = hazardString.indexOf("-");
-                hazardString = hazardString.substring(start+2);
                 String [] hazards = hazardString.split(",");
 
                 ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
 
-
-                if(hazards.length != 0) {
-                    for (int i = 0; i < hazardTypeList.size(); i++) {
+                    for (int i = 0; i < hazards.length; i++) {
                         if (i == 3) { //can't have more than 3
                             break;
                         }
@@ -4424,8 +4417,6 @@ public class RockfallActivity extends AppCompatActivity
                             }
                         }
                     }//end for
-                }
-
             }
 
             BeginLat.setText(rockfall.getBegin_coordinate_lat());
@@ -4555,16 +4546,13 @@ public class RockfallActivity extends AppCompatActivity
                 //todo: hazard type (10)
                 String hazardString = offlineSite.getHazard_type();
 
-                if(hazardString.contains("-")) {
-                    //example entry is "Landslide - Shallow Slump, Below Route"
-                    int start = hazardString.indexOf("-");
-                    hazardString = hazardString.substring(start+2);
+
                     String [] hazards = hazardString.split(",");
 
                     ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
 
 
-                    for(int j = 0; j<hazardTypeList.size(); j++){
+                    for(int j = 0; j<hazards.length; j++){
                         if(j==3){ //can't have more than 3
                             break;
                         }
@@ -4580,7 +4568,7 @@ public class RockfallActivity extends AppCompatActivity
                         }
                     }
 
-                }
+
 
                 BeginLat.setText(offlineSite.getBegin_coordinate_lat());
                 EndLat.setText(offlineSite.getEnd_coordinate_latitude());

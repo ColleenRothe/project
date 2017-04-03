@@ -791,7 +791,7 @@
     <string name="NPSR7L64">Obed</string>
 
     <!--Hazard Type Dropdown-->
-    <string name="HazardType0"> </string>
+    <string name="HazardType0"></string>
     <string name="HazardTypeR1">Planar</string>
     <string name="HazardTypeR2">Wedge</string>
     <string name="HazardTypeR3">Toppling</string>

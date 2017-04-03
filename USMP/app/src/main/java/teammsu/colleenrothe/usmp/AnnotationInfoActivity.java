@@ -63,7 +63,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
     String offline_clicked = "0";
     String offline_landslide_id = "";
 
-    private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php"; //to place the sites
+    private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php"; //to place the sites
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -298,24 +298,33 @@ public class AnnotationInfoActivity extends AppCompatActivity
                 text2 = text2.replace("[",""); //old,new
                 text2 = text2.replace("]",""); //old,new
 
+                text2 = text2.replace("{",""); //old,new
+                text2 = text2.replace("}",""); //old,new
+
+                String text3 = "{";
+                text3 = text3.concat(text2);
+                text2 = text3.concat("}");
+                System.out.println("TEXT 2:"+text2);
+
                 //Map<String, String> map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
                 map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
                 System.out.println(map);
 
                 //fill-in values on the UI
                 siteId.setText(map.get("SITE_ID"));
-                coordinates.setText(map.get("COORDINATES"));
+                String coordinatesS = map.get("BEGIN_COORDINATE_LAT")+","+map.get("BEGIN_COORDINATE_LONG");
+                coordinates.setText(coordinatesS);
                 date.setText(map.get("DATE"));
                 agency.setText(map.get("UMBRELLA_AGENCY"));
                 Rtnum.setText(map.get("ROAD_TRAIL_NO"));
                 beginMile.setText(map.get("BEGIN_MILE_MARKER"));
                 endMile.setText(map.get("END_MILE_MARKER"));
                 side.setText(map.get("SIDE"));
-                hazardType.setText(map.get("HAZARD_TYPE"));
-                prelimRating.setText(map.get("PRELIM_RATING"));
+                hazardType.setText(map.get("HAZARD_TYPE2"));
+                prelimRating.setText(map.get("PRELIMINARY_RATING"));
                 totalScore.setText(map.get("TOTAL_SCORE"));
                 photos.setText(map.get("PHOTOS"));
-                comments.setText(map.get("COMMENTS"));
+                comments.setText(map.get("COMMENT"));
             }
         });
 
