@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
@@ -153,11 +154,10 @@ public class MaintenanceMapActivity extends AppCompatActivity
 
         if (id == R.id.action_mmLegend) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            final TextView tv = new TextView(this);
-            tv.setText("White icon - the maintenance form is NOT associated with a slope rating. \n \n " +
-                    "Blue icon - the maintenance form IS associated with a slope rating", TextView.BufferType.NORMAL);
+            final ImageView iv = new ImageView(this);
+            iv.setImageResource(R.drawable.maintenance_legend_web);
 
-            alertDialogBuilder.setView(tv);
+            alertDialogBuilder.setView(iv);
             alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                 }

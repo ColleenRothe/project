@@ -112,10 +112,6 @@ public class OfflineList extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         if (id == R.id.action_home) {
             Intent intent = new Intent(this, OnlineHomeActivity.class);
             startActivity(intent);

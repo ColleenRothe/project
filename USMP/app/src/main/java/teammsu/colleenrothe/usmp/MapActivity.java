@@ -55,6 +55,7 @@ import java.util.List;
 import org.json.JSONObject;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.view.View;
@@ -267,13 +268,11 @@ public class MapActivity extends AppCompatActivity
         //clicked on map legend
         if (id == R.id.mapLegend) {
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-            final TextView tv = new TextView(this);
-            tv.setText("Based on Preliminary Rating \n \n" +
-                    "Green: Good (0-15)\n" +
-                    "Yellow: Fair (22-161)\n" +
-                    "Red: Poor (>161)", TextView.BufferType.NORMAL);
 
-            alertDialogBuilder.setView(tv);
+            final ImageView iv = new ImageView(this);
+            iv.setImageResource(R.drawable.map_legend_web);
+
+            alertDialogBuilder.setView(iv);
             alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                 }
@@ -1197,11 +1196,11 @@ public class MapActivity extends AppCompatActivity
                     offlineManager = OfflineManager.getInstance(MapActivity.this);
 
                     //create icon for the custom marker to use
+
                     IconFactory iconFactory = IconFactory.getInstance(MapActivity.this);
 
                     Drawable iconDrawable0 = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_whitelandslide);
                     Icon icon0;
-
 
                     //Landslide
                     Drawable iconDrawable = ContextCompat.getDrawable(MapActivity.this, R.drawable.ic_greenlandslide);
