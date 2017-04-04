@@ -819,9 +819,15 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
     }
     
     @IBAction func clickLegend(_ sender: Any) {
-        let messageString = "Based on Preliminary Rating \n \nGreen: Good (0-15)\n\n Yellow: Fair (22-161)\n\nRed: Poor (>161)"
         
-        let alert = UIAlertController(title: "Legend", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.alert)
+        
+        var framed = CGRect(x: 65, y: 50, width: 150, height: 200)
+        
+        let imageView = UIImageView(frame: framed)
+        imageView.image = UIImage(named: "mapLegend")
+        alert.view.addSubview(imageView)
+        
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
         

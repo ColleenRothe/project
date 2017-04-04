@@ -157,9 +157,16 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
     }
     
     @IBAction func clickLegend(_ sender: Any) {
-        let messageString = "White icon - the maintenance form is NOT associated with a slope rating. \n \n Blue icon - the maintenance form IS associated with a slope rating"
+     
 
-        let alert = UIAlertController(title: "Legend", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let framed = CGRect(x: 40, y: 50, width: 200, height: 100)
+        
+        let imageView = UIImageView(frame: framed)
+        imageView.image = UIImage(named: "maintenanceLegend")
+        alert.view.addSubview(imageView)
+        
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
 
