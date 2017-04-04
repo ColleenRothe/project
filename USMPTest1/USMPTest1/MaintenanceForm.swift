@@ -124,6 +124,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var percentagesTotalText: UITextField!
     
+    @IBOutlet weak var dateText: UITextField!
    
     @IBOutlet weak var rtNum: UITextField!
     
@@ -242,8 +243,6 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         agency.delegate=self
         agency.dataSource = self
         
-        
-                
         regional.delegate=self
         regional.dataSource=self
         
@@ -310,7 +309,17 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         percent19Text.keyboardType = .numberPad
         percent20Text.keyboardType = .numberPad
         percentagesTotalText.keyboardType = .numberPad
-
+        
+        //date
+        dateText.delegate = self
+        let date = Date()
+        let format = DateFormatter()
+        format.dateFormat = "yyyy-MM-dd' 'HH:mm:ss"
+        let currDate = format.string(from: date)
+        dateText.text = currDate
+        
+        
+        
 
         //Scroller
         scrollView.isScrollEnabled = true
