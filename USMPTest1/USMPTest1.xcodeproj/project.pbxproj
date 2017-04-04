@@ -36,7 +36,6 @@
 		9B9EDF791C346E5B00DED3D6 /* ShareData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9EDF781C346E5B00DED3D6 /* ShareData.swift */; };
 		9B9F14301BF63B5A004B8B3E /* ViewControllerManual.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9F142F1BF63B5A004B8B3E /* ViewControllerManual.swift */; };
 		9B9F14321BF63D26004B8B3E /* RatingManual.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9B9F14311BF63D26004B8B3E /* RatingManual.pdf */; };
-		9BA4DA9B1CF89DB700F67269 /* VCAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA4DA9A1CF89DB600F67269 /* VCAccount.swift */; };
 		9BA528361C89FAEB0042FB4D /* SiteImages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA528351C89FAEB0042FB4D /* SiteImages.swift */; };
 		9BAC04941C037DE70057E44E /* VConlineHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAC04931C037DE70057E44E /* VConlineHome.swift */; };
 		9BAE44E01CA9B5DE007496D6 /* USMPTest1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAE44DE1CA9B5DE007496D6 /* USMPTest1.xcdatamodeld */; };
@@ -121,7 +120,6 @@
 		9B9EDF781C346E5B00DED3D6 /* ShareData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareData.swift; sourceTree = "<group>"; };
 		9B9F142F1BF63B5A004B8B3E /* ViewControllerManual.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerManual.swift; sourceTree = "<group>"; };
 		9B9F14311BF63D26004B8B3E /* RatingManual.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = RatingManual.pdf; sourceTree = "<group>"; };
-		9BA4DA9A1CF89DB600F67269 /* VCAccount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCAccount.swift; sourceTree = "<group>"; };
 		9BA528351C89FAEB0042FB4D /* SiteImages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteImages.swift; sourceTree = "<group>"; };
 		9BAC04931C037DE70057E44E /* VConlineHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VConlineHome.swift; sourceTree = "<group>"; };
 		9BAE44DF1CA9B5DE007496D6 /* USMPTest1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = USMPTest1.xcdatamodel; sourceTree = "<group>"; };
@@ -259,7 +257,6 @@
 				9BD7C7441DF1FE3F00286DAE /* SiteListModel.swift */,
 				9BD7C7421DF0D8E600286DAE /* SiteListModelHelper.swift */,
 				9BAE44DE1CA9B5DE007496D6 /* USMPTest1.xcdatamodeld */,
-				9BA4DA9A1CF89DB600F67269 /* VCAccount.swift */,
 				9BAC04931C037DE70057E44E /* VConlineHome.swift */,
 				9B5B8B501BF4E7CF00A345E8 /* ViewController.swift */,
 				9B5B8B701BF5459D00A345E8 /* ViewControllerLogin.swift */,
@@ -546,7 +543,6 @@
 				9B9EDF791C346E5B00DED3D6 /* ShareData.swift in Sources */,
 				9BCBCB961C8E5E330044C587 /* Credits.swift in Sources */,
 				9B8828961CC147D3009D20CB /* LandslideChoice.swift in Sources */,
-				9BA4DA9B1CF89DB700F67269 /* VCAccount.swift in Sources */,
 				9BD7C7451DF1FE4000286DAE /* SiteListModel.swift in Sources */,
 				9B9DFB3F1E5B97650012E668 /* OfflineModel.swift in Sources */,
 				9B9F14301BF63B5A004B8B3E /* ViewControllerManual.swift in Sources */,

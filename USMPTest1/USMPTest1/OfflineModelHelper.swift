@@ -129,14 +129,7 @@ class OfflineModelHelper: NSObject, URLSessionDataDelegate{
 
         }
         
-        if(ODictionary.value(forKey:"MGMT_AREA") as? String != nil){
-            site.setValue(ODictionary.value(forKey: "MGMT_AREA")! as? String, forKey: "mgmt_area")
-            thing.mgmt_area = ODictionary.value(forKey: "MGMT_AREA")! as? String}
-
-        else{
-            site.setValue("", forKey: "mgmt_area")
-            thing.mgmt_area = ""
-        }
+    
         
         if(ODictionary.value(forKey:"UMBRELLA_AGENCY") as? String != nil){
             site.setValue(ODictionary.value(forKey: "UMBRELLA_AGENCY")! as? String, forKey: "umbrella_agency")

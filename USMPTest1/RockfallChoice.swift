@@ -279,9 +279,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var newSlopeEventButton: UIBarButtonItem!
     
     @IBOutlet weak var maintenanceFormButton: UIBarButtonItem!
-    
-    @IBOutlet weak var accountButton: UIBarButtonItem!
-    
+        
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
     @IBOutlet weak var manualButton: UIBarButtonItem!
@@ -869,7 +867,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-            accountButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             manualButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             
@@ -882,7 +879,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-            accountButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             manualButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
 

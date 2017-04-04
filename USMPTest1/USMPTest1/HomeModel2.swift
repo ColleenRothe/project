@@ -124,11 +124,7 @@ class HomeModel2: NSObject, URLSessionDataDelegate, OfflineModelHelperProtocol{
 //                    thing.slope_status = ""
 //                }
                 
-                if(jsonElement.value(forKey:"MGMT_AREA") as? String != nil){
-                    thing.mgmt_area = jsonElement.value(forKey: "MGMT_AREA")! as? String}
-                else{
-                    thing.mgmt_area = ""
-                }
+                
                 
                 if(jsonElement.value(forKey:"ROAD_TRAIL_NO") as? String != nil){
                     thing.road_trail_no = jsonElement.value(forKey: "ROAD_TRAIL_NO")! as? String}

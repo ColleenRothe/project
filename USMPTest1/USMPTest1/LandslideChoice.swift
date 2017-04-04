@@ -284,8 +284,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var manualButton: UIBarButtonItem!
     
-    @IBOutlet weak var accountButton: UIBarButtonItem!
-    
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -906,7 +904,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             slopeRatingButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-            accountButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             manualButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             
@@ -920,7 +917,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             slopeRatingButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-            accountButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             manualButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
 

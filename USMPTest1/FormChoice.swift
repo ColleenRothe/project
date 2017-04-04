@@ -32,7 +32,6 @@ class FormChoice: UIViewController{
     
     @IBOutlet weak var maintenanceFormButton: UIBarButtonItem!
     
-    @IBOutlet weak var accountButton: UIBarButtonItem!
     
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
@@ -50,7 +49,6 @@ class FormChoice: UIViewController{
             slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-            accountButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             
         }else{
@@ -62,7 +60,6 @@ class FormChoice: UIViewController{
             slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-            accountButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
         }
         

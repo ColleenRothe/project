@@ -549,7 +549,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 
                 site.setValue(selectedLocation.date, forKey:"date")
                 //site.setValue(selectedLocation.slope_status, forKey:"slopeStatus")
-                site.setValue(selectedLocation.mgmt_area, forKey:"managementArea")
+                //site.setValue(selectedLocation.mgmt_area, forKey:"managementArea")
                 site.setValue(selectedLocation.road_trail_no, forKey: "roadTrailNo")
                 site.setValue(selectedLocation.begin_mile_marker, forKey: "beginMile")
                 site.setValue(selectedLocation.end_mile_marker, forKey: "endMile")

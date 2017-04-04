@@ -48,7 +48,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     @IBOutlet weak var maintenanceFormButton: UIBarButtonItem!
     
-    @IBOutlet weak var accountButton: UIBarButtonItem!
     
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
@@ -335,7 +334,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-            accountButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             manualButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
 
@@ -349,7 +347,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-            accountButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             manualButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
         }
