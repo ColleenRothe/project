@@ -1097,10 +1097,6 @@ public class MapActivity extends AppCompatActivity
             Intent intent = new Intent(this, MaintenanceMapActivity.class);
             startActivity(intent);
 
-        }
-        else if (id == R.id.account) {
-            Intent intent = new Intent(this, AccountActivity.class);
-            startActivity(intent);
 
         }
         else if (id == R.id.logout) {

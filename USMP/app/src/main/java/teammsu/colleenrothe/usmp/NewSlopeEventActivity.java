@@ -367,11 +367,6 @@ public class NewSlopeEventActivity extends AppCompatActivity
             startActivity(intent);
 
         }
-        else if (id == R.id.account) {
-            Intent intent = new Intent(this, AccountActivity.class);
-            startActivity(intent);
-
-        }
         else if (id == R.id.logout) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);

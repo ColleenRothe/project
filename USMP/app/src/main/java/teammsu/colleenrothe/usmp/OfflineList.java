@@ -160,12 +160,6 @@ public class OfflineList extends AppCompatActivity
             Intent intent = new Intent(this, MaintenanceMapActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.account) {
-            should_load=false;
-            should_submit=false;
-            Intent intent = new Intent(this, AccountActivity.class);
-            startActivity(intent);
-
         } else if (id == R.id.logout) {
             should_load=false;
             should_submit=false;

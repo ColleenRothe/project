@@ -106,10 +106,6 @@
             android:name=".AnnotationInfoActivity"
             android:label="@string/title_activity_annotation_info"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".AccountActivity"
-            android:label="@string/title_activity_account"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
 
 
     </application>
