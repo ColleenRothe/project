@@ -2,10 +2,11 @@
 //  ViewControllerLogin.swift
 //  USMPTest1
 //
+//  Corresponds to ViewController for the Login Page
+//
 //  Created by Colleen Rothe on 11/12/15.
 //  Copyright © 2015 Colleen Rothe. All rights reserved.
 //
-//Login Page
 
 import UIKit
 
@@ -30,10 +31,9 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
     var permissionList = [String]()
     var login = false;
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        //list of available permissions options
         permissionList.append("0")
         permissionList.append("1")
         permissionList.append("2")
@@ -60,12 +60,11 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
   
     
     @IBAction func submitTap(_ sender: UIButton) {
-        //authentication code
-        
         //save user input
         email = usernameText.text!
         password = passwordText.text!
         
+        //they must enter something to be considered
         if (email == "" || password == ""){
             welcomeLabel.text = "Please fill in username and password"
         }
@@ -75,11 +74,12 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
         
     }
     
+    //authentication code
     func helper(){
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/initial_login.php")! as URL)
         request.httpMethod = "POST"
         
-        
+        //post their email and password
         let postString = "email=\(email)&password=\(password)"
         
         request.httpBody = postString.data(using: String.Encoding.utf8)
@@ -94,42 +94,36 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
             
             print("response = \(String(describing: response))")
             
-            
             responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String
             
-          
-            print("response string is: ")
+            //change "2" -> 2
             responseString = responseString.replacingOccurrences(of: "\"", with:"")
+            //if this a valid permission
             if(self.permissionList.contains(responseString)){
+                //set permission level in singleton
                 shareData.level = Int(responseString)!
                 self.goLogin()
             }
             else{
                 self.errorLogin()
             }
-            
-            
         }
         task.resume()
-        
-        
     }
     
+    //user can login
     func goLogin(){
         OperationQueue.main.addOperation {
-        
-        //loginSegue
+        //loginSegue to VConlineHome
         self.performSegue(withIdentifier: "loginSegue", sender: self)
         }
         
     }
     
+    //bad login info
     func errorLogin(){
-        print("in error")
         OperationQueue.main.addOperation {
             self.welcomeLabel.text = "Error. Incorrect username or password"
         }
     }
-
-
 }

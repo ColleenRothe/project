@@ -1,18 +1,21 @@
 //
 //  AnnotationModel.swift
 //  USMPTest1
+//  
+//  Holds information that will be displayed on AnnotationInfo.swift
 //
 //  Created by Colleen Rothe on 2/28/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
 
+//CREDITS:
 //adapted from:
 //http://codewithchris.com/iphone-app-connect-to-mysql-database/
 
 import Foundation
 
+//annotationModel object
 class AnnotationModel: NSObject {
-    
     var id : String?
     var site_id : String?
     var coordinates : String?
@@ -30,13 +33,11 @@ class AnnotationModel: NSObject {
     var hazard_rating_rockfall_id : String?
     var hazard_rating_landslide_id : String?
     
-    
-
     override init(){
         
     }
     
-    
+    //constructor
     init(id: String, site_id: String, coordinates: String, date: String, umbrella_agency: String, road_trail_no: String, begin_mile_marker: String, end_mile_marker: String, side: String, hazard_type: String, prelim_rating: String, total_score: String, photos: String, comments: String, hazard_rating_rockfall_id: String, hazard_rating_landslide_id: String){
      
         self.id = id
@@ -55,13 +56,5 @@ class AnnotationModel: NSObject {
         self.comments = comments
         self.hazard_rating_rockfall_id = hazard_rating_rockfall_id
         self.hazard_rating_landslide_id = hazard_rating_landslide_id
-        
-        
     }
-    
-    
-    
-        //override var description
-   
-    
 }

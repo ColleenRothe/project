@@ -2,10 +2,14 @@
 //  SiteImages.swift
 //  USMPTest1
 //
+//  Corresponds to ViewController that holds sliding view of all the images
+//  that go with a site, when you click on the button from it's AnnotationInfo page
+//
 //  Created by Colleen Rothe on 3/4/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
 
+//CREDITS:
 //https://stackoverflow.com/questions/30440660/start-uiscrollview-with-an-image-of-particular-index-from-another-view
 //https://www.raywenderlich.com/122139/uiscrollview-tutorial
 
@@ -29,12 +33,8 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
     var tapNum = 0;
     var frame = CGRect()
 
-    
     //offline func.
     var site = [NSManagedObject]()             //core data sites
-
-
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,78 +43,61 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
         scroller.minimumZoomScale = 1
         scroller.maximumZoomScale = 6
         
-        
+        //add an action if you tap on a picture
         tapped = UITapGestureRecognizer(target: self, action: #selector(SiteImages.tapPic))
         
-        
-
- 
-        print("offline/onlinestatus...")
+        //working offline
         if(shareData.offline == true){
-            print("true....offline")
             loadOfflineImages()
         }
+        //working online
         if(shareData.offline == false){
-            print("false....online")
             loadImages()
         }
-        
-
-        
-        
     }
     
+    //you tap on a picture
     func tapPic(_ sender: UIImageView!){
-        print("TESTING IMAGE TAP")
-        
+        //allow user interaction
         view.isUserInteractionEnabled = true
         
+        //make the picture bigger
         if(tapNum == 0){
         frame = view.frame
         view.transform = CGAffineTransform(scaleX: 2, y: 2)
         view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
             tapNum = 1
         }
+        //put the image back to its normal size
         else if (tapNum == 1){
-        
             view.transform = CGAffineTransform.identity
             view.frame = frame
             tapNum = 0
         }
-        
-       
-
-        
-        
-        
     }
     
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    //load images
     func loadImages(){
-        print("all images loaded")
         let photo_string = shareData.photo_string
         var pics: [String] = []
         
         let fullArray = photo_string.components(separatedBy: ",")
         
-        //for(var j = 0; j<fullArray.count; j += 1)
         for j in 0 ..< fullArray.count{
             let mid = fullArray[j]
             pics.append(mid )
             }
         
-
         pageImages = []
         
         //crashes if no pictures...
         if(pics[0] != ""){
-            //for(var i = 0; i<pics.count; i += 1)
+            //get the image from the server
         for i in 0 ..< pics.count{
             let path = pics[i]
             let urlPath: String = "http://nl.cs.montana.edu/usmp_media/photo_thumbnails/\(path)"
@@ -124,8 +107,6 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
             pageImages.append(image!)
         }
         }
-        
-
         
         let pageCount = pageImages.count
         
@@ -141,18 +122,15 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
             height: pagesScrollViewSize.height)
         
         loadVisiblePages()
-        
-        
-        
     }
     
+    //load images when in offline mode
     func loadOfflineImages(){
         //for some reason, all of the images are shown twice?...
         
-        print("offline images loaded")
-        
         pageImages = []
         
+        //core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext
@@ -164,16 +142,13 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
                 try managedContext.fetch(fetchRequest)
             site = results as! [NSManagedObject]
 
-            
-            
             for pz in 0 ..< site.count{
             
                 
                 //check if they match..when you click on a point saves the title to share/current id
                 if site[pz].value(forKey: "siteID") as? String == shareData.current_site_id{
-                    print("match")
                     
-               
+                    //pull each image (saved as data1....10). if existing, add it
                     
                     let data1 = site[pz].value(forKey: "image1")
                     
@@ -254,14 +229,7 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
                         
                         pageImages.append(image10!)
                     }
-
-
-
-
-
-                    
-
-                    
+   
                 }
                 
             }
@@ -270,7 +238,7 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
         }
 
     
-        
+        //set number of pages
         let pageCount = pageImages.count
         
         pageControl.currentPage = 0
@@ -285,10 +253,7 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
                                       height: pagesScrollViewSize.height)
         
         loadVisiblePages()
-        
-        
     }
-    
     
     
     func loadPage(_ page: Int){
@@ -310,8 +275,8 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
             newPageView.contentMode = .scaleAspectFit
             newPageView.frame = frame
             newPageView.isUserInteractionEnabled = true
-            print("FIRST CHECK")
-
+            
+            //add "tapped" action
             newPageView.addGestureRecognizer(tapped)
             scroller.addSubview(newPageView)
             
@@ -319,8 +284,6 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
             
         }
     }
-    
-    
     
     func loadVisiblePages(){
         // First, determine which page is currently visible
@@ -334,19 +297,14 @@ class SiteImages: UIViewController, UIScrollViewDelegate{
         let firstPage = 0
         let lastPage = pageControl.numberOfPages
         
-        
         // Load pages in our range
         for index in firstPage...lastPage {
             loadPage(index)
-            //add the tap control here??????????????????????????
         }
-        
-           }
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // Load the pages that are now on screen
         loadVisiblePages()
     }
-    
-    
 }

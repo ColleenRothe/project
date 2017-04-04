@@ -2,6 +2,9 @@
 //  OptionCell.swift
 //  USMPTest1
 //
+//  Represents the "navigation bar" of buttons on the OfflineList.swift
+//  That allows you to choose to clear, load, submit a form, or go back
+//
 //  Created by Colleen Rothe on 8/15/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -10,8 +13,11 @@ import Foundation
 import UIKit
 import CoreData
 
+//CREDITS:
 //to allow load of the alertController
 //http://stackoverflow.com/questions/30483104/presenting-uialertcontroller-from-uitableviewcell
+
+
 extension UIView {
     var parentViewController: UIViewController? {
         var parentResponder: UIResponder? = self
@@ -25,12 +31,13 @@ extension UIView {
     }
 }
 
-
 class OptionCell: UITableViewCell{
     
     let sharedData = ShareData.sharedInstance
     
     var coreType = ""
+    
+    //buttons
 
     @IBOutlet weak var clearButton: UIButton!
   
@@ -55,7 +62,7 @@ class OptionCell: UITableViewCell{
             coreType = "OfflineMaintenance"
         }
         
-        //permissions!
+        //permissions
         if(shareData.level == 2){
             submitButton.isEnabled = false
             submitButton.backgroundColor = UIColor.black
@@ -82,7 +89,8 @@ class OptionCell: UITableViewCell{
             
         }
     }
-    //MARK: Load the right form
+    
+    //MARK: Load the right type form
     func handleLoad(_ alertView:UIAlertAction!){
         if(sharedData.OfflineType == "landslide"){
             sharedData.load = true
@@ -105,8 +113,6 @@ class OptionCell: UITableViewCell{
             
         }
         
-        
-        
     }
 
     //user confirmation of load
@@ -124,7 +130,7 @@ class OptionCell: UITableViewCell{
     }
     }
     
-    //MARK: Clear form from core data
+    //Clear form from core data
     func handleDone(_ alertView:UIAlertAction!){
         
         let number = sharedData.selectedForm
@@ -135,7 +141,6 @@ class OptionCell: UITableViewCell{
             let entity =  NSEntityDescription.entity(forEntityName: coreType, in:managedContext)
             
         
-            
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: coreType)
             
             do {
@@ -169,7 +174,6 @@ class OptionCell: UITableViewCell{
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             parentViewController!.present(alertController, animated: false, completion: nil) //may be an issue?
         }else{
-        print("TRYING TO CLEAR")
         let alertController = UIAlertController(title: "Clear?", message: "Are you sure you want to clear the form?", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "Clear", style: UIAlertActionStyle.default, handler: handleDone))

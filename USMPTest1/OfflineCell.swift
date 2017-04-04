@@ -2,6 +2,9 @@
 //  OfflineCell.swift
 //  USMPTest1
 //
+//  Cell shown in OfflineList.Swift. Holds the # in the list, as well as selected info
+//  Created for each saved list
+//
 //  Created by Colleen Rothe on 6/7/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -12,9 +15,9 @@ import UIKit
 
 //cell for an offline site
 class OfflineCell: UITableViewCell{
-    //MARK: Properties
-    
+
     @IBOutlet weak var labelOne: UILabel!
+    
     @IBOutlet weak var numLabel: UILabel!
     
     @IBOutlet weak var labelTwo: UILabel!

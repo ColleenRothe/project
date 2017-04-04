@@ -1,23 +1,20 @@
 //
-//  onlineHome.swift
+//  VConlineHome.swift
 //  USMPTest1
+//
+//  Corresponds to ViewController shown after they login
 //
 //  Created by Colleen Rothe on 11/23/15.
 //  Copyright © 2015 Colleen Rothe. All rights reserved.
 //
-// Online Homepage
 
 import UIKit
-
-
 
 class VConlineHome: UIViewController {
     
    //welcome message
     @IBOutlet weak var welcomeLabel: UILabel!
-       
-    @IBOutlet weak var homeBarButtonItem: UIBarButtonItem!
-    
+           
     //nav bar
     
     @IBOutlet weak var mapButton: UIBarButtonItem!
@@ -32,11 +29,9 @@ class VConlineHome: UIViewController {
     
     let shareData = ShareData.sharedInstance
 
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        //not editing(probs redundant)
         shareData.edit_site = false
         
         //iPad sizing
@@ -69,7 +64,5 @@ class VConlineHome: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
 }
 

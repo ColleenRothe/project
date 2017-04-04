@@ -2,6 +2,10 @@
 //  AnnotationInfo.swift
 //  USMPTest1
 //
+//  Corresponds for the View Controller shown when a user clicks on a
+//  slope rating form on the main map. Shows selected rating info that
+//  clients requested before going to the full form
+//
 //  Created by Colleen Rothe on 2/2/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -11,26 +15,17 @@ import CoreData
 
 
 class AnnotationInfo: UITableViewController, HomeModelProtocol  {
-    
-    
     //listTableView
     var feedItems: NSArray = NSArray()
     let shareData = ShareData.sharedInstance
     var sites = [NSManagedObject]()             //core data sites
-
-
     
-    
+    //UI Connections
     @IBOutlet weak var site_idLabel: UILabel!
     
     @IBOutlet weak var coordinatesLabel: UILabel!
     
     @IBOutlet weak var dateLabel: UILabel!
-    
-    
-    @IBOutlet weak var slope_statusLabel: UILabel!
-    
-    @IBOutlet weak var management_areaLabel: UILabel!
     
     @IBOutlet weak var road_trail_noLabel: UILabel!
     
@@ -43,7 +38,6 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
     @IBOutlet weak var sideLabel: UILabel!
     
     @IBOutlet weak var hazard_typeLabel: UILabel!
-
     
     @IBOutlet weak var prelim_ratingLabel: UILabel!
     
@@ -51,12 +45,7 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
     
     @IBOutlet weak var photosLabel: UILabel!
     
-    
     @IBOutlet weak var commentsLabel: UILabel!
-    
-    @IBOutlet weak var hazard_rating_rockfall_idLabel: UILabel!
-    
-    @IBOutlet weak var hazard_rating_landslide_idLabel: UILabel!
     
     @IBOutlet weak var editSiteButton: UIButton!
     
@@ -64,10 +53,8 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
     
     //offline func.
     var site = [NSManagedObject]()             //core data sites
-
     
     //nav bar
-    
     @IBOutlet weak var mapButton: UIBarButtonItem!
     
     @IBOutlet weak var slopeRatingFormButton: UIBarButtonItem!
@@ -76,46 +63,35 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
     
     @IBOutlet weak var maintenanceFormButton: UIBarButtonItem!
     
-    
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        //delegates and initialize homeModel
-        ///
+        //delegates
         self.listTableView.delegate = self
         self.listTableView.dataSource = self
         
+        //create home model to hold information from db
         let homeModel = HomeModel()
         homeModel.delegate = self
         
-        
-        print("offline/onlinestatus...")
+        //if they are accessing the form while online
         if(shareData.offline == true){
-            print("true....offline")
             makeTableOffline()
-
         }
+        //if they are accessing the form while offline
         if(shareData.offline == false){
-            print("false....online")
             homeModel.downloadItems()
         }
         
         let font = UIFont(name: "Times New Roman", size: 10)
-        
         //fixes the alert controllers resizing the nav bar when dismissed
-        
         mapButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
         slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
         newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
         maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
         logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-        
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -123,63 +99,56 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         // Dispose of any resources that can be recreated.
     }
     
+    //catch info downloaded from the db (HomeModel.swift)
     func itemsDownloadedH(_ items: NSArray){
         feedItems = items
         self.listTableView.reloadData()
+        //call make table online version
         makeTableOnline()
-       
-        
-        
     }
     
-    
-    
-    
+    //fill table with info when user is online
     func makeTableOnline(){
+        //they are online....
         shareData.offline_edit = false
-        
+        //annotation model holds the information saved from the db
         let selectedLocation = feedItems.object(at: 0) as! AnnotationModel
         
-            site_idLabel.text = "Site ID: \(selectedLocation.site_id!)"
+        //set the labels with the appropriate information downloaded
         
-            coordinatesLabel.text = "Coordinates: \(selectedLocation.coordinates!)"
+        site_idLabel.text = "Site ID: \(selectedLocation.site_id!)"
         
-            dateLabel.text = "Date: \(selectedLocation.date!)"
+        coordinatesLabel.text = "Coordinates: \(selectedLocation.coordinates!)"
         
-            //slope_statusLabel.text = "Slope Status: \(selectedLocation.slope_status!)"
+        dateLabel.text = "Date: \(selectedLocation.date!)"
         
-            management_areaLabel.text = "Agency: \(selectedLocation.umbrella_agency!)"
+        road_trail_noLabel.text = "Road/Trail No: \(selectedLocation.road_trail_no!)"
         
-            road_trail_noLabel.text = "Road/Trail No: \(selectedLocation.road_trail_no!)"
+        begin_mile_markerLabel.text = "Begin Mile Mark: \(selectedLocation.begin_mile_marker!)"
         
-            begin_mile_markerLabel.text = "Begin Mile Mark: \(selectedLocation.begin_mile_marker!)"
-       
-            end_mile_markerLabel.text = "End Mile Mark: \(selectedLocation.end_mile_marker!)"
+        end_mile_markerLabel.text = "End Mile Mark: \(selectedLocation.end_mile_marker!)"
         
-            sideLabel.text = "Side: \(selectedLocation.side!)"
-       
-            hazard_typeLabel.text = "Hazard Type: \(selectedLocation.hazard_type!)"
+        sideLabel.text = "Side: \(selectedLocation.side!)"
         
-            prelim_ratingLabel.text = "Prelim Rating: \(selectedLocation.prelim_rating!)"
-      
-            total_scoreLabel.text = "Total Score: \(selectedLocation.total_score!)"
+        hazard_typeLabel.text = "Hazard Type: \(selectedLocation.hazard_type!)"
         
-            photosLabel.text = "Photos: \(selectedLocation.photos!)"
+        prelim_ratingLabel.text = "Prelim Rating: \(selectedLocation.prelim_rating!)"
         
-            commentsLabel.text = "Comments: \(selectedLocation.comments!)"
+        total_scoreLabel.text = "Total Score: \(selectedLocation.total_score!)"
         
-            shareData.photo_string = selectedLocation.photos!
+        photosLabel.text = "Photos: \(selectedLocation.photos!)"
         
+        commentsLabel.text = "Comments: \(selectedLocation.comments!)"
         
-        
-        }
+        shareData.photo_string = selectedLocation.photos!
+    }
     
+    //fill table when user is offline
     func makeTableOffline(){
+        //edit is in offline mode
         shareData.offline_edit = true
-        print("makeTableOffline1 site count")
-        print(site.count)
-        //need to delete from "site"?
         
+        //core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         let managedContext = appDelegate.managedObjectContext
@@ -191,29 +160,19 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
                 try managedContext.fetch(fetchRequest)
             site = results as! [NSManagedObject]
             
-            print("makeTableOffline2 site count")
-            print(site.count)
             
             for pz in 0 ..< site.count{
-                print("pz value")
-                print(pz)
-                print(site[pz].value(forKey: "siteID"))
                 
                 //check if they match..when you click on a point saves the title to share/current id
                 if site[pz].value(forKey: "siteID") as? String == shareData.current_site_id{
-                    print("match")
                     
-                  
+                    //fill in labels with data saved in core data framework as type "OfflineSite"
                     
                     site_idLabel.text = "Site ID: \((site[pz].value(forKey: "siteID")! as? String)!)"
                     
                     coordinatesLabel.text = "Coordinates: \((site[pz].value(forKey: "coordinates") as? String)!)"
                     
                     dateLabel.text = "Date: \((site[pz].value(forKey: "date") as? String)!)"
-                    
-                    //slope_statusLabel.text = "Slope Status: \((site[pz].value(forKey: "slopeStatus") as? String)!)"
-                    
-                    management_areaLabel.text = "Agency: \((site[pz].value(forKey: "umbrella_agency") as? String)!)"
                     
                     road_trail_noLabel.text = "Road/Trail No: \((site[pz].value(forKey: "roadTrailNo") as? String)!)"
                     
@@ -234,35 +193,31 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
                     commentsLabel.text = "Comments: \((site[pz].value(forKey: "comments") as? String)!)"
                     
                     shareData.photo_string = (site[pz].value(forKey: "photos") as? String)!
-                
                     
+                    //id of the site you are editing
                     shareData.offline_edit_site_id = (site[pz].value(forKey: "siteID")! as? String)!
-
+                    
                 }
                 
             }
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
-
-        
     }
     
-   
-    
+    //when you click to edit a site
     @IBAction func editSite(_ sender: AnyObject) {
-        print("CLICK EDIT")
+        //it's a landslide form
         if(shareData.editType == "landslide"){
             shareData.edit_site = true
             self.performSegue(withIdentifier: "editLandslide", sender: self)
             
         }
+        //it's a rockfall form
         if(shareData.editType == "rockfall"){
             shareData.edit_site = true
             self.performSegue(withIdentifier: "editRockfall", sender: self)
             
         }
     }
-    
-        
 }

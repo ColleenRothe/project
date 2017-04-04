@@ -2,17 +2,16 @@
 //  ManualRating.swift
 //  USMPTest1
 //
+//  Page to show rating manual while on one of the rating forms
+//
 //  Created by Colleen Rothe on 6/6/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
-//  Page to show rating manual while on one of the rating forms
 
 import Foundation
 import UIKit
 
 class ManualRating: UIViewController, UIDocumentInteractionControllerDelegate {
-    
-    @IBOutlet weak var returnButton: UIButton!
     
     @IBOutlet weak var manualView: UIWebView!
     
@@ -20,14 +19,11 @@ class ManualRating: UIViewController, UIDocumentInteractionControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         previewDocument();
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,16 +45,6 @@ class ManualRating: UIViewController, UIDocumentInteractionControllerDelegate {
         manualView.scrollView.isScrollEnabled = true
         
         manualView.scalesPageToFit = true
-        
-        
-        
-        
-        
-        
-      
-       
+ 
     }
-
-    
-    
 }

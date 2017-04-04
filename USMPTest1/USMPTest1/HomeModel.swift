@@ -2,6 +2,8 @@
 //  HomeModel.swift
 //  USMPTest1
 //
+//  Gets info from DB for AnnotationInfo.swift and saves in AnnotationModel
+//
 //  Created by Colleen Rothe on 2/22/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -11,12 +13,12 @@
 
 import Foundation
 
+//protocol that AnnotationInfo.swift will follow
 protocol HomeModelProtocol: class{
     func itemsDownloadedH (_ items: NSArray)
 }
 
 class HomeModel: NSObject, URLSessionDataDelegate{
-    
     weak var delegate: HomeModelProtocol?
     var data: NSMutableData = NSMutableData()
     let shareData = ShareData.sharedInstance
@@ -25,16 +27,13 @@ class HomeModel: NSObject, URLSessionDataDelegate{
 
 
     func helper(){
-        print("Helper")
-        //let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService2.php")! as URL)
-        
-        //update to master once merged.....
-          let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php")! as URL)
+        //where the php is
+        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php")! as URL)
         
         request.httpMethod = "POST"
         
+        //send the site_id
         let postString = "id=\(shareData.current_site_id)"
-        
         
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
@@ -42,20 +41,15 @@ class HomeModel: NSObject, URLSessionDataDelegate{
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 return
             }
             
-            print("response = \(response)")
+            //print("response = \(String(describing: response))")
             
-            self.responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String
+            self.responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String
             
-
-            
-            
-
-            //print("responseString = \(responseString)")
-            
+            //parse the response string, because it comes back in several {} blocks
             self.responseString = self.responseString.replacingOccurrences(of: "[", with: "")
             self.responseString = self.responseString.replacingOccurrences(of: "]", with: "")
             self.responseString = self.responseString.replacingOccurrences(of: "{", with: "")
@@ -64,10 +58,10 @@ class HomeModel: NSObject, URLSessionDataDelegate{
             tempString = tempString.appending(self.responseString)
             tempString.append("}")
             self.responseString = tempString
-            //problem if there are commas in any of the strings people type in
             
             if let data2 = self.responseString.data(using: .utf8){
             
+            //save as a dictionary
             do {
                 self.JSONDictionary =  try JSONSerialization.jsonObject(with: data2, options: []) as! NSDictionary
             } catch let error as NSError {
@@ -75,22 +69,16 @@ class HomeModel: NSObject, URLSessionDataDelegate{
             }
             }
             
-            
             self.parseJSON()
         
-            
-            
         }
         task.resume()
         
-
     }
     
     
     func downloadItems(){
-        print("map service")
        helper()
-        
     }
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data){
@@ -100,10 +88,13 @@ class HomeModel: NSObject, URLSessionDataDelegate{
        
     }
     
+    //save data into the AnnotationModel
     func parseJSON(){
         print("Response string is"+responseString)
         let comments : NSMutableArray = NSMutableArray()
         let thing = AnnotationModel() //instantiate object to hold each element in the spec. JSON obj.
+        
+        //put info from the dictionary into the model
         
         if(self.JSONDictionary.value(forKey:"ID") as? String != nil){
             thing.id = self.JSONDictionary.value(forKey: "ID")! as? String}
@@ -184,26 +175,11 @@ class HomeModel: NSObject, URLSessionDataDelegate{
             thing.comments=""
         }
 
-
-    
-            //print(thing.id)
-            comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
-            
-            
+        comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
         
-
-
         //pass comments array to protocol method, make available for VC use
         DispatchQueue.main.async(execute: { ()->Void in self.delegate!.itemsDownloadedH(comments)
         })
         
     }
 }
-    
-    
-    
-
-
-
-    
-    

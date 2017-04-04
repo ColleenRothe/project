@@ -2,6 +2,9 @@
 //  ButtonCell.swift
 //  USMPTest1
 //
+//  Represents the top "navigation" buttons on the OfflineList.swift that
+//  lets you select what type of saved forms you want to see listed
+//
 //  Created by Colleen Rothe on 6/7/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -9,7 +12,6 @@
 import Foundation
 import UIKit
 
-//class that holds buttons on the offline list page
 class ButtonCell: UITableViewCell{
     
     @IBOutlet weak var landslideButton: UIButton!
@@ -44,12 +46,10 @@ class ButtonCell: UITableViewCell{
     //know which page to go back to...based on where you came from
     @IBAction func goLandslide(_ sender: AnyObject) {
         shareData.OfflineType = "landslide"
-        
     }
     
     @IBAction func goRockfall(_ sender: AnyObject) {
         shareData.OfflineType = "rockfall"
-
     }
     
     @IBAction func goNewSlope(_ sender: AnyObject) {

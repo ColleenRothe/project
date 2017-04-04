@@ -2,13 +2,13 @@
 //  ViewControllerManual.swift
 //  USMPTest1
 //
+//  View Controller for the Rating Manual
+//
 //  Created by Colleen Rothe on 11/13/15.
 //  Copyright © 2015 Colleen Rothe. All rights reserved.
 //
 
 import UIKit
-
-
 class ViewControllerManual: UIViewController, UIDocumentInteractionControllerDelegate {
     
     //webview for pdf
@@ -43,13 +43,6 @@ class ViewControllerManual: UIViewController, UIDocumentInteractionControllerDel
         //enable scrolling
         manualView.scrollView.isScrollEnabled = true
         
-        
-        
     }
-  
+
 }
-
-
-    
-    
-    

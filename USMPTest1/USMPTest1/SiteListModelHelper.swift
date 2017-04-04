@@ -2,14 +2,19 @@
 //  SiteListModelHelper.swift
 //  USMPTest1
 //
+//  Downloads the list of site ids for the maintenance forms
+//
 //  Created by Colleen Rothe on 12/1/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
 
-import Foundation
+//CREDITS:
 //adapted from:
 //http://codewithchris.com/iphone-app-connect-to-mysql-database/
 
+import Foundation
+
+//MaintenanceForm.swift implements this
 protocol SiteListModelHelperProtocol: class{
     func itemsDownloadedSL (_ items: NSArray)
 }
@@ -26,7 +31,6 @@ class SiteListModelHelper: NSObject, URLSessionDataDelegate{
         let url: URL = URL(string: urlPath)!
         var session: Foundation.URLSession!
         let configuration = URLSessionConfiguration.default
-        
         
         session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
         
@@ -49,10 +53,10 @@ class SiteListModelHelper: NSObject, URLSessionDataDelegate{
             self.parseJSON()
             
         }
-}
+    }
 
+    //save the information in a site list model
     func parseJSON(){
-        //var jsonResult: NSMutableArray = NSMutableArray()
         var jsonResult: NSArray = NSArray()
         do{
             jsonResult = try JSONSerialization.jsonObject(with: self.data as Data, options:JSONSerialization.ReadingOptions.allowFragments) as! NSArray
@@ -61,58 +65,23 @@ class SiteListModelHelper: NSObject, URLSessionDataDelegate{
             print(error)
             
         }
-        
-        //jsonResult = NSMutableArray(array: jsonResult)
-        
+                
         var jsonElement: NSArray = NSArray()
         let comments : NSMutableArray = NSMutableArray()
         
-        print("SITe LIST COUNT IS")
-        print(jsonResult.count)
-        
         jsonElement = jsonResult[0] as! NSArray
-        //print("ELEMENT IS")
-        //print(jsonElement)
+
         let thing = SiteListModel()
         let ids = jsonElement
-        //let ids = jsonElement[0]
-            
-            //print("IDS ARE:")
-            //print(ids)
-            thing.ids = ids as! NSArray
-            
-            
-            
-        
-        
-        //loop through JSON objects, store them in NSDictionary object to split into key-val pairs
-        //for(var i=0; i<jsonResult.count; i += 1)
-//        for i in 0 .. <= jsonResult.count{
-//            jsonElement = jsonResult[i] as! NSArray
-//            let thing = SiteListModel() //instantiate object to hold each element in the spec. JSON obj.
-//            
-//            if let ids = jsonElement[0] as? [String] {
-//                
-//                    print("IDS ARE:")
-//                    print(ids)
-//                    thing.ids = ids
-//           
-//                
-//
-//            }
+
+            thing.ids = ids 
         
             comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
-            
-            
-        //}
         
         //pass comments array to protocol method, make available for VC use
         DispatchQueue.main.async(execute: { ()->Void in self.delegate!.itemsDownloadedSL(comments)
         })
         
     }
-    
-    
-    
 }
 
