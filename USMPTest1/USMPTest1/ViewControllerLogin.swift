@@ -25,13 +25,18 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
     //button to submit ->authenticate
     @IBOutlet weak var submitButton: UIButton!
     
+    var email = ""
+    var password  = ""
+    var permissionList = [String]()
+    var login = false;
     
     
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        permissionList.append("0")
+        permissionList.append("1")
+        permissionList.append("2")
         
         //submit button design
         submitButton.layer.cornerRadius = 5
@@ -46,10 +51,6 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
         //handle input thru delegate callbacks (self is class)
         usernameText.delegate = self
         passwordText.delegate = self
-        
-       
-
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,25 +59,77 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
     }
   
     
-    
-    
     @IBAction func submitTap(_ sender: UIButton) {
         //authentication code
         
         //save user input
-        let username = usernameText.text
-        let password = passwordText.text
+        email = usernameText.text!
+        password = passwordText.text!
         
-        if (username == "" || password == ""){
-            welcomeLabel.text = "Incorrect username or password. Please try again."
+        if (email == "" || password == ""){
+            welcomeLabel.text = "Please fill in username and password"
         }
-        
-        //set if root, level1, or level2
-        
-        shareData.level = 2;
+        else{
+            helper();
+        }
         
     }
     
+    func helper(){
+        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/initial_login.php")! as URL)
+        request.httpMethod = "POST"
+        
+        
+        let postString = "email=\(email)&password=\(password)"
+        
+        request.httpBody = postString.data(using: String.Encoding.utf8)
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(String(describing: error))")
+                return
+            }
+            
+            print("response = \(String(describing: response))")
+            
+            
+            responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String
+            
+          
+            print("response string is: ")
+            responseString = responseString.replacingOccurrences(of: "\"", with:"")
+            if(self.permissionList.contains(responseString)){
+                shareData.level = Int(responseString)!
+                self.goLogin()
+            }
+            else{
+                self.errorLogin()
+            }
+            
+            
+        }
+        task.resume()
+        
+        
+    }
+    
+    func goLogin(){
+        OperationQueue.main.addOperation {
+        
+        //loginSegue
+        self.performSegue(withIdentifier: "loginSegue", sender: self)
+        }
+        
+    }
+    
+    func errorLogin(){
+        print("in error")
+        OperationQueue.main.addOperation {
+            self.welcomeLabel.text = "Error. Incorrect username or password"
+        }
+    }
 
 
 }

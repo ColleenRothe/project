@@ -148,7 +148,6 @@ class ShareData {
     //login info
     var email : String = ""
     var password : String = ""
-    var permissions: String = ""
     
     //offline...
     var offIds: [String] = []
@@ -175,7 +174,7 @@ class ShareData {
     //login permissions
         //0=root, 1=level1, 2=level2
             //level 2 is read-only
-    var level = 2;
+    var level = 4;
     
 
     

@@ -10338,7 +10338,7 @@
                                         <rect key="frame" x="141" y="52" width="146" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dBd-m9-3P1">
                                         <rect key="frame" x="121" y="107" width="49" height="30"/>
@@ -10356,7 +10356,6 @@
                                         </state>
                                         <connections>
                                             <action selector="submitTap:" destination="qAW-cO-2dg" eventType="touchUpInside" id="6Xu-ps-CiK"/>
-                                            <segue destination="1oD-pp-Cuc" kind="show" id="NkK-9H-GAe"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9B1-8G-XMU">
@@ -10399,6 +10398,7 @@
                         <outlet property="usernameLabel" destination="zHa-eV-I19" id="7rY-M7-mTA"/>
                         <outlet property="usernameText" destination="5Gy-AM-ukm" id="M9x-Re-7Ot"/>
                         <outlet property="welcomeLabel" destination="aPP-4j-gcN" id="bET-af-QhF"/>
+                        <segue destination="1oD-pp-Cuc" kind="show" identifier="loginSegue" id="hHR-93-QvW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s0V-xU-YXq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -10535,7 +10535,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fY9-KH-QRp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-506" y="-4762"/>
+            <point key="canvasLocation" x="888" y="-3293"/>
         </scene>
         <!--Account-->
         <scene sceneID="Hcp-vZ-3MK">
@@ -22615,18 +22615,18 @@
         <image name="unchecked" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="0DZ-C6-JFq"/>
+        <segue reference="hHR-93-QvW"/>
+        <segue reference="qhu-Bt-asp"/>
+        <segue reference="FNX-vS-74p"/>
+        <segue reference="jyx-BU-0PN"/>
+        <segue reference="J7Z-4k-YZr"/>
+        <segue reference="Qpd-D4-Loz"/>
+        <segue reference="j2k-8x-MiD"/>
         <segue reference="4tm-Ra-Xm8"/>
-        <segue reference="omK-Xe-j3k"/>
-        <segue reference="llY-fe-SOr"/>
-        <segue reference="fZf-iP-1Jh"/>
-        <segue reference="SB2-gw-fKK"/>
-        <segue reference="ueR-qn-71D"/>
         <segue reference="pZD-tL-FSh"/>
-        <segue reference="18A-zA-lLS"/>
-        <segue reference="VRO-8h-jtS"/>
+        <segue reference="SB2-gw-fKK"/>
         <segue reference="wrv-ZR-wG6"/>
+        <segue reference="18A-zA-lLS"/>
         <segue reference="wmW-Im-6MB"/>
-        <segue reference="Nog-UT-dYS"/>
     </inferredMetricsTieBreakers>
 </document>
