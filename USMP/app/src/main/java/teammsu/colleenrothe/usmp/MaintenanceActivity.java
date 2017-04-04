@@ -43,6 +43,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+import java.text.DateFormat;
 
 /* Class for Maintenance Form
     CREDITS:
@@ -68,6 +70,7 @@ public class MaintenanceActivity extends AppCompatActivity
     Spinner Local;
     Spinner EventType;
     EditText MDescription;
+    EditText Date;
     EditText TotalCost;
 
     EditText Percent1;
@@ -182,6 +185,12 @@ public class MaintenanceActivity extends AppCompatActivity
         MaintenanceID = (Spinner) findViewById(R.id.MaintenanceID);
         Mcode = (EditText) findViewById(R.id.Mcode);
         MDescription = (EditText) findViewById(R.id.MDescription);
+
+        //autofill date text field with current date
+        Date = (EditText) findViewById(R.id.MDate);
+        String currentDate = DateFormat.getDateTimeInstance().format(new Date());
+        Date.setText(currentDate);
+
         TotalCost = (EditText) findViewById(R.id.TotalCost);
 
         MaintenanceType = (Spinner) findViewById(R.id.MaintenanceType);
@@ -997,6 +1006,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
                     String MDescriptionText = String.valueOf(MDescription.getText());
+                    String dateinput = String.valueOf(Date.getText());
                     String code = String.valueOf(Mcode.getText());
                     String rtnum = String.valueOf(RTNumber.getText());
                     String beginMile = String.valueOf(BeginMile.getText());
@@ -1070,7 +1080,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
 
                     writer.write("code_relation="+code+"&maintenance_type="+maintenanceType+"&road_trail_no="+rtnum+"&begin_mile_marker="+beginMile+"&end_mile_marker=" +
-                            endMile+"&umbrella_agency="+agency+"&regional_admin="+regional+"&local_admin="+local+"&us_event="+usEvent+"&event_desc="+MDescriptionText+
+                            endMile+"&umbrella_agency="+agency+"&regional_admin="+regional+"&local_admin="+local+"&us_event="+usEvent+"&event_desc="+MDescriptionText+"&dateinput="+dateinput+
                     "&design_pse_val="+Percent1Text+"&remove_ditch_val="+Percent2Text+"&remove_road_trail_val="+Percent3Text+"&relevel_aggregate_val="+Percent4Text+
                     "&relevel_patch_val="+Percent4_5Text+"&drainage_improvement_val="+Percent5Text+"&deep_patch_val="+Percent6Text+"&haul_debris_val="+Percent7Text+
                     "&scaling_rock_slopes_val="+Percent8Text+"&road_trail_alignment_val="+Percent9Text+"&repair_rockfall_barrier_val="+Percent10Text+
