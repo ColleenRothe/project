@@ -15,23 +15,24 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AlertDialog;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -42,23 +43,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
-import java.util.regex.Pattern;
-import android.widget.AdapterView.OnItemSelectedListener;
-import java.io.OutputStreamWriter;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.*;
+
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
@@ -68,14 +53,43 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import android.view.View.OnFocusChangeListener;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.Headers;
-import  com.squareup.okhttp.MediaType;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.regex.Pattern;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+
 
 /* Class for the Landslide Slope Rating Form
     CREDITS:
@@ -3936,12 +3950,16 @@ public class LandslideActivity extends AppCompatActivity
                         System.out.println("hazard type input is: "+ hazard_type);
                         String [] hazardA = {"Shallow Slump"};
 
+                        hazard_type = "Shallow Slump,Erosional Failure";
+
+                        //give up. change the php?
+
                         //todo: hazard type (5) (after aadt)
                         writer.write("&umbrella_agency=" + umbrella_agency + "&regional_admin=" + regional_admin + "&local_admin=" + local_admin + "&road_trail_number=" + road_trail_number + "&road_trail_class=" + road_trail_class +
                                 "&begin_mile_marker=" + begin_mile_marker + "&end_mile_marker=" + end_mile_marker + "&road_or_trail=" + road_or_trail + "&side=" +
                                 side + "&rater=" + l_rater + "&weather=" + weather + "&begin_coordinate_latitude=" + begin_coordinate_lat + "&begin_coordinate_longitude=" +
                                 begin_coordinate_long + "&end_coordinate_latitude=" + end_coordinate_latitude + "&end_coordinate_longitude=" + end_coordinate_longitude +
-                                "&datum=" + datum + "&aadt=" + aadt + "&hazard_type=" + hazardA + "&length_affected=" + length_affected + "&slope_height_axial_length=" +
+                                "&datum=" + datum + "&aadt=" + aadt +"&hazard_type="+hazard_type+"&length_affected=" + length_affected + "&slope_height_axial_length=" +
                                 slope_height_axial_length + "&slope_angle=" + slope_angle + "&sight_distance=" + sight_distance + "&road_trail_width=" + road_trail_width +
                                 "&speed_limit=" + speed_limit + "&minimum_ditch_width=" + minimum_ditch_width + "&maximum_ditch_width=" + maximum_ditch_width +
                                 "&minimum_ditch_depth=" + minimum_ditch_depth + "&maximum_ditch_depth=" + maximum_ditch_depth + "&first_begin_ditch_slope=" + first_begin_ditch_slope +
@@ -3959,6 +3977,8 @@ public class LandslideActivity extends AppCompatActivity
                                 r_w_impacts + "&enviro_cult_impacts=" + enviro_cult_impacts + "&maint_complexity=" + maint_complexity + "&event_cost=" + event_cost +
                                 "&hazard_rating_landslide_total=" + hazard_total + "&hazard_rating_rockfall_total= &risk_total=" + risk_total + "&total_score=" + total_score + "&comments=" +
                                 comments + "&fmla_id=" + flma_id + "&fmla_name=" + flma_name + "&fmla_description=" + flma_description);
+
+
                         writer.flush();
                         String line;
                         BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -4617,6 +4637,65 @@ public class LandslideActivity extends AppCompatActivity
         protected String doInBackground(String... params) {
 
             try {
+                System.out.println("START NEW");
+//                final OkHttpClient client2 = new OkHttpClient();
+//                RequestBody body = new FormEncodingBuilder()
+//                        .add("hazard_type", "Shallow Slump")
+//                        .build();
+//
+//                Request request2 = new Request.Builder()
+//                        .url("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
+//                        .post(body)
+//                        .build();
+//
+//                Response response2 = null;
+//
+//                response2 = client2.newCall(request2).execute();
+//
+//                if (!response2.isSuccessful()) try {
+//                    throw new IOException("Unexpected code " + response2);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                System.out.println(response2.body().string());
+
+//                JSONObject parameters = new JSONObject();
+//                String [] hazards = {"Shallow Slump"};
+//                try {
+//                    parameters.put("hazard_type", new JSONArray(Arrays.asList(hazards)));
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                URL url = new URL("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php");
+//                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//                //  conn.setReadTimeout(10000 /* milliseconds */);
+//                //  conn.setConnectTimeout(15000 /* milliseconds */);
+//                conn.setRequestProperty( "Content-Type", "application/json" );
+//                conn.setDoOutput(true);
+//                conn.setRequestMethod("POST");
+//                OutputStream out = new BufferedOutputStream(conn.getOutputStream());
+//                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+//                writer.write(parameters);
+//                writer.close();
+//                out.close();
+//
+//                int responseCode = conn.getResponseCode();
+//                //  System.out.println("\nSending 'POST' request to URL : " + url);
+//                //  System.out.println("Response Code : " + responseCode);
+//
+//                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//                String inputLine;
+//                StringBuffer response2 = new StringBuffer();
+//
+//                while ((inputLine = in.readLine()) != null) {
+//                    response2.append(inputLine);
+//                }
+//                in.close();
+//
+                System.out.println("END NEW");
+
 
                 if(selectedImages != null){
                     smallerImage();

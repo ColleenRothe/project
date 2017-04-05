@@ -67,7 +67,7 @@
     $end_coordinate_longitude = mysqli_real_escape_string($conn, $_POST['end_coordinate_longitude']);
     $datum = mysqli_real_escape_string($conn, $_POST['datum']);
     $aadt = mysqli_real_escape_string($conn, $_POST['aadt']);
-    $hazard_type =  $_POST['hazard_type'];
+    $hazard_types = mysqli_real_escape_string($conn, $_POST['hazard_type']);
     $length_affected = mysqli_real_escape_string($conn, $_POST['length_affected']);
     $slope_height_axial_length = mysqli_real_escape_string($conn, $_POST['slope_height_axial_length']);
     $slope_angle = mysqli_real_escape_string($conn, $_POST['slope_angle']);
@@ -271,35 +271,18 @@
                                                                        $update .= "TRAIL = '".$trail_id['ID']."'";
                                                                        }
                                                                        
-                                                                       // //sql for the weather table
-                                                                       // $weather_query = "INSERT INTO WEATHER(ID, WEATHER_TYPE) VALUES(NULL, '".$weather."');";
-                                                                       // if (!mysqli_query($conn, $weather_query)) {
-                                                                       //   printf("Errormessage: %s\n", mysqli_error($conn));
-                                                                       // }
-                                                                       // $weather_id_query = "SELECT ID FROM WEATHER ORDER BY ID DESC LIMIT 1";
-                                                                       // $weather_id_result = $conn->query($weather_id_query);
-                                                                       // $weather_id = $weather_id_result->fetch_assoc();
-                                                                       // $update .= ", WEATHER = '".$weather_id['ID']."'";
-                                                                       
-                                                                       //sql for the hazard type table
-    /*$hazard_type_query = "INSERT INTO HAZARD_TYPE(ID, HAZARD_TYPE) VALUES(NULL, '".$hazard_type."');";
-     if (!mysqli_query($conn, $hazard_type_query)) {
-     printf("Errormessage: %s\n", mysqli_error($conn));
-     }*/
-    /*$hazard_type_id_query = "SELECT ID FROM HAZARD_TYPE WHERE HAZARD_TYPE= '".$hazard_type."'";//ORDER BY ID DESC LIMIT 1";
-     $hazard_type_id_result = $conn->query($hazard_type_id_query);
-     $hazard_type_id = $hazard_type_id_result->fetch_assoc();
-     $update .= ", HAZARD_TYPE = '".$hazard_type_id['ID']."'";*/
-                                                                       
+                                                                       //$hazard_type = array();
+                                                                       $hazard_type = explode(",", $hazard_types);
+                                                                       echo "hazard_types";
+                                                                       echo $hazard_types;
+                                                                       echo "\ntesting";
+                                                                       echo $hazard_type[0];
                                                                        $max_hazard_type ="SELECT ID FROM HAZARD_LINK ORDER BY ID DESC LIMIT 1";
                                                                        $max_hazard_type_result = $conn->query($max_hazard_type);
                                                                        $max_hazard_type_value = $max_hazard_type_result->fetch_assoc();
                                                                        $max_hazard_type_value['ID'] = $max_hazard_type_value['ID'] +1;
                                                                        
                                                                        for($i=0;$i<count($hazard_type);$i++){
-                                                                       echo "thing is";
-                                                                       echo $hazard_type[2];
-                                                                       
                                                                     
                                                                        $hazard_link_query = "INSERT INTO HAZARD_LINK(ID,HAZARD_TYPE) VALUES('".$max_hazard_type_value['ID']."', '".$hazard_type[$i]."');";
                                                                        if (!mysqli_query($conn, $hazard_link_query)) {
