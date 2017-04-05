@@ -2,6 +2,8 @@
 //  MapboxOnline.swift
 //  USMPTest1
 //
+//  ViewController for the Slope Rating Map
+//
 //  Created by Colleen Rothe on 4/3/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -20,7 +22,6 @@
 
 //core data:
 //https://www.raywenderlich.com/115695/getting-started-with-core-data-tutorial
-
 
 
 import Foundation
@@ -46,7 +47,6 @@ fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     return !(rhs < lhs)
   }
 }
-
 
 
 class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, MGLMapViewDelegate {
@@ -101,10 +101,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         progressView.frame = frames
         progressView.setProgress(0, animated: true)
         
-        //activityIndicator.hidesWhenStopped = true
-        //activityIndicator.activityIndicatorViewStyle  = UIActivityIndicatorViewStyle.gray
-        //activityIndicator.center = view.center
-        
         //offline or online?
         shareData.offline = false
         shareData.offline_edit = false
@@ -138,7 +134,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
 
     }
     
-    
     //annotation...
     func itemsDownloaded2(_ items: NSArray) {
         offFeed = items
@@ -147,7 +142,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
     }
     
     override func viewDidAppear(_ animated: Bool){
-        
         //sizing based on screensize...
         if shareData.device == "iPad"{
             let font = UIFont(name: "Times New Roman", size: 15)
@@ -171,8 +165,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             cacheStatusButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             loadOfflineButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             infoButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-
-            
         }
         
         //for all of the pins....
@@ -200,8 +192,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                     imagename = "GreenLandslide"
                 }
                 
-           
-                
             }else{ //it's a rockfall
                 if(prelimRating > 161){
                     imagename = "RedRockfall"
@@ -212,8 +202,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 else{
                     imagename = "GreenRockfall"
                 }
-
-                
             }
             
             //make a new pin
@@ -224,7 +212,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             pin.subtitle = selectedLocation.id! + "\n" + imagename
             //pin.subtitle = "Total Score:" + selectedLocation.total! + "\n" + imagename
             count = count + 1 //try to reduce crashes?
-            
         }
     }
     
@@ -235,8 +222,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
     
     //tapped the info button...
     func mapView(_ mapView: MGLMapView, annotation: MGLAnnotation, calloutAccessoryControlTapped control: UIControl) {
-        print("description is")
-        print(annotation.description)
         //set the current side id
         shareData.current_site_id = (annotation.title)!!
         //set the current id
@@ -250,24 +235,18 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         let index = string??.index((string??.startIndex)!, offsetBy: pos!)
         string = string??.substring(to:index!)
         }
-        print("STRING SHOULD BE")
-        print(string!!)
         shareData.current_clicked_id = string!!
         //it's a rockfall...know what type of form to pull up
         if(annotation.description.contains("Rockfall")){
             shareData.editType = "rockfall"
-
         }
         //its a landslide...know what type of form to pull up
         else if(annotation.description.contains("Landslide")){
             shareData.editType = "landslide"
         }
-        
         //go to the right form
         self.performSegue(withIdentifier: "getInfo2", sender: self)
-        
     }
-    
     
     func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
         // Try to reuse the existing annotation image, if it exists
@@ -308,21 +287,21 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         
     }
     
+    //clear out saved
     @IBAction func clearCache(_ sender: AnyObject) {
         offline5()
-
     }
     
+    //check- is anything saved?
   @IBAction func getStatus(_ sender: AnyObject) {
         offline3()
- 
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
-
+    //keep track of the download
     func offlinePackProgressDidChange(_ notification: Notification) {
         if let pack = notification.object as? MGLOfflinePack,
             let userInfo = NSKeyedUnarchiver.unarchiveObject(with: pack.context) as? [String: String] {
@@ -388,21 +367,18 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         textField.placeholder = "NE corner long. -###.##### "
         tf2 = textField
         tf2.text = String(mapView.visibleCoordinateBounds.ne.longitude)
-
     }
     
     func configurationTextField3(_ textField: UITextField!){
         textField.placeholder = "SW corner lat. ##.#####)"
         tf3 = textField
         tf3.text = String(mapView.visibleCoordinateBounds.sw.latitude)
-
     }
     
     func configurationTextField4(_ textField: UITextField!){
         textField.placeholder = "SW corner long. -###.#####"
         tf4 = textField
         tf4.text = String(mapView.visibleCoordinateBounds.sw.longitude)
-
     }
     
     //save map...core data implementation in helper
@@ -415,8 +391,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         
         //if they press done...process the input
         func handleDone(_ alertView:UIAlertAction!){
-           
-            
             nelat = Double(tf.text!)!
             nelong = Double(tf2.text!)!
             swlat = Double(tf3.text!)!
@@ -428,8 +402,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             let bounds = MGLCoordinateBounds(sw: swCorner, ne: neCorner)
           
             //if the point is in the offline box....
-            print("count is")
-            print(count)
             for p in 0...(count - 1) {
                 
                 if((mapView.annotations![p].coordinate.latitude > swlat) && (mapView.annotations![p].coordinate.latitude < nelat) && (mapView.annotations![p].coordinate.longitude > swlong) && (mapView.annotations![p].coordinate.longitude < nelong)){
@@ -444,7 +416,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 
             }//end for...
             
-            
             homeModel.downloadItems()
           
             self.view.addSubview(progressView)
@@ -456,7 +427,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             
             //create region based on what the user inputs....
             let region = MGLTilePyramidOfflineRegion(styleURL: mapView.styleURL, bounds: bounds, fromZoomLevel: mapView.zoomLevel, toZoomLevel: mapView.maximumZoomLevel)
-            
             
             // Store some data for identification purposes alongside the downloaded resources.
             let userInfo = ["name": "My New Offline Pack"]
@@ -474,7 +444,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 
                 // Start downloading.
                 pack!.resume()
-                                        }
+            }
         }
         
         //alert for user input....
@@ -493,14 +463,12 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
     
     //core data implementation for save
     func offline1Helper(){
-        print("helper 1")
         var z = 0; //increment for the core data pull
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let entity =  NSEntityDescription.entity(forEntityName: "OfflineSite", in:managedContext)
   
-        //random crash point....
         if(count > 0){
         
         //problem when sometimes count is 0....error message to redo
@@ -539,17 +507,8 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 }
                 
                 site.setValue((imageString), forKey: "imagename")
-                
-                //rest of core data stuff loaded from database for each point...
-                
-                
-//                print("selected location site id")
-//                print(selectedLocation.site_id)
-              
-                
+    
                 site.setValue(selectedLocation.date, forKey:"date")
-                //site.setValue(selectedLocation.slope_status, forKey:"slopeStatus")
-                //site.setValue(selectedLocation.mgmt_area, forKey:"managementArea")
                 site.setValue(selectedLocation.road_trail_no, forKey: "roadTrailNo")
                 site.setValue(selectedLocation.begin_mile_marker, forKey: "beginMile")
                 site.setValue(selectedLocation.end_mile_marker, forKey: "endMile")
@@ -627,10 +586,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         
         for pack in MGLOfflineStorage.shared().packs! {
             let userInfo = NSKeyedUnarchiver.unarchiveObject(with: pack.context) as! [String: String]
-            print("\(userInfo["name"])")
-            print("state is")
-            print(pack.state.rawValue)
-            
+
             if(pack.state.rawValue == 1){
                 messageString = "Inactive. Clearing, then you can resave"
                 offline5()
@@ -654,7 +610,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         
     }
     
-    
     //remove offline pack
     func offline5(){
         //let user know the removal is beginning
@@ -662,13 +617,11 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         alertController1.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         self.present(alertController1, animated: true, completion: nil) //may be an issue?
         
-        
         //CORE DATA STUFF
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
         sites.removeAll()
-        
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OfflineSite")
         
@@ -680,8 +633,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 managedContext.delete(entity as! NSManagedObject)
             }
             
-            
-            
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
@@ -690,7 +641,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         } catch{
             //error
         }
-        
         
         let fetchRequest2 = NSFetchRequest<NSFetchRequestResult>(entityName: "OfflineSiteFull")
         
@@ -702,8 +652,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 managedContext.delete(entity2 as! NSManagedObject)
             }
             
-            
-            
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
         }
@@ -713,9 +661,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             //error
         }
         
-        
-
-        
+        //success/failure message to the users
         for pack in MGLOfflineStorage.shared().packs!{
             MGLOfflineStorage.shared().removePack(pack) { (error) in
                 guard error == nil else {
@@ -733,29 +679,19 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 let alertController = UIAlertController(title: "Complete", message: "Successful Removal", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alertController, animated: true, completion: nil) //may be an issue?
-                
-                
             }
-            //if no packs...
-            
         }
-        
-        
     }
     
+    //load offline points
     @IBAction func loadOffline(_ sender: AnyObject) {
    
         var messageString = ""
-        //offline or online?
-
+        //you are offline
         shareData.offline = true
         
         for pack in MGLOfflineStorage.shared().packs! {
             let userInfo = NSKeyedUnarchiver.unarchiveObject(with: pack.context) as! [String: String]
-            print("\(userInfo["name"])")
-            print("state is")
-            print(pack.state.rawValue)
-            
             //not a complete pack...can't load
             if(pack.state.rawValue != 3){
                 //message to user
@@ -767,7 +703,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             
         }//end for pack...
         if MGLOfflineStorage.shared().packs?.count == 0 {
-            //messaeg to user
+            //message to user
             messageString = "Invalid or Empty Download. Clear Cache and Redo"
             let alertController = UIAlertController(title: "Error", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
@@ -787,14 +723,9 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
                 try managedContext.fetch(fetchRequest)
             sites = results as! [NSManagedObject] //shows up twice cuz they were appended earlier?
             
-            print("load offline count is")
-            print(sites.count)
-            
             for pz in 0 ..< sites.count{
                 
                 let pp: MGLPointAnnotation = MGLPointAnnotation() //make a new point
- 
-                
                 //set lat/long
                 pp.coordinate.latitude = sites[pz].value(forKey: "latitude")! as! Double
                 pp.coordinate.longitude = sites[pz].value(forKey: "longitude")! as! Double
@@ -818,6 +749,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         
     }
     
+    //clicked on the legend
     @IBAction func clickLegend(_ sender: Any) {
         
         let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.alert)
@@ -830,8 +762,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
-        
     }
-    
 }
 

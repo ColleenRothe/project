@@ -2,6 +2,8 @@
 //  MaintenancePinModelHelper.swift
 //  USMPTest1
 //
+//  Gets info from DB to place pins on Maintenance Map. Used by MaintenanceMap.swift
+//
 //  Created by Colleen Rothe on 11/26/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -27,7 +29,6 @@ class MaintenancePinModelHelper: NSObject, URLSessionDataDelegate{
         var session: Foundation.URLSession!
         let configuration = URLSessionConfiguration.default
         
-        
         session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
         
         let task = session.dataTask(with: url)
@@ -49,6 +50,8 @@ class MaintenancePinModelHelper: NSObject, URLSessionDataDelegate{
             
         }
     }
+    
+    //take info from DB, put into MaintenancePinModel
     func parseJSON(){
         //var jsonResult: NSMutableArray = NSMutableArray()
         var jsonResult: NSArray = NSArray()
@@ -59,23 +62,15 @@ class MaintenancePinModelHelper: NSObject, URLSessionDataDelegate{
             
         }
         
-        //jsonResult = NSMutableArray(array: jsonResult)
-        
         var jsonElement: NSArray = NSArray()
         let comments : NSMutableArray = NSMutableArray()
         
-        print("COUNT IS")
-        print(jsonResult.count)
-        
         //loop through JSON objects, store them in NSDictionary object to split into key-val pairs
-        //for(var i=0; i<jsonResult.count; i += 1)
         for i in 0 ..< jsonResult.count{
             jsonElement = jsonResult[i] as! NSArray
             let thing = MaintenancePinModel() //instantiate object to hold each element in the spec. JSON obj.
             
             if let id = jsonElement[0] as? String, let site_id = jsonElement[1] as? String, let coordinate1 = jsonElement[2] as? String, let coordinate2 = jsonElement[3] as? String, let code_relation = jsonElement[4] as? String, let maintenance_type = jsonElement[5] as? String, let us_event = jsonElement[6] as? String, let event_desc = jsonElement[7] as? String, let total = jsonElement[8] as? String, let total_percent = jsonElement[9] as? String{
-                
-                
                 
                 thing.id = id
                 thing.site_id = site_id
@@ -87,23 +82,17 @@ class MaintenancePinModelHelper: NSObject, URLSessionDataDelegate{
                 thing.event_desc = event_desc
                 thing.total = total
                 thing.total_percent = total_percent
-                
-                
+            
             }
             
             comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
-            
             
         }
         
         //pass comments array to protocol method, make available for VC use
         DispatchQueue.main.async(execute: { ()->Void in self.delegate!.itemsDownloaded(comments)
         })
-        
     }
-    
-    
-    
 }
 
 

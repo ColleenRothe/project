@@ -2,6 +2,8 @@
 //  HomeModel2.swift
 //  USMPTest1
 //
+//  Gets DB pin info for offline save. Used by MapboxOnline.swift, OfflineModel
+//
 //  Created by Colleen Rothe on 4/27/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -18,13 +20,11 @@ protocol HomeModel2Protocol: class{
 
 class HomeModel2: NSObject, URLSessionDataDelegate, OfflineModelHelperProtocol{
     
-    //rockfall model stuff 
+    //offline model stuff
      var OFeedItems: NSArray = NSArray()
     
     func itemsDownloadedO(_ items: NSArray) {
         OFeedItems = items
-        print("Offline  feed count is")
-        print(OFeedItems.count)
     }
     
     //Back to regular stuff...
@@ -35,12 +35,10 @@ class HomeModel2: NSObject, URLSessionDataDelegate, OfflineModelHelperProtocol{
     
     let urlPath: String = "http://nl.cs.montana.edu/test_sites/colleen.rothe/mapService.php"
     
-  
     func downloadItems(){
         let url: URL = URL(string: urlPath)!
         var session: Foundation.URLSession!
         let configuration = URLSessionConfiguration.default
-        
         
         session = Foundation.URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
         
@@ -65,8 +63,8 @@ class HomeModel2: NSObject, URLSessionDataDelegate, OfflineModelHelperProtocol{
         }
     }
     
+    //put info from dictionary into OfflineModel
     func parseJSON(){
-        //var jsonResult: NSMutableArray = NSMutableArray()
         var jsonResult: NSArray = NSArray()
         
         do{
@@ -82,18 +80,14 @@ class HomeModel2: NSObject, URLSessionDataDelegate, OfflineModelHelperProtocol{
        
         let comments : NSMutableArray = NSMutableArray()
         
-        
-        //for (var k = 0; k<jsonResult.count; k++){
         for k in 0 ..< jsonResult.count {
         
             jsonElement = jsonResult[k] as! NSDictionary
 
+            //if you find the one you want
             if shareData.offIds.contains((jsonElement.value(forKey:"SITE_ID") as? String)!){
-                print("MATCH")
-                print((jsonElement.value(forKey:"SITE_ID") as? String)!)
                 let thing = OfflineModel() //instantiate object to hold each element in the spec. JSON obj.
         
-                
                 if(jsonElement.value(forKey:"ID") as? String != nil){
                     thing.id = jsonElement.value(forKey: "ID")! as? String}
                 else{
@@ -185,20 +179,16 @@ class HomeModel2: NSObject, URLSessionDataDelegate, OfflineModelHelperProtocol{
                     thing.hazard_rating_landslide_id = ""
                 }
                 
-                
-                
                 shareData.current_clicked_id = thing.id!
+                //call to offline model helper for the full information
                 let omh = OfflineModelHelper()
                 omh.delegate = self
                 omh.downloadItems()
                 
-        
         comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
         
             }//end if contains
         } //end for loop
-        
-        
         
         //pass comments array to protocol method, make available for VC use
         DispatchQueue.main.async(execute: { ()->Void in self.delegate!.itemsDownloaded2(comments)

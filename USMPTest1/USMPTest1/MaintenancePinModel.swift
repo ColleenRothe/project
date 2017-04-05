@@ -2,6 +2,8 @@
 //  MaintenancePinModel.swift
 //  USMPTest1
 //
+//  Object holds info from database used to place the maintenance form pins. Used by MaintenancePinModelHelper
+//
 //  Created by Colleen Rothe on 11/26/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -14,7 +16,6 @@ import Foundation
 import Foundation
 
 class MaintenancePinModel: NSObject {
-    
     
     var id: String?
     var site_id: String?
@@ -31,7 +32,6 @@ class MaintenancePinModel: NSObject {
         
     }
     
-    
     init(id: String, site_id: String, latitude: String, longitude: String, code_relation: String, maintenance_type: String, us_event: String, event_desc: String, total: String, total_percent: String){
         
         self.id = id
@@ -46,7 +46,4 @@ class MaintenancePinModel: NSObject {
         self.total_percent = total_percent
         
     }
-    
- 
-    
 }

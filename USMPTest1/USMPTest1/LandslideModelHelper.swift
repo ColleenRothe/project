@@ -2,6 +2,8 @@
 //  LandslideModelHelper.swift
 //  USMPTest1
 //
+//  Use to get info for a landslide site. used by LandslideChoice.swift, LandslideModel.swift
+//
 //  Created by Colleen Rothe on 2/2/17.
 //  Copyright © 2017 Colleen Rothe. All rights reserved.
 //
@@ -11,11 +13,11 @@
 
 import Foundation
 
+//landslideChoice implements it
 protocol LandslideModelHelperProtocol: class{
     func itemsDownloadedL (_ items: NSArray)
 }
 
-//let shareDatas = ShareData.sharedInstance
 var response = ""
 var JDictionary = NSDictionary()
 
@@ -25,7 +27,7 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php")! as URL)
         request.httpMethod = "POST"
 
-        
+        //post the id
         let postString = "id=\(shareData.current_clicked_id)"
         
         request.httpBody = postString.data(using: String.Encoding.utf8)
@@ -34,15 +36,15 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 return
             }
             
-            print("response = \(response)")
+            print("response = \(String(describing: response))")
             
             
-            responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String
-            
+            responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String
+            //get rid of the multiple {} {} sections
             responseString = responseString.replacingOccurrences(of: "[", with: "")
             responseString = responseString.replacingOccurrences(of: "]", with: "")
             responseString = responseString.replacingOccurrences(of: "{", with: "")
@@ -51,10 +53,8 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
             finalString = finalString.appending(responseString)
             
             finalString = finalString.appending("}")
-            print("FINAL STRING IS")
-            print(finalString)
 
-            
+            //put into dictionary
             if let data2 = finalString.data(using: .utf8){
                 
                 do {
@@ -67,25 +67,19 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
 
             self.parseJSON()
             
-            
-            
         }
         task.resume()
-        
-
+    
     }
+    
     weak var delegate: LandslideModelHelperProtocol?
     
     func downloadItems(){
-        print("landslide helper")
         helper()
-        
-        
     }
     
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data){
-        
         
     }
     
@@ -93,6 +87,7 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
         
     }
     
+    //put info from dictionary into a LandslideModel
     func parseJSON(){
         
         let comments : NSMutableArray = NSMutableArray()
@@ -516,10 +511,7 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
         else{
             thing.comments = ""
         }
-        
-        
-
-        
+ 
          comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
         
         DispatchQueue.main.async(execute: { ()->Void in self.delegate!.itemsDownloadedL(comments)

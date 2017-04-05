@@ -2,6 +2,8 @@
 //  NewSlopeEventForm.swift
 //  USMPTest1
 //
+//  ViewController for New Slope Event Form
+//
 //  Created by Colleen Rothe on 5/7/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -21,7 +23,8 @@
 //internet connectivity
 //http://stackoverflow.com/questions/39558868/check-internet-connection-ios-10
 
-
+//image picker library
+//https://github.com/mikaoj/BSImagePicker
 
 import Foundation
 import UIKit
@@ -30,15 +33,12 @@ import AssetsLibrary
 import Photos
 import CoreData
 import SystemConfiguration
-//import Pods_USMPTest1
 import BSImagePicker
-
 
 class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate  {
     
     let shareData = ShareData.sharedInstance
 
-    
     //nav bar
     @IBOutlet weak var mapButton: UIBarButtonItem!
     
@@ -48,17 +48,14 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     @IBOutlet weak var maintenanceFormButton: UIBarButtonItem!
     
-    
     @IBOutlet weak var logoutButton: UIBarButtonItem!
     
     @IBOutlet weak var manualButton: UIBarButtonItem!
     
-    
-    
+    //UI connection
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var todaysDateLabel: UILabel!
-    
     
     @IBOutlet weak var datePicker: UIDatePicker!
     
@@ -227,10 +224,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     //Images
     var images = [PHAsset]()
 
-    
-    
-    
-    
     //offline func.
     var sites = [NSManagedObject]()             //core data
     
@@ -240,9 +233,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     
     @IBOutlet weak var submitButton: UIButton!
     
-    @IBOutlet weak var submitSavedButton: UIButton!
-
-    
     //text fields for alerts
     var clearNum: UITextField = UITextField()
     var loadNum: UITextField = UITextField()
@@ -250,9 +240,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
     var clearString = ""
     var loadString = ""
     var savedString = ""
-
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -263,15 +250,14 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             submitButton.backgroundColor = UIColor.gray
         }
         
+        //not editing a site
         shareData.edit_site = false
+        shareData.OfflineType = "slopeEvent"
         
         //fill in today's date
         let date1 = Date()
         let date = DateFormatter.localizedString(from: date1, dateStyle: .medium, timeStyle: .medium)
         todaysDateLabel.text = date
-        
-        shareData.OfflineType = "slopeEvent"
-
         
         //get user's current location
         self.locationManager = CLLocationManager()
@@ -337,7 +323,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             manualButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
 
-            
         }else{
             
             let font = UIFont(name: "Times New Roman", size: 9)
@@ -361,7 +346,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             submitButton.backgroundColor = UIColor.darkGray
         }
 
-        
         //dismiss keyboard...
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(NewSlopeEventForm.dismissKeyboard))
         view.addGestureRecognizer(tap)
@@ -376,6 +360,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     func isInternetAvailable() -> Bool
     {
@@ -398,8 +383,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         return (isReachable && !needsConnection)
     }
     
-    
-    
+    //press return, what text field is next?
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         if textField == observerNameText {
@@ -453,6 +437,8 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         }
         
     }
+    
+    //Required picker delegate functions
     
     //one component each row
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -521,15 +507,9 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         if(pickerView .isEqual(estimatedVolumePicker)){
             return estimatedVolumeOptions[row]
         }
-
-
-            
-            
         else{
             return "error"
         }
-        
-        
     }
     
     //MARK: Autofill Location
@@ -539,9 +519,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         //limit to 6 significant digits based on stakeholder feedback
             latitudeText.text = String(format: "%f",locValue.latitude)
             longitudeText.text = String(format: "%f",locValue.longitude)
-       
     }
-    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error")
@@ -552,10 +530,9 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let alertController = UIAlertController(title: "Error", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-        
-        
     }
     
+    //get the user's location. let them know if they have it disabled in permissions
     @IBAction func getLocation(_ sender: AnyObject) {
         if CLLocationManager.authorizationStatus() == .denied {
             //print("denied")
@@ -577,19 +554,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             self.present(alertController, animated: true, completion: nil)
         }
         if CLLocationManager.authorizationStatus() == .authorizedAlways {
-            //print("location!!")
             locationManager.requestLocation()
-            
-            
         }
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            //print("location!!")
             locationManager.requestLocation()
         }
-        
     }
-    
-
     
     //MARK: Description of event locations
 
@@ -598,16 +568,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             aboveRoadTrailButton.setImage(image, for: UIControlState())
             checkedAboveRoadTrail = true
-          
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             aboveRoadTrailButton.setImage(image, for: UIControlState())
             checkedAboveRoadTrail = false
-
-            
-        }
+          }
     }
     
     @IBAction func belowRoadTrail(_ sender: AnyObject) {
@@ -615,17 +581,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             belowRoadTrailButton.setImage(image, for: UIControlState())
             checkedBelowRoadTrail = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             belowRoadTrailButton.setImage(image, for: UIControlState())
             checkedBelowRoadTrail = false
-            
-            
         }
-
     }
     
     @IBAction func atCulvert(_ sender: AnyObject) {
@@ -633,18 +594,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             atCulvertButton.setImage(image, for: UIControlState())
             checkedAtCulvert = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             atCulvertButton.setImage(image, for: UIControlState())
             checkedAtCulvert = false
-            
-            
         }
-        
-        
     }
     
     @IBAction func aboveRiver(_ sender: AnyObject) {
@@ -652,37 +607,25 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             aboveRiverButton.setImage(image, for: UIControlState())
             checkedAboveRiver = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             aboveRiverButton.setImage(image, for: UIControlState())
             checkedAboveRiver = false
-            
-            
         }
-        
     }
-    
     
     @IBAction func aboveCoast(_ sender: AnyObject) {
         if checkedAboveCoast == false{
             let image = UIImage(named: "checkmark")! as UIImage
             aboveCoastButton.setImage(image, for: UIControlState())
             checkedAboveCoast = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             aboveCoastButton.setImage(image, for: UIControlState())
             checkedAboveCoast = false
-            
-            
         }
-        
-        
     }
     
     @IBAction func burnedArea(_ sender: AnyObject) {
@@ -690,38 +633,25 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             burnedAreaButton.setImage(image, for: UIControlState())
             checkedBurnedArea = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             burnedAreaButton.setImage(image, for: UIControlState())
             checkedBurnedArea = false
-            
-            
         }
-        
-        
     }
-    
     
     @IBAction func deforestedSlope(_ sender: AnyObject) {
         if checkedDeforestedSlope == false{
             let image = UIImage(named: "checkmark")! as UIImage
             deforestedSlopeButton.setImage(image, for: UIControlState())
             checkedDeforestedSlope = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             deforestedSlopeButton.setImage(image, for: UIControlState())
             checkedDeforestedSlope = false
-            
-            
         }
-        
-        
     }
     
     @IBAction func urban(_ sender: AnyObject) {
@@ -729,18 +659,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             urbanButton.setImage(image, for: UIControlState())
             checkedUrban = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             urbanButton.setImage(image, for: UIControlState())
             checkedUrban = false
-            
-            
         }
-        
-        
     }
     
     @IBAction func mine(_ sender: AnyObject) {
@@ -748,17 +672,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             mineButton.setImage(image, for: UIControlState())
             checkedMine = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             mineButton.setImage(image, for: UIControlState())
             checkedMine = false
-            
-            
         }
-        
     }
     
     @IBAction func retainingWall(_ sender: AnyObject) {
@@ -766,18 +685,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             retainingWallButton.setImage(image, for: UIControlState())
             checkedRetainingWall = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             retainingWallButton.setImage(image, for: UIControlState())
             checkedRetainingWall = false
-            
-            
         }
-        
-        
     }
     
     @IBAction func naturalSlope(_ sender: AnyObject) {
@@ -785,15 +698,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             naturalSlopeButton.setImage(image, for: UIControlState())
             checkedNaturalSlope = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             naturalSlopeButton.setImage(image, for: UIControlState())
             checkedNaturalSlope = false
-            
-            
         }
     }
     
@@ -802,17 +711,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             engineeredSlopeButton.setImage(image, for: UIControlState())
             checkedEngineeredSlope = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             engineeredSlopeButton.setImage(image, for: UIControlState())
             checkedEngineeredSlope = false
-            
-            
         }
-
     }
     
     @IBAction func unknown(_ sender: AnyObject) {
@@ -820,15 +724,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             unknownButton.setImage(image, for: UIControlState())
             checkedUnknown = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             unknownButton.setImage(image, for: UIControlState())
             checkedUnknown = false
-            
-            
         }
     }
     
@@ -837,15 +737,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             otherButton.setImage(image, for: UIControlState())
             checkedOther = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             otherButton.setImage(image, for: UIControlState())
             checkedOther = false
-            
-            
         }
     }
     
@@ -856,34 +752,24 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             rainButton.setImage(image, for: UIControlState())
             checkedRain = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             rainButton.setImage(image, for: UIControlState())
             checkedRain = false
-            
-            
         }
-
-        
     }
-    
     
     @IBAction func thunderstorm(_ sender: AnyObject) {
         if checkedThunderstorm == false{
             let image = UIImage(named: "checkmark")! as UIImage
             thunderstormButton.setImage(image, for: UIControlState())
             checkedThunderstorm = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             thunderstormButton.setImage(image, for: UIControlState())
             checkedThunderstorm = false
-            
             
         }
 
@@ -894,17 +780,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             continuousRainButton.setImage(image, for: UIControlState())
             checkedContinuousRain = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             continuousRainButton.setImage(image, for: UIControlState())
             checkedContinuousRain = false
-            
-            
         }
-
     }
     
     @IBAction func hurricane(_ sender: AnyObject) {
@@ -912,17 +793,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             hurricaneButton.setImage(image, for: UIControlState())
             checkedHurricane = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             hurricaneButton.setImage(image, for: UIControlState())
             checkedHurricane = false
-            
-            
         }
-
     }
     
     @IBAction func flooding(_ sender: AnyObject) {
@@ -930,17 +806,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             floodingButton.setImage(image, for: UIControlState())
             checkedFlooding = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             floodingButton.setImage(image, for: UIControlState())
             checkedFlooding = false
-            
-            
         }
-
     }
     
     @IBAction func snowfall(_ sender: AnyObject) {
@@ -948,17 +819,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             snowfallButton.setImage(image, for: UIControlState())
             checkedSnowfall = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             snowfallButton.setImage(image, for: UIControlState())
             checkedSnowfall = false
-            
-            
         }
-
     }
     
     @IBAction func prolongedFreezing(_ sender: AnyObject) {
@@ -966,17 +832,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             prolongedFreezingButton.setImage(image, for: UIControlState())
             checkedSnowfall = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             prolongedFreezingButton.setImage(image, for: UIControlState())
             checkedProlongedFreezing = false
-            
-            
         }
-        
     }
     
     @IBAction func highTemperatures(_ sender: AnyObject) {
@@ -984,15 +845,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             highTemperaturesButton.setImage(image, for: UIControlState())
             checkedHighTemperatures = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             highTemperaturesButton.setImage(image, for: UIControlState())
             checkedHighTemperatures = false
-            
-            
         }
     }
     
@@ -1001,15 +858,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             earthquakeButton.setImage(image, for: UIControlState())
             checkedEarthquake = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             earthquakeButton.setImage(image, for: UIControlState())
             checkedEarthquake = false
-            
-            
         }
     }
     
@@ -1018,15 +871,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             volcanicActivityButton.setImage(image, for: UIControlState())
             checkedVolcanicActivity = true
-            
-            
-        }
+     }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             volcanicActivityButton.setImage(image, for: UIControlState())
             checkedVolcanicActivity = false
-            
-            
         }
     }
     
@@ -1035,15 +884,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             leakingPipeButton.setImage(image, for: UIControlState())
             checkedLeakingPipe = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             leakingPipeButton.setImage(image, for: UIControlState())
             checkedLeakingPipe = false
-            
-            
         }
     }
     
@@ -1052,15 +897,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             miningButton.setImage(image, for: UIControlState())
             checkedMining = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             miningButton.setImage(image, for: UIControlState())
             checkedMining = false
-            
-            
         }
     }
     
@@ -1069,15 +910,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             constructionButton.setImage(image, for: UIControlState())
             checkedConstruction = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             constructionButton.setImage(image, for: UIControlState())
             checkedConstruction = false
-            
-            
         }
     }
     
@@ -1086,15 +923,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             damButton.setImage(image, for: UIControlState())
             checkedDam = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             damButton.setImage(image, for: UIControlState())
             checkedDam = false
-            
-            
         }
     }
     
@@ -1103,15 +936,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             noObviousButton.setImage(image, for: UIControlState())
             checkedNoObvious = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             noObviousButton.setImage(image, for: UIControlState())
             checkedNoObvious = false
-            
-            
         }
     }
     
@@ -1120,15 +949,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             unknownCuaseButton.setImage(image, for: UIControlState())
             checkedUnknownCause = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             unknownCuaseButton.setImage(image, for: UIControlState())
             checkedUnknownCause = false
-            
-            
         }
     }
     
@@ -1137,27 +962,22 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let image = UIImage(named: "checkmark")! as UIImage
             secondOtherButton.setImage(image, for: UIControlState())
             checkedSecondOther = true
-            
-            
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
             secondOtherButton.setImage(image, for: UIControlState())
             checkedSecondOther = false
-            
-            
         }
     }
     
     //MARK: Choose Images
-    
     @IBAction func chooseImages(_ sender: AnyObject) {
 
         let vc = BSImagePickerViewController()
         var defaultAssetIds = [String]()
-
+        //all of your photos
         let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
-        
+        //enumerate them
         allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
             
             
@@ -1176,14 +996,13 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         
         let defaultSelected = PHAsset.fetchAssets(withLocalIdentifiers: defaultAssetIds, options: nil)
+        //set the default selected to the ones prev. selected, if any
         vc.defaultSelections = defaultSelected
     
-        
         bs_presentImagePickerController(vc, animated: true,
                                         select: { (asset: PHAsset) -> Void in
                                             // User selected an asset.
                                             // Do something with it, start upload perhaps?
-                                            //print("Selected: \(asset)")
                                             self.images.append(asset)
         }, deselect: { (asset: PHAsset) -> Void in
             // User deselected an assets.
@@ -1202,7 +1021,8 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         
     }
-    //image upload?
+    
+    //image upload
     func UploadRequest()
     {
         if(images.count != 0){
@@ -1236,18 +1056,14 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     return
                 }
                 
-                
                 let body = NSMutableData()
                 
                 var fname = images[i].localIdentifier //how to name?
                 fname = fname.replacingOccurrences(of: "/", with: "")
                 fname.append(".jpg")
-                print("fname test")
-                print(fname)
                 let mimetype = "image/jpg"
                 
                 //define the data post parameter
-                
                 //if name is "file", will add as a document
                 
                 body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
@@ -1259,14 +1075,9 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                 
                 body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
                 
-                
-                
                 request.httpBody = body as Data
                 
-                
-                
                 let session = URLSession.shared
-                
                 
                 let task = session.dataTask(with: request as URLRequest) {
                     (
@@ -1286,29 +1097,19 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             }
             
         }
-        
-        
     }
-    
     
     func generateBoundaryString() -> String
     {
         return "Boundary-\(NSUUID().uuidString)"
     }
 
-    
- 
-
     //MARK: Submit Form Online
     
     func handleSubmit(_ alertView:UIAlertAction!){
-        //delete site from core data if submitted successfully...
-        //let request = NSMutableURLRequest(url: NSURL(string: "http://localhost:8080/usmp/server/new_slope_event/add_new_slope_event.php")! as URL)
-        
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_slope_event/add_new_slope_event.php")! as URL)
         request.httpMethod = "POST"
         
-        //new slope event
         //date_approximator
         var dateApproximatorS = ""
         if(dateTypePicker.selectedRow(inComponent: 0) == 1){
@@ -1336,7 +1137,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         let num_fallen = fallenRocksOptions[fallenRocksPicker.selectedRow(inComponent: 0)]
         let estimated_volume = estimatedVolumeOptions[estimatedVolumePicker.selectedRow(inComponent: 0)]
         let damages = damagesOptions[damagesPicker.selectedRow(inComponent: 0)]
-
     
         //0=false, 1 = true
         //description of event location
@@ -1468,11 +1268,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             cc17 = 1
         }
         
-        
-        
         let postString = "observer_name=\(observerNameText.text!)&email=\(emailText.text!)&phone_no=\(phoneText.text!)&observer_comments=\(observerCommentsText.text!)&date_approximator=\(dateApproximatorS)&dateinput=\(dateInput)&hazard_type=\(hazardType)&state=\(state)&rt_type=\(rt_type)&road_trail_number=\(roadTrailNoText.text!)&begin_mile_marker\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&datum=\(datumText.text!)&begin_coordinate_latitude=\(latitudeText.text!)&begin_coordinate_longitude=\(longitudeText.text!)&condition=\(condition)&affected_length=\(lengthAffectedText.text!)&size_rock=\(size_rock)&num_fallen_rocks=\(num_fallen)&vol_debris=\(estimated_volume)&above_road=\(c1)&below_road=\(c2)&at_culvert=\(c3)&above_river=\(c4)&above_coast=\(c5)&burned_area=\(c6)&deforested_slope=\(c7)&urban=\(c8)&mine=\(c9)&retaining_wall=\(c10)&natural_slope=\(c11)&engineered_slope=\(c12)&unknown=\(c13)&other=\(c14)&rain_checkbox=\(cc1)&thunder_checkbox=\(cc2)&cont_rain_checkbox=\(cc3)&hurricane_checkbox=\(cc4)&flood_checkbox=\(cc5)&snowfall_checkbox=\(cc6)&freezing_checkbox=\(cc7)&high_temp_checkbox=\(cc8)&earthquake_checkbox=\(cc9)&volcano_checkbox=\(cc10)&leaky_pipe_checkbox=\(cc11)&mining_checkbox=\(cc12)&construction_checkbox=\(cc13)&dam_embankment_checkbox=\(cc14)&not_obvious_checkbox=\(cc15)&unknown_checkbox=\(cc16)&other_checkbox=\(cc17)&damages_y_n=\(damages)&damages=\(damagesCommentsText.text!)"
-        
-        
         
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
@@ -1480,14 +1276,25 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
+                print("error=\(String(describing: error))")
+                let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+                
                 return
             }
             
-            print("response = \(response)")
+            print("response = \(String(describing: response))")
             
+            print("error=\(String(describing: error))")
+            //user message confirming submit
+            let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
+            print("responseString = \(String(describing: responseString))")
         }
         task.resume()
 
@@ -1497,60 +1304,31 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
     }
     
-    
+    //submission confirmation
     @IBAction func submit(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "Submit", message: "Are you sure you want to submit the form?", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSubmit))
         present(alertController, animated: true, completion: nil)
-        
-
-    }
     
-    //MARK: submit saved form(s)
-    
-    func configurationSavedTextField(_ textField: UITextField!){
-        textField.placeholder = "0"
-        savedNum = textField
-    }
-    
-    func handleSaved(_ alertView:UIAlertAction!){
-        //delete site from core data if submitted successfully...
-        //add message confirming submission...
-        savedString = savedNum.text!
-        if((savedNum.text! =~ "(?:6[0-4]|[1-5]\\d|[1-9])(?: *- *(?:6[0-4]|[1-5]\\d|[1-9]))?(?: *, *(?:6[0-4]|[1-5]\\d|[1-9])(?: *- *(?:6[0-4]|[1-5]\\d|[1-9]))?)*$") == false){
-            submitSaved(submitSavedButton)
-        }
-        
-    }
-    
-    @IBAction func submitSaved(_ sender: AnyObject) {
-        let alertController = UIAlertController(title: "Submit Saved Form(s)", message: "Enter Form Numbers Seperated by Comma (Ex: 1,3,5-8,10)", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addTextField(configurationHandler: configurationSavedTextField)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSaved))
-        
-        present(alertController, animated: true, completion: nil) //may be an issue?
-        
-
     }
     
     //MARK: save offline sites
     
     @IBAction func saveOffline(_ sender: AnyObject) {
-        print("save offline")
-      
+        //core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let entity =  NSEntityDescription.entity(forEntityName: "OfflineSlopeEvent", in:managedContext)
         let site = NSManagedObject(entity: entity!, insertInto: managedContext)
         
+        //save values
         site.setValue(observerNameText.text, forKey: "observerName")
         site.setValue(emailText.text, forKey: "email")
         site.setValue(phoneText.text, forKey: "phone")
         site.setValue(observerCommentsText.text, forKey: "observerComments")
         site.setValue(todaysDateLabel.text, forKey: "todaysDate")
-        //EVENT DATE
+
         site.setValue(datePicker.date, forKey: "eventDate")
             
         //3 options
@@ -1566,7 +1344,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         site.setValue(selectedState, forKey: "state")
     
         //pictures
-        
         var defaultAssetIds = [String]()
         
         let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
@@ -1590,9 +1367,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         
         site.setValue(defaultAssetIds, forKey:"photos")
        
-        
-        //site.setValue(imagesLabel.text, forKey:"photos")
-        
         site.setValue(roadTrailNoText.text, forKey: "roadTrailNo")
 
         //road or trail? - 2 options
@@ -1837,14 +1611,10 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             let alertController = UIAlertController(title: "Error", message: "Form Not Saved: \(error.userInfo)", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             present(alertController, animated: true, completion: nil) //may be an issue?
-
         }
-        
     }
 
-
     //MARK:LOAD offline site
-    
     func loadFromList(){
         shareData.load = false
         
@@ -1861,7 +1631,9 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             sites = results as! [NSManagedObject] //shows up twice cuz they were appended earlier?
             
             let number = shareData.selectedForm
-                    
+            
+                    //set UI
+            
                     observerNameText.text = sites[number].value(forKey: "observerName")! as? String
                     emailText.text = sites[number].value(forKey: "email")! as? String
                     phoneText.text = sites[number].value(forKey: "phone")! as? String
@@ -1917,14 +1689,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         let image = UIImage(named: "checkmark")! as UIImage
                         aboveRoadTrailButton.setImage(image, for: UIControlState())
                         checkedAboveRoadTrail = true
-                        
                     }else{
                         let image = UIImage(named: "unchecked")! as UIImage
                         aboveRoadTrailButton.setImage(image, for: UIControlState())
                         checkedAboveRoadTrail = false
-                        
                     }
-                    
                     if((sites[number].value(forKey: "lBelow")! as! Bool) == true){
                         let image = UIImage(named: "checkmark")! as UIImage
                         belowRoadTrailButton.setImage(image, for: UIControlState())
@@ -1934,7 +1703,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         belowRoadTrailButton.setImage(image, for: UIControlState())
                         checkedBelowRoadTrail = false
                     }
-                    
                     if((sites[number].value(forKey: "lCulvert")! as! Bool) == true){
                         let image = UIImage(named: "checkmark")! as UIImage
                         atCulvertButton.setImage(image, for: UIControlState())
@@ -1944,7 +1712,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         atCulvertButton.setImage(image, for: UIControlState())
                         checkedAtCulvert = false
                     }
-                    
                     if((sites[number].value(forKey: "lRiver")! as! Bool) == true){
                         let image = UIImage(named: "checkmark")! as UIImage
                         aboveRiverButton.setImage(image, for: UIControlState())
@@ -1954,7 +1721,6 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         aboveRiverButton.setImage(image, for: UIControlState())
                         checkedAboveRiver = false
                     }
-                    
                     if((sites[number].value(forKey: "lCoast")! as! Bool) == true){
                         let image = UIImage(named: "checkmark")! as UIImage
                         aboveCoastButton.setImage(image, for: UIControlState())
@@ -2045,9 +1811,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                         otherButton.setImage(image, for: UIControlState())
                         checkedOther = false
                     }
-                    
                     //MARK: Possible Cause of Event
-                    
                     if((sites[number].value(forKey: "cRain")! as! Bool) == true){
                         let image = UIImage(named: "checkmark")! as UIImage
                         rainButton.setImage(image, for: UIControlState())
@@ -2205,35 +1969,26 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     datumText.text = sites[number].value(forKey: "datum")! as? String
                     latitudeText.text = sites[number].value(forKey: "lat")! as? String
                     longitudeText.text = sites[number].value(forKey: "long")! as? String
-                    
                     //road/trail conditions after failure- 5 options
                     let afterFailure = sites[number].value(forKey: "rtConditionAfter")! as! NSObject as! Int
                     afterFailurePicker.selectRow(afterFailure, inComponent: 0, animated: true)
-
                     lengthAffectedText.text = sites[number].value(forKey: "lengthAffected")! as? String
-                    
                     //damages? - 2 options
                     let damages = sites[number].value(forKey: "deaths")! as! NSObject as! Int
                     damagesPicker.selectRow(damages, inComponent: 0, animated: true)
-
                     damagesCommentsText.text = sites[number].value(forKey: "deathsComments")! as? String
-                    
                     //number of fallen rocks - 5 options
                     let fallenRocks = sites[number].value(forKey: "numFallen")! as! NSObject as! Int
                     fallenRocksPicker.selectRow(fallenRocks, inComponent: 0, animated: true)
-
-            
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
             let alertController = UIAlertController(title: "Error", message: "Could not fetch \(error.userInfo)", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             present(alertController, animated: true, completion: nil) //may be an issue?
-            
         }
-
-        
-    }
-        
+}
+    
+    //help popup
     @IBAction func getOfflineHelp(_ sender: AnyObject) {
         let messageString = "Save forms while offline. See what forms you have saved on the list. Clear a form when it isn't needed or load a form to double-check the information. Submit form(s) once you are back online."
         let alertController = UIAlertController(title: "Help", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
@@ -2277,13 +2032,5 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             present(alertController, animated: true, completion: nil) //may be an issue?
         }
-        
-        
-        
-        
-        
     }
-    
-
-    
 }

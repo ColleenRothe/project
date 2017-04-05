@@ -2,30 +2,35 @@
 //  RockfallModelHelper.swift
 //  USMPTest1
 //
+//  Downloads info from DB for an existing slope rating form - rockfall
+//
 //  Created by Colleen Rothe on 2/7/17.
 //  Copyright © 2017 Colleen Rothe. All rights reserved.
 //
 
+//CREDITS:
 //adapted from:
 //http://codewithchris.com/iphone-app-connect-to-mysql-database/
 
 
 import Foundation
 
+//RockfallChoice.swift implements
 protocol RockfallModelHelperProtocol: class{
     func itemsDownloadedR (_ items: NSArray)
     
 }
-
     var responseR = ""
     var RDictionary = NSDictionary()
 
 class RockfallModelHelper: NSObject, URLSessionDataDelegate{
     
+    
     func helper(){
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php")! as URL)
         request.httpMethod = "POST"
         
+        //post the id
         let postString = "id=\(shareData.current_clicked_id)"
         
         request.httpBody = postString.data(using: String.Encoding.utf8)
@@ -40,10 +45,9 @@ class RockfallModelHelper: NSObject, URLSessionDataDelegate{
             
             print("response = \(response)")
             
-            
             responseR = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String
             
-            
+            //parse the response because there are a bunch of {} blocks
             responseR = responseR.replacingOccurrences(of: "[", with: "")
             responseR = responseR.replacingOccurrences(of: "]", with: "")
             responseR = responseR.replacingOccurrences(of: "{", with: "")
@@ -52,11 +56,9 @@ class RockfallModelHelper: NSObject, URLSessionDataDelegate{
             finalString = finalString.appending(responseR)
             
             finalString = finalString.appending("}")
-            print("FINAL STRING IS")
-            print(finalString)
             
             if let data2 = finalString.data(using: .utf8){
-                
+                //put it into a dictionary
                 do {
                     RDictionary =  try JSONSerialization.jsonObject(with: data2, options: []) as! NSDictionary
                 } catch let error as NSError {
@@ -66,33 +68,23 @@ class RockfallModelHelper: NSObject, URLSessionDataDelegate{
             }
             
             self.parseJSON()
-            
-            
-            
         }
         task.resume()
-
-        
-        
     }
     
     weak var delegate: RockfallModelHelperProtocol?
     
     func downloadItems(){
         helper()
-        
-        
     }
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data){
-        
-        
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?){
-        
     }
     
+    //put the data into a RockfallModel
     func parseJSON(){
         
         let comments : NSMutableArray = NSMutableArray()
@@ -110,12 +102,7 @@ class RockfallModelHelper: NSObject, URLSessionDataDelegate{
             thing.site_id = ""
         }
         
-        if(RDictionary.value(forKey:"MGMT_AREA") as? String != nil){
-            thing.mgmt_area = RDictionary.value(forKey: "MGMT_AREA")! as? String}
-        else{
-            thing.mgmt_area = ""
-        }
-        
+            
         if(RDictionary.value(forKey:"UMBRELLA_AGENCY") as? String != nil){
             thing.umbrella_agency = RDictionary.value(forKey: "UMBRELLA_AGENCY")! as? String}
         else{
@@ -541,20 +528,11 @@ class RockfallModelHelper: NSObject, URLSessionDataDelegate{
             thing.comments = ""
         }
         
-        
-        
-        
         comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
         
         DispatchQueue.main.async(execute: { ()->Void in self.delegate!.itemsDownloadedR(comments)
         })
         
-    }
-    
-
-
-    
-    
-    
+    }   
 }
 

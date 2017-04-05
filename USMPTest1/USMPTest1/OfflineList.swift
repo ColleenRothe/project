@@ -2,10 +2,11 @@
 //  OfflineList.swift
 //  USMPTest1
 //
+//  Page holds list of forms saved offline
+//
 //  Created by Colleen Rothe on 6/7/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
-//Page to hold a list of forms saved offline
 
 import Foundation
 import UIKit
@@ -21,11 +22,8 @@ class OfflineList: UITableViewController{
 
     
     override func viewDidLoad(){
-      
-        
         super.viewDidLoad()
         getData()
-        print(shareData.OfflineType)
     }
     func getData(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -62,9 +60,6 @@ class OfflineList: UITableViewController{
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             present(alertController, animated: true, completion: nil) //may be an issue?
         }
-
-        
-        
     }
     
     override func didReceiveMemoryWarning(){
@@ -109,7 +104,6 @@ class OfflineList: UITableViewController{
         }
         //if it's not the first row, site stuff
         else if((indexPath as NSIndexPath).row == 1){
-            print("RETURN THAT OPTION CELL")
             return optionCell!
         }
         //if it's not the first row, it is a site
@@ -121,7 +115,7 @@ class OfflineList: UITableViewController{
                         cell.numLabel.text = "\(number)"
             
         //form type: Landslide and Rockfall
-            //hazard type, management area, road/trail id, date of event
+            //hazard type, agency , road/trail id, date of event
             if(shareData.OfflineType == "landslide" || shareData.OfflineType == "rockfall"){
                 
                 cell.labelOne.text = "Hazard Type:" + (site.value(forKey: "hazardType")! as! String) //as? String
@@ -149,7 +143,6 @@ class OfflineList: UITableViewController{
                 //hazard type, state, road/trail ID, date of event
             else if(shareData.OfflineType == "slopeEvent"){
                 
-                
                 //hazard type
                 if((site.value(forKey: "hazardType")! as! NSObject) as! Int == 3){
                     cell.labelOne.text = "Hazard Type: Snow Avalanche"
@@ -171,14 +164,11 @@ class OfflineList: UITableViewController{
                 cell.labelThree.text = "Road/Trail No:" + (site.value(forKey: "roadTrailNo")! as! String) //as? String
                 
                 //date of event
-                
                 let dateformatter = DateFormatter()
                 dateformatter.dateStyle = DateFormatter.Style.medium
                 dateformatter.timeStyle = DateFormatter.Style.none
                 let dateVal = dateformatter.string(from: (site.value(forKey: "eventDate")! as? Date)!)
                 cell.labelFour.text = "Event Date:" + dateVal
-                
-                
             }
             //form type: Maintenance Form
             //type of event, maintenance type, facility code etc.
@@ -201,20 +191,15 @@ class OfflineList: UITableViewController{
                 else{
                     cell.labelTwo.text = "Maint. Type:New Maintenance"
                 }
-                
                 cell.labelThree.text = "Code:" + (site.value(forKey: "code")! as! String) //as? String
             }
-
             return cell
         }
     }
     
     //click on row in table to select that form for submit/load/clear
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("You selected cell number: \(indexPath.row)!")
         selected = (indexPath.row - 2)
         shareData.selectedForm = selected
     }
-    
-        
 }

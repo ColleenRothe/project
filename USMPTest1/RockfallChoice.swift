@@ -2,10 +2,11 @@
 //  RockfallChoice.swift
 //  USMPTest1
 //
+//  ViewController for Rockfall Slope Rating Form
+//
 //  Created by Colleen Rothe on 5/2/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
-//  Rockfall Slope Rating Form
 
 //infix operator from:
 //http://stackoverflow.com/questions/29784447/swift-regex-does-a-string-match-a-pattern
@@ -25,6 +26,9 @@
 //TO CHECK CONNECTIVITY
 //http://stackoverflow.com/questions/39558868/check-internet-connection-ios-10
 
+//image picker library
+//https://github.com/mikaoj/BSImagePicker
+
 import Foundation
 import UIKit
 import MapKit
@@ -34,11 +38,7 @@ import Photos
 import SystemConfiguration
 import BSImagePicker
 
-
-
-
-
-
+//regex stuff
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -68,9 +68,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
-
-
 infix operator =~
 
 func =~(string:String, regex:String) -> Bool {
@@ -82,12 +79,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     let shareData = ShareData.sharedInstance
     var feedItems: NSArray = NSArray()
-
-
-    
     var locationManager = CLLocationManager()
     
-    
+    //UI Connections
     @IBOutlet weak var agency: UIPickerView!
     var agencyOptions = ["Select Agency option", "FS", "NPS", "BLM", "BIA"]
 
@@ -100,8 +94,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     var NPSRegionalOptions = ["Select Regional option","AKR","IMR","MWR","NCR","NER","PWR","SER"]
 
-    
-    
     @IBOutlet weak var local: UIPickerView!
     var localOptions = ["Select Local option"]
     
@@ -267,8 +259,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                        "TIMUCUAN_ECOLOGICAL","BLUE_RIDGE_PARKWAY","OBED"]
 
     
-    
-    
     @IBOutlet weak var datePicker: UIDatePicker!
     //nav bar
     
@@ -287,11 +277,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBOutlet weak var scrollView: UIScrollView!
     
-    
     @IBOutlet weak var speedPicker: UIPickerView!
     
     var speedOptions = ["25 mph", "30 mph", "35 mph", "40 mph", "45 mph", "50 mph", "55 mph", "60 mph", "65 mph", "70 mph"]
-    
     
     @IBOutlet weak var sidePicker: UIPickerView!
     
@@ -306,11 +294,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     var fixesOptions = ["Yes", "No"]
     
-    
     @IBOutlet weak var rtPicker: UIPickerView!
     
     var rtOptions = ["Road", "Trail"]
-    
     
     @IBOutlet weak var ditchEPicker: UIPickerView!
     
@@ -409,7 +395,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //site information validations
     
-    
     @IBOutlet weak var roadTrailNoText: UITextField!
     
     @IBOutlet weak var roadTrailClassText: UITextField!
@@ -419,8 +404,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var beginMileText: UITextField!
     
     @IBOutlet weak var endMileText: UITextField!
-    
-    
     
     @IBOutlet weak var lengthAffectedText: UITextField!
     
@@ -458,9 +441,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //Images
     var images = [PHAsset]()
-    
 
-    
     //to load offline site...
     var sites = [NSManagedObject]()             //core data sites
     
@@ -483,7 +464,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     var selectedAadt = false
     
-    
     @IBOutlet weak var weatherPicker: UIPickerView!
     
      var weatherOptions = ["Clear","Clear and Breezy","A Few Clouds","A Few Clouds and Breezy","Partly Cloudy","Partly Cloudy and Breezy","Mostly Cloudy","Mostly Cloudy and Breezy","Overcast","Overcast and Breezy","Fog","Partial Fog","Freezing Fog","Light Rain","Rain","Heavy Rain","Freezing Rain","Thunderstorms","Snow","Smoky\\/Haze","Unknown"]
@@ -493,7 +473,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var hazardType2: UIPickerView!
     
     @IBOutlet weak var hazardType3: UIPickerView!
-    
     
       var hazardOptions = ["","Planar", "Wedge", "Toppling", "Raveling/Undermining", "Rock Avalanche", "Indeterminate Rock Failures", "Diff. Erosion"]
     
@@ -523,8 +502,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var wordsLat = [NSManagedObject]()
     var lat = "one"
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -545,8 +522,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
-        
-        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ACManagement")
         
         do {
@@ -560,7 +535,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         //do once at beginning to keep it up to date
         for i in 0 ..< wordsMA.count {
-            //print(wordsMA[i].valueForKey("word")!)
             pastMA.append(wordsMA[i].value(forKey: "word") as! NSString)
         }
         
@@ -596,7 +570,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             pastR.append((wordsR[i].value(forKey: "word") as! NSString!))
         }
         
-        
         autoTableR.delegate = self
         autoTableR.dataSource = self
         autoTableR.isScrollEnabled = true
@@ -608,7 +581,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //Longitude
         self.view.addSubview(self.autoTableLong)
         autoTableLong.register(UITableViewCell.self, forCellReuseIdentifier: "AutoCompleteRowIdentifier")
-        
         
         let fetchRequest3 = NSFetchRequest<NSFetchRequestResult>(entityName: "ACLongitude")
         
@@ -627,7 +599,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             pastLong.append((wordsLong[i].value(forKey: "word") as! NSString!))
         }
         
-        
         autoTableLong.delegate = self
         autoTableLong.dataSource = self
         autoTableLong.isScrollEnabled = true
@@ -639,7 +610,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //Latitude
         self.view.addSubview(self.autoTableLat)
         autoTableLat.register(UITableViewCell.self, forCellReuseIdentifier: "AutoCompleteRowIdentifier")
-        
         
         let fetchRequest4 = NSFetchRequest<NSFetchRequestResult>(entityName: "ACLatitude")
         
@@ -658,7 +628,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             pastLat.append((wordsLat[i].value(forKey: "word") as! NSString))
         }
         
-        
         autoTableLat.delegate = self
         autoTableLat.dataSource = self
         autoTableLat.isScrollEnabled = true
@@ -666,9 +635,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         autoTableLat.allowsSelectionDuringEditing = true
         autoTableLat.allowsSelection = true
         autoTableLat.isHidden = true  //true
-        
-
-
         
         //Pickers
         agency.delegate = self
@@ -679,7 +645,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         local.delegate = self
         local.dataSource = self
-        
         
         rtPicker.delegate = self
         rtPicker.dataSource = self
@@ -738,7 +703,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         weatherPicker.delegate = self
         weatherPicker.dataSource = self
         
-        
         //text field delegates
         bsPerEventText.delegate = self
         aadtEtcText.delegate = self
@@ -770,7 +734,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         flmaIdText.delegate = self
         flmaDescriptionText.delegate = self
         
-        
         hazardType1.delegate = self
         hazardType1.dataSource = self
         
@@ -779,7 +742,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         hazardType3.delegate = self
         hazardType3.dataSource = self
-        
         
         roadTrailNoText.delegate = self
         
@@ -851,13 +813,10 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         long1Text.delegate = self
         long2Text.delegate = self
 
-        
-        
         //Scroller
         scrollView.isScrollEnabled = true
        
         scrollView.contentSize = CGSize(width: 600, height: 9000) //set content size (= to view)
-        
         
         if(shareData.device == "iPad"){
             let font = UIFont(name: "Times New Roman", size: 15)
@@ -894,20 +853,21 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             //call special load method
             loadFromList()
         }
+        //editing offline
         if(shareData.offline_edit == true){
             shareData.offline_edit = false
             offlineEdit()
         }
+        //editing site online
         else if(shareData.edit_site == true){
             shareData.edit_site = false; //??
             edit()
         }
-        
+        //internet available?
         if(!isInternetAvailable()){
             submitButton.isEnabled = false
             submitButton.backgroundColor = UIColor.darkGray
         }
-        
         
         //dismiss keyboard...
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(RockfallChoice.dismissKeyboard))
@@ -920,9 +880,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
-    
-    
-    
     
     func isInternetAvailable() -> Bool
     {
@@ -945,21 +902,21 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return (isReachable && !needsConnection)
     }
     
+    //call rockfall model helper to get data on the site
     func edit(){
-        print("CALL TO EDIT")
         let rimh = RockfallModelHelper()
         rimh.delegate = self
         rimh.downloadItems()
         
     }
     
+    //data downloaded, call to fill form
     func itemsDownloadedR(_ items: NSArray) {
         feedItems = items
-        print("Rockfall feed count is")
-        print(feedItems.count)
         fillToEdit()
     }
     
+    //fill form with rockfall site information, from RockfallModel
     func fillToEdit(){
         let selectedLocation = feedItems.object(at: 0) as! RockfallModel
         
@@ -1033,7 +990,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
         }
         
-        
         //date?
         let road_or_trail = selectedLocation.road_or_trail
         if(road_or_trail == "T"){
@@ -1049,13 +1005,10 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let dateIndex = dateString.index(dateString.startIndex, offsetBy: 10)
         dateString = dateString.substring(to: dateIndex)
         
-        print("DATE STRING IS"+dateString)
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateFromString = dateFormatter.date(from: dateString)
         datePicker.setDate(dateFromString!, animated: true)
-        
         
         roadTrailNoText.text = selectedLocation.road_trail_no
         roadTrailClassText.text = selectedLocation.road_trail_class
@@ -1064,22 +1017,18 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         endMileText.text = selectedLocation.end_mile_marker
         
         let side = selectedLocation.side as String!
-        print("SIDE IS:" + side!)
         if(sideOptions.contains(side!)){
             let temp = sideOptions.index(of: side!)
             sidePicker.selectRow(temp!, inComponent: 0, animated: true)
         }
         
-        
         let weather = selectedLocation.weather as String!
         if (weatherOptions.contains(weather!)){
             let temp = weatherOptions.index(of: weather!)
             weatherPicker.selectRow(temp!, inComponent: 0, animated: true)
-            
         }
         
         //TODO: Hazard Type (1)
-        
         lat1Text.text = selectedLocation.begin_coordinate_lat
         lat2Text.text = selectedLocation.end_coordinate_lat
         long1Text.text = selectedLocation.begin_coordinate_long
@@ -1119,7 +1068,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else{
             fixesPicker.selectRow(0, inComponent: 0, animated: true)
         }
-        //photos
+        //photos???
         
         commentsText.text = selectedLocation.comments
         flmaNameText.text = selectedLocation.flma_name
@@ -1144,7 +1093,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let temp_bsv = ratingOptions.index(of: bsv!)
             rockfallHPicker.selectRow(temp_bsv!, inComponent: 0, animated: true)
         }
-     
         
         //Prelim Ratings...all
         let impact_on_use = selectedLocation.impact_on_use
@@ -1157,7 +1105,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }else{
             impactOUPicker.selectRow(0, inComponent: 0, animated: true)
         }
-        
         
         //1 is true, 0 is false
         let aadt_usage_checked = selectedLocation.aadt_usage_calc_checkbox
@@ -1190,7 +1137,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         slopeHeightCalcText.text = selectedLocation.hazard_rating_slope_height_axial_length
         rockfallHazardTotalText.text = selectedLocation.hazard_total
         
-        
         //Hazard Rating - Rockfall Only
         let rrmf = selectedLocation.hazard_rockfall_maint_frequency
         if(ratingOptions.contains(rrmf!)){
@@ -1221,7 +1167,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let temp = ratingOptions.index(of: diff2!)
             rockF2Picker.selectRow(temp!, inComponent: 0, animated: true)
         }
-        
         
         //Risk Ratings -All
         routeTWText.text = selectedLocation.route_trail_width
@@ -1275,12 +1220,11 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         //total score
         totalScoreText.text = selectedLocation.total_score
-        
-        
     }
     
+    //edit form in offline mode
     func offlineEdit(){
-    print("CALL OFFLINE EDIT")
+        //get the site from core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
@@ -1299,13 +1243,83 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     number = i
                 }
             }
-
-            print(sites[number].value(forKey: "site_id")! as? String)
             
+            //fill in the UI
             let site_id = sites[number].value(forKey: "site_id")! as? String
-            let agency = sites[number].value(forKey: "umbrella_agency")! as? String
+            let agencyS = sites[number].value(forKey: "umbrella_agency")! as? String
+            
+            for i in 0 ... (agencyOptions.count - 1){
+                if (agencyOptions[i] == agencyS){
+                    agency.selectRow(agencyOptions.index(of: agencyS!)!, inComponent: 0, animated: true)
+                }
+            }
+            
             let regional_admin = sites[number].value(forKey: "regional_admin")! as? String
-            let local = sites[number].value(forKey: "local_admin")! as? String
+            let local_admin = sites[number].value(forKey: "local_admin")! as? String
+            
+            //FS
+            if(agency.selectedRow(inComponent: 0) == 1){
+                if(FSRegionalOptions.contains(regional_admin!)){
+                   regional.selectRow(FSRegionalOptions.index(of: regional_admin!)!, inComponent: 0, animated: true)
+                    
+                    if(FSNorthernLocal.contains(local_admin!)){
+                        local.selectRow(FSNorthernLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSRockyMountainLocal.contains(local_admin!)){
+                        local.selectRow(FSRockyMountainLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSSouthwesternLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSIntermountainLocal.contains(local_admin!)){
+                        local.selectRow(FSIntermountainLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSPacificSouthwestLocal.contains(local_admin!)){
+                        local.selectRow(FSPacificSouthwestLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSPacificNorthwestLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSSouthernLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthernLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSEasternLocal.contains(local_admin!)){
+                        local.selectRow(FSEasternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSAlaskaLocal.contains(local_admin!)){
+                        local.selectRow(FSAlaskaLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                }
+            }
+            
+            //NPS
+            if(agency.selectedRow(inComponent: 0) == 2){
+                    if(NPSRegionalOptions.contains(regional_admin!)){
+                        regional.selectRow(NPSRegionalOptions.index(of: regional_admin!)!, inComponent: 0, animated: true)
+                        
+                        if(NPSAkrLocal.contains(local_admin!)){
+                            local.selectRow(NPSAkrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        }
+                        else if(NPSImrLocal.contains(local_admin!)){
+                            local.selectRow(NPSImrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        }
+                        else if(NPSMwrLocal.contains(local_admin!)){
+                            local.selectRow(NPSMwrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        }
+                        else if(NPSNcrLocal.contains(local_admin!)){
+                            local.selectRow(NPSNcrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        }
+                        else if(NPSNerLocal.contains(local_admin!)){
+                            local.selectRow(NPSNerLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        }
+                        else if(NPSPwrLocal.contains(local_admin!)){
+                            local.selectRow(NPSPwrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        }
+                        else if(NPSSerLocal.contains(local_admin!)){
+                            local.selectRow(NPSSerLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        }
+                    }
+                }
             
             roadTrailNoText.text = sites[number].value(forKey: "road_trail_no")! as? String
             roadTrailClassText.text = sites[number].value(forKey: "road_trail_class")! as? String
@@ -1464,8 +1478,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             flmaIdText.text = sites[number].value(forKey: "flma_id")! as? String
             flmaNameText.text = sites[number].value(forKey: "flma_name")! as? String
             flmaDescriptionText.text = sites[number].value(forKey: "flma_description")! as? String
-
-
             
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
@@ -1480,8 +1492,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Dispose of any resources that can be recreated.
     }
     
-        
-    
     //MARK: location manager delegates
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
@@ -1495,12 +1505,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             lat2Text.text = String(format: "%f",locValue.latitude)
             long2Text.text = String(format: "%f",locValue.longitude)
         }
-        
-        
-        
     }
-    
-    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error")
@@ -1512,16 +1517,13 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
         
-        
     }
     
     //MARK: Automplete Stuff
     
     func textField(_ textField: UITextField!, shouldChangeCharactersIn range: NSRange, replacementString string: String!) -> Bool
     {
-        
         if (textField == rater){
-            
             let substring2 = (rater.text! as NSString).replacingCharacters(in: range, with: string)
             autocompleteR(substring2)
         }else if (textField == long1Text){
@@ -1539,9 +1541,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }else if (textField == lat2Text){
             let substring4 = (lat2Text.text! as NSString).replacingCharacters(in: range, with: string)
             autocompleteLat(substring4)
-            
         }
-        
         
         return true
     }
@@ -1555,7 +1555,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             autoTableMA.isHidden = true
         }
         autocompMA.removeAll(keepingCapacity: false)
-        
         
         for curString in pastMA
         {
@@ -1665,7 +1664,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }else{
             return autocompLat.count
         }
-
         
     }
     
@@ -1736,11 +1734,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             
         }
-        
     }
-
-
     
+    //click enter, which text field is next?
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //management area -> date picker
         //date picker -> r/t picker
@@ -1896,24 +1892,18 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             return false
         }
         
-        //pickers...
-        
         if textField == aadtEtcText {
             textField.resignFirstResponder()
             preliminaryRatingText.becomeFirstResponder()
             return false
         }
         
-        //pickers...
-        
         if textField == annualRText {
             textField.resignFirstResponder()
             slopeHText.becomeFirstResponder()
             return false
         }
-        
-        //pickers...
-        
+ 
         if textField == rockfallHazardTotalText {
             textField.resignFirstResponder()
             routeTWText.becomeFirstResponder()
@@ -1929,19 +1919,14 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             percentDSDText.becomeFirstResponder()
             return false
         }
-        //pickers...
         if textField == riskTotalText {
             textField.resignFirstResponder()
             totalScoreText.becomeFirstResponder()
             return false
         }
-        
-        
+
         return true
     }
-    
-    
-    
     //MARK: Autofill for calculations
     
     //auto-update when you click out of text field
@@ -1992,8 +1977,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
                 
-                
-                
             }
             else{
                 roadTrailNoText.backgroundColor = UIColor.white
@@ -2008,13 +1991,10 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
             }
             else{
                 roadTrailClassText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == rater){
@@ -2026,8 +2006,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
+            
             }
             else{
                 rater.backgroundColor = UIColor.white
@@ -2046,8 +2025,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
             }
             
-            
-            
             do {
                 try managedContext.save()
                 
@@ -2055,10 +2032,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-            
-
-            
-            
             
         }
         
@@ -2071,13 +2044,10 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
                 
-                
             }
             else{
                 beginMileText.backgroundColor = UIColor.white
             }
-            
-            
         }
         
         if(textField == endMileText){
@@ -2088,17 +2058,12 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
             }
             else{
                 endMileText.backgroundColor = UIColor.white
             }
-            
-            
         }
 
-        
         //lat/long pattern matching
         if(textField == lat1Text){
             //autoTableLat.hidden = true
@@ -2127,8 +2092,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
             }
             
-            
-            
             do {
                 try managedContext.save()
                 
@@ -2137,8 +2100,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
             }
 
-            
-            
         }
         
         if(textField == lat2Text){
@@ -2165,12 +2126,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if(pastLat.contains(lat2Text.text! as NSString)){
                 
             }else{
-                print("NOT THERE YET")
                 pastLat.append(lat2Text.text! as NSString)
                 
             }
-            
-            
             
             do {
                 try managedContext.save()
@@ -2179,11 +2137,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-            
-            
-
-            
-            
+   
         }
         
         if(textField == long1Text){
@@ -2210,11 +2164,8 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
             }else{
                 pastLong.append(long1Text.text! as NSString)
-                
             }
-            
-            
-            
+    
             do {
                 try managedContext.save()
                 
@@ -2222,9 +2173,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-
-            
-            
         }
         
         if(textField == long2Text){
@@ -2255,8 +2203,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
             }
             
-            
-            
             do {
                 try managedContext.save()
                 
@@ -2264,12 +2210,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-
-            
-            
+  
         }
 
-        
         if(textField == aadtText){
             if(aadtText.text == "" || Int(aadtText.text!) == nil){
                 aadtText.backgroundColor = UIColor.red
@@ -2278,9 +2221,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
-                
+     
             }
             else{
                 aadtText.backgroundColor = UIColor.white
@@ -2296,9 +2237,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
-                
+       
             }
             else{
                 lengthAffectedText.backgroundColor = UIColor.white
@@ -2345,7 +2284,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 sightDText.backgroundColor = UIColor.white
@@ -2398,7 +2336,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             else{
                 volumeText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == beginRainText){
@@ -2425,7 +2362,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 endRainText.backgroundColor = UIColor.white
@@ -2551,10 +2487,8 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             
         }
-        
-        
-    }
     
+    }
     
     //auto-update when you change picker value
     func pickerView(_ pickerView: UIPickerView,didSelectRow row: Int,inComponent component: Int){
@@ -2718,7 +2652,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         //calc overall total
         totalScoreText.text = String(calcTotalScore())
         
-        
     }
     
     //MARK: Picker Delegate Functions
@@ -2750,7 +2683,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if(pickerView .isEqual(local)){
             components = localOptions.count;
         }
-        
         
         if(pickerView .isEqual(rtPicker)){
             components = rtOptions.count;
@@ -2811,9 +2743,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             components = weatherOptions.count;
         }
 
-
         return components
-        
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -2912,8 +2842,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
-        
     }
     
     //Preliminary Ratings...
@@ -2925,8 +2853,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
-        
     }
     
     
@@ -2936,7 +2862,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     
@@ -2946,9 +2871,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
-    
     
     @IBAction func getImpactOUInfo(_ sender: AnyObject) {
         let messageString = "3: Full use continues with minor delays \n 9: Partial use remains. Use modification required, short (3mi/30min) detour available \n 27: Use is blocked- long(>30 min) detour available or less than 1 day closure \n 81: Use is blocked- no detour available or closure longer than 1 week"
@@ -2958,16 +2881,13 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         present(alertController, animated: true, completion: nil)
     }
     
-    
     @IBAction func getAadtInfo(_ sender: AnyObject) {
         let messageString = "3: 50 rarely used insignificant economic/ rec. importance \n 9: 200 occasionally used minor economic/recreational importance \n 27: 450 frequently used moerate economic/rec. importance \n 81: 800 constantly used significant economic/rec. importance"
         
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
-    
     
     @IBAction func getPrelimRatingInfo(_ sender: AnyObject) {
         let messageString = "Good(15-21 pts) \n Fair(22-161 pts) \n Poor(>161 pts)"
@@ -2975,12 +2895,10 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     
     //Slope Hazard Ratings
-    
     
     @IBAction func getSlopeDInfo(_ sender: AnyObject) {
         let messageString = "3: Slope appears dry or well drained; surface runoff well controlled \n 9: Intermittent water on slope; mod. not well drained; or surface runoff moderately controlled \n 27: Water usually on slope; poorly drained; or surface runoff poorly controlled \n 81: Water always on slope; very poorly drained; or surface water runoff control not present"
@@ -2990,7 +2908,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         present(alertController, animated: true, completion: nil)
     }
     
-    
     @IBAction func getAnnualRInfo(_ sender: AnyObject) {
         let messageString = "3: 0-10\" \n 9: 10-30\" \n 27: 30-60\" \n 81: 60\"+ "
         
@@ -2999,14 +2916,12 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         present(alertController, animated: true, completion: nil)
     }
     
-    
     @IBAction func getSlopeHInfo(_ sender: AnyObject) {
         let messageString = "3: 25ft \n 9: 50ft \n 27: 75ft \n 81: 100 ft"
         
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     
@@ -3016,7 +2931,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getStrucC1Info(_ sender: AnyObject) {
@@ -3025,7 +2939,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getRockF1Info(_ sender: AnyObject) {
@@ -3034,7 +2947,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getStrucC2Info(_ sender: AnyObject) {
@@ -3043,7 +2955,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getRockF2Info(_ sender: AnyObject) {
@@ -3052,7 +2963,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     //Risk Ratings
@@ -3071,7 +2981,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getPercentDSDInfo(_ sender: AnyObject) {
@@ -3088,7 +2997,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getECImpactInfo(_ sender: AnyObject) {
@@ -3097,7 +3005,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     
@@ -3156,7 +3063,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    
+    //aadt checkmark
     @IBAction func selectAadt(_ sender: AnyObject) {
         if(selectedAadt == false){
             let image = UIImage.init(named: "checkmark")
@@ -3220,8 +3127,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return rating
     }
     
-    
-    
     //use value from slope height to set slope height
     func calculateK()->Int{
         var val = 1.0
@@ -3257,7 +3162,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             if(val>100){
                 val=100
             }
-            
             
             //ROAD
             if(selectedVal == 0){
@@ -3348,7 +3252,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if(sightDText.text != ""){
             let sightDist = Double(sightDText.text!)
             
-            
             let selectedVal = speedPicker.selectedRow(inComponent: 0)
             
             if(selectedVal == 0){
@@ -3406,7 +3309,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         let tempInt = Int(value)
-        
         
         return tempInt
         
@@ -3538,7 +3440,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             total = total + Double(annualRText.text!)!
         }
         
-        
         //K = calculated... axialLength of slide
         if(slopeHeightCalcText.text != ""){
             total = total + Double(slopeHeightCalcText.text!)!
@@ -3657,7 +3558,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             total = total + 81
         }
         
-        
         //H: calculated... AADT etc
         if(aadtEtcText.text != ""){
             total = total + Double(aadtEtcText.text!)!
@@ -3668,12 +3568,10 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             total = total + Double(routeTWText.text!)!
         }
         
-        
         //W: calculated...human ex.
         if(humanEFText.text != ""){
             total = total + Double(humanEFText.text!)!
         }
-        
         
         //X: calculated...dsd
         if(percentDSDText.text != ""){
@@ -3709,7 +3607,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if(selectedVal2 == 3){
             total = total + 81
         }
-        
         
         //A: maint complexity
         let selectedVal3 = maintenanceCPicker.selectedRow(inComponent: 0)
@@ -3762,9 +3659,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     //MARK: Autofill coordinates...
-    
-
-    @IBAction func fillBegin(_ sender: AnyObject) {
+        @IBAction func fillBegin(_ sender: AnyObject) {
         beginOrEnd = "begin"
         if CLLocationManager.authorizationStatus() == .denied {
             print("denied")
@@ -3830,20 +3725,15 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             //print("location!!")
             locationManager.requestLocation()
         }
-
-
     }
     
     //MARK: Choose Images
-    
-    
-    
     @IBAction func selectImages(_ sender: AnyObject) {
         let vc = BSImagePickerViewController()
         var defaultAssetIds = [String]()
-        
+        //all your photos
         let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
-        
+        //enumerate
         allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
             
             
@@ -3862,14 +3752,13 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         
         let defaultSelected = PHAsset.fetchAssets(withLocalIdentifiers: defaultAssetIds, options: nil)
+        //set default selected to previously selected images
         vc.defaultSelections = defaultSelected
-        
         
         bs_presentImagePickerController(vc, animated: true,
                                         select: { (asset: PHAsset) -> Void in
                                             // User selected an asset.
                                             // Do something with it, start upload perhaps?
-                                            //print("Selected: \(asset)")
                                             self.images.append(asset)
         }, deselect: { (asset: PHAsset) -> Void in
             // User deselected an assets.
@@ -3885,11 +3774,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 print(self.images[i])
             }
         }, completion: nil)
-        
-
     }
     
-    //image upload?
+    //image upload
     func UploadRequest()
     {
         if(images.count != 0){
@@ -3924,14 +3811,11 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     return
                 }
                 
-                
                 let body = NSMutableData()
                 
                 var fname = images[i].localIdentifier //how to name?
                 fname = fname.replacingOccurrences(of: "/", with: "")
                 fname.append(".jpg")
-                print("fname test")
-                print(fname)
                 let mimetype = "image/jpg"
                 
                 //define the data post parameter
@@ -3947,14 +3831,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
                 body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
                 
-                
-                
                 request.httpBody = body as Data
                 
-                
-                
                 let session = URLSession.shared
-                
                 
                 let task = session.dataTask(with: request as URLRequest) {
                     (
@@ -3972,19 +3851,14 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 
                 task.resume()
             }
-            
         }
-        
-        
     }
-    
     
     func generateBoundaryString() -> String
     {
         return "Boundary-\(NSUUID().uuidString)"
     }
 
-    
     //MARK: Submit form online
     
     func handleSubmit(_ alertView:UIAlertAction!){
@@ -4058,7 +3932,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 if(regional.selectedRow(inComponent: 0) == 7){  //ser
                     localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
                 }
-                
                 
             }
 
@@ -4237,7 +4110,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         
-        
         //Risk Ratings
         var r_w_impacts = 3
         let selected_rwi = rightOWIPicker.selectedRow(inComponent: 0)
@@ -4262,24 +4134,23 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         else if(selected_eci == 3){
             enviro_cult_impacts = 81
         }
-        
         var maint_complexity = 3
         let selected_mc = maintenanceCPicker.selectedRow(inComponent: 0)
         if(selected_mc == 1){
-            maint_complexity = 9
+        maint_complexity = 9
         }
         else if(selected_mc == 2){
-            maint_complexity = 27
+                maint_complexity = 27
         }
         else if(selected_mc == 3){
-            maint_complexity = 81
+                maint_complexity = 81
         }
-        
         var event_cost = 3
-        let selected_ec = eventCPicker.selectedRow(inComponent: 0)
+            let selected_ec = eventCPicker.selectedRow(inComponent: 0)
         if(selected_ec == 1){
-            event_cost = 9
-        }
+                event_cost = 9
+            }
+  
         else if(selected_ec == 2){
             event_cost = 27
         }
@@ -4287,21 +4158,20 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             event_cost = 81
         }
         
-
-        
         //delete site from core data if submitted successfully...
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")! as URL)
         request.httpMethod = "POST"
         
-        //take out site_id=287&
-        let postString = "umbrella_agency=\(agency)&regional_admin=\(regional)&local_admin=\(local)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(rockfallHazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)"
+        //agencyS? or agency?
+        let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(rockfallHazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)"
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             
+            //success and failure messages
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alertController, animated: true, completion: nil)
@@ -4309,22 +4179,24 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 return
             }
             
-            print("response = \(response)")
-            print("error=\(error)")
+            print("response = \(String(describing: response))")
+            print("error=\(String(describing: error))")
             let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alertController, animated: true, completion: nil)
             
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("responseString = \(String(describing: responseString))")
+            
             return
             
-            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
         }
         task.resume()
 
         }
     }
 
+    //submit clarification
     @IBAction func submit(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "Submit", message: "Are you sure you want to submit the form?", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
@@ -4405,8 +4277,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
         }
         
-
-        
         //road/trail?
         var road_or_trail="R"
         let selected =  rtPicker.selectedRow(inComponent: 0)
@@ -4414,11 +4284,11 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             road_or_trail="T"
         }
         
-        var tempSide = sidePicker.selectedRow(inComponent: 0)
-        var side = sideOptions[tempSide]
+        let tempSide = sidePicker.selectedRow(inComponent: 0)
+        let side = sideOptions[tempSide]
         
         //how to do enum?
-        var tempWeather = weatherPicker.selectedRow(inComponent: 0)
+        let tempWeather = weatherPicker.selectedRow(inComponent: 0)
         let weather = weatherOptions[tempWeather]
         
         //hazard type?
@@ -4580,8 +4450,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             rock_f2 = 9
         }
         
-        
-        
         //Risk Ratings
         var r_w_impacts = 3
         let selected_rwi = rightOWIPicker.selectedRow(inComponent: 0)
@@ -4632,16 +4500,13 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         let email = ""
-
-        
-        
         
         //delete site from core data if submitted successfully...
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")! as URL)
         request.httpMethod = "POST"
         
-        //take out site_id=287&
-        let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agency)&regional_admin=\(regional)&local_admin=\(local)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(rockfallHazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)&email=\(email)"
+        //agencyS?
+        let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(rockfallHazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)&email=\(email)"
 
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
@@ -4649,7 +4514,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alertController, animated: true, completion: nil)
@@ -4657,56 +4522,25 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 return
             }
             
-            print("response = \(response)")
-            print("error=\(error)")
+            print("response = \(String(describing: response))")
+            print("error=\(String(describing: error))")
             let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alertController, animated: true, completion: nil)
             
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
+            print("responseString = \(String(describing: responseString))")
             
             return
             
-          
         }
         task.resume()
         
         }
 
-        
-
-    
-    //MARK: Submit saved form(s)
-    func configurationSavedTextField(_ textField: UITextField!){
-        textField.placeholder = "0"
-        savedNum = textField
-    }
-    
-    func handleSaved(_ alertView:UIAlertAction!){
-        //delete site from core data if submitted successfully...
-        //add message confirming submission...
-        savedString = savedNum.text!
-        if((savedNum.text! =~ "(?:6[0-4]|[1-5]\\d|[1-9])(?: *- *(?:6[0-4]|[1-5]\\d|[1-9]))?(?: *, *(?:6[0-4]|[1-5]\\d|[1-9])(?: *- *(?:6[0-4]|[1-5]\\d|[1-9]))?)*$") == false){
-            submitSaved(submitButton)
-        }
-        
-    }
-
-    @IBAction func submitSaved(_ sender: AnyObject) {
-        let alertController = UIAlertController(title: "Submit Saved Form(s)", message: "Enter Form Numbers Seperated by Comma (Ex: 1,3,5-8,10)", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addTextField(configurationHandler: configurationSavedTextField)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSaved))
-        
-        present(alertController, animated: true, completion: nil) //may be an issue?
-        
-    }
-    
-    
     //Mark: save offline sites
     @IBAction func saveOffline(_ sender: AnyObject) {
-        
+        //core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let entity =  NSEntityDescription.entity(forEntityName: "NewOfflineRockfall", in:managedContext)
@@ -4720,7 +4554,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         site.setValue(selectedAgency, forKey: "agency")
         site.setValue(selectedRegional, forKey: "regional")
         site.setValue(selectedLocal, forKey: "local")
-        
         
         //date
         site.setValue(datePicker.date, forKey: "date")
@@ -4763,8 +4596,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         site.setValue(hazardString, forKey: "hazardType")
-
-            
         
         site.setValue(lat1Text.text, forKey: "lat1")
         site.setValue(lat2Text.text, forKey: "lat2")
@@ -4828,7 +4659,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         
         site.setValue(defaultAssetIds, forKey:"photos")
 
-        
         site.setValue(commentsText.text, forKey: "comments")
         site.setValue(flmaNameText.text, forKey: "flmaName")
         site.setValue(flmaIdText.text, forKey: "flmaId")
@@ -4938,9 +4768,9 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     }
     
-    
     //MARK:LOAD offline site
     
+    //load offline site from list
     func loadFromList(){
         shareData.load = false
         
@@ -4971,9 +4801,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
             local.selectRow(localI, inComponent: 0, animated: true)
 
-
                     //Date
-            
                     datePicker.date = (sites[number].value(forKey: "date")! as? Date)!
                     
                     //road or trail?
@@ -4994,8 +4822,8 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     weatherPicker.selectRow(weatherVal, inComponent: 0, animated: true)
                     
                     //TODO: Hazard Type7
-            var hazardString = ""
-            hazardString = (sites[number].value(forKey: "HazardType")! as? String)!
+                    var hazardString = ""
+                    hazardString = (sites[number].value(forKey: "HazardType")! as? String)!
             let hazards = hazardString.components(separatedBy: ",")
             
             for i in 0 ... ((hazards.count) - 1){
@@ -5099,8 +4927,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     }
                     
                     aadtEtcText.text = sites[number].value(forKey: "prAadt")! as? String
-                    
-                    
+            
                     preliminaryRatingText.text = sites[number].value(forKey: "prTotal")! as? String
                     
                     //MARK: Slope Hazard Ratings
@@ -5116,28 +4943,21 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     let rockfallRMF = sites[number].value(forKey: "shMaintFreq")! as! NSObject as! Int
                     rockfallRMFPicker.selectRow(rockfallRMF, inComponent: 0, animated: true)
 
-            
                     //Geological Character Case 1....special w/ o option
                     
                     //structural condition- 5 options
                     let structuralC1 = sites[number].value(forKey: "shStructural1")! as! NSObject as! Int
                     structuralC1Picker.selectRow(structuralC1, inComponent: 0, animated: true)
 
-            
-            
                     //rock friction - 5 options
                     let rockF1 = sites[number].value(forKey: "shFriction1")! as! NSObject as! Int
                     rockF1Picker.selectRow(rockF1, inComponent: 0, animated: true)
 
-            
-            
                     //Geological Character Case 2...special case w/ 0 option
                     //structural condition- 5 options
                     let structuralC2 = sites[number].value(forKey: "shStructural2")! as! NSObject as! Int
                     structuralC2Picker.selectRow(structuralC2, inComponent: 0, animated: true)
 
-            
-            
                     //rock friction - 5 options
                     let rockF2 = sites[number].value(forKey: "shFriction2")! as! NSObject as! Int
                     rockF2Picker.selectRow(rockF2, inComponent: 0, animated: true)
@@ -5157,7 +4977,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     let environCI = sites[number].value(forKey: "rrEnviron")! as! NSObject as! Int
                     ecImpactsPicker.selectRow(environCI, inComponent: 0, animated: true)
 
-            
                     //maintenance complexity - 4 options
                     let maintC = sites[number].value(forKey: "rrMaintenance")! as! NSObject as! Int
                     maintenanceCPicker.selectRow(maintC, inComponent: 0, animated: true)
@@ -5168,8 +4987,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             
                     riskTotalText.text = sites[number].value(forKey: "rrTotal")! as? String
                     totalScoreText.text = sites[number].value(forKey: "total")! as? String
-                    
-                    
             
             
         } catch let error as NSError {
@@ -5179,7 +4996,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             present(alertController, animated: true, completion: nil) //may be an issue?
         }
 
-        
     }
     
     
@@ -5229,8 +5045,5 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             present(alertController, animated: true, completion: nil) //may be an issue?
         }
         
-        
     }
-
-    
 }

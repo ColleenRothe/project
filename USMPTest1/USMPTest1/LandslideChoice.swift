@@ -2,31 +2,40 @@
 //  LandslideChoice.swift
 //  USMPTest1
 //
+//  ViewController for Landslide Slope rating form
+//
 //  Created by Colleen Rothe on 4/15/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
-//  //Landslide Slope Rating Form
+//
 
-//autocomplete:
+//CREDITS:
+
+//autocomplete(1)
 //http://stackoverflow.com/questions/26885438/getting-autocomplete-to-work-in-swift
 
-//core location:
+//core location(2)
 //http://nshipster.com/core-location-in-ios-8/
 
-//picking image from library
+//picking image from library(3)
 //http://stackoverflow.com/questions/4314405/how-can-i-get-the-name-of-image-picked-through-photo-library-in-iphone
 
-//core data
+//core data(4)
 //https://www.raywenderlich.com/115695/getting-started-with-core-data-tutorial
 
-//check connectivity
+//check connectivity (5)
 //http://stackoverflow.com/questions/39558868/check-internet-connection-ios-10
 
-//file upload
+//file upload (6)
 //http://www.kaleidosblog.com/how-to-upload-images-using-swift-2-send-multipart-post-request
 
-//image resizing
+//image resizing (7)
 //http://stackoverflow.com/questions/29726643/how-to-compress-of-reduce-the-size-of-an-image-before-uploading-to-parse-as-pffi
+
+//image picker library (8)
+//https://github.com/mikaoj/BSImagePicker
+
+//http://stackoverflow.com/questions/37400639/post-data-to-a-php-method-from-swift
 
 
 import Foundation
@@ -39,6 +48,8 @@ import SystemConfiguration
 import BSImagePicker
 
 
+//CREDITS(7)
+//for the image resizing
 extension UIImage
 {
     var highestQualityJPEGNSData: NSData { return UIImageJPEGRepresentation(self, 1.0)! as NSData }
@@ -78,20 +89,15 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-
-
-
 class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate, UITableViewDelegate, UITableViewDataSource, LandslideModelHelperProtocol {
     
     let shareData = ShareData.sharedInstance
     var feedItems: NSArray = NSArray()
 
-
-    
     var locationManager = CLLocationManager()
     
+    //UI Connections
     @IBOutlet weak var datePicker: UIDatePicker!
-    
     
     @IBOutlet weak var agency: UIPickerView!
     
@@ -281,7 +287,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var maintenanceFormButton: UIBarButtonItem!
     
-    
     @IBOutlet weak var manualButton: UIBarButtonItem!
     
     @IBOutlet weak var logoutButton: UIBarButtonItem!
@@ -289,7 +294,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     @IBOutlet weak var scrollView: UIScrollView!
     
     //preliminary ratings
-    
     
     @IBOutlet weak var speedPicker: UIPickerView!
     
@@ -299,8 +303,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     var sideOptions = ["L - For use with roads with mile markers","R - For use with roads with mile markers",
                        "N - if road direction not specified with mile mark", "NE - if road direction not specified with mile mark", "E - if road direction not specified with mile mark","SE - if road direction not specified with mile mark", "S - if road direction not specified with mile mark", "SW - if road direction not specified with mile mark", "W - if road direction not specified with mile mark", "NW - if road direction not specified with mile mark"]
-    
- 
     
     @IBOutlet weak var accessPicker: UIPickerView!
     
@@ -316,9 +318,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     var ratingOptions = ["3", "9", "27", "81"]
     
-    
     @IBOutlet weak var flmaInfo: UIButton!
-    
     
     @IBOutlet weak var roadwayWAInfo: UIButton!
     
@@ -401,40 +401,31 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //calculate prelim total using...
     
-    
     @IBOutlet weak var roadwayWAPicker: UIPickerView!
     
-    
     @IBOutlet weak var slideEEPicker: UIPickerView!
-    
     
     //roadwayLAText
     
     @IBOutlet weak var impactOUPicker: UIPickerView!
     
-    
     //aadtEtcText
-    
-    
+
     @IBOutlet weak var prelimRatingText: UITextField!
     
     //Calculate Hazard total
     
     @IBOutlet weak var slopeDPicker: UIPickerView!
     
-    
     @IBOutlet weak var annualRText: UITextField!
     
     //axial length of slide...
     
-    
     @IBOutlet weak var thawSPicker: UIPickerView!
-    
     
     @IBOutlet weak var instabilityRMFPicker: UIPickerView!
    
     @IBOutlet weak var movementHPicker: UIPickerView!
-    
     
     @IBOutlet weak var hazardTotalText: UITextField!
     
@@ -442,14 +433,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var rightOWIPicker: UIPickerView!
     
-    
     @IBOutlet weak var environCIPicker: UIPickerView!
     
     @IBOutlet weak var maintCPicker: UIPickerView!
     
-    
     @IBOutlet weak var eventCPicker: UIPickerView!
-    
     
     @IBOutlet weak var riskTotalsText: UITextField!
     
@@ -480,7 +468,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     @IBOutlet weak var endRainText: UITextField!
     
     //For Validation
-    
     
     @IBOutlet weak var roadTrailNoText: UITextField!
     
@@ -522,7 +509,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var flmaDText: UITextField!
     
-    
     //For selecting images
     
     @IBOutlet weak var imagesLabel: UILabel!
@@ -534,7 +520,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     //To submit online...
     
     @IBOutlet weak var submitButton: UIButton!
-    
     
     var sites = [NSManagedObject]()             //core data sites
     
@@ -556,9 +541,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var loadString = ""
     var savedString = ""
     
-    @IBOutlet weak var submitSavedButton: UIButton!
-    
-    
     var weatherOptions = ["Clear","Clear and Breezy","A Few Clouds","A Few Clouds and Breezy","Partly Cloudy","Partly Cloudy and Breezy","Mostly Cloudy","Mostly Cloudy and Breezy","Overcast","Overcast and Breezy","Fog","Partial Fog","Freezing Fog","Light Rain","Rain","Heavy Rain","Freezing Rain","Thunderstorms","Snow","Smoky\\/Haze","Unknown"]
     
     @IBOutlet weak var weatherPicker: UIPickerView!
@@ -573,7 +555,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     
     //autocomplete
-    
     
     //Rater
     let autoTableR = UITableView(frame: CGRect(x: 10,y: 20,width: 300,height: 120), style: UITableViewStyle.plain)
@@ -605,11 +586,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     //Images
     var images = [PHAsset]()
     
-
     override func viewDidAppear(_ animated: Bool) {
  
     }
-    
     
     override func viewDidLoad() {
         //permissions!
@@ -620,20 +599,13 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
      
         super.viewDidLoad()
         //Autocomplete
-
-
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
-        
-        
-    
-        
         //Rater
         self.view.addSubview(self.autoTableR)
         autoTableR.register(UITableViewCell.self, forCellReuseIdentifier: "AutoCompleteRowIdentifier")
-        
         
         let fetchRequest2 = NSFetchRequest<NSFetchRequestResult>(entityName: "ACRater")
         
@@ -650,7 +622,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         for i in 0 ..< wordsR.count {
             pastR.append((wordsR[i].value(forKey: "word") as? NSString)!)
         }
-        
         
         autoTableR.delegate = self
         autoTableR.dataSource = self
@@ -713,7 +684,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             pastLat.append((wordsLat[i].value(forKey: "word") as? NSString)!)
         }
         
-        
         autoTableLat.delegate = self
         autoTableLat.dataSource = self
         autoTableLat.isScrollEnabled = true
@@ -732,7 +702,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
         //picker delegates
-        
         agency.delegate = self
         agency.dataSource = self
         
@@ -748,7 +717,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         sidePicker.delegate = self
         sidePicker.dataSource = self
         
-       
         accessPicker.delegate = self
         accessPicker.dataSource = self
         
@@ -846,7 +814,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         long1Text.delegate = self
         long2Text.delegate = self
         
-    
         lengthOARTText.keyboardType = .decimalPad
         
         slopeHText.keyboardType = .decimalPad //(axial length)
@@ -927,20 +894,22 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             //call special load method
             loadFromList()
         }
+        //edit form offline
         if(shareData.offline_edit == true){
             shareData.offline_edit = false
             offlineEdit()
         }
+        //edit form online
         else if(shareData.edit_site == true){
             //shareData.edit_site = false; //? problem
             edit()
         }
         
+        //if there is internet connection
         if(!isInternetAvailable()){
             submitButton.isEnabled = false
             submitButton.backgroundColor = UIColor.darkGray
         }
-
 
         //dismiss keyboard...
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LandslideChoice.dismissKeyboard))
@@ -948,9 +917,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         tap.cancelsTouchesInView = false //for the autocomplete
         
         //add some other kind of tap to get out of the table when no options chosen/needed
-        
     }
     
+    //CREDITS(5)
     func isInternetAvailable() -> Bool
     {
         var zeroAddress = sockaddr_in()
@@ -972,24 +941,26 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         return (isReachable && !needsConnection)
     }
     
+    //edit form
     func edit(){
-        print("CALL TO EDIT")
+        //call landslide model helper, get info for the form
         let limh = LandslideModelHelper()
         limh.delegate = self
         limh.downloadItems()
         
     }
     
+    //get the info from the db call - LandslideModelHelper.swift
     func itemsDownloadedL(_ items: NSArray) {
         feedItems = items
-        print("Landslide feed count is")
-        print(feedItems.count)
         fillToEdit()
     }
     
+    //put the info into a LandslideModel
     func fillToEdit(){
         let selectedLocation = feedItems.object(at: 0) as! LandslideModel
         
+        //populate the fields
         let agencyS = selectedLocation.umbrella_agency
         let regionS = selectedLocation.regiona_admin
         let localS = selectedLocation.local_admin
@@ -1311,12 +1282,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         //total score
         totalScoreText.text = selectedLocation.total_score
-        
-
     }
     
+    //calling edit while offline
     func offlineEdit(){
-        print("CALL OFFLINE EDIT")
+        //get the site out of core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
@@ -1336,12 +1306,74 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 }
             }
 
-            print(sites[number].value(forKey: "site_id")! as? String)
-            
             let site_id = sites[number].value(forKey: "site_id")! as? String
-            let agency = sites[number].value(forKey: "umbrella_agency")! as? String
+            let agencyS = sites[number].value(forKey: "umbrella_agency")! as? String
             let regional_admin = sites[number].value(forKey: "regional_admin")! as? String
-            let local = sites[number].value(forKey: "local_admin")! as? String
+            let local_admin = sites[number].value(forKey: "local_admin")! as? String
+            
+            //FS
+            if(agency.selectedRow(inComponent: 0) == 1){
+                if(FSRegionalOptions.contains(regional_admin!)){
+                    regional.selectRow(FSRegionalOptions.index(of: regional_admin!)!, inComponent: 0, animated: true)
+                    
+                    if(FSNorthernLocal.contains(local_admin!)){
+                        local.selectRow(FSNorthernLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSRockyMountainLocal.contains(local_admin!)){
+                        local.selectRow(FSRockyMountainLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSSouthwesternLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSIntermountainLocal.contains(local_admin!)){
+                        local.selectRow(FSIntermountainLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSPacificSouthwestLocal.contains(local_admin!)){
+                        local.selectRow(FSPacificSouthwestLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSPacificNorthwestLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSSouthernLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthernLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSEasternLocal.contains(local_admin!)){
+                        local.selectRow(FSEasternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSAlaskaLocal.contains(local_admin!)){
+                        local.selectRow(FSAlaskaLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                }
+            }
+            
+            //NPS
+            if(agency.selectedRow(inComponent: 0) == 2){
+                if(NPSRegionalOptions.contains(regional_admin!)){
+                    regional.selectRow(NPSRegionalOptions.index(of: regional_admin!)!, inComponent: 0, animated: true)
+                    
+                    if(NPSAkrLocal.contains(local_admin!)){
+                        local.selectRow(NPSAkrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSImrLocal.contains(local_admin!)){
+                        local.selectRow(NPSImrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSMwrLocal.contains(local_admin!)){
+                        local.selectRow(NPSMwrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSNcrLocal.contains(local_admin!)){
+                        local.selectRow(NPSNcrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSNerLocal.contains(local_admin!)){
+                        local.selectRow(NPSNerLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSPwrLocal.contains(local_admin!)){
+                        local.selectRow(NPSPwrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSSerLocal.contains(local_admin!)){
+                        local.selectRow(NPSSerLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                }
+            }
             
             roadTrailNoText.text = sites[number].value(forKey: "road_trail_no")! as? String
             roadTrailClassText.text = sites[number].value(forKey: "road_trail_class")! as? String
@@ -1499,13 +1531,13 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
 
     
+    //click on the view, keyboard disappears
     func dismissKeyboard() {
         view.endEditing(true)
         
     }
     
- 
-        override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -1514,7 +1546,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
-        
         
         if (textField == rater){
         
@@ -1879,7 +1910,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         return true
     }
     
-
+    
+    //called when stop editing a textfield
     func textFieldDidEndEditing(_ textField: UITextField) {
         
         //calc C
@@ -1892,7 +1924,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         //calc J
         annualRText.text = String(calculateJ())
-            
         
         //calc K
         axialL2OSText.text = String(calculateK())
@@ -1919,10 +1950,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         totalScoreText.text = String(calcTotalScore())
         
         //MARK: Validation--> Keyboards only work completely on phones
-       
-        
-        
-        if(textField == roadTrailNoText){
+       if(textField == roadTrailNoText){
             if(roadTrailNoText.text == ""){
                 roadTrailNoText.backgroundColor = UIColor.red
                 let messageString = "Road/Trail No. must have an value."
@@ -1930,14 +1958,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
-                
+  
             }
             else{
                 roadTrailNoText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == roadTrailClassText){
@@ -1948,13 +1973,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
+ 
             }
             else{
                 roadTrailClassText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == rater){
@@ -1966,8 +1989,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
             }
             else{
                 rater.backgroundColor = UIColor.white
@@ -1983,10 +2004,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 
             }else{
                 pastR.append(rater.text! as NSString)
-                
             }
-            
-            
             
             do {
                 try managedContext.save()
@@ -1995,10 +2013,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-            
-
-            
-            
+   
         }
         
         
@@ -2010,16 +2025,13 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
+            
             }
             else{
                 beginMileText.backgroundColor = UIColor.white
             }
-            
-            
-        }
         
+        }
         
         if(textField == endMileText ){
             if(endMileText.text == ""  || (endMileText.text! =~ "[0-9]+\\.*[0-9]*") == false){
@@ -2029,16 +2041,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
             }
             else{
                 endMileText.backgroundColor = UIColor.white
             }
-            
-            
         }
-        
         
         //lat/long pattern matching
         if(textField == lat1Text){
@@ -2067,9 +2074,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 pastLat.append(lat1Text.text! as NSString)
                 
             }
-            
-            
-            
+        
             do {
                 try managedContext.save()
                 
@@ -2077,9 +2082,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-
-            
-            
         }
         
         if(textField == lat2Text){
@@ -2105,13 +2107,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             if(pastLat.contains(lat2Text.text! as NSString)){
                 
             }else{
-                print("NOT THERE YET")
                 pastLat.append(lat2Text.text! as NSString)
                 
             }
-            
-            
-            
+ 
             do {
                 try managedContext.save()
                 
@@ -2119,9 +2118,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-
-            
-            
+   
         }
         
         if(textField == long1Text){
@@ -2147,13 +2144,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             if(pastLong.contains(long1Text.text! as NSString)){
                 
             }else{
-                print("NOT THERE YET")
                 pastLong.append(long1Text.text! as NSString)
                 
             }
-            
-            
-            
+        
             do {
                 try managedContext.save()
                 
@@ -2161,9 +2155,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-
-            
-            
+  
         }
         
         if(textField == long2Text){
@@ -2189,12 +2181,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             if(pastLong.contains(long2Text.text! as NSString)){
                 
             }else{
-                print("NOT THERE YET")
                 pastLong.append(long2Text.text! as NSString)
-                
             }
-            
-            
             
             do {
                 try managedContext.save()
@@ -2203,13 +2191,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 print("Could not save \(error), \(error.userInfo)")
                 
             }
-
-            
-            
+  
         }
 
-
-        
         if(textField == aadtText){
             if(aadtText.text == "" || Int(aadtText.text!) == nil ){
                 aadtText.backgroundColor = UIColor.red
@@ -2218,14 +2202,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
-                
             }
             else{
                 aadtText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == lengthOARTText){
@@ -2236,14 +2216,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
-                
-                
             }
             else{
                 lengthOARTText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == slopeHText){
@@ -2254,12 +2230,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 slopeHText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == slopeAngleText){
@@ -2270,12 +2244,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 slopeAngleText.backgroundColor = UIColor.white
             }
-            
         }
 
         if(textField == sightDText){
@@ -2291,7 +2263,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             else{
                 sightDText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == roadwayTWText){
@@ -2302,15 +2273,11 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 roadwayTWText.backgroundColor = UIColor.white
             }
-            
         }
-        
-    
         
         if(textField == beginRainText){
             if(beginRainText.text == "" || (beginRainText.text! =~ "[0-9]+\\.*[0-9]*") == false){
@@ -2320,12 +2287,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 beginRainText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == endRainText){
@@ -2335,12 +2300,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 endRainText.backgroundColor = UIColor.white
             }
-            
         }
         
         //Preliminary Ratings
@@ -2353,17 +2316,12 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 roadwayLAText.backgroundColor = UIColor.white
             }
-            
         }
 
-        
-        
-        
         if(textField == aadtEtcText){
             if(aadtEtcText.text == "" || Double(aadtEtcText.text!) < 0 || Double(aadtEtcText.text!) > 100 || Int(aadtEtcText.text!) == nil){
                 aadtEtcText.backgroundColor = UIColor.red
@@ -2371,16 +2329,13 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 aadtEtcText.backgroundColor = UIColor.white
             }
-            
         }
         
         //slope hazard ratings
-        
         if(textField == annualRText){
             if(annualRText.text == "" || Double(annualRText.text!) < 0 || Double(annualRText.text!) > 100 || Int(annualRText.text!) == nil){
                 annualRText.backgroundColor = UIColor.red
@@ -2389,12 +2344,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 annualRText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == axialL2OSText){
@@ -2405,12 +2358,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 axialL2OSText.backgroundColor = UIColor.white
             }
-            
         }
         
         //Risk Ratings
@@ -2423,12 +2374,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 routeTWText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == humanEFText){
@@ -2439,12 +2388,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 humanEFText.backgroundColor = UIColor.white
             }
-            
         }
         
         if(textField == percentDSDText){
@@ -2455,18 +2402,12 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 let alertController = UIAlertController(title: "USMP Says:", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 present(alertController, animated: true, completion: nil)
-                
             }
             else{
                 percentDSDText.backgroundColor = UIColor.white
             }
-            
         }
-
-
-
     }
-    
     
     //update calculations after changing picker selection
     func pickerView(_ pickerView: UIPickerView,didSelectRow row: Int,inComponent component: Int){
@@ -2594,7 +2535,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             }
         }
 
-        
         //calc C
         roadwayLAText.text = String(calculateC())
         
@@ -2605,7 +2545,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         //calc J
         annualRText.text = String(calculateJ())
-        
         
         //calc K
         axialL2OSText.text = String(calculateK())
@@ -2639,7 +2578,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let locValue:CLLocationCoordinate2D = manager.location!.coordinate
         
         //limit significant digits to 6 based on stakeholder feedback
-        
         if(beginOrEnd == "begin"){
         lat1Text.text = String(format: "%f", locValue.latitude)
             long1Text.text = String(format: "%f", locValue.longitude)
@@ -2648,7 +2586,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             lat2Text.text = String(format: "%f",locValue.latitude)
             long2Text.text = String(format: "%f",locValue.longitude)
         }
-        
     }
     
     //error message to user
@@ -2662,7 +2599,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
         
-        
     }
     
     //MARK: Required picker functions
@@ -2672,7 +2608,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         return 1
     }
 
-    
     //total components=components in array
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         var components = 0
@@ -2753,7 +2688,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             components = weatherOptions.count;
         }
 
-        
         return components
     }
     
@@ -2834,7 +2768,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         else{
             return "error";
         }
-        
     }
     
     //Mark: Preliminary Ratings Get Info
@@ -2845,7 +2778,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-        
     }
     
     @IBAction func getSlideEEInfo(_ sender: AnyObject) {
@@ -2862,8 +2794,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-        
-        
     }
 
     @IBAction func getImpactOUInfo(_ sender: AnyObject) {
@@ -2899,7 +2829,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getAnnualRInfo(_ sender: AnyObject) {
@@ -2908,8 +2837,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
-        
     }
     
     @IBAction func getAxialLOSInfo(_ sender: AnyObject) {
@@ -2918,7 +2845,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getThawSInfo(_ sender: AnyObject) {
@@ -2927,7 +2853,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getInstabilityRMFInfo(_ sender: AnyObject) {
@@ -2936,7 +2861,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     @IBAction func getMovementHInfo(_ sender: AnyObject) {
@@ -2945,7 +2869,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Rating Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-
     }
     
     //Mark: Risk Ratings Get Info
@@ -3014,8 +2937,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
-        
-        
     }
     
     
@@ -3026,7 +2947,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         var temp = 1.0
         if(lengthOARTText.text != ""){
         let value = Double(lengthOARTText.text!)
-        
         
         temp = value!/25 //divide input by 25
         temp = sqrt(temp) //take the square root
@@ -3055,10 +2975,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             let image = UIImage.init(named: "unchecked")
             aadtButton.setImage(image, for: UIControlState())
             selectedAadt = false
-            
         }
     }
-    
     
     //use value from aadt text to set aadtEtcText
     func calculateH()->Int{
@@ -3104,11 +3022,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         }
         
-        
-        
         return rating
-
-    
     }
     
     //use value from axial length to set axial length of slide
@@ -3145,14 +3059,12 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 val=100
             }
             
-            
             //ROAD
             if(selectedVal == 0){
                value = (44-val!)/8
                 
             }
-                
-                //TRAIL
+            //TRAIL
             else{
                 value = (18-val!)/4
             }
@@ -3224,8 +3136,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         //}
         
         let tempInt = Int(val)
-       
-        
+    
         return tempInt
     }
     
@@ -3235,7 +3146,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         if(sightDText.text != ""){
         let sightDist = Double(sightDText.text!)
-        
         
         let selectedVal = speedPicker.selectedRow(inComponent: 0)
         
@@ -3331,13 +3241,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         if(selectedVal2 == 3){
             total = total + 81
         }
-
-
         
         if(roadwayLAText.text != ""){
             total = total + Double(roadwayLAText.text!)!
         }
-        
         
         let selectedVal3 = impactOUPicker.selectedRow(inComponent: 0)
         if(selectedVal3 == 0){
@@ -3353,7 +3260,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             total = total + 81
         }
 
-        
         if(aadtEtcText.text != ""){
             total = total + Double(aadtEtcText.text!)!
         }
@@ -3367,10 +3273,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     //(A+B+C+I+J+K+L+M+N):
     func calcHazardTotal()->Int{
         var total = 0.0
-        
-        
-        
-        
+ 
         //A
         let selectedVal = roadwayWAPicker.selectedRow(inComponent: 0)
         if(selectedVal == 0){
@@ -3401,7 +3304,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             total = total + 81
         }
         
-
         //C
         if(roadwayLAText.text != ""){
             total = total + Double(roadwayLAText.text!)!
@@ -3420,7 +3322,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         if(selectedVal3 == 3){
             total = total + 81
         }
-
         
         //J = annual rainfall
         if(annualRText.text != ""){
@@ -3500,7 +3401,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             total = total + 81
         }
         
-        
         //H: calculated... AADT etc
         if(aadtEtcText.text != ""){
             total = total + Double(aadtEtcText.text!)!
@@ -3511,12 +3411,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             total = total + Double(routeTWText.text!)!
         }
         
-        
         //W: calculated...human ex.
         if(humanEFText.text != ""){
             total = total + Double(humanEFText.text!)!
         }
-        
         
         //X: calculated...dsd
         if(percentDSDText.text != ""){
@@ -3538,7 +3436,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             total = total + 81
         }
         
-        
         //Z: enviro/cult impacts
         let selectedVal2 = environCIPicker.selectedRow(inComponent: 0)
         if(selectedVal2 == 0){
@@ -3553,7 +3450,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         if(selectedVal2 == 3){
             total = total + 81
         }
-
         
         //A: maint complexity
         let selectedVal3 = maintCPicker.selectedRow(inComponent: 0)
@@ -3590,7 +3486,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         return tempInt
         
-        
     }
     
     //T+CC... hazard total + risk total
@@ -3611,8 +3506,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     //Mark: Get Location...
     
+    //autofill start coordinates
     @IBAction func getBeginCoord(_ sender: AnyObject) {
         beginOrEnd = "begin"
+        //if their permissions don't allow for autofill, prompt them to change
         if CLLocationManager.authorizationStatus() == .denied {
             print("denied")
             let alertController = UIAlertController(
@@ -3634,24 +3531,19 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         
         if CLLocationManager.authorizationStatus() == .authorizedAlways {
-            //print("location!!")
             locationManager.requestLocation()
-            
-            
         }
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            //print("location!!")
             locationManager.requestLocation()
         }
-        
-        
-       
+ 
     }
     
+    //autofill end coordinates
     @IBAction func getEndCoord(_ sender: AnyObject) {
         beginOrEnd = "end"
+        //if their permissions don't allow for autofill, prompt them to change
         if CLLocationManager.authorizationStatus() == .denied {
-            //print("denied")
             let alertController = UIAlertController(
                 title: "Background Location Access Disabled",
                 message: "In order to auto-fill coordinates, please change your location services settings.",
@@ -3679,19 +3571,18 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             //print("location!!")
             locationManager.requestLocation()
         }
-
-        
     }
     
-    //PHOTO STUFF HERE
+    //MARK: Choosing Images
+    //CREDITS: 3 & 8
         @IBAction func selectImages(_ sender: AnyObject) {
             let vc = BSImagePickerViewController()
+            //photos that will be selected when the picker opens
             var defaultAssetIds = [String]()
-            
+            //all of your photo assets
             let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
             
             allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
-                
                 
             })
             
@@ -3701,7 +3592,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     if allAssets.contains(self.images[i]){ //if the images is one of all the assets
                         let index = allAssets.index(of: self.images[i]) //gets its index
                         defaultAssetIds.append(allAssets[index].localIdentifier) //add its identifier to the defaults
-                        print("appending!")
                     } //if
                 } //for
             } //if
@@ -3710,12 +3600,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             let defaultSelected = PHAsset.fetchAssets(withLocalIdentifiers: defaultAssetIds, options: nil)
             vc.defaultSelections = defaultSelected
             
-            
             bs_presentImagePickerController(vc, animated: true,
                                             select: { (asset: PHAsset) -> Void in
                                                 // User selected an asset.
                                                 // Do something with it, start upload perhaps?
-                                                //print("Selected: \(asset)")
                                                 self.images.append(asset)
             }, deselect: { (asset: PHAsset) -> Void in
                 // User deselected an assets.
@@ -3732,13 +3620,14 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 }
             }, completion: nil)
 
-        
-
     }
-    //image upload?
+    
+    //image upload
+    //CREDITS(6)
     func UploadRequest()
     {
         if(images.count != 0){
+            //for each of the images...
             for i in 0 ... (images.count-1){
         let url = NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
         
@@ -3774,11 +3663,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let body = NSMutableData()
         
-        var fname = images[i].localIdentifier //how to name?
+        var fname = images[i].localIdentifier //named by local identifier
         fname = fname.replacingOccurrences(of: "/", with: "")
         fname.append(".jpg")
-        print("fname test")
-        print(fname)
         let mimetype = "image/jpg"
         
         //define the data post parameter
@@ -3793,15 +3680,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         
         body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
-        
-        
-        
+    
         request.httpBody = body as Data
         
-        
-        
         let session = URLSession.shared
-        
         
         let task = session.dataTask(with: request as URLRequest) {
             (
@@ -3819,10 +3701,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         task.resume()
             }
-            
         }
-        
-        
     }
     
     
@@ -3833,19 +3712,14 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     
     //MARK: submit form online
-    ////http://stackoverflow.com/questions/37400639/post-data-to-a-php-method-from-swift
-    
     func handleSubmit(_ alertView:UIAlertAction!){
-        print("HANDLE SUBMIT")
-        //delete site from core data if submitted successfully...
         
-        //add message confirming submission...
-        
+        //if you are editing, call the editSubmit method
         if(shareData.edit_site == true){
             editSubmit()
         }
+        //else, not editing, continue
         else{
-        
             //agency
         let agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
             //regional
@@ -3911,8 +3785,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 if(regional.selectedRow(inComponent: 0) == 7){  //ser
                     localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
                 }
-                
-                
             }
             
         //road/trail?
@@ -3934,8 +3806,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             let hazard = ""
         
         //TODO: Hazard Type (4)
-
-        
         //speed
         var speed = 0
         let selectedSpeed = speedPicker.selectedRow(inComponent:0)
@@ -4114,11 +3984,9 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         else if(selected_ec == 3){
             event_cost = 81
         }
-            
         
-
-        
-        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")! as URL)
+        //post request, new slope rating form
+            let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")! as URL)
         request.httpMethod = "POST"
         
         let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthOARTText.text!)&slope_height_axial_length=\(axialLText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(prelimRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(axialL2OSText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDText.text!)"
@@ -4127,8 +3995,10 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             
+            //print messages to the user, success/fail?
+            
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alertController, animated: true, completion: nil)
@@ -4136,18 +4006,16 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 return
             }
             
-            print("response = \(response)")
-            print("error=\(error)")
+            print("response = \(String(describing: response))")
+            print("error=\(String(describing: error))")
             //user message confirming submit
             let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alertController, animated: true, completion: nil)
             
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
+            print("responseString = \(String(describing: responseString))")
             return
-            
-           
         }
         task.resume()
         }
@@ -4155,12 +4023,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
     }
     
+    //submit from edited form
     func editSubmit(){
-        print("CALLING EDIT SUBMIT")
-        //site id where old site id
-        
-        //let postString = "old_site_id=1559"
-        
         //agency
         let agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
         //regional
@@ -4226,11 +4090,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             if(regional.selectedRow(inComponent: 0) == 7){  //ser
                 localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
             }
-            
-            
         }
 
-        
         //road/trail?
         var road_or_trail="R"
         let selected =  rtPicker.selectedRow(inComponent: 0)
@@ -4432,6 +4293,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let email = ""
         
+        //post request
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/editSite.php")! as URL)
         request.httpMethod = "POST"
         print("old site id")
@@ -4444,7 +4306,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alertController, animated: true, completion: nil)
@@ -4452,25 +4314,21 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 return
             }
             
-            print("response = \(response)")
-            print("error=\(error)")
+            print("response = \(String(describing: response))")
+            print("error=\(String(describing: error))")
             //user message confirming submit
             let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alertController, animated: true, completion: nil)
             
-            
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
+            print("responseString = \(String(describing: responseString))")
 
             return
             
-                    }
+            }
         task.resume()
-    
-        
     }
-    
     
     //user message confirming submit
     @IBAction func submit(_ sender: AnyObject) {
@@ -4480,46 +4338,16 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         present(alertController, animated: true, completion: nil)
 
     }
-    
-    //MARK: submit saved form(s)
-    
-    func configurationSavedTextField(_ textField: UITextField!){
-        textField.placeholder = "0"
-        savedNum = textField
-    }
-    
-    func handleSaved(_ alertView:UIAlertAction!){
-        //delete site from core data if submitted successfully...
-        //add message confirming submission...
-        savedString = savedNum.text!
-        if((savedNum.text! =~ "(?:6[0-4]|[1-5]\\d|[1-9])(?: *- *(?:6[0-4]|[1-5]\\d|[1-9]))?(?: *, *(?:6[0-4]|[1-5]\\d|[1-9])(?: *- *(?:6[0-4]|[1-5]\\d|[1-9]))?)*$") == false){
-            submitSaved(submitSavedButton)
-        }
-        
-    }
-
-    
-    @IBAction func submitSaved(_ sender: AnyObject) {
-        let alertController = UIAlertController(title: "Submit Saved Form(s)", message: "Enter Form Numbers Seperated by Comma (Ex: 1,3,5-8,10)", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addTextField(configurationHandler: configurationSavedTextField)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSaved))
-        
-        present(alertController, animated: true, completion: nil)
-   
-    }
-    
-    
     //MARK: save offline sites
     
     @IBAction func saveOffline(_ sender: AnyObject) {
     
+        //save site to core data
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let managedContext = appDelegate.managedObjectContext
             let entity =  NSEntityDescription.entity(forEntityName: "NewOfflineLandslide", in:managedContext)
             let site = NSManagedObject(entity: entity!, insertInto: managedContext)
 
-        
         //set value for agency, regional, local
             let selectedAgency = agency.selectedRow(inComponent: 0)
             let selectedRegional = regional.selectedRow(inComponent: 0)
@@ -4532,7 +4360,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         //date
         site.setValue(datePicker.date, forKey: "date")
 
-        
         //road or trail? - 2 options
         let selectedRT = rtPicker.selectedRow(inComponent: 0)
         if(selectedRT == 0){
@@ -4591,7 +4418,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let selectedSpeed = speedPicker.selectedRow(inComponent: 0)
         site.setValue(selectedSpeed, forKey: "speed")
   
-        
         site.setValue(ditchWidth1Text.text, forKey: "ditchWidth1")
         site.setValue(ditchWidth2Text.text, forKey: "ditchWidth2")
         site.setValue(ditchDepth1Text.text, forKey: "ditchDepth1")
@@ -4620,7 +4446,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
             
-            
         })
         
         //if there are some images saved...
@@ -4636,7 +4461,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         
         site.setValue(defaultAssetIds, forKey:"photos")
-        
         
         site.setValue(commentsText.text, forKey: "comments")
         site.setValue(flmaNameText.text, forKey: "flmaName")
@@ -4666,7 +4490,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             site.setValue(false, forKey: "aadtCheck")
         }
 
-        
         site.setValue(aadtEtcText.text, forKey: "prAadt")
         
         //landslide total?? probably deleting this field->redundant
@@ -4686,7 +4509,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let selectedThaw = thawSPicker.selectedRow(inComponent: 0)
         site.setValue(selectedThaw, forKey: "shThaw")
     
-        
         //instability related maintenance frequenc - 4 rating options
         let selectedInstability = instabilityRMFPicker.selectedRow(inComponent: 0)
         site.setValue(selectedInstability, forKey: "shInstability")
@@ -4747,6 +4569,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func loadFromList(){
         shareData.load = false
         
+        //core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         //let entity =  NSEntityDescription.entityForName("NewOfflineLandslide", inManagedObjectContext:managedContext)
@@ -4761,6 +4584,8 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
                     let number = shareData.selectedForm
             
+                    //fill in the UI
+            
                     let agencyI = sites[number].value(forKey: "agency")! as! NSObject as! Int
                     let regionalI = sites[number].value(forKey: "regional")! as! NSObject as! Int
                     let localI = sites[number].value(forKey: "local")! as! NSObject as! Int
@@ -4773,7 +4598,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     self.regional.delegate?.pickerView!(regional, didSelectRow: regionalI, inComponent: 0)
 
                     local.selectRow(localI, inComponent: 0, animated: true)
-            
             
                     //DATE
                     datePicker.date = (sites[number].value(forKey: "date")! as? Date)!
@@ -4815,7 +4639,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     }
                 }
             
-                    
                     lat1Text.text = sites[number].value(forKey: "lat1")! as? String
                     lat2Text.text = sites[number].value(forKey: "lat2")! as? String
                     long1Text.text = sites[number].value(forKey: "long1")! as? String
@@ -4862,7 +4685,6 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                             images.append(photoResults.object(at: i))
                     }
             }
-            
             
                     commentsText.text = sites[number].value(forKey: "comments")! as? String
                     flmaNameText.text = sites[number].value(forKey: "flmaName")! as? String
@@ -5012,8 +4834,5 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             present(alertController, animated: true, completion: nil) //may be an issue?
         }
-        
     }
-    
-    
 }

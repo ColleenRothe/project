@@ -2,6 +2,9 @@
 //  LandslideModel.swift
 //  USMPTest1
 //
+//  Object that holds information for a landslide rating form, used when saving offline
+//
+//
 //  Created by Colleen Rothe on 2/2/17.
 //  Copyright © 2017 Colleen Rothe. All rights reserved.
 //
@@ -17,7 +20,7 @@ class LandslideModel: NSObject{
     var umbrella_agency: String?
     var regiona_admin: String?
     var local_admin: String?
-    var date: String?               //??
+    var date: String?
     var road_trail_no: String?
     var road_trail_class: String?
     var begin_mile_marker: String?
@@ -175,7 +178,5 @@ class LandslideModel: NSObject{
         self.risk_total = risk_total
         
         self.total_score = total_score
-        
-        
     }
 }

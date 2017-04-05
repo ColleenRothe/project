@@ -2,6 +2,8 @@
 //  OfflineModel.swift
 //  USMPTest1
 //
+//  Object that holds full info for an offline slope rating form
+//
 //  Created by Colleen Rothe on 2/20/17.
 //  Copyright © 2017 Colleen Rothe. All rights reserved.
 //
@@ -16,7 +18,7 @@ class OfflineModel: NSObject{
     var umbrella_agency: String?
     var regiona_admin: String?
     var local_admin: String?
-    var date: String?               //??
+    var date: String?
     var road_trail_no: String?
     var road_trail_class: String?
     var begin_mile_marker: String?
@@ -106,10 +108,7 @@ class OfflineModel: NSObject{
     var risk_total: String?
     
     var total_score: String?
-    
-    
-    
-    
+
     override init(){
         
     }
@@ -214,10 +213,7 @@ class OfflineModel: NSObject{
         
         self.total_score = total_score
         
-        
     }
-
-    
 }
 
 

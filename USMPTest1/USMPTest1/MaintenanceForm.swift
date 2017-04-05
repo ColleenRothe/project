@@ -2,6 +2,8 @@
 //  MaintenanceForm.swift
 //  USMPTest1
 //
+//  Corresponds to View Controller for Maintenance Form
+//
 //  Created by Colleen Rothe on 5/7/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -24,6 +26,9 @@
 //internet connectivity
 //http://stackoverflow.com/questions/39558868/check-internet-connection-ios-10
 
+//image picker library
+//https://github.com/mikaoj/BSImagePicker
+
 import Foundation
 import UIKit
 import CoreData
@@ -36,8 +41,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var feedItems: NSArray = NSArray()          //feed for pin info
     var feedItemsList: NSArray = NSArray()      //feed for list of site ids
 
-
-    
+    //nav bar
     @IBOutlet weak var mapButton: UIBarButtonItem!
     
     @IBOutlet weak var slopeRatingFormButton: UIBarButtonItem!
@@ -50,8 +54,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var manualButton: UIBarButtonItem!
     
-    
-
+    //UI connection
     @IBOutlet weak var scrollView: UIScrollView!
     
     let maintenanceTypeOptions = ["New Maintenance", "Repeat Maintenance"]
@@ -177,7 +180,6 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     //ser
     let NPSLocal7Options = ["Select Local Options", "Cowpens", "Forst Donelson", "Moores Creek", "Stones River", "Tupelo", "Kennesaw Mountain", "Abraham Lincoln Birthplace", "Cumberland Gap", "Natchez", "New Orleans Jazz", "Andersonville", "Andrew Johnson", "Carl Sandburg Home", "Charles Pinckney", "Christiansted", "Fort Raleigh", "Jimmy Carter", "Martin Luther King, JR.", "Ninety Six", "San Juan", "Tuskegee Airmen", "Tuskegee Institue", "Buck Island reef", "Castillo de San Marcos", "Fort Frederica", "Fort Matanzas" ,"Fort Pulaski", "Forst Sumter", "Ocmulgee", "Poverty Point State", "Russell Cave", "Virgin Islands Coral Reef", "De Soto", "Fort Caroline", "Wright Brothers", "Chickamauga and Chattanooga", "Guilford Courthouse", "Horseshoe Bend", "Kings Mountain", "Shiloh, Vicksburg", "Biscayne", "Congaree", "Dry Tortugas", "Everglades", "Great Smoky Mountains", "Mammoth Cave", "Virgin Islands", "Little River Canyon", "Big South Fork", "Chattahoochee", "Canaveral", "Cape Hatteras", "Cape Lookout","Cumberland Island", "Gulf Islands", "Appalachian", "Natchez Trace", "Brices Cross Roads National Battlefield Site", "Cane River Creole National HIstorical Park & Heritage Area", "Jean Lafitte National Historical Park & Preserve", "Salt River Bay National HIstorical Park & Ecological Preserve", "Timucuan Ecological", "Blue Ridge Parkway"]
     
-    
     //offline func.
     var sites = [NSManagedObject]()             //core data
     
@@ -187,9 +189,6 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
     @IBOutlet weak var submitButton: UIButton!
     
-    @IBOutlet weak var submitSavedButton: UIButton!
-
-   
     //text fields for alerts
     var clearNum: UITextField = UITextField()
     var loadNum: UITextField = UITextField()
@@ -198,7 +197,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var loadString = ""
     var savedString = ""
     
-    //floating
+    //floating percentage
     var originalOffset : CGFloat?
     
     @IBOutlet weak var float: UIView!
@@ -209,12 +208,10 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var siteList: [String] = [String]()
     
     @IBOutlet weak var siteIDPicker: UIPickerView!
-    var siteIDOptions = ["---"]
+    var siteIDOptions = ["---"] //initially isn't associated w/ any site id
     
     var site_id = "0"
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -225,8 +222,6 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         
         shareData.OfflineType = "maintenance"
-        
-
         
         //picker delegates
         maintenancePicker.delegate = self
@@ -279,9 +274,9 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         other3Text.delegate = self
         other4Text.delegate = self
         other5Text.delegate = self
+        rtNum.delegate = self
         
-        
-        //rtnum
+        //keyboards
         beginMile.keyboardType = .numberPad
         endMile.keyboardType = .numberPad
         totalCostText.keyboardType = .numberPad
@@ -316,17 +311,10 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let currDate = format.string(from: date)
         dateText.text = currDate
         
-        
-        
-
         //Scroller
         scrollView.isScrollEnabled = true
         scrollView.contentSize = CGSize(width: 600, height: 4700) //set content size (= to view)
         scrollView.delegate = self
-        
-        //float
-        //percentagesTotalText.translatesAutoresizingMaskIntoConstraints = true
-
         
         if(shareData.device == "iPad"){
             let font = UIFont(name: "Times New Roman", size: 15)
@@ -338,7 +326,6 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
             manualButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-
             
         }else{
             
@@ -363,7 +350,6 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LandslideChoice.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
-        //loadSiteInformation()
         
         if shareData.fillMaintenance == true {
         //load form stuff....
@@ -371,6 +357,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             let mimh = MaintenanceInfoModelHelper()
             mimh.delegate = self
             mimh.downloadItems()
+            //get list of site ids
             let slmh = SiteListModelHelper()
             slmh.delegate = self
             slmh.downloadItems()
@@ -409,12 +396,9 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
     
     
-  
-    
+    //get maintenance form info out of the MaintenanceInfoModel
     func loadSiteInformation(){
-        print("Load site information")
-        print ("count again is:")
-        print(feedItems.count)
+        //fill in the UI
         codeText.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).code_relation)
         site_id = ((feedItems.object(at: 0) as! MaintenanceInfoModel).site_id)!
         let maintenance_type = ((feedItems.object(at: 0) as! MaintenanceInfoModel).maintenance_type)
@@ -434,19 +418,17 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
         }//else recent unstable slope event(0)
         
-        let rtNum = ((feedItems.object(at: 0) as! MaintenanceInfoModel).rtNum)
-        let beginMile = ((feedItems.object(at: 0) as! MaintenanceInfoModel).beginMile)
-        let endMile = ((feedItems.object(at: 0) as! MaintenanceInfoModel).endMile)
-
+        let rtNumS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).rtNum)
+        rtNum.text = rtNumS
+        let beginMileS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).beginMile)
+        beginMile.text = beginMileS
+        let endMileS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).endMile)
+        endMile.text = endMileS
         
         //agency, regional, local
         let agency = ((feedItems.object(at: 0) as! MaintenanceInfoModel).agency)
         let regional = ((feedItems.object(at: 0) as! MaintenanceInfoModel).regional)
         let local = ((feedItems.object(at: 0) as! MaintenanceInfoModel).local)
-        
-        print("AGENCY IS: "+agency!)
-        print("REGINONAL IS: "+regional!)
-        print("LOCAL IS: "+local!)
         
         eventDescriptionText.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).event_desc)
         totalCostText.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).total)
@@ -473,84 +455,69 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         percent19Text.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).others4)
         percent20Text.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).others5)
 
-        
         other1Text.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).others1_desc)
         other2Text.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).others2_desc)
         other3Text.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).others3_desc)
         other4Text.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).others4_desc)
         other5Text.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).others5_desc)
 
-        
         percentagesTotalText.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).total_percent)
     
     }
     
+    //load list of site ids
     func loadSiteList(){
-        print("Load the site list")
         let listed = ((feedItemsList.object(at: 0) as! SiteListModel))
         //First Item is them All
         let length = listed.ids
         for i in 0..<listed.ids.count{
             siteIDOptions.append(listed.ids[i] as! String)
-            print(listed.ids[i])
         }
         
+        //add them to the picker
         siteIDPicker.reloadAllComponents()
         var index = 0
-        print("site id is")
-        print(shareData.maintenance_site)
+        //load the correct one
         if(siteIDOptions.contains(shareData.maintenance_site)){
             index = siteIDOptions.index(of: shareData.maintenance_site)!
-
         }
         siteIDPicker.selectRow(index, inComponent: 0, animated: true)
-        
-        
     }
     
     
+    //maintenance info feed
     func itemsDownloadedI(_ items: NSArray) {
         feedItems = items
-        print("Maintenance Info Feed Count is")
-        print(feedItems.count)
         loadSiteInformation()
     }
     
+    //site list feed
     func itemsDownloadedSL(_ items: NSArray) {
         feedItemsList = items
-        print("Site List feed Count on Maintenance is")
-        print(feedItemsList.count)
         loadSiteList()
     }
 
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    //to place the floating thing
     override func viewWillAppear(_ animated: Bool) {
-        //super.viewWillAppear(animated)
         originalOffset = float.frame.origin.y
-        print("APPEARING")
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        //print("ORIGINAL OFFSET")
-        //print(originalOffset)
-        //print("CONTENT OFFSET")
-        //print(scrollView.contentOffset.y)
         float.frame.origin.y = max(originalOffset!,scrollView.contentOffset.y)
-        //print("FRAME")
-        //print(float.frame.origin.y)
+        
     }
-    
     
 
     //text field delegate func
     func textFieldDidEndEditing(_ textField: UITextField) {
         percentagesTotalText.text = String(calcPercentages())
         floatLabel.text = percentagesTotalText.text
+        //check if total percent >100
         if(textField == totalCostText){
             if(Int(totalCostText.text!) == nil){
                 totalCostText.backgroundColor = UIColor.red
@@ -562,6 +529,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
     }
     
+    //press the return button, what text field is next?
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == totalCostText{
             textField.resignFirstResponder()
@@ -708,7 +676,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
     
     
-    
+    //calculate percentages
     func calcPercentages()->Int{
         var total = 0
         
@@ -939,6 +907,8 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
     }
     
+    //Required picker delegate functions
+    
     //one component each row
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -966,7 +936,6 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             components = localOptions.count;
         }
 
-
      return components
     }
 
@@ -993,16 +962,12 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         else{
             return "error"
         }
-        
     }
 
 
     //MARK: submit form online
     func handleSubmit(_ alertView:UIAlertAction!){
-        //delete site from core data if submitted successfully...
-        
-        
-        //let request = NSMutableURLRequest(url: NSURL(string: "http://localhost:8080/usmp/server/maintenance/add_maintenance.php")! as URL)
+  
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/maintenance/add_maintenance.php")! as URL)
         request.httpMethod = "POST"
         
@@ -1057,30 +1022,26 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         let postString = "site_id=0&code_relation=\(codeText.text!)&maintenance_type=\(maintenance_type)&road_trail_no=\(rtNumString)&begin_mile_marker=\(beginMileString)&end_mile_marker=\(endMileString)&umbrella_agency=\(agency)&regional_admin=\(regional)&local_admin=\(local)&us_event=\(us_event)&event_desc=\(eventDescriptionText.text!)&design_pse=\(percent0!)&remove_ditch_debris=\(percent1!)&remove_road_trail_debris=\(percent2!)&relevel_aggregate=\(percent3!)&relevel_patch=\(percent4!)&drainage_improvement=\(percent5!)&deep_patch=\(percent6!)&haul_debris=\(percent7!)&scaling_rock_slopes=\(percent8!)&road_trail_alignment=\(percent9!)&repair_rockfall_barrier=\(percent10!)&repair_rockfall_netting=\(percent11!)&sealing_cracks=\(percent12!)&guardrail=\(percent13!)&cleaning_drains=\(percent14!)&flagging_signing=\(percent15!)&other1_desc=\(other1Text.text!)&other1=\(percent16!)&other2_desc=\(other2Text.text!)&other2=\(percent17!)&other3_desc=\(other3Text.text!)&other3=\(percent18!)&other4_desc=\(other4Text.text!)&other4=\(percent19!)&other5_desc=\(other5Text.text!)&other5=\(percent20!)"
 
-        
-        
             request.httpBody = postString.data(using: String.Encoding.utf8)
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 return
             }
             
-            print("response = \(response)")
+            print("response = \(String(describing: response))")
             
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-            print("responseString = \(responseString)")
+            print("responseString = \(String(describing: responseString))")
         }
         task.resume()
 
-        
-        //add message confirming submission...
-        
     }
     
+    //user clarification message
     @IBAction func submit(_ sender: AnyObject) {
         let alertController = UIAlertController(title: "Submit", message: "Are you sure you want to submit the form?", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
@@ -1089,38 +1050,11 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
     }
     
-    //MARK: Submit saved form(s)
-    
-    func configurationSavedTextField(_ textField: UITextField!){
-        textField.placeholder = "0"
-        savedNum = textField
-    }
-    
-    func handleSaved(_ alertView:UIAlertAction!){
-        //delete site from core data if submitted successfully...
-        //add message confirming submission...
-        savedString = savedNum.text!
-        if((savedNum.text! =~ "(?:6[0-4]|[1-5]\\d|[1-9])(?: *- *(?:6[0-4]|[1-5]\\d|[1-9]))?(?: *, *(?:6[0-4]|[1-5]\\d|[1-9])(?: *- *(?:6[0-4]|[1-5]\\d|[1-9]))?)*$") == false){
-            submitSaved(submitSavedButton)
-        }
-        
-    }
-
-    
-    @IBAction func submitSaved(_ sender: AnyObject) {
-        let alertController = UIAlertController(title: "Submit Saved Form(s)", message: "Enter Form Numbers Seperated by Comma (Ex: 1,3,5-8,10)", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addTextField(configurationHandler: configurationSavedTextField)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSaved))
-        
-        present(alertController, animated: true, completion: nil) //may be an issue?
-    }
-    
-    
     //MARK: save offline sites
     
     @IBAction func save(_ sender: AnyObject) {
    
+        //core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         let entity =  NSEntityDescription.entity(forEntityName: "OfflineMaintenance", in:managedContext)
@@ -1205,7 +1139,8 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
         site.setValue(percentagesTotalText.text, forKey: "percentTotal")
             
-                   do {
+        //success/failure messages to user
+        do {
                 try managedContext.save()
                 let alertController = UIAlertController(title: "Success", message: "Form Saved", preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
@@ -1226,6 +1161,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func loadFromList(){
         shareData.load = false
         
+        //core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
@@ -1241,12 +1177,13 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
                     let number = shareData.selectedForm
                     
+                    //fill UI with data from saved offline site
+            
                     codeText.text = sites[number].value(forKey: "code")! as? String
                     
                     //maintenance type - 2 options
                     let maintenance = sites[number].value(forKey: "maintenanceType")! as! NSObject as! Int
                     maintenancePicker.selectRow(maintenance, inComponent: 0, animated: true)
-            
             
                     rtNum.text = sites[number].value(forKey: "rtNum")! as? String
                     beginMile.text = sites[number].value(forKey: "beginMile")! as? String
@@ -1256,12 +1193,10 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     let regionSelect = sites[number].value(forKey: "regional")! as! NSObject as! Int
                     let localSelect = sites[number].value(forKey: "local")! as! NSObject as! Int
             
-            
                     agency.selectRow(agencySelect, inComponent: 0, animated: true)
                     regional.selectRow(regionSelect, inComponent: 0, animated: true)
                     local.selectRow(localSelect, inComponent: 0, animated: true)
 
-            
                     //type of event - 3 options
                     let event = sites[number].value(forKey: "eventType")! as! NSObject as! Int
                     eventPicker.selectRow(event, inComponent: 0, animated: true)
@@ -1323,11 +1258,9 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     other5Text.text = sites[number].value(forKey: "other5Text")! as? String
                     
                     percent20Text.text = sites[number].value(forKey: "other5")! as? String
-                    
-                    
+            
                     percentagesTotalText.text = sites[number].value(forKey: "percentTotal")! as? String
                     
-           
             
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
@@ -1335,11 +1268,9 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             present(alertController, animated: true, completion: nil) //may be an issue?
         }
-        
-
-        
     }
     
+    //help message
        @IBAction func getOfflineHelp(_ sender: AnyObject) {
         let messageString = "Save forms while offline. See what forms you have saved on the list. Clear a form when it isn't needed or load a form to double-check the information. Submit form(s) once you are back online."
         let alertController = UIAlertController(title: "Help", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
@@ -1384,16 +1315,5 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             present(alertController, animated: true, completion: nil) //may be an issue?
         }
-        
-        
-        
-        
-        
     }
-    
-    
-    
-    
-
-
 }

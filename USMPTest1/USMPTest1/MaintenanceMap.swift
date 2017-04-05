@@ -2,6 +2,8 @@
 //  MaintenanceMap.swift
 //  USMPTest1
 //
+//  Map that shows the maintenance forms
+//
 //  Created by Colleen Rothe on 11/26/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -14,39 +16,34 @@ import Mapbox
 
 
 class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelHelperProtocol {
-    
-   
+    //map view
     @IBOutlet weak var mapView: MGLMapView!
     var feedItems: NSArray = NSArray() //feed for pin info
     let maintenancePinModel = MaintenancePinModel()
     let shareData = ShareData.sharedInstance
-    var current_id = 0 //where to set??
+    var current_id = 0
+    //for the long press to create new sites
     var pressNew = UILongPressGestureRecognizer(target: self, action: #selector(MaintenanceMap.newForm))
-    var imagename = ""                          //used to set image of each pin when online
+    //used to set image of each pin when online
+    var imagename = ""
 
-
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //not offline, not editing
         shareData.edit_site = false
+        shareData.offline = false
         
         //map view stuff
         mapView.maximumZoomLevel = 13  //Have to include this...pick a good number //7
         mapView.minimumZoomLevel = 3
-        
         mapView.delegate=self
-        
         mapView.centerCoordinate = CLLocationCoordinate2DMake(39.7392, -104.9903)
-        
-        shareData.offline = false
         
         //pins
         let pinmh = MaintenancePinModelHelper()
         pinmh.delegate = self
         pinmh.downloadItems()
-        
         
         //create new pin
         pressNew = UILongPressGestureRecognizer(target: self, action: #selector(MaintenanceMap.newForm))
@@ -58,7 +55,6 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
     
     //create a new pin
     func newForm(tap: UILongPressGestureRecognizer){
-        print("long press")
         let location: CLLocationCoordinate2D = mapView.convert(pressNew.location(in: mapView), toCoordinateFrom: mapView)
         
         let pin: MGLPointAnnotation = MGLPointAnnotation()
@@ -72,9 +68,6 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
     //maintenance pin model helper protocol
     func itemsDownloaded(_ items: NSArray){
         feedItems = items
-        print("Feed Count is")
-        print(feedItems.count)
-        
     }
     
     override func viewDidAppear(_ animated: Bool){
@@ -115,10 +108,12 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
     func mapView(_ mapView: MGLMapView, annotation: MGLAnnotation, calloutAccessoryControlTapped control: UIControl) {
         print("Tapped the button")
         if(((annotation.title)!) != "New Maintenance Form"){
+            //set that you need to load the information
         shareData.fillMaintenance = true
         }
         shareData.current_site_id = (annotation.subtitle)!!
         shareData.maintenance_site = (annotation.title)!!
+        //open up the maintenance form
         self.performSegue(withIdentifier: "goMaintenance", sender: self)
 
     }
@@ -128,37 +123,29 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
         return true
     }
 
-    
     func mapView(_ mapView: MGLMapView, imageFor annotation: MGLAnnotation) -> MGLAnnotationImage? {
-        //print("adding images")
         // Try to reuse the existing annotation image, if it exists
        var annotationImage = mapView.dequeueReusableAnnotationImage(withIdentifier: imagename)
     
         if annotationImage == nil {
             var image = UIImage(named: imagename)!
     
-    
            image = image.withAlignmentRectInsets(UIEdgeInsetsMake(0, 0, image.size.height/2, 0))
     
             // Initialize the  annotation image with the UIImage just loaded
             annotationImage = MGLAnnotationImage(image: image, reuseIdentifier: imagename)
-            print("HERE IT GOES")
         }
     
         return annotationImage
     }
 
-    
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    //pull up the legend
     @IBAction func clickLegend(_ sender: Any) {
-     
-
         let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.alert)
         
         let framed = CGRect(x: 40, y: 50, width: 200, height: 100)
@@ -171,8 +158,5 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
         self.present(alert, animated: true, completion: nil)
 
     }
-    
-
-    
 }
 

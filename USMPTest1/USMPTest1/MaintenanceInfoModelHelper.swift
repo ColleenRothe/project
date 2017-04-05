@@ -2,6 +2,8 @@
 //  MaintenanceInfoModelHelper.swift
 //  USMPTest1
 //
+//  Gets info from DB for maintenance form. Used by MaintenanceForm.Swift
+//
 //  Created by Colleen Rothe on 11/26/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -26,8 +28,8 @@ class MaintenanceInfoModelHelper: NSObject, URLSessionDataDelegate{
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/currentMaintenance.php")! as URL)
         request.httpMethod = "POST"
         
+        //post
         let postString = "id=\(shareData.current_site_id)"
-        
         
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
@@ -35,21 +37,20 @@ class MaintenanceInfoModelHelper: NSObject, URLSessionDataDelegate{
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 return
             }
             
-            print("response = \(response)")
+            print("response = \(String(describing: response))")
             
-            responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String
+            responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String
             
-            
-            //print("responseString = \(responseString)")
-            
+            // get rid of [] so you can make into dictionary
             responseString = responseString.replacingOccurrences(of: "[", with: "")
             responseString = responseString.replacingOccurrences(of: "]", with: "")
             //problem if there are commas in any of the strings people type in
             
+            //try to put into dictionary
             if let data2 = responseString.data(using: .utf8){
                 
                 do {
@@ -59,37 +60,27 @@ class MaintenanceInfoModelHelper: NSObject, URLSessionDataDelegate{
                 }
             }
             
-            
-            //responseString = responseString.replacingOccurrences(of: "\"", with: "~!~")
             print("new string is" + responseString)
             self.parseJSON()
-            
-            
-            
         }
         task.resume()
-        
-        
     }
 
     weak var delegate: MaintenanceInfoModelHelperProtocol?
     
     func downloadItems(){
         helper()
-
-        
     }
     
-    
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data){
-       
-
+    
     }
     
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?){
 
     }
     
+    //put dictionary info into a MaintenanceInfoModel
     func parseJSON(){
         let comments : NSMutableArray = NSMutableArray()
         let thing = MaintenanceInfoModel() //instantiate object to hold each element in the spec. JSON obj.
@@ -337,81 +328,8 @@ class MaintenanceInfoModelHelper: NSObject, URLSessionDataDelegate{
             thing.total_percent = ""
         }
 
-        
-
-        
-        //problem if there are commas in any of the strings people type in
-        //let answer = responseString.components(separatedBy: ",~!~")
-        
-//        thing.id = answer[0].replacingOccurrences(of: "~!~", with: "")
-//        thing.site_id = answer[1].replacingOccurrences(of: "~!~", with: "")
-//        thing.code_relation = answer[2].replacingOccurrences(of: "~!~", with: "")
-//        thing.maintenance_type = answer[3].replacingOccurrences(of: "~!~", with: "")
-//        thing.rtNum = answer[4].replacingOccurrences(of: "~!~", with: "")
-//        thing.beginMile = answer[5].replacingOccurrences(of: "~!~", with: "")
-//        thing.endMile = answer[6].replacingOccurrences(of: "~!~", with: "")
-//        thing.agency = answer[7].replacingOccurrences(of: "~!~", with: "")
-//        thing.regional = answer[8].replacingOccurrences(of: "~!~", with: "")
-//        thing.local = answer[9].replacingOccurrences(of: "~!~", with: "")
-//
-//        
-//        
-//        thing.us_event = answer[10].replacingOccurrences(of: "~!~", with: "")
-//        thing.event_desc = answer[11].replacingOccurrences(of: "~!~", with: "")
-//        thing.design_pse = answer[12].replacingOccurrences(of: "~!~", with: "")
-//        thing.remove_ditch = answer[13].replacingOccurrences(of: "~!~", with: "")
-//        thing.remove_road_trail = answer[14].replacingOccurrences(of: "~!~", with: "")
-//        thing.relevel_aggregate = answer[15].replacingOccurrences(of: "~!~", with: "")
-//        thing.relevel_patch = answer[16].replacingOccurrences(of: "~!~", with: "")
-//        thing.drainage_improvement = answer[17].replacingOccurrences(of: "~!~", with: "")
-//        thing.deep_patch = answer[18].replacingOccurrences(of: "~!~", with: "")
-//        thing.haul_debris = answer[19].replacingOccurrences(of: "~!~", with: "")
-//        thing.scaling_rock_slopes = answer[20].replacingOccurrences(of: "~!~", with: "")
-//        thing.road_trail_alignment = answer[21].replacingOccurrences(of: "~!~", with: "")
-//        thing.repair_rockfall_barrier = answer[22].replacingOccurrences(of: "~!~", with: "")
-//        thing.repair_rockfall_netting = answer[23].replacingOccurrences(of: "~!~", with: "")
-//        thing.sealing_cracks = answer[24].replacingOccurrences(of: "~!~", with: "")
-//        thing.guardrail = answer[25].replacingOccurrences(of: "~!~", with: "")
-//        thing.cleaning_drains = answer[26].replacingOccurrences(of: "~!~", with: "")
-//        thing.flagging_signing = answer[27].replacingOccurrences(of: "~!~", with: "")
-//        thing.others1_desc = answer[28].replacingOccurrences(of: "~!~", with: "")
-//        thing.others1 = answer[29].replacingOccurrences(of: "~!~", with: "")
-//        thing.others2_desc = answer[30].replacingOccurrences(of: "~!~", with: "")
-//        thing.others2 = answer[31].replacingOccurrences(of: "~!~", with: "")
-//        thing.others3_desc = answer[32].replacingOccurrences(of: "~!~", with: "")
-//        thing.others3 = answer[33].replacingOccurrences(of: "~!~", with: "")
-//        thing.others4_desc = answer[34].replacingOccurrences(of: "~!~", with: "")
-//        thing.others4 = answer[35].replacingOccurrences(of: "~!~", with: "")
-//        thing.others5_desc = answer[36].replacingOccurrences(of: "~!~", with: "")
-//        thing.others5 = answer[37].replacingOccurrences(of: "~!~", with: "")
-//        thing.total = answer[38].replacingOccurrences(of: "~!~", with: "")
-//        thing.total_percent = answer[39].replacingOccurrences(of: "~!~", with: "")
-//        thing.design_pse_val = answer[40].replacingOccurrences(of: "~!~", with: "")
-//        thing.remove_ditch_val = answer[41].replacingOccurrences(of: "~!~", with: "")
-//        thing.remove_road_trail_val = answer[42].replacingOccurrences(of: "~!~", with: "")
-//        thing.relevel_aggregate_val = answer[43].replacingOccurrences(of: "~!~", with: "")
-//        thing.relevel_patch_val = answer[44].replacingOccurrences(of: "~!~", with: "")
-//        thing.drainage_improvement_val = answer[45].replacingOccurrences(of: "~!~", with: "")
-//        thing.deep_patch_val = answer[46].replacingOccurrences(of: "~!~", with: "")
-//        thing.haul_debris_val = answer[47].replacingOccurrences(of: "~!~", with: "")
-//        thing.scaling_rock_slopes_val = answer[48].replacingOccurrences(of: "~!~", with: "")
-//        thing.road_trail_alignment_val = answer[49].replacingOccurrences(of: "~!~", with: "")
-//        thing.repair_rockfall_barrier_val = answer[50].replacingOccurrences(of: "~!~", with: "")
-//        thing.repair_rockfall_netting_val = answer[51].replacingOccurrences(of: "~!~", with: "")
-//        thing.sealing_cracks_val = answer[52].replacingOccurrences(of: "~!~", with: "")
-//        thing.guardrail_val = answer[53].replacingOccurrences(of: "~!~", with: "")
-//        thing.cleaning_drains_val = answer[54].replacingOccurrences(of: "~!~", with: "")
-//        thing.flagging_signing_val = answer[55].replacingOccurrences(of: "~!~", with: "")
-//        thing.others1_val = answer[56].replacingOccurrences(of: "~!~", with: "")
-//        thing.others2_val = answer[57].replacingOccurrences(of: "~!~", with: "")
-//        thing.others3_val = answer[58].replacingOccurrences(of: "~!~", with: "")
-//        thing.others4_val = answer[59].replacingOccurrences(of: "~!~", with: "")
-//        thing.others5_val = answer[60].replacingOccurrences(of: "~!~", with: "")
 
         comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
-            
-            
-        //}
         
         //pass comments array to protocol method, make available for VC use
         DispatchQueue.main.async(execute: { ()->Void in self.delegate!.itemsDownloadedI(comments)
@@ -419,7 +337,4 @@ class MaintenanceInfoModelHelper: NSObject, URLSessionDataDelegate{
         
     }
     
-    
-
-
 }

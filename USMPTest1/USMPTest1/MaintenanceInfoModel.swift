@@ -2,6 +2,8 @@
 //  MaintenanceInfoModel.swift
 //  USMPTest1
 //
+//  Object that holds all info for the Maintenance Form
+//
 //  Created by Colleen Rothe on 11/26/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -16,7 +18,7 @@ class MaintenanceInfoModel: NSObject{
     var site_id : String?
     var code_relation: String?
     var maintenance_type: String?
-    var rtNum: String? // new here
+    var rtNum: String?
     var beginMile: String?
     var endMile: String?
     var agency: String?
@@ -76,11 +78,9 @@ class MaintenanceInfoModel: NSObject{
     var others4_val: String?
     var others5_val: String?
 
-
     override init(){
         
     }
-    
     
     init(id: String,site_id : String, code_relation: String, maintenance_type: String, rtNum: String, beginMile: String, endMile: String, agency: String, regional: String, local: String, us_event: String, event_desc: String, design_pse: String, remove_ditch: String, remove_road_trail: String, relevel_aggregate: String, relevel_patch: String, drainage_improvement: String, deep_patch: String, haul_debris: String, scaling_rock_slopes: String, road_trail_alignment: String, repair_rockfall_barrier: String, repair_rockfall_netting: String, sealing_cracks: String, guardrail: String, cleaning_drains: String, flagging_signing: String, others1_desc: String, others1: String, others2_desc: String, others2: String, others3_desc: String, others3: String, others4_desc: String, others4: String, others5_desc: String, others5: String, total: String, total_percent: String, design_pse_val: String, remove_ditch_val: String, remove_road_trail_val: String, relevel_aggregate_val: String, relevel_patch_val: String, drainage_improvement_val: String, deep_patch_val: String, haul_debris_val: String, scaling_rock_slopes_val: String, road_trail_alignment_val: String, repair_rockfall_barrier_val: String, repair_rockfall_netting_val: String, sealing_cracks_val: String, guardrail_val: String, cleaning_drains_val: String, flagging_signing_val: String, others1_val: String, others2_val: String, others3_val: String, others4_val: String, others5_val: String){
         
@@ -88,7 +88,7 @@ class MaintenanceInfoModel: NSObject{
         self.site_id = site_id
         self.code_relation = code_relation
         self.maintenance_type = maintenance_type
-        self.rtNum = rtNum //new here
+        self.rtNum = rtNum
         self.beginMile = beginMile
         self.endMile = endMile
         self.agency = agency
@@ -148,8 +148,5 @@ class MaintenanceInfoModel: NSObject{
         self.others4_val = others4_val
         self.others5_val = others5_val
         
-        
     }
-
-    
 }

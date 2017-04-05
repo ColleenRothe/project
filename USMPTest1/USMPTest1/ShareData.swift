@@ -2,7 +2,7 @@
 //  ShareData.swift
 //  USMPTest1
 //
-//  Singleton
+//  Singleton for the app
 //
 //  Created by Colleen Rothe on 12/30/15.
 //  Copyright © 2015 Colleen Rothe. All rights reserved.

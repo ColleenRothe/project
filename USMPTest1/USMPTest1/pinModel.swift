@@ -2,6 +2,8 @@
 //  pinModel.swift
 //  USMPTest1
 //
+//  Model that holds information for a pin on the slope rating map, used by Mapbox Online and pinModelHelper.swift
+//
 //  Created by Colleen Rothe on 2/28/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
 //
@@ -28,7 +30,6 @@ class pinModel: NSObject {
         
     }
     
-    
     init(id: String, site_id: String, coordinate1: String, coordinate2: String, total:String, hazard_rating_rockfall_id: String, hazard_rating_landslide_id: String, prelimRating: String){
         
         self.id = id
@@ -39,16 +40,5 @@ class pinModel: NSObject {
         self.hazard_rating_rockfall_id = hazard_rating_rockfall_id
         self.hazard_rating_landslide_id = hazard_rating_landslide_id
         self.prelimRating = prelimRating
-                
     }
-    
-    
-    
-    //prints object's current state
-    
-//    override var description: String {
-//        return "id: \(id), site_id: \(site_id), latitude: \(coordinate1), longitude: \(coordinate2)"
-//        
-//    }
-    
 }
