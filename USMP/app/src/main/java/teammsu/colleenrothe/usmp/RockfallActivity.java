@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -55,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -204,6 +206,9 @@ public class RockfallActivity extends AppCompatActivity
     Uri imageUri;
     String [] savedImagePaths;
 
+    //hazard type options
+    List <String[]> hazardOptions = new ArrayList();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //provided
@@ -220,6 +225,11 @@ public class RockfallActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //hazard dropdown options
+        if (isNetworkAvailable()) {
+            getJSON2();
+        }
 
         //UI Connection
         SubmitButton = (Button)findViewById(R.id.RSubmitButton);
@@ -3024,6 +3034,91 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
+    //gets the hazard type options
+    private void getJSON2() {
+        class GetJSON extends AsyncTask<String, Void, String>{
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                BufferedReader bufferedReader = null;
+                try {
+                    URL url = new URL("http://nl.cs.montana.edu/usmp/server/shared/get_hazard_type_dropdown_options.php");
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while((json = bufferedReader.readLine())!= null){
+                        sb.append(json+"\n");
+                    }
+
+                    String temp = sb.toString();
+                    //get rid of all the extra junk
+                    temp = temp.replace("[","");
+                    temp = temp.replace("]","");
+                    temp = temp.replace("{","");
+                    temp = temp.replace("}","");
+                    temp = temp.replace("\"","");
+                    //put it into an array split by comma
+                    String [] hazardStuff;
+                    hazardStuff = temp.split(",");
+                    //have a temporary array
+                    String [] tempS = new String [3];
+                    //arraylist to hold it out
+                    List<String[]> hazard2 = new ArrayList();
+                    //counter for the temp array
+                    int z = 0;
+                    //for all of the hazard option information
+                    for(int i = 0; i<hazardStuff.length; i++) {
+                        //counter has gone too far
+                        if (z == 3) {
+                            //reset to 0
+                            z = 0;
+                            //add the temporary array for one hazard option to the final
+                            hazard2.add(tempS);
+                            //reset it
+                            tempS = new String[3];
+                        }
+                        //get rid of all the extra text
+                        hazardStuff[i] = hazardStuff[i].replaceAll(".*:", "");
+                        //put data in the temporary array
+                        tempS[z] = hazardStuff[i];
+                        //increment temp array counter
+                        z++;
+                        //last one, so the z=3 will never come into play
+                        if(i == (hazardStuff.length-1)){
+                            hazard2.add(tempS);
+                        }
+
+                    }
+
+                    //put into var.
+                    hazardOptions = hazard2;
+
+                    return sb.toString().trim();
+
+                }catch(Exception e){
+                    return null;
+                }
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute();
+    }
+
 
     //<<POPUPS>>
     public void popup1(View view) {
@@ -3529,22 +3624,36 @@ public class RockfallActivity extends AppCompatActivity
                     String end_coordinate_longitude = String.valueOf(EndLong.getText());
                     String datum = String.valueOf(Datum.getText());
                     String aadt = String.valueOf(Aadt.getText());
-                    //todo: hazard type (2)
+
                     String temp = "";
-                    if(HazardType1.getSelectedItem().toString() != "") {
-                        temp = temp.concat(HazardType1.getSelectedItem().toString());
+                    if (HazardType1.getSelectedItemPosition() != 0) {
+                        for(int i = 0; i<hazardOptions.size(); i++){
+                            String [] tempA = hazardOptions.get(i);
+                            System.out.println(tempA[2]);
+                            if (tempA[2].equals(HazardType1.getSelectedItem().toString())){
+                                temp = temp.concat(tempA[0]);
+                            }
+                        }
                     }
-                    if(HazardType2.getSelectedItem().toString() != "") {
-                        temp = temp.concat(",");
-                        temp = temp.concat(HazardType2.getSelectedItem().toString());
+                    if (HazardType2.getSelectedItemPosition() != 0) {
+                        for(int i = 0; i<hazardOptions.size(); i++){
+                            String [] tempA = hazardOptions.get(i);
+                            if (tempA[2].equals(HazardType2.getSelectedItem().toString())){
+                                temp = temp.concat(",");
+                                temp = temp.concat(tempA[0]);
+                            }
+                        }
                     }
-                    if(HazardType3.getSelectedItem().toString() != "") {
-                        temp = temp.concat(",");
-                        temp = temp.concat(HazardType3.getSelectedItem().toString());
+                    if (HazardType3.getSelectedItemPosition() != 0) {
+                        for(int i = 0; i<hazardOptions.size(); i++){
+                            String [] tempA = hazardOptions.get(i);
+                            if (tempA[2].equals(HazardType3.getSelectedItem().toString())){
+                                temp = temp.concat(",");
+                                temp = temp.concat(tempA[0]);
+                            }
+                        }
                     }
                     String hazard_type = temp;
-
-
 
                     String length_affected = String.valueOf(LengthAffected.getText());
                     String slope_height_axial_length = String.valueOf(SlopeHeight.getText());
@@ -3809,7 +3918,7 @@ public class RockfallActivity extends AppCompatActivity
                 @Override
                 public void run() {
                     try {
-                        URL url = new URL("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php");
+                        URL url = new URL("http://nl.cs.montana.edu/test_sites/colleen.rothe/add_new_site.php");
                         URLConnection conn = url.openConnection();
                         conn.setDoOutput(true);
                         OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
@@ -3866,20 +3975,37 @@ public class RockfallActivity extends AppCompatActivity
                         String end_coordinate_longitude = String.valueOf(EndLong.getText());
                         String datum = String.valueOf(Datum.getText());
                         String aadt = String.valueOf(Aadt.getText());
-                        //todo: hazard type (4)
+
                         String temp = "";
-                        if(HazardType1.getSelectedItem().toString() != "") {
-                            temp = temp.concat(HazardType1.getSelectedItem().toString());
+                        if (HazardType1.getSelectedItemPosition() != 0) {
+                            for(int i = 0; i<hazardOptions.size(); i++){
+                                String [] tempA = hazardOptions.get(i);
+                                System.out.println(tempA[2]);
+                                if (tempA[2].equals(HazardType1.getSelectedItem().toString())){
+                                    temp = temp.concat(tempA[0]);
+                                }
+                            }
                         }
-                        if(HazardType2.getSelectedItem().toString() != "") {
-                            temp = temp.concat(",");
-                            temp = temp.concat(HazardType2.getSelectedItem().toString());
+                        if (HazardType2.getSelectedItemPosition() != 0) {
+                            for(int i = 0; i<hazardOptions.size(); i++){
+                                String [] tempA = hazardOptions.get(i);
+                                if (tempA[2].equals(HazardType2.getSelectedItem().toString())){
+                                    temp = temp.concat(",");
+                                    temp = temp.concat(tempA[0]);
+                                }
+                            }
                         }
-                        if(HazardType3.getSelectedItem().toString() != "") {
-                            temp = temp.concat(",");
-                            temp = temp.concat(HazardType3.getSelectedItem().toString());
+                        if (HazardType3.getSelectedItemPosition() != 0) {
+                            for(int i = 0; i<hazardOptions.size(); i++){
+                                String [] tempA = hazardOptions.get(i);
+                                if (tempA[2].equals(HazardType3.getSelectedItem().toString())){
+                                    temp = temp.concat(",");
+                                    temp = temp.concat(tempA[0]);
+                                }
+                            }
                         }
                         String hazard_type = temp;
+
                         String length_affected = String.valueOf(LengthAffected.getText());
                         String slope_height_axial_length = String.valueOf(SlopeHeight.getText());
                         String slope_angle = String.valueOf(SlopeAngle.getText());
@@ -4800,7 +4926,7 @@ public class RockfallActivity extends AppCompatActivity
 
                 try {
 
-                    if(selectedImages.size() != 0){
+                    if(selectedImages != null){
                         for(int i = 0; i<selectedImages.size(); i++) {
 
                             final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
