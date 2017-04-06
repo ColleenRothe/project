@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		463D806DED7D2BF380FDE51B /* Pods_USMPTest1Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB6F427B585BA643D30428E /* Pods_USMPTest1Tests.framework */; };
+		9B0CB3A81E95F86E00E5A322 /* HazardTypeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0CB3A71E95F86E00E5A322 /* HazardTypeHelper.swift */; };
 		9B1399F91D9AE1C100D893B1 /* USMPTest1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1399F81D9AE1C100D893B1 /* USMPTest1Tests.swift */; };
 		9B2D69D11CBB091F00D6AB80 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B2D69D01CBB091F00D6AB80 /* Mapbox.framework */; };
 		9B2D69D21CBB091F00D6AB80 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9B2D69D01CBB091F00D6AB80 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -87,6 +88,7 @@
 /* Begin PBXFileReference section */
 		2AB6F427B585BA643D30428E /* Pods_USMPTest1Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_USMPTest1Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		514A8CE3B9B880B4342C1697 /* Pods-USMPTest1.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-USMPTest1.release.xcconfig"; path = "Pods/Target Support Files/Pods-USMPTest1/Pods-USMPTest1.release.xcconfig"; sourceTree = "<group>"; };
+		9B0CB3A71E95F86E00E5A322 /* HazardTypeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HazardTypeHelper.swift; sourceTree = "<group>"; };
 		9B1399F61D9AE1BF00D893B1 /* USMPTest1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = USMPTest1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B1399F81D9AE1C100D893B1 /* USMPTest1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USMPTest1Tests.swift; sourceTree = "<group>"; };
 		9B1399FA1D9AE1C200D893B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				9BAF972D1CD121B600DF3D99 /* HomeModel2.swift */,
 				9B5B8B5A1BF4E7CF00A345E8 /* Info.plist */,
 				9B8828951CC147D3009D20CB /* LandslideChoice.swift */,
+				9B0CB3A71E95F86E00E5A322 /* HazardTypeHelper.swift */,
 				9B914C851E43D249005DCE99 /* LandslideModel.swift */,
 				9BE93E0C1E43E03800A44D1A /* LandslideModelHelper.swift */,
 				9B5B8B571BF4E7CF00A345E8 /* LaunchScreen.storyboard */,
@@ -537,6 +540,7 @@
 				9BD916D41C7B76DB008402A1 /* HomeModel.swift in Sources */,
 				9BAE44E01CA9B5DE007496D6 /* USMPTest1.xcdatamodeld in Sources */,
 				9BA528361C89FAEB0042FB4D /* SiteImages.swift in Sources */,
+				9B0CB3A81E95F86E00E5A322 /* HazardTypeHelper.swift in Sources */,
 				9B5D99081CDE961C00891FC9 /* MaintenanceForm.swift in Sources */,
 				9B3417651D07145C00428E11 /* OfflineList.swift in Sources */,
 				9B3417671D071A0100428E11 /* OfflineCell.swift in Sources */,

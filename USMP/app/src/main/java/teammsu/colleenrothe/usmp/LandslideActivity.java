@@ -4753,63 +4753,6 @@ public class LandslideActivity extends AppCompatActivity
         protected String doInBackground(String... params) {
 
             try {
-//                final OkHttpClient client2 = new OkHttpClient();
-//                RequestBody body = new FormEncodingBuilder()
-//                        .add("hazard_type", "Shallow Slump")
-//                        .build();
-//
-//                Request request2 = new Request.Builder()
-//                        .url("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
-//                        .post(body)
-//                        .build();
-//
-//                Response response2 = null;
-//
-//                response2 = client2.newCall(request2).execute();
-//
-//                if (!response2.isSuccessful()) try {
-//                    throw new IOException("Unexpected code " + response2);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                System.out.println(response2.body().string());
-
-//                JSONObject parameters = new JSONObject();
-//                String [] hazards = {"Shallow Slump"};
-//                try {
-//                    parameters.put("hazard_type", new JSONArray(Arrays.asList(hazards)));
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                URL url = new URL("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php");
-//                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//                //  conn.setReadTimeout(10000 /* milliseconds */);
-//                //  conn.setConnectTimeout(15000 /* milliseconds */);
-//                conn.setRequestProperty( "Content-Type", "application/json" );
-//                conn.setDoOutput(true);
-//                conn.setRequestMethod("POST");
-//                OutputStream out = new BufferedOutputStream(conn.getOutputStream());
-//                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-//                writer.write(parameters);
-//                writer.close();
-//                out.close();
-//
-//                int responseCode = conn.getResponseCode();
-//                //  System.out.println("\nSending 'POST' request to URL : " + url);
-//                //  System.out.println("Response Code : " + responseCode);
-//
-//                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-//                String inputLine;
-//                StringBuffer response2 = new StringBuffer();
-//
-//                while ((inputLine = in.readLine()) != null) {
-//                    response2.append(inputLine);
-//                }
-//                in.close();
-//
-
 
                 if(selectedImages != null){
                     smallerImage();
