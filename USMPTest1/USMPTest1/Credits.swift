@@ -72,7 +72,7 @@ class Credits: UIViewController, UIScrollViewDelegate {
             return //outside range of what is to be displayed
         }
         
-        if let pageView = pageViews[page]{
+        if pageViews[page] != nil{
             //do nothing, already loaded
         }else{
             var frame = scroller.bounds

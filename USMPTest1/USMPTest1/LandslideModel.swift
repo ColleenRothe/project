@@ -16,7 +16,6 @@ import Foundation
 class LandslideModel: NSObject{
     var id: String?
     var site_id: String?
-    var mgmt_area: String?
     var umbrella_agency: String?
     var regiona_admin: String?
     var local_admin: String?
@@ -98,11 +97,10 @@ class LandslideModel: NSObject{
         
     }
     
-    init(id: String, site_id: String, mgmt_area: String,umbrella_agency: String, regional_admin: String, local_admin: String, date: String, road_trail_no: String, road_trail_class: String, begin_mile_marker: String, end_mile_marker: String, road_or_trail: String, side: String, rater: String, weather: String, begin_coordinate_lat: String,begin_coordinate_long: String,end_coordinate_lat: String,end_coordinate_long: String,datum: String,aadt: String,hazard_type: String, length_affected: String, slope_ht_axial_length: String,slope_angle: String, sight_distance: String, road_trail_width: String, speed_limit: String, minimum_ditch_width: String, maximum_ditch_width: String, minimum_ditch_depth: String, maximum_ditch_depth: String, minimum_ditch_slope_first: String, maximum_ditch_slope_first: String,minimum_ditch_slope_second: String,maximum_ditch_slope_second: String,begin_annual_rainfall: String,end_annual_rainfall: String,sole_access_route: String,fixes_present: String,flma_id: String, flma_name: String,flma_description: String, comments: String,prelim_landslide_road_width_affected: String,prelim_landslide_slide_erosion_effects: String,prelim_landslide_length_affected: String,impact_on_use: String,aadt_usage_calc_checkbox: String,aadt_usage: String, prelim_rating: String,slope_drainage: String,hazard_rating_annual_rainfall: String,hazard_rating_slope_height_axial_length: String,hazard_total: String,hazard_landslide_thaw_stability: String,hazard_landslide_maint_frequency: String,hazard_landslide_movement_history: String,route_trail_width: String,human_ex_factor: String,percent_dsd: String,r_w_impacts: String,enviro_cult_impacts: String,maint_complexity: String,event_cost: String,risk_total: String,total_score: String ){
+    init(id: String, site_id: String,umbrella_agency: String, regional_admin: String, local_admin: String, date: String, road_trail_no: String, road_trail_class: String, begin_mile_marker: String, end_mile_marker: String, road_or_trail: String, side: String, rater: String, weather: String, begin_coordinate_lat: String,begin_coordinate_long: String,end_coordinate_lat: String,end_coordinate_long: String,datum: String,aadt: String,hazard_type: String, length_affected: String, slope_ht_axial_length: String,slope_angle: String, sight_distance: String, road_trail_width: String, speed_limit: String, minimum_ditch_width: String, maximum_ditch_width: String, minimum_ditch_depth: String, maximum_ditch_depth: String, minimum_ditch_slope_first: String, maximum_ditch_slope_first: String,minimum_ditch_slope_second: String,maximum_ditch_slope_second: String,begin_annual_rainfall: String,end_annual_rainfall: String,sole_access_route: String,fixes_present: String,flma_id: String, flma_name: String,flma_description: String, comments: String,prelim_landslide_road_width_affected: String,prelim_landslide_slide_erosion_effects: String,prelim_landslide_length_affected: String,impact_on_use: String,aadt_usage_calc_checkbox: String,aadt_usage: String, prelim_rating: String,slope_drainage: String,hazard_rating_annual_rainfall: String,hazard_rating_slope_height_axial_length: String,hazard_total: String,hazard_landslide_thaw_stability: String,hazard_landslide_maint_frequency: String,hazard_landslide_movement_history: String,route_trail_width: String,human_ex_factor: String,percent_dsd: String,r_w_impacts: String,enviro_cult_impacts: String,maint_complexity: String,event_cost: String,risk_total: String,total_score: String ){
         
         self.id = id
         self.site_id=site_id
-        self.mgmt_area=mgmt_area
         self.umbrella_agency = umbrella_agency
         self.regiona_admin = regional_admin
         self.local_admin = local_admin

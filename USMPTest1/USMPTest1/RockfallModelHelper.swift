@@ -27,7 +27,7 @@ class RockfallModelHelper: NSObject, URLSessionDataDelegate{
     
     
     func helper(){
-        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php")! as URL)
         request.httpMethod = "POST"
         
         //post the id
@@ -39,13 +39,13 @@ class RockfallModelHelper: NSObject, URLSessionDataDelegate{
             data, response, error in
             
             if error != nil {
-                print("error=\(error)")
+                print("error=\(String(describing: error))")
                 return
             }
             
             print("response = \(response)")
             
-            responseR = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String
+            responseR = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)! as String
             
             //parse the response because there are a bunch of {} blocks
             responseR = responseR.replacingOccurrences(of: "[", with: "")
@@ -444,8 +444,8 @@ class RockfallModelHelper: NSObject, URLSessionDataDelegate{
         
         //prelim and hazard ratings rockfall/landslide ids
         
-        if(RDictionary.value(forKey:"HAZARD_TYPE") as? String != nil){
-            thing.hazard_type = RDictionary.value(forKey: "HAZARD_TYPE")! as? String}
+        if(RDictionary.value(forKey:"HAZARD_TYPE2") as? String != nil){
+            thing.hazard_type = RDictionary.value(forKey: "HAZARD_TYPE2")! as? String}
         else{
             thing.hazard_type = ""
         }

@@ -426,9 +426,62 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         endMile.text = endMileS
         
         //agency, regional, local
-        let agency = ((feedItems.object(at: 0) as! MaintenanceInfoModel).agency)
-        let regional = ((feedItems.object(at: 0) as! MaintenanceInfoModel).regional)
-        let local = ((feedItems.object(at: 0) as! MaintenanceInfoModel).local)
+        let agencyS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).agency)
+        if(agencyOptions.contains(agencyS!)){
+            agency.selectRow(agencyOptions.index(of: agencyS!)!, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: agencyOptions.index(of: agencyS!)!, inComponent: 0)
+
+        }
+        let regionS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).regional)
+        let localS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).local)
+        
+        if(FSRegionalOptions.contains(regionS!)){
+            regional.selectRow(FSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
+            self.regional.delegate?.pickerView!(regional, didSelectRow: FSRegionalOptions.index(of: regionS!)!, inComponent: 0)
+            if(FSLocal1Options.contains(localS!)){
+                local.selectRow(FSLocal1Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSLocal2Options.contains(localS!)){
+                local.selectRow(FSLocal2Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSLocal3Options.contains(localS!)){
+                local.selectRow(FSLocal3Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSLocal4Options.contains(localS!)){
+                local.selectRow(FSLocal4Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSLocal5Options.contains(localS!)){
+                local.selectRow(FSLocal5Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSLocal6Options.contains(localS!)){
+                local.selectRow(FSLocal6Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSLocal6Options.contains(localS!)){
+                local.selectRow(FSLocal6Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSLocal7Options.contains(localS!)){
+                local.selectRow(FSLocal7Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSLocal8Options.contains(localS!)){
+                local.selectRow(FSLocal8Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }
+            
+        }
+            
+        else if(NPSRegionalOptions.contains(regionS!)){
+            regional.selectRow(NPSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
+            self.regional.delegate?.pickerView!(regional, didSelectRow: NPSRegionalOptions.index(of: regionS!)!, inComponent: 0)
+            
+            if(NPSLocal1Options.contains(localS!)){
+                local.selectRow(NPSLocal1Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSLocal2Options.contains(localS!)){
+                local.selectRow(NPSLocal2Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSLocal3Options.contains(localS!)){
+                local.selectRow(NPSLocal3Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSLocal4Options.contains(localS!)){
+                local.selectRow(NPSLocal4Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSLocal5Options.contains(localS!)){
+                local.selectRow(NPSLocal5Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSLocal6Options.contains(localS!)){
+                local.selectRow(NPSLocal6Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSLocal7Options.contains(localS!)){
+                local.selectRow(NPSLocal7Options.index(of: localS!)!, inComponent: 0, animated: true)
+            }
+            
+        }
+
         
         eventDescriptionText.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).event_desc)
         totalCostText.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).total)
@@ -469,7 +522,6 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     func loadSiteList(){
         let listed = ((feedItemsList.object(at: 0) as! SiteListModel))
         //First Item is them All
-        let length = listed.ids
         for i in 0..<listed.ids.count{
             siteIDOptions.append(listed.ids[i] as! String)
         }

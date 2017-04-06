@@ -24,7 +24,7 @@ var JDictionary = NSDictionary()
 class LandslideModelHelper: NSObject, URLSessionDataDelegate{
     
     func helper(){
-        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php")! as URL)
         request.httpMethod = "POST"
 
         //post the id
@@ -105,11 +105,6 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
             thing.site_id = ""
         }
         
-        if(JDictionary.value(forKey:"MGMT_AREA") as? String != nil){
-            thing.mgmt_area = JDictionary.value(forKey: "MGMT_AREA")! as? String}
-        else{
-            thing.mgmt_area = ""
-        }
         
         if(JDictionary.value(forKey:"UMBRELLA_AGENCY") as? String != nil){
             thing.umbrella_agency = JDictionary.value(forKey: "UMBRELLA_AGENCY")! as? String}
@@ -442,8 +437,8 @@ class LandslideModelHelper: NSObject, URLSessionDataDelegate{
         
         //prelim and hazard ratings rockfall/landslide ids
         
-        if(JDictionary.value(forKey:"HAZARD_TYPE") as? String != nil){
-            thing.hazard_type = JDictionary.value(forKey: "HAZARD_TYPE")! as? String}
+        if(JDictionary.value(forKey:"HAZARD_TYPE2") as? String != nil){
+            thing.hazard_type = JDictionary.value(forKey: "HAZARD_TYPE2")! as? String}
         else{
             thing.hazard_type = ""
         }

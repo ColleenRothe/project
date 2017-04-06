@@ -169,7 +169,6 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         
         //for all of the pins....
         for i in 0 ..< feedItems.count {
-            var tempTotal = 0
             imagename = ""
             //get the pin model at the feed item index
             let selectedLocation = feedItems.object(at: i) as! pinModel
@@ -178,8 +177,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             poiCoordinates.latitude = CDouble(selectedLocation.coordinate1!)!
             poiCoordinates.longitude = CDouble(selectedLocation.coordinate2!)!
             //get the total
-            tempTotal = Int(selectedLocation.total!)!
-            var prelimRating = Int(selectedLocation.prelimRating!)!
+            let prelimRating = Int(selectedLocation.prelimRating!)!
             //It's a landslide
             if Int(selectedLocation.hazard_rating_landslide_id!)! > 0{
                 if(prelimRating > 161){
@@ -754,7 +752,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         
         let alert = UIAlertController(title: "Legend", message: "\n\n\n\n\n\n\n\n\n\n\n\n", preferredStyle: UIAlertControllerStyle.alert)
         
-        var framed = CGRect(x: 65, y: 50, width: 150, height: 200)
+        let framed = CGRect(x: 65, y: 50, width: 150, height: 200)
         
         let imageView = UIImageView(frame: framed)
         imageView.image = UIImage(named: "mapLegend")

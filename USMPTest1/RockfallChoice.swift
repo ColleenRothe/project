@@ -1044,6 +1044,29 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         //TODO: Hazard Type (1)
+        var hazardString = ""
+        hazardString = selectedLocation.hazard_type!
+        let hazardA = hazardString.components(separatedBy: ",")
+        if(hazardA.count > 0){
+            for i in 0 ... (hazardA.count - 1){
+                if i == 0 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType1.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+                else if i == 1 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType2.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+                else if i == 2 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType3.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+            }
+        }
+        
         lat1Text.text = selectedLocation.begin_coordinate_lat
         lat2Text.text = selectedLocation.end_coordinate_lat
         long1Text.text = selectedLocation.begin_coordinate_long
@@ -1260,7 +1283,6 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
             
             //fill in the UI
-            let site_id = sites[number].value(forKey: "site_id")! as? String
             let agencyS = sites[number].value(forKey: "umbrella_agency")! as? String
             
             for i in 0 ... (agencyOptions.count - 1){
@@ -1536,7 +1558,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     //MARK: Automplete Stuff
     
-    func textField(_ textField: UITextField!, shouldChangeCharactersIn range: NSRange, replacementString string: String!) -> Bool
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         if (textField == rater){
             let substring2 = (rater.text! as NSString).replacingCharacters(in: range, with: string)
@@ -3883,7 +3905,25 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }else{
         
             //agency
-            var agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+            let agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+            if(agencyS == "FS"){
+                agency.selectRow(1, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
+                
+            }else if(agencyS == "NPS"){
+                agency.selectRow(2, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+                
+                
+            }else if(agencyS == "BLM"){
+                agency.selectRow(3, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 3, inComponent: 0)
+                
+                
+            }else if(agencyS == "BIA"){
+                agency.selectRow(4, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
+            }
             //regional
             var regionalS = ""
             if(agency.selectedRow(inComponent: 0) == 1){ //fs
@@ -3958,12 +3998,12 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             road_or_trail="T"
         }
         
-        var tempSide = sidePicker.selectedRow(inComponent: 0)
-        var side = sideOptions[tempSide]
+        let tempSide = sidePicker.selectedRow(inComponent: 0)
+        let side = sideOptions[tempSide]
         
         //how to do enum?
-        var tempWeather = weatherPicker.selectedRow(inComponent: 0)
-        var weather = weatherOptions[tempWeather]
+        let tempWeather = weatherPicker.selectedRow(inComponent: 0)
+        let weather = weatherOptions[tempWeather]
         
             var hazard = ""
             
@@ -4245,7 +4285,25 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func editSubmit(){
         
         //agency
-        var agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+        let agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+        if(agencyS == "FS"){
+            agency.selectRow(1, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
+            
+        }else if(agencyS == "NPS"){
+            agency.selectRow(2, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+            
+            
+        }else if(agencyS == "BLM"){
+            agency.selectRow(3, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 3, inComponent: 0)
+            
+            
+        }else if(agencyS == "BIA"){
+            agency.selectRow(4, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
+        }
         //regional
         var regionalS = ""
         if(agency.selectedRow(inComponent: 0) == 1){ //fs

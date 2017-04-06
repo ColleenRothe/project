@@ -1089,12 +1089,32 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             weatherPicker.selectRow(temp!, inComponent: 0, animated: true)
             
         }
-        //TODO: Hazard Type (1)
         
-        print("testing Hazard type")
-        print(selectedLocation.hazard_type)
+        var hazardString = ""
+        hazardString = selectedLocation.hazard_type!
+        let hazardA = hazardString.components(separatedBy: ",")
+        if(hazardA.count > 0){
+            for i in 0 ... (hazardA.count - 1){
+                if i == 0 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType1.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+                else if i == 1 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType2.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+                else if i == 2 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType3.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+            }
+        }
+
         
-        //hazardTypeText.text = selectedLocation.hazard_type
+    
         lat1Text.text = selectedLocation.begin_coordinate_lat
         lat2Text.text = selectedLocation.end_coordinate_lat
         long1Text.text = selectedLocation.begin_coordinate_long
@@ -1321,10 +1341,29 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                 }
             }
 
-            let site_id = sites[number].value(forKey: "site_id")! as? String
             let agencyS = sites[number].value(forKey: "umbrella_agency")! as? String
             let regional_admin = sites[number].value(forKey: "regional_admin")! as? String
             let local_admin = sites[number].value(forKey: "local_admin")! as? String
+            
+            if(agencyS == "FS"){
+                agency.selectRow(1, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
+                
+            }else if(agencyS == "NPS"){
+                agency.selectRow(2, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+                
+                
+            }else if(agencyS == "BLM"){
+                agency.selectRow(3, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 3, inComponent: 0)
+                
+                
+            }else if(agencyS == "BIA"){
+                agency.selectRow(4, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
+            }
+            
             
             //FS
             if(agency.selectedRow(inComponent: 0) == 1){
