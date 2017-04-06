@@ -75,10 +75,12 @@ func =~(string:String, regex:String) -> Bool {
 }
 
 
-class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate,RockfallModelHelperProtocol {
+class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, CLLocationManagerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, UIPopoverPresentationControllerDelegate,RockfallModelHelperProtocol, HazardTypeHelperProtocol {
     
     let shareData = ShareData.sharedInstance
     var feedItems: NSArray = NSArray()
+    //for hazard type options
+    var hazardItems: NSArray = NSArray()
     var locationManager = CLLocationManager()
     
     //UI Connections
@@ -849,6 +851,14 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         
+        //download hazard type list
+        if(isInternetAvailable()){
+            //hazard type options
+            let hth = HazardTypeHelper()
+            hth.delegate = self
+            hth.downloadItems()
+        }
+        
         if(shareData.load == true){
             //call special load method
             loadFromList()
@@ -914,6 +924,11 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func itemsDownloadedR(_ items: NSArray) {
         feedItems = items
         fillToEdit()
+    }
+    
+    //get the info from the db call - HazardTypeHelper.swift
+    func itemsDownloadedH(_ items: NSArray) {
+        hazardItems = items
     }
     
     //fill form with rockfall site information, from RockfallModel
@@ -3950,8 +3965,29 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         var tempWeather = weatherPicker.selectedRow(inComponent: 0)
         var weather = weatherOptions[tempWeather]
         
-        //hazard type?
-        var hazard = 0
+            var hazard = ""
+            
+            //get the selected hazards
+            let hazard1S = hazardOptions[hazardType1.selectedRow(inComponent: 0)]
+            let hazard2S = hazardOptions[hazardType2.selectedRow(inComponent: 0)]
+            let hazard3S = hazardOptions[hazardType3.selectedRow(inComponent: 0)]
+            
+            //problem if not in order
+            for j in 0 ... (hazardItems.count-1){
+                let temp = hazardItems[j] as! NSDictionary
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard1S){
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard2S){
+                    hazard.append(",")
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard3S){
+                    hazard.append(",")
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+            }
+
         
         //speed
         var speed = 0
@@ -4159,7 +4195,7 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
         //delete site from core data if submitted successfully...
-        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/add_new_site.php")! as URL)
         request.httpMethod = "POST"
         
         //agencyS? or agency?
@@ -4291,8 +4327,30 @@ class RockfallChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let tempWeather = weatherPicker.selectedRow(inComponent: 0)
         let weather = weatherOptions[tempWeather]
         
-        //hazard type?
-        let hazard = 0
+        //hazard type
+        var hazard = ""
+        
+        //get the selected hazards
+        let hazard1S = hazardOptions[hazardType1.selectedRow(inComponent: 0)]
+        let hazard2S = hazardOptions[hazardType2.selectedRow(inComponent: 0)]
+        let hazard3S = hazardOptions[hazardType3.selectedRow(inComponent: 0)]
+        
+        //problem if not in order
+        for j in 0 ... (hazardItems.count-1){
+            let temp = hazardItems[j] as! NSDictionary
+            if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard1S){
+                hazard.append(temp.value(forKey: "ID") as! String)
+            }
+            if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard2S){
+                hazard.append(",")
+                hazard.append(temp.value(forKey: "ID") as! String)
+            }
+            if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard3S){
+                hazard.append(",")
+                hazard.append(temp.value(forKey: "ID") as! String)
+            }
+        }
+
         
         //speed
         var speed = 0

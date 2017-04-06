@@ -893,15 +893,12 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
         //download hazard type list
         if(isInternetAvailable()){
-        print("call hazard type helper")
         //hazard type options
         let hth = HazardTypeHelper()
         hth.delegate = self
         hth.downloadItems()
         }
 
-        
-        
         //load from core data
         if(shareData.load == true){
             //call special load method
@@ -969,7 +966,7 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         fillToEdit()
     }
     
-    //get the info from the db call - LandslideModelHelper.swift
+    //get the info from the db call - HazardTypeHelper.swift
     func itemsDownloadedH(_ items: NSArray) {
         hazardItems = items
     }
@@ -3819,11 +3816,30 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let tempWeather = weatherPicker.selectedRow(inComponent: 0)
         let weather = weatherOptions[tempWeather]
         
-        //hazard type?
-        //let hazard = hazardTypeText.text
-            let hazard = ""
+       
+        var hazard = ""
         
-        //TODO: Hazard Type (4)
+        //get the selected hazards
+        let hazard1S = hazardOptions[hazardType1.selectedRow(inComponent: 0)]
+        let hazard2S = hazardOptions[hazardType2.selectedRow(inComponent: 0)]
+        let hazard3S = hazardOptions[hazardType3.selectedRow(inComponent: 0)]
+            
+            //problem if not in order
+            for j in 0 ... (hazardItems.count-1){
+                let temp = hazardItems[j] as! NSDictionary
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard1S){
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard2S){
+                    hazard.append(",")
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard3S){
+                    hazard.append(",")
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+            }
+            
         //speed
         var speed = 0
         let selectedSpeed = speedPicker.selectedRow(inComponent:0)
@@ -4124,11 +4140,29 @@ class LandslideChoice: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let tempWeather = weatherPicker.selectedRow(inComponent: 0)
         let weather = weatherOptions[tempWeather]
         
-        //hazard type?
-        //TODO: Hazard Type (5)
-        let hazard = ""
-
-        //let hazard = hazardTypeText.text
+        //hazard type
+        var hazard = ""
+        
+        //get the selected hazards
+        let hazard1S = hazardOptions[hazardType1.selectedRow(inComponent: 0)]
+        let hazard2S = hazardOptions[hazardType2.selectedRow(inComponent: 0)]
+        let hazard3S = hazardOptions[hazardType3.selectedRow(inComponent: 0)]
+        
+        //problem if not in order
+        for j in 0 ... (hazardItems.count-1){
+            let temp = hazardItems[j] as! NSDictionary
+            if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard1S){
+                hazard.append(temp.value(forKey: "ID") as! String)
+            }
+            if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard2S){
+                hazard.append(",")
+                hazard.append(temp.value(forKey: "ID") as! String)
+            }
+            if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard3S){
+                hazard.append(",")
+                hazard.append(temp.value(forKey: "ID") as! String)
+            }
+        }
         
         //speed
         var speed = 0
