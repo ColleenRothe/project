@@ -60,4 +60,8 @@ class ShareData {
             //level 2 is read-only
     var level = 4;
     
+    //
+    var form = "rockfall"  //or rockfall
+    
+    
 }
