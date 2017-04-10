@@ -61,7 +61,7 @@ class ShareData {
     var level = 4;
     
     //
-    var form = "rockfall"  //or rockfall
+    var form = "landslide"  //or rockfall
     
     
 }

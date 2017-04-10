@@ -11940,6 +11940,9 @@
                                                     <rect key="frame" x="7" y="6" width="49" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Submit"/>
+                                                    <connections>
+                                                        <action selector="submit:" destination="VAZ-Go-kNI" eventType="touchUpInside" id="OB8-NW-tjJ"/>
+                                                    </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="irE-m7-9dT">
                                                     <rect key="frame" x="74" y="6" width="122" height="30"/>

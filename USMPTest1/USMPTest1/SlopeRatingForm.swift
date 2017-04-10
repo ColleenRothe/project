@@ -2901,6 +2901,307 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         
     }
     
+    func editSubmit(){
+        
+    }
+    
+    func UploadRequest(){
+        
+    }
+    
+    //MARK: SUBMIT
+    
+    @IBAction func submit(_ sender: AnyObject) {
+        let alertController = UIAlertController(title: "Submit", message: "Are you sure you want to submit the form?", preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSubmit))
+        present(alertController, animated: true, completion: nil)
+        
+        
+    }
+    
+    //Yes, they want to submit the form
+    func handleSubmit(_ alertView:UIAlertAction!){
+        if(shareData.edit_site == true){
+            editSubmit()
+        }else{
+            //site information all:
+            
+            //agency
+            let agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+            if(agencyS == "FS"){
+                agency.selectRow(1, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
+                
+            }else if(agencyS == "NPS"){
+                agency.selectRow(2, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+                
+                
+            }else if(agencyS == "BLM"){
+                agency.selectRow(3, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 3, inComponent: 0)
+                
+                
+            }else if(agencyS == "BIA"){
+                agency.selectRow(4, inComponent: 0, animated: true)
+                self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
+            }
+            //regional
+            var regionalS = ""
+            if(agency.selectedRow(inComponent: 0) == 1){ //fs
+                regionalS = FSRegionalOptions[regional.selectedRow(inComponent: 0)]
+            }
+            if(agency.selectedRow(inComponent: 0) == 2){ //fs
+                regionalS = NPSRegionalOptions[regional.selectedRow(inComponent: 0)]
+            }
+            //local
+            var localS = ""
+            if(agency.selectedRow(inComponent: 0) == 1){ //FS
+                if(regional.selectedRow(inComponent: 0) == 1){  //NORTHERN
+                    localS = FSNorthernLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 2){  //Rocky MTN
+                    localS = FSRockyMountainLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 3){  //Southwestern
+                    localS = FSSouthwesternLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 4){  //Intermountain
+                    localS = FSIntermountainLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 5){  //Pacific Southwest
+                    localS = FSPacificSouthwestLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 6){  //Pacific Northwest
+                    localS = FSPacificNorthwestLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 7){  //Southern
+                    localS = FSSouthernLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 8){  //Eastern
+                    localS = FSEasternLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 9){  //Alaska
+                    localS = FSAlaskaLocal[local.selectedRow(inComponent: 0)]
+                }
+            }
+            
+            if(agency.selectedRow(inComponent: 0) == 2){ //NPS
+                if(regional.selectedRow(inComponent: 0) == 1){  //Akr
+                    localS = NPSAkrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 2){  //Imr
+                    localS = NPSImrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 3){  //Mwr
+                    localS = NPSMwrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 4){  //Ncr
+                    localS = NPSNcrLocal[local.selectedRow(inComponent: 0)]
+                }
+                
+                if(regional.selectedRow(inComponent: 0) == 5){  //Ner
+                    localS = NPSNerLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 6){  //pwr
+                    localS = NPSPwrLocal[local.selectedRow(inComponent: 0)]
+                }
+                if(regional.selectedRow(inComponent: 0) == 7){  //ser
+                    localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
+                }
+                
+            }
+            
+            
+            //road/trail?
+            var road_or_trail="R"
+            let selected =  rtPicker.selectedRow(inComponent: 0)
+            if(selected == 1){
+                road_or_trail="T"
+            }
+            
+            let tempSide = sidePicker.selectedRow(inComponent: 0)
+            let side = sideOptions[tempSide]
+            
+            //how to do enum?
+            let tempWeather = weatherPicker.selectedRow(inComponent: 0)
+            let weather = weatherOptions[tempWeather]
+            
+            var hazard = ""
+            
+            //get the selected hazards
+            let hazard1S = hazardOptions[hazardType1.selectedRow(inComponent: 0)]
+            let hazard2S = hazardOptions[hazardType2.selectedRow(inComponent: 0)]
+            let hazard3S = hazardOptions[hazardType3.selectedRow(inComponent: 0)]
+            
+            //problem if not in order
+            for j in 0 ... (hazardItems.count-1){
+                let temp = hazardItems[j] as! NSDictionary
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard1S){
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard2S){
+                    hazard.append(",")
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+                if((temp.value(forKey: "HAZARD_TYPE")as! String) == hazard3S){
+                    hazard.append(",")
+                    hazard.append(temp.value(forKey: "ID") as! String)
+                }
+            }
+            
+            
+            //speed
+            var speed = 0.0
+            if(speedText.text != ""){
+            speed = Double(speedText.text!)!
+            }
+            
+        
+            var sole_access="Y"
+            let selected_access = accessPicker.selectedRow(inComponent: 0)
+            if(selected_access == 1){
+                sole_access = "N"
+            }
+            
+            var fixes_present="Y"
+            let selected_fixes = fixesPicker.selectedRow(inComponent: 0)
+            if(selected_fixes == 1){
+                fixes_present = "N"
+            }
+            
+            //Prelim Ratings-All:
+            var impact_on_use = "3"
+            let selected_iou = impactOUPicker.selectedRow(inComponent: 0)
+            impact_on_use = ratingOptions[selected_iou]
+            
+            //Slope Hazard - All:
+            var slope_drainage = "3"
+            let selected_sd = slopeDPicker.selectedRow(inComponent: 0)
+            slope_drainage = ratingOptions[selected_sd]
+            
+            //Risk Ratings - ALL:
+            var r_w_impacts = "3"
+            let selected_rwi = rightOWIPicker.selectedRow(inComponent: 0)
+            r_w_impacts = ratingOptions[selected_rwi]
+            
+            var enviro_cult_impacts = "3"
+            let selected_eci = environCIPicker.selectedRow(inComponent: 0)
+            enviro_cult_impacts = ratingOptions[selected_eci]
+            
+            var maint_complexity = "3"
+            let selected_mc = maintCPicker.selectedRow(inComponent: 0)
+            maint_complexity = ratingOptions[selected_mc]
+            
+            var event_cost = "3"
+            let selected_ec = eventCPicker.selectedRow(inComponent: 0)
+            event_cost = ratingOptions[selected_ec]
+            
+            let email = ""
+            
+            //rockfall only:
+            var prelim_ditch_effectiveness = "3"
+            let selected_pde=ditchEPicker.selectedRow(inComponent: 0)
+            prelim_ditch_effectiveness = ratingOptions[selected_pde]
+            
+            var prelim_rockfall_history = "3"
+            let selected_prh = rockfallHPicker.selectedRow(inComponent: 0)
+            prelim_rockfall_history = ratingOptions[selected_prh]
+            
+            var hazard_rr_maint_freq = "3"
+            let selected_hrrmf = rockfallRMFPicker.selectedRow(inComponent: 0)
+            hazard_rr_maint_freq = ratingOptions[selected_hrrmf]
+            
+            var struct_c1 = "3"
+            let selected_sc1=structuralC1Picker.selectedRow(inComponent: 0)
+            struct_c1 = specialOptions[selected_sc1]
+            
+            var rock_f1 = "3"
+            let selected_rf1 = rockF1Picker.selectedRow(inComponent: 0 )
+            rock_f1 = specialOptions[selected_rf1]
+            
+            var struct_c2 = "3"
+            let selected_sc2=structuralC1Picker.selectedRow(inComponent: 0)
+            struct_c2 = specialOptions[selected_sc2]
+            
+            var rock_f2 = "3"
+            let selected_rf2 = rockF1Picker.selectedRow(inComponent: 0 )
+            rock_f2 = specialOptions[selected_rf2]
+            
+            //landslide only:
+            var prelim_landslide_road_width_affected = "3"
+            let selected_plrwa = roadwayWAPicker.selectedRow(inComponent: 0)
+            prelim_landslide_road_width_affected = ratingOptions[selected_plrwa]
+            
+            var prelim_landslide_slide_erosion_effects = "3"
+            let selected_plsee = slideEEPicker.selectedRow(inComponent: 0)
+            prelim_landslide_slide_erosion_effects = ratingOptions[selected_plsee]
+            
+            var hazard_landslide_thaw_stability = "3"
+            let selected_hlts = thawSPicker.selectedRow(inComponent: 0)
+            hazard_landslide_thaw_stability = ratingOptions[selected_hlts]
+            
+            var hazard_landslide_maint_frequency = "3"
+            let selected_hlmf = instabilityRMFPicker.selectedRow(inComponent: 0)
+            hazard_landslide_maint_frequency = ratingOptions[selected_hlmf]
+            
+            var hazard_landslide_movement_history = "3"
+            let selected_hlmh = movementHPicker.selectedRow(inComponent: 0)
+            hazard_landslide_movement_history = ratingOptions[selected_hlmh]
+            
+            //post request, new slope rating form
+            let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/add_new_site.php")! as URL)
+            request.httpMethod = "POST"
+            
+            if(shareData.form == "landslide"){
+            let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)"
+            request.httpBody = postString.data(using: String.Encoding.utf8)
+
+            }
+            //rockfall
+            else{
+                let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)"
+                
+                request.httpBody = postString.data(using: String.Encoding.utf8)
+                
+            }
+            
+            
+            
+            let task = URLSession.shared.dataTask(with: request as URLRequest) {
+                data, response, error in
+                
+                //print messages to the user, success/fail?
+                
+                if error != nil {
+                    print("error=\(String(describing: error))")
+                    let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                    
+                    return
+                }
+                
+                print("response = \(String(describing: response))")
+                print("error=\(String(describing: error))")
+                //user message confirming submit
+                let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+                
+                let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                print("responseString = \(String(describing: responseString))")
+                return
+            }
+            task.resume()
+        }
+        UploadRequest()
+        
+    }
+
+    
+    
 
     
     
