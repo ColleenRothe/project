@@ -83,4 +83,15 @@ class FormChoice: UIViewController{
         landslidebutton.layer.borderColor = UIColor.init(red: 0, green: 0.35, blue: 0.19, alpha: 1).cgColor
         
     }
+    
+    @IBAction func goLandslide(_ sender: Any) {
+        shareData.form = "landslide"
+        
+    }
+    
+    @IBAction func goRockfall(_ sender: Any) {
+        shareData.form = "rockfall"
+    }
+    
+    
 }

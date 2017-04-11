@@ -205,18 +205,19 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         }
     }
     
+    
     //when you click to edit a site
     @IBAction func editSite(_ sender: AnyObject) {
         //it's a landslide form
         if(shareData.editType == "landslide"){
             shareData.edit_site = true
-            self.performSegue(withIdentifier: "editLandslide", sender: self)
+            shareData.form = "landslide"
             
         }
         //it's a rockfall form
         if(shareData.editType == "rockfall"){
             shareData.edit_site = true
-            self.performSegue(withIdentifier: "editRockfall", sender: self)
+            shareData.form = "rockfall"
             
         }
     }
