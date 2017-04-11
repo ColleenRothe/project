@@ -73,11 +73,13 @@ class OptionCell: UITableViewCell{
     //go back to the right page
     @IBAction func goBack(_ sender: AnyObject) {
         if(sharedData.OfflineType == "landslide"){
-            parentViewController!.performSegue(withIdentifier: "loadLandslide", sender: self)
+            shareData.form = "landslide"
+            parentViewController!.performSegue(withIdentifier: "goSlopeRating", sender: self)
             
         }
         if(sharedData.OfflineType == "rockfall"){
-            parentViewController!.performSegue(withIdentifier: "loadRockfall", sender: self)
+            shareData.form = "rockfall"
+            parentViewController!.performSegue(withIdentifier: "goSlopeRating", sender: self)
             
         }
         if(sharedData.OfflineType == "slopeEvent"){
@@ -94,12 +96,14 @@ class OptionCell: UITableViewCell{
     func handleLoad(_ alertView:UIAlertAction!){
         if(sharedData.OfflineType == "landslide"){
             sharedData.load = true
-            parentViewController!.performSegue(withIdentifier: "loadLandslide", sender: self)
+            shareData.form = "landslide"
+            parentViewController!.performSegue(withIdentifier: "goSlopeRating", sender: self)
        
         }
         if(sharedData.OfflineType == "rockfall"){
             sharedData.load = true
-            parentViewController!.performSegue(withIdentifier: "loadRockfall", sender: self)
+            shareData.form = "rockfall"
+            parentViewController!.performSegue(withIdentifier: "goSlopeRating", sender: self)
             
         }
         if(sharedData.OfflineType == "slopeEvent"){

@@ -117,8 +117,14 @@ class OfflineList: UITableViewController{
         //form type: Landslide and Rockfall
             //hazard type, agency , road/trail id, date of event
             if(shareData.OfflineType == "landslide" || shareData.OfflineType == "rockfall"){
+                print("share data type is:")
+                print(shareData.OfflineType)
                 
-                cell.labelOne.text = "Hazard Type:" + (site.value(forKey: "hazardType")! as! String) //as? String
+                var hazardS = ""
+                if(site.value(forKey: "hazardType") != nil){
+                    hazardS = site.value(forKey: "hazardType")! as! String
+                }
+                cell.labelOne.text = "Hazard Type:" + hazardS
                 var agencyS = ""
                 let agencyNum = (site.value(forKey: "agency")! as! NSObject) as! Int
                 if(agencyNum  == 1){
@@ -131,7 +137,11 @@ class OfflineList: UITableViewController{
                     agencyS = "BIA"
                 }
                 cell.labelTwo.text = "Agency: "+agencyS
-                cell.labelThree.text = "Road/Trail No:" + (site.value(forKey: "roadTrailNo")! as! String) //as? String
+                var rtS = ""
+                if(site.value(forKey: "roadTrailNo") != nil){
+                    rtS = site.value(forKey: "roadTrailNo")! as! String
+                }
+                cell.labelThree.text = "Road/Trail No:" + rtS
                 
                 let dateformatter = DateFormatter()
                 dateformatter.dateStyle = DateFormatter.Style.medium

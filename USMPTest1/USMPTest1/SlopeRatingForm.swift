@@ -445,7 +445,11 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     
     //LOCATION
     //set the type of form
+    if(shareData.form == "landslide"){
     shareData.OfflineType = "landslide"
+    }else{
+        shareData.OfflineType = "rockfall"
+    }
     //get the user's current location
     self.locationManager = CLLocationManager()
     self.locationManager.requestWhenInUseAuthorization()
@@ -2501,7 +2505,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     //use road/trail picker and roadwayTWText to set routeTWText
     func calculateV()->Int{
         var value = 0.0
-        var compare = 100.0
+        let compare = 100.0
         
         if(roadwayTWText.text != ""){
             var val = Double(roadwayTWText.text!)
@@ -2555,56 +2559,41 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func calculateX()->Int{
-        var speed = 0.0
         var value = 0.0
         
         if(sightDText.text != ""){
             let sightDist = Double(sightDText.text!)
             
-            let selectedVal = Double(speedText.text!)
+            let selectedVal = Int(speedText.text!)
             
-            if(selectedVal == 0){
-                speed = 25
+            if(selectedVal! <= 25){
                 value = sightDist!/375.0
             }
-            else if(selectedVal == 1){
-                speed = 30
+            else if(selectedVal! <= 30){
                 value = sightDist!/450.0
             }
-            else if(selectedVal == 2){
-                speed = 35
+            else if(selectedVal! <= 35){
                 value = sightDist!/525.0
             }
-            else if(selectedVal == 3){
-                speed = 40
+            else if(selectedVal! <= 40){
                 value = sightDist!/600.0
             }
-            else if(selectedVal == 4){
-                speed = 45
+            else if(selectedVal! <= 45){
                 value = sightDist!/675.0
             }
-            else if(selectedVal == 5){
-                speed = 50
+            else if(selectedVal! <= 50){
                 value = sightDist!/750.0
             }
-            else if(selectedVal == 6){
-                speed = 55
+            else if(selectedVal! <= 55){
                 value = sightDist!/875.0
             }
-            else if(selectedVal == 7){
-                speed = 60
+            else if(selectedVal! <= 60){
                 value = sightDist!/1000.0
-                
             }
-            else if(selectedVal == 8){
-                speed = 65
+            else { //65
                 value = sightDist!/1050.0
-                
             }
-            else if(selectedVal == 9){
-                speed = 70
-            }
-            
+           
             value = (120-(value*100))
             value = value/20
             
@@ -2617,9 +2606,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             value = round(value)
         }
         
-        let tempInt = Int(value)
-        
-        
+        let tempInt = Int(value)        
         return tempInt
         
     }
@@ -2888,10 +2875,279 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         
     }
     
-
-    
     //fill me in later
     func loadFromList(){
+        shareData.load = false
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        
+        //default landslide
+        var fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NewOfflineLandslide")
+        
+        //could be a rockfall
+        if(shareData.form == "rockfall"){
+            fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "NewOfflineRockfall")
+        }
+        
+        
+        do {
+            let results =
+                try managedContext.fetch(fetchRequest)
+            sites.removeAll() //need to re-clear??
+            
+            sites = results as! [NSManagedObject] //shows up twice cuz they were appended earlier?
+            
+            let number = shareData.selectedForm
+            
+            
+            //landslide only
+            if(shareData.form == "landslide"){
+                //Prelim Ratings:
+                
+                //roadway width affected - 4 options
+                let roadwayWA = sites[number].value(forKey: "prRoadwayWidth")! as! NSObject as! Int
+                roadwayWAPicker.selectRow(roadwayWA, inComponent: 0, animated: true)
+                
+                
+                //slide erosion effects - 4 options
+                let slideEE = sites[number].value(forKey: "prSlideErosion")! as! NSObject as! Int
+                slideEEPicker.selectRow(slideEE, inComponent: 0, animated: true)
+                
+                roadwayLAText.text = sites[number].value(forKey: "prRoadwayLength")! as? String
+                
+                //Slope Hazard Ratings:
+                //thaw stability - 4 options
+                let thawS = sites[number].value(forKey: "shThaw")! as! NSObject as! Int
+                thawSPicker.selectRow(thawS, inComponent: 0, animated: true)
+                
+                //instability related maintenance frequency - 4 options
+                let instabilityRMF = sites[number].value(forKey: "shInstability")! as! NSObject as! Int
+                instabilityRMFPicker.selectRow(instabilityRMF, inComponent: 0, animated: true)
+                
+                //movement history - 4 options
+                let movementH = sites[number].value(forKey: "shMovement")! as! NSObject as! Int
+                movementHPicker.selectRow(movementH, inComponent: 0, animated: true)
+                
+                
+                
+            }
+            //rockfall only
+            else if(shareData.form == "rockfall"){
+                blkSizeText.text = sites[number].value(forKey: "blockSize")! as? String
+                volumeText.text = sites[number].value(forKey: "volume")! as? String
+                
+                //Prelim Ratings:
+                
+                //ditch effectiveness - 4 options
+                let ditchE = sites[number].value(forKey: "prDitch")! as! NSObject as! Int
+                ditchEPicker.selectRow(ditchE, inComponent: 0, animated: true)
+                
+                //rockfall history - 4 options
+                let rockfallH = sites[number].value(forKey: "prHistory")! as! NSObject as! Int
+                rockfallHPicker.selectRow(rockfallH, inComponent: 0, animated: true)
+                
+                bsPerEventText.text = sites[number].value(forKey: "prBvEvent")! as? String
+                
+                //Slope Hazard Ratings:
+                //rockfall related maintenance frequency - 4 options
+                let rockfallRMF = sites[number].value(forKey: "shMaintFreq")! as! NSObject as! Int
+                rockfallRMFPicker.selectRow(rockfallRMF, inComponent: 0, animated: true)
+                
+                //Geological Character Case 1....special w/ o option
+                
+                //structural condition- 5 options
+                let structuralC1 = sites[number].value(forKey: "shStructural1")! as! NSObject as! Int
+                structuralC1Picker.selectRow(structuralC1, inComponent: 0, animated: true)
+                
+                //rock friction - 5 options
+                let rockF1 = sites[number].value(forKey: "shFriction1")! as! NSObject as! Int
+                rockF1Picker.selectRow(rockF1, inComponent: 0, animated: true)
+                
+                //Geological Character Case 2...special case w/ 0 option
+                //structural condition- 5 options
+                let structuralC2 = sites[number].value(forKey: "shStructural2")! as! NSObject as! Int
+                structuralC2Picker.selectRow(structuralC2, inComponent: 0, animated: true)
+                
+                //rock friction - 5 options
+                let rockF2 = sites[number].value(forKey: "shFriction2")! as! NSObject as! Int
+                rockF2Picker.selectRow(rockF2, inComponent: 0, animated: true)
+                
+            }
+            
+            //BOTH
+            let agencyI = sites[number].value(forKey: "agency")! as! NSObject as! Int
+            let regionalI = sites[number].value(forKey: "regional")! as! NSObject as! Int
+            let localI = sites[number].value(forKey: "local")! as! NSObject as! Int
+            
+            //need to manually call didSelectRow to load lists correctly
+            agency.selectRow(agencyI, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: agencyI, inComponent: 0)
+            
+            regional.selectRow(regionalI, inComponent: 0, animated: true)
+            self.regional.delegate?.pickerView!(regional, didSelectRow: regionalI, inComponent: 0)
+            
+            local.selectRow(localI, inComponent: 0, animated: true)
+            
+            //Date
+            datePicker.date = (sites[number].value(forKey: "date")! as? Date)!
+            
+            //road or trail?
+            let rt = sites[number].value(forKey: "roadOrTrail")! as! NSObject as! Int
+            rtPicker.selectRow(rt, inComponent: 0, animated: true)
+            
+            roadTrailNoText.text = sites[number].value(forKey: "roadTrailNo")! as? String
+            roadTrailClassText.text = sites[number].value(forKey: "roadTrailClass")! as? String
+            rater.text = sites[number].value(forKey: "rater")! as? String
+            beginMileText.text = sites[number].value(forKey: "beginMile")! as? String
+            endMileText.text = sites[number].value(forKey: "endMile")! as? String
+            
+            //side-10 options...
+            let side = sites[number].value(forKey: "side")! as! NSObject as! Int
+            sidePicker.selectRow(side, inComponent: 0, animated: true)
+            
+            let weatherVal = sites[number].value(forKey: "weather")! as! Int
+            weatherPicker.selectRow(weatherVal, inComponent: 0, animated: true)
+            
+            //TODO: Hazard Type7
+            var hazardString = ""
+            hazardString = (sites[number].value(forKey: "HazardType")! as? String)!
+            let hazards = hazardString.components(separatedBy: ",")
+            
+            for i in 0 ... ((hazards.count) - 1){
+                if(hazardOptions.contains((hazards[i]))){
+                    let index = hazardOptions.index(of: hazards[i])
+                    if(i == 0){
+                        hazardType1.selectRow(index!, inComponent: 0, animated: true)
+                    }else if (i == 1){
+                        hazardType2.selectRow(index!, inComponent: 0, animated: true)
+                        
+                    }else{
+                        hazardType3.selectRow(index!, inComponent: 0, animated: true)
+                        
+                    }
+                }
+            }
+            
+            lat1Text.text = sites[number].value(forKey: "lat1")! as? String
+            lat2Text.text = sites[number].value(forKey: "lat2")! as? String
+            long1Text.text = sites[number].value(forKey: "long1")! as? String
+            long2Text.text = sites[number].value(forKey: "long2")! as? String
+            datumText.text = sites[number].value(forKey: "datum")! as? String
+            aadtText.text = sites[number].value(forKey: "aadt")! as? String
+            lengthAffectedText.text = sites[number].value(forKey: "lengthAffected")! as? String
+            slopeHText.text = sites[number].value(forKey: "slopeHeight")! as? String
+            slopeAngleText.text = sites[number].value(forKey: "slopeAngle")! as? String
+            sightDText.text = sites[number].value(forKey: "sightDistance")! as? String
+            roadwayTWText.text = sites[number].value(forKey: "rtWidth")! as? String
+            speedText.text = sites[number].value(forKey: "speed")! as? String
+            ditchWidth1Text.text = sites[number].value(forKey: "ditchWidth1")! as? String
+            ditchWidth2Text.text = sites[number].value(forKey: "ditchWidth2")! as? String
+            ditchDepth1Text.text = sites[number].value(forKey: "ditchDepth1")! as? String
+            ditchDepth2Text.text = sites[number].value(forKey: "ditchDepth2")! as? String
+            ditchSlope1beginText.text = sites[number].value(forKey: "ditchSlope1")! as? String
+            ditchSlope1endText.text = sites[number].value(forKey: "ditchSlope2")! as? String
+            ditchSlope2beginText.text = sites[number].value(forKey: "ditchSlope3")! as? String
+            ditchSlope2endText.text = sites[number].value(forKey: "ditchSlope4")! as? String
+            
+            beginRainText.text = sites[number].value(forKey: "beginRain")! as? String
+            endRainText.text = sites[number].value(forKey: "endRain")! as? String
+            
+            //sole access route- 2 options
+            let soleAccess = sites[number].value(forKey: "soleAccess")! as! NSObject as! Int
+            accessPicker.selectRow(soleAccess, inComponent: 0, animated: true)
+            
+            //fixes present- 2 options
+            let fixes = sites[number].value(forKey: "fixesPresent")! as! NSObject as! Int
+            fixesPicker.selectRow(fixes, inComponent: 0, animated: true)
+            
+            //PHOTOS
+            //imagesLabel.text = sites[number].value(forKey: "photos")! as? String
+            
+            let photos = sites[number].value(forKey: "photos")! as! [String]
+            
+            let photoResults = PHAsset.fetchAssets(withLocalIdentifiers: photos, options: nil)
+            
+            if(photoResults.count != 0){
+                for i in 0 ... photoResults.count-1{
+                    images.append(photoResults.object(at: i))
+                }
+            }
+            
+            commentsText.text = sites[number].value(forKey: "comments")! as? String
+            flmaNameText.text = sites[number].value(forKey: "flmaName")! as? String
+            flmaIdText.text = sites[number].value(forKey: "flmaId")! as? String
+            flmaDescriptionText.text = sites[number].value(forKey: "flmaDescription")! as? String
+            
+            //Prelim Ratings:
+            
+            //impact on use - 4 options
+            let impactOU = sites[number].value(forKey: "prImpact")! as! NSObject as! Int
+            impactOUPicker.selectRow(impactOU, inComponent: 0, animated: true)
+            
+            if((sites[number].value(forKey: "aadtCheck")! as! NSObject) as! Bool == true){ //ERROR HERE
+                let image = UIImage(named: "checkmark")
+                aadtButton.setImage(image, for: UIControlState())
+                selectedAadt = true
+            }
+            else{
+                let image = UIImage(named: "unchecked")
+                aadtButton.setImage(image, for: UIControlState())
+                selectedAadt = false
+                
+            }
+            
+            aadtEtcText.text = sites[number].value(forKey: "prAadt")! as? String
+            
+            preliminaryRatingText.text = sites[number].value(forKey: "prTotal")! as? String
+            
+            //Slope Hazard Ratings:
+            
+            //slope drainage - 4 options
+            let slopeD = sites[number].value(forKey: "shDrainage")! as! NSObject as! Int
+            slopeDPicker.selectRow(slopeD, inComponent: 0, animated: true)
+            
+            annualRText.text = sites[number].value(forKey: "shAnnualRain")! as? String
+            slopeHText.text = sites[number].value(forKey: "shSlopeHeight")! as? String
+            
+            hazardTotalText.text = sites[number].value(forKey: "shTotal")! as? String
+            
+            //Risk Ratings:
+            
+            routeTWText.text = sites[number].value(forKey: "rrWidth")! as? String
+            humanEFText.text = sites[number].value(forKey: "rrHumanExposure")! as? String
+            percentDSDText.text = sites[number].value(forKey: "rrDsd")! as? String
+            
+            //right of way impacts - 4 options
+            let rightOWI = sites[number].value(forKey: "rrRight")! as! NSObject as! Int
+            rightOWIPicker.selectRow(rightOWI, inComponent: 0, animated: true)
+            
+            //environmental/cutural impacts - 4 options
+            let environCI = sites[number].value(forKey: "rrEnviron")! as! NSObject as! Int
+            environCIPicker.selectRow(environCI, inComponent: 0, animated: true)
+            
+            //maintenance complexity - 4 options
+            let maintC = sites[number].value(forKey: "rrMaintenance")! as! NSObject as! Int
+            maintCPicker.selectRow(maintC, inComponent: 0, animated: true)
+            
+            //event cost - 4 options
+            let eventC = sites[number].value(forKey: "rrEvent")! as! NSObject as! Int
+            eventCPicker.selectRow(eventC, inComponent: 0, animated: true)
+            
+            riskTotalsText.text = sites[number].value(forKey: "rrTotal")! as? String
+            totalScoreText.text = sites[number].value(forKey: "total")! as? String
+
+    
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+            let alertController = UIAlertController(title: "Error", message: "Could not fetch \(error.userInfo)", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+            present(alertController, animated: true, completion: nil) //may be an issue?
+        }
+        
+            
+
         
     }
     
@@ -3847,7 +4103,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             
             //rockfall
             else{
-                let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)&email=\(email)"
+                let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)&email=\(email)"
                 
                 request.httpBody = postString.data(using: String.Encoding.utf8)
                 
@@ -3906,8 +4162,270 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         
     }
     @IBAction func saveOffline(_ sender: Any) {
+        //save site to core data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        //(start as landslide?)
+        var entity =  NSEntityDescription.entity(forEntityName: "NewOfflineLandslide", in:managedContext)
+        var site = NSManagedObject(entity: entity!, insertInto: managedContext)
         
-    
+        //landslide only
+        if(shareData.form == "landslide"){
+            //prelim ratings:
+            
+            //roadway width affected - 4 rating options
+            let selectedRoadwayWA = roadwayWAPicker.selectedRow(inComponent: 0)
+            site.setValue(selectedRoadwayWA, forKey: "prRoadwayWidth" )
+            
+            //slide erosion effects - 4 rating options
+            let selectedSlideEE = slideEEPicker.selectedRow(inComponent: 0)
+            site.setValue(selectedSlideEE, forKey: "prSlideErosion")
+            
+            site.setValue(roadwayLAText.text, forKey: "prRoadwayLength")
+            
+            //slope hazard ratings:
+            
+            //thaw stability- 4 rating options
+            let selectedThaw = thawSPicker.selectedRow(inComponent: 0)
+            site.setValue(selectedThaw, forKey: "shThaw")
+            
+            //instability related maintenance frequenc - 4 rating options
+            let selectedInstability = instabilityRMFPicker.selectedRow(inComponent: 0)
+            site.setValue(selectedInstability, forKey: "shInstability")
+            
+            //movement history - 4 rating options
+            let selectedMovement = movementHPicker.selectedRow(inComponent: 0)
+            site.setValue(selectedMovement, forKey: "shMovement")
+            
+            
+        }
+            //rockfall only
+        else{
+            entity =  NSEntityDescription.entity(forEntityName: "NewOfflineRockfall", in:managedContext)
+            site = NSManagedObject(entity: entity!, insertInto: managedContext)
+            
+            site.setValue(blkSizeText.text, forKey: "blockSize")
+            site.setValue(volumeText.text, forKey: "volume")
+            
+            //prelim ratings:
+            
+            //ditch effectiveness - 4 options
+            let selectedDitch = ditchEPicker.selectedRow(inComponent: 0)
+            site.setValue(selectedDitch, forKey: "prDitch")
+            
+            //rockfall history - 4 options
+            let selectedHistory = rockfallHPicker.selectedRow(inComponent: 0)
+            site.setValue(selectedHistory, forKey: "prHistory")
+            
+            site.setValue(bsPerEventText.text, forKey: "prBvEvent")
+            
+            //Slope hazard rating:
+            
+            //rockfall related maintenance frequency- 4 options
+            let selectedMFrequency = rockfallRMFPicker.selectedRow(inComponent: 0)
+            site.setValue(selectedMFrequency, forKey: "shMaintFreq")
+            
+            //Geological Character Case 1...GEO CHARACTERS HAVE SPECIAL RATINGS(include 0)
+            
+            //structural condition - 5 options
+            let selectedSCond1 = structuralC1Picker.selectedRow(inComponent: 0)
+            site.setValue(selectedSCond1, forKey: "shStructural1")
+            
+            //rock friction - 5 options
+            let selectedRFriction = rockF1Picker.selectedRow(inComponent: 0)
+            site.setValue(selectedRFriction, forKey: "shFriction1")
+            
+            //Geological Character Case 2
+            //structural condition - 5 options
+            let selectedSCond2 = structuralC2Picker.selectedRow(inComponent: 0)
+            site.setValue(selectedSCond2, forKey: "shStructural2")
+            
+            //rock friction - 5 options
+            let selectedRFriction2 = rockF2Picker.selectedRow(inComponent: 0)
+            site.setValue(selectedRFriction2, forKey: "shFriction2")
+
+        }
+        
+        //stuff for both
+        let selectedAgency = agency.selectedRow(inComponent: 0)
+        let selectedRegional = regional.selectedRow(inComponent: 0)
+        let selectedLocal = local.selectedRow(inComponent: 0)
+        
+        site.setValue(selectedAgency, forKey: "agency")
+        site.setValue(selectedRegional, forKey: "regional")
+        site.setValue(selectedLocal, forKey: "local")
+        
+        //date
+        site.setValue(datePicker.date, forKey: "date")
+        
+        //road or trail? - 2 options
+        let selectedRT = rtPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedRT, forKey: "roadOrTrail")
+        
+        site.setValue(roadTrailNoText.text, forKey: "roadTrailNo")
+        site.setValue(roadTrailClassText.text, forKey: "roadTrailClass")
+        site.setValue(rater.text, forKey: "rater")
+        site.setValue(beginMileText.text, forKey: "beginMile")
+        site.setValue(endMileText.text, forKey: "endMile")
+        
+        //side- 10 options
+        //change side core data to integer...can pull what the text option should be based on order in picker
+        let selectedSide = sidePicker.selectedRow(inComponent: 0)
+        site.setValue(selectedSide, forKey: "side")
+        
+        let selectedWeather = weatherPicker.selectedRow(inComponent: 0)
+        
+        site.setValue(selectedWeather, forKey: "weather")
+        
+        //TODO: Hazard Type 6
+        var hazardString = ""
+        //must select the first one if they are going to select the second or third
+        if(hazardType1.selectedRow(inComponent: 0) != 0){
+            let temp = hazardOptions[hazardType1.selectedRow(inComponent: 0)]
+            hazardString.append(temp)
+            if(hazardType2.selectedRow(inComponent: 0) != 0){
+                let temp = hazardOptions[hazardType2.selectedRow(inComponent: 0)]
+                hazardString.append(",")
+                hazardString.append(temp)
+            }
+            if(hazardType3.selectedRow(inComponent: 0) != 0){
+                let temp = hazardOptions[hazardType3.selectedRow(inComponent: 0)]
+                hazardString.append(",")
+                hazardString.append(temp)
+            }
+        }
+        
+        site.setValue(hazardString, forKey: "hazardType")
+        
+        site.setValue(lat1Text.text, forKey: "lat1")
+        site.setValue(lat2Text.text, forKey: "lat2")
+        site.setValue(long1Text.text, forKey: "long1")
+        site.setValue(long2Text.text, forKey: "long2")
+        site.setValue(datumText.text, forKey: "datum")
+        site.setValue(aadtText.text, forKey: "aadt")
+        site.setValue(lengthAffectedText.text, forKey: "lengthAffected")
+        site.setValue(slopeHText.text, forKey: "slopeHeight")
+        site.setValue(slopeAngleText.text, forKey: "slopeAngle")
+        site.setValue(sightDText.text, forKey: "sightDistance")
+        site.setValue(roadwayTWText.text, forKey: "rtWidth")
+        site.setValue(speedText.text, forKey: "speed")
+        site.setValue(ditchWidth1Text.text, forKey: "ditchWidth1")
+        site.setValue(ditchWidth2Text.text, forKey: "ditchWidth2")
+        site.setValue(ditchDepth1Text.text, forKey: "ditchDepth1")
+        site.setValue(ditchDepth2Text.text, forKey: "ditchDepth2")
+        site.setValue(ditchSlope1beginText.text, forKey: "ditchSlope1")
+        site.setValue(ditchSlope1endText.text, forKey: "ditchSlope2")
+        site.setValue(ditchSlope2beginText.text, forKey: "ditchSlope3")
+        site.setValue(ditchSlope2endText.text, forKey: "ditchSlope4")
+        
+        site.setValue(beginRainText.text, forKey: "beginRain")
+        site.setValue(endRainText.text, forKey: "endRain")
+        
+        //sole access-2 options
+        let selectedAccess = accessPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedAccess, forKey:"soleAccess")
+        
+        //fixes present- 2 options
+        let selectedFixes = fixesPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedFixes, forKey: "fixesPresent")
+        
+        //PHOTOS!!!
+        //site.setValue(imagesLabel.text, forKey: "photos")
+        var defaultAssetIds = [String]()
+        
+        let allAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
+        
+        allAssets.enumerateObjects({ (asset, idx, stop) -> Void in
+            
+            
+        })
+        
+        //if there are some images saved...
+        if(self.images.count != 0){
+            for i in 0 ... self.images.count-1{
+                if allAssets.contains(self.images[i]){ //if the images is one of all the assets
+                    let index = allAssets.index(of: self.images[i]) //gets its index
+                    defaultAssetIds.append(allAssets[index].localIdentifier) //add its identifier to the defaults
+                    print("appending!")
+                } //if
+            } //for
+        } //if
+        
+        
+        site.setValue(defaultAssetIds, forKey:"photos")
+        
+        site.setValue(commentsText.text, forKey: "comments")
+        site.setValue(flmaNameText.text, forKey: "flmaName")
+        site.setValue(flmaIdText.text, forKey: "flmaId")
+        site.setValue(flmaDescriptionText.text, forKey: "flmaDescription")
+        
+        //Prelim Ratings:
+        
+        //impact on use - 4 options
+        let selectedImpact = impactOUPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedImpact, forKey: "prImpact")
+        
+        //aadt
+        if(selectedAadt == true){
+            site.setValue(true, forKey: "aadtCheck")
+        }
+        else{
+            site.setValue(false, forKey: "aadtCheck")
+        }
+        
+        site.setValue(aadtEtcText.text, forKey: "prAadt")
+        site.setValue(preliminaryRatingText.text, forKey: "prTotal")
+        
+        //Slope Hazard Ratings:
+        
+        //slope drainage- 4 rating options
+        let selectedDrainage = slopeDPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedDrainage, forKey: "shDrainage")
+        
+        site.setValue(annualRText.text, forKey: "shAnnualRain")
+        site.setValue(slopeHText.text, forKey: "shSlopeHeight")
+        site.setValue(hazardTotalText.text, forKey: "shTotal")
+        
+        //Risk Ratings:
+        site.setValue(routeTWText.text, forKey: "rrWidth")
+        site.setValue(humanEFText.text, forKey: "rrHumanExposure")
+        site.setValue(percentDSDText.text, forKey: "rrDsd")
+        
+        //right of way impacts - 4 rating options
+        let selectedRow = rightOWIPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedRow, forKey: "rrRight")
+        
+        //environmental/cultural impacts - 4 rating options
+        let selectedEnvironmental = environCIPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedEnvironmental, forKey: "rrEnviron")
+        
+        
+        //maintenance complexity - 4 rating options
+        let selectedMaintenance = maintCPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedMaintenance, forKey: "rrMaintenance")
+        
+        
+        //event cost - 4 rating options
+        let selectedEventCost = eventCPicker.selectedRow(inComponent: 0)
+        site.setValue(selectedEventCost, forKey: "rrEvent")
+        
+        site.setValue(riskTotalsText.text, forKey: "rrTotal")
+        site.setValue(totalScoreText.text, forKey: "total")
+        
+        //save in core data
+        do {
+            try managedContext.save()
+            let alertController = UIAlertController(title: "Success", message: "Form Saved", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+            present(alertController, animated: true, completion: nil) //may be an issue?
+            //sites.append(site)
+        } catch let error as NSError  {
+            print("Could not save \(error), \(error.userInfo)")
+            let alertController = UIAlertController(title: "Error", message: "Form Not Saved: \(error.userInfo)", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+            present(alertController, animated: true, completion: nil) //may be an issue?
+        }
+
     }
     
     //offline help message
