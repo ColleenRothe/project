@@ -146,7 +146,10 @@ class OfflineList: UITableViewController{
                 let dateformatter = DateFormatter()
                 dateformatter.dateStyle = DateFormatter.Style.medium
                 dateformatter.timeStyle = DateFormatter.Style.medium
-                let dateVal = dateformatter.string(from: (site.value(forKey: "date")! as? Date)!)
+                var dateVal = ""
+                if(site.value(forKey: "date") != nil){
+                    dateVal = dateformatter.string(from: (site.value(forKey: "date")! as? Date)!)
+                }
                 cell.labelFour.text = "Date:" + dateVal
             }
             //form type: New slope event form
