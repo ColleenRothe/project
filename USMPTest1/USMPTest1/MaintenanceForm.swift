@@ -347,7 +347,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
 
         //dismiss keyboard...
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LandslideChoice.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MaintenanceForm.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         

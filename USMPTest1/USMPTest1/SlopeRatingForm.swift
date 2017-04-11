@@ -15,8 +15,55 @@ import Photos
 import SystemConfiguration
 import BSImagePicker
 
+//CREDITS(7)
+//for the image resizing
+extension UIImage
+{
+    var highestQualityJPEGNSData: NSData { return UIImageJPEGRepresentation(self, 1.0)! as NSData }
+    var highQualityJPEGNSData: NSData    { return UIImageJPEGRepresentation(self, 0.75)! as NSData}
+    var mediumQualityJPEGNSData: NSData  { return UIImageJPEGRepresentation(self, 0.5)! as NSData }
+    var lowQualityJPEGNSData: NSData     { return UIImageJPEGRepresentation(self, 0.25)! as NSData}
+    var lowestQualityJPEGNSData: NSData  { return UIImageJPEGRepresentation(self, 0.0)! as NSData }
+}
 
-class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource,CLLocationManagerDelegate, UITextFieldDelegate, HazardTypeHelperProtocol, FullSiteModelHelperProtocol{
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l < r
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
+}
+
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l >= r
+    default:
+        return !(lhs < rhs)
+    }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l > r
+    default:
+        return rhs < lhs
+    }
+}
+
+
+infix operator =~
+
+func =~(string:String, regex:String) -> Bool {
+    return string.range(of: regex, options: .regularExpression) != nil
+}
+
+
+class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource,CLLocationManagerDelegate, UITextFieldDelegate, HazardTypeHelperProtocol, FullSiteModelHelperProtocol,UIPopoverPresentationControllerDelegate{
     //singleton
     let shareData = ShareData.sharedInstance
     //feed from db/helper
@@ -491,7 +538,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     }
     
     //dismiss keyboard...
-    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LandslideChoice.dismissKeyboard))
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SlopeRatingForm.dismissKeyboard))
     view.addGestureRecognizer(tap)
     tap.cancelsTouchesInView = false //for the autocomplete
     
@@ -3269,7 +3316,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
                 let weatherNum = weatherOptions.index(of: weather!)
                 weatherPicker.selectRow(weatherNum!, inComponent: 0, animated: true)
             }
-            let date = sites[number].value(forKey: "date")! as? Date
+            //let date = sites[number].value(forKey: "date")! as? Date
             //datePicker.setDate(date!, animated: true)
             
             lat1Text.text = sites[number].value(forKey: "begin_coordinate_lat")! as? String
@@ -4434,6 +4481,22 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         let alertController = UIAlertController(title: "Help", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
+    }
+    
+    //present manual
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "popoverSegue2" {
+            let popoverViewController = segue.destination
+            popoverViewController.modalPresentationStyle = UIModalPresentationStyle.popover
+            if(shareData.device == "iPad"){ //By Device Type
+                popoverViewController.preferredContentSize = CGSize(width: 600, height: 600)
+            }
+            popoverViewController.popoverPresentationController!.delegate = self
+        }
     }
     
 }
