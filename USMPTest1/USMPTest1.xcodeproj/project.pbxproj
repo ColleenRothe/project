@@ -28,6 +28,8 @@
 		9B5B8B711BF5459E00A345E8 /* ViewControllerLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5B8B701BF5459D00A345E8 /* ViewControllerLogin.swift */; };
 		9B5D99081CDE961C00891FC9 /* MaintenanceForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5D99071CDE961A00891FC9 /* MaintenanceForm.swift */; };
 		9B5D990A1CDEB28300891FC9 /* NewSlopeEventForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5D99091CDEB28300891FC9 /* NewSlopeEventForm.swift */; };
+		9B6764E11E9C6EF300C6BBB2 /* FullSiteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6764E01E9C6EF300C6BBB2 /* FullSiteModel.swift */; };
+		9B6764E31E9C6FAD00C6BBB2 /* FullSiteModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6764E21E9C6FAD00C6BBB2 /* FullSiteModelHelper.swift */; };
 		9B87DD5E1CFDE30100C3F44C /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B87DD5C1CFDE30100C3F44C /* Fabric.framework */; };
 		9B87DD5F1CFDE30200C3F44C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B87DD5D1CFDE30100C3F44C /* Crashlytics.framework */; };
 		9B8828941CC13DFB009D20CB /* FormChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8828931CC13DFB009D20CB /* FormChoice.swift */; };
@@ -114,6 +116,8 @@
 		9B5B8B701BF5459D00A345E8 /* ViewControllerLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerLogin.swift; sourceTree = "<group>"; };
 		9B5D99071CDE961A00891FC9 /* MaintenanceForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaintenanceForm.swift; sourceTree = "<group>"; };
 		9B5D99091CDEB28300891FC9 /* NewSlopeEventForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewSlopeEventForm.swift; sourceTree = "<group>"; };
+		9B6764E01E9C6EF300C6BBB2 /* FullSiteModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullSiteModel.swift; sourceTree = "<group>"; };
+		9B6764E21E9C6FAD00C6BBB2 /* FullSiteModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullSiteModelHelper.swift; sourceTree = "<group>"; };
 		9B87DD5C1CFDE30100C3F44C /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = USMPTest1/Fabric.framework; sourceTree = "<group>"; };
 		9B87DD5D1CFDE30100C3F44C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = USMPTest1/Crashlytics.framework; sourceTree = "<group>"; };
 		9B8828931CC13DFB009D20CB /* FormChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormChoice.swift; path = ../FormChoice.swift; sourceTree = "<group>"; };
@@ -238,6 +242,8 @@
 				9B5B8B571BF4E7CF00A345E8 /* LaunchScreen.storyboard */,
 				9B5B8B521BF4E7CF00A345E8 /* Main.storyboard */,
 				9B0B2B081E9734E20012E557 /* SlopeRatingForm.swift */,
+				9B6764E01E9C6EF300C6BBB2 /* FullSiteModel.swift */,
+				9B6764E21E9C6FAD00C6BBB2 /* FullSiteModelHelper.swift */,
 				9B5D99071CDE961A00891FC9 /* MaintenanceForm.swift */,
 				9BE8D2501DEA79E5004F2210 /* MaintenanceInfoModel.swift */,
 				9BE8D2521DEA7FBB004F2210 /* MaintenanceInfoModelHelper.swift */,
@@ -573,7 +579,9 @@
 				9B2D69D51CBB094500D6AB80 /* MapboxOnline.swift in Sources */,
 				9B3417691D075C8000428E11 /* ButtonCell.swift in Sources */,
 				9B5B8B711BF5459E00A345E8 /* ViewControllerLogin.swift in Sources */,
+				9B6764E11E9C6EF300C6BBB2 /* FullSiteModel.swift in Sources */,
 				9BEC1ADD1C83A7D3006E2D76 /* AnnotationModel.swift in Sources */,
+				9B6764E31E9C6FAD00C6BBB2 /* FullSiteModelHelper.swift in Sources */,
 				9BE8D2531DEA7FBB004F2210 /* MaintenanceInfoModelHelper.swift in Sources */,
 				9BEC1AE11C83AFA0006E2D76 /* pinModelHelper.swift in Sources */,
 				9B9DFB411E5BAE210012E668 /* OfflineModelHelper.swift in Sources */,

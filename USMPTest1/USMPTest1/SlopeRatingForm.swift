@@ -16,13 +16,15 @@ import SystemConfiguration
 import BSImagePicker
 
 
-class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource,CLLocationManagerDelegate, UITextFieldDelegate, HazardTypeHelperProtocol{
+class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource,CLLocationManagerDelegate, UITextFieldDelegate, HazardTypeHelperProtocol, FullSiteModelHelperProtocol{
     //singleton
     let shareData = ShareData.sharedInstance
     //feed from db/helper
     var feedItems: NSArray = NSArray()
     //hazard type
     var hazardItems: NSArray = NSArray()
+    //core data
+    var sites = [NSManagedObject]()
     //location manager
     var locationManager = CLLocationManager()
     
@@ -2894,18 +2896,700 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func offlineEdit(){
+        //get the site from core data
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
         
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "OfflineSiteFull")
+        
+        do {
+            let results =
+                try managedContext.fetch(fetchRequest)
+            sites.removeAll() //need to re-clear??
+            
+            sites = results as! [NSManagedObject] //shows up twice cuz they were appended earlier?
+            var number = 0;
+            let wanted = shareData.offline_edit_site_id
+            for i in 0 ... sites.count-1{
+                if( wanted ==  sites[i].value(forKey: "site_id") as? String){
+                    number = i
+                }
+            }
+            
+            //fill in the UI
+            let agencyS = sites[number].value(forKey: "umbrella_agency")! as? String
+            
+            for i in 0 ... (agencyOptions.count - 1){
+                if (agencyOptions[i] == agencyS){
+                    agency.selectRow(agencyOptions.index(of: agencyS!)!, inComponent: 0, animated: true)
+                }
+            }
+            
+            let regional_admin = sites[number].value(forKey: "regional_admin")! as? String
+            let local_admin = sites[number].value(forKey: "local_admin")! as? String
+            
+            //FS
+            if(agency.selectedRow(inComponent: 0) == 1){
+                if(FSRegionalOptions.contains(regional_admin!)){
+                    regional.selectRow(FSRegionalOptions.index(of: regional_admin!)!, inComponent: 0, animated: true)
+                    
+                    if(FSNorthernLocal.contains(local_admin!)){
+                        local.selectRow(FSNorthernLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSRockyMountainLocal.contains(local_admin!)){
+                        local.selectRow(FSRockyMountainLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSSouthwesternLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSIntermountainLocal.contains(local_admin!)){
+                        local.selectRow(FSIntermountainLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSPacificSouthwestLocal.contains(local_admin!)){
+                        local.selectRow(FSPacificSouthwestLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSPacificNorthwestLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSSouthernLocal.contains(local_admin!)){
+                        local.selectRow(FSSouthernLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSEasternLocal.contains(local_admin!)){
+                        local.selectRow(FSEasternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(FSAlaskaLocal.contains(local_admin!)){
+                        local.selectRow(FSAlaskaLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                }
+            }
+            
+            //NPS
+            if(agency.selectedRow(inComponent: 0) == 2){
+                if(NPSRegionalOptions.contains(regional_admin!)){
+                    regional.selectRow(NPSRegionalOptions.index(of: regional_admin!)!, inComponent: 0, animated: true)
+                    
+                    if(NPSAkrLocal.contains(local_admin!)){
+                        local.selectRow(NPSAkrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSImrLocal.contains(local_admin!)){
+                        local.selectRow(NPSImrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSMwrLocal.contains(local_admin!)){
+                        local.selectRow(NPSMwrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSNcrLocal.contains(local_admin!)){
+                        local.selectRow(NPSNcrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSNerLocal.contains(local_admin!)){
+                        local.selectRow(NPSNerLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSPwrLocal.contains(local_admin!)){
+                        local.selectRow(NPSPwrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                    else if(NPSSerLocal.contains(local_admin!)){
+                        local.selectRow(NPSSerLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                    }
+                }
+            }
+            
+            roadTrailNoText.text = sites[number].value(forKey: "road_trail_no")! as? String
+            roadTrailClassText.text = sites[number].value(forKey: "road_trail_class")! as? String
+            beginMileText.text = sites[number].value(forKey: "begin_mile_marker")! as? String
+            endMileText.text = sites[number].value(forKey: "end_mile_marker")! as? String
+            let road_or_trail = sites[number].value(forKey: "road_or_trail")! as? String
+            if(road_or_trail == "T"){
+                rtPicker.selectRow(1, inComponent: 0, animated: true)
+            }
+            let side = sites[number].value(forKey: "side")! as? String
+            
+            if(sideOptions.contains(side!)){
+                let sideNum = sideOptions.index(of: side!)
+                sidePicker.selectRow(sideNum!, inComponent: 0, animated: true)
+            }
+            
+            rater.text = sites[number].value(forKey: "rater")! as? String
+            let weather = sites[number].value(forKey: "weather")! as? String
+            if(weatherOptions.contains(weather!)){
+                let weatherNum = weatherOptions.index(of: weather!)
+                weatherPicker.selectRow(weatherNum!, inComponent: 0, animated: true)
+            }
+            let date = sites[number].value(forKey: "date")! as? Date
+            //datePicker.setDate(date!, animated: true)
+            
+            lat1Text.text = sites[number].value(forKey: "begin_coordinate_lat")! as? String
+            lat2Text.text = sites[number].value(forKey: "end_coordinate_lat")! as? String
+            long1Text.text = sites[number].value(forKey: "begin_coordinate_long")! as? String
+            long2Text.text = sites[number].value(forKey: "end_coordinate_long")! as? String
+            datumText.text = sites[number].value(forKey: "datum")! as? String
+            aadtText.text = sites[number].value(forKey: "aadt")! as? String
+            lengthAffectedText.text = sites[number].value(forKey: "length_affected")! as? String
+            slopeHText.text = sites[number].value(forKey: "slope_ht_axial_length")! as? String
+            slopeAngleText.text = sites[number].value(forKey: "slope_angle")! as? String
+            sightDText.text = sites[number].value(forKey: "sight_distance")! as? String
+            roadwayTWText.text = sites[number].value(forKey: "road_trail_width")! as? String
+            speedText.text = sites[number].value(forKey: "speed_limit")! as? String
+           
+            ditchWidth1Text.text = sites[number].value(forKey: "minimum_ditch_width")! as? String
+            ditchWidth2Text.text = sites[number].value(forKey: "maximum_ditch_width")! as? String
+            ditchDepth1Text.text = sites[number].value(forKey: "minimum_ditch_depth")! as? String
+            ditchDepth2Text.text = sites[number].value(forKey: "maximum_ditch_depth")! as? String
+            ditchSlope1beginText.text = sites[number].value(forKey: "minimum_ditch_slope_first")! as? String
+            ditchSlope1endText.text = sites[number].value(forKey: "maximum_ditch_slope_first")! as? String
+            ditchSlope2beginText.text = sites[number].value(forKey: "minimum_ditch_slope_second")! as? String
+            ditchSlope2endText.text = sites[number].value(forKey: "maximum_ditch_slope_second")! as? String
+            blkSizeText.text = sites[number].value(forKey: "blk_size")! as? String
+            volumeText.text = sites[number].value(forKey: "volume")! as? String
+            beginRainText.text = sites[number].value(forKey: "begin_annual_rainfall")! as? String
+            endRainText.text = sites[number].value(forKey: "end_annual_rainfall")! as? String
+            let sole_access_route = sites[number].value(forKey: "sole_access_route")! as? String
+            if(sole_access_route == "N"){
+                accessPicker.selectRow(1, inComponent: 0, animated: true)
+            }else{
+                accessPicker.selectRow(0, inComponent: 0, animated: true)
+            }
+            let fixes_present = sites[number].value(forKey: "fixes_present")! as? String
+            if(fixes_present == "N"){
+                fixesPicker.selectRow(1, inComponent: 0, animated: true)
+            }
+            
+            let preliminary_rating_impact_on_use = sites[number].value(forKey: "preliminary_rating_impact_on_use")! as? String
+            if(ratingOptions.contains(preliminary_rating_impact_on_use!)){
+                impactOUPicker.selectRow(ratingOptions.index(of: preliminary_rating_impact_on_use!)!, inComponent: 0, animated: true)
+            }
+            //1 true, 0 false
+            let preliminary_rating_aadt_usage_calc_checkbox = sites[number].value(forKey: "preliminary_rating_aadt_usage_calc_checkbox")! as? String
+            
+            if(preliminary_rating_aadt_usage_calc_checkbox == "1"){
+                let image = UIImage(named: "checkmark")
+                aadtButton.setImage(image, for: UIControlState())
+                selectedAadt = true
+            }else{
+                let image = UIImage(named: "unchecked")
+                aadtButton.setImage(image, for: UIControlState())
+                selectedAadt = false
+            }
+            
+            aadtEtcText.text = sites[number].value(forKey: "preliminary_rating_aadt_usage")! as? String
+            preliminaryRatingText.text = sites[number].value(forKey: "preliminary_rating")! as? String
+            let hazard_rating_slope_drainage = sites[number].value(forKey: "hazard_rating_slope_drainage")! as? String
+            if(ratingOptions.contains(hazard_rating_slope_drainage!)){
+                slopeDPicker.selectRow(ratingOptions.index(of: hazard_rating_slope_drainage!)!, inComponent: 0, animated: true)
+            }
+            
+            annualRText.text = sites[number].value(forKey: "hazard_rating_annual_rainfall")! as? String
+            slopeHeightCalcText.text = sites[number].value(forKey: "hazard_rating_slope_height_axial_length")! as? String
+            routeTWText.text = sites[number].value(forKey: "risk_rating_route_trail")! as? String
+            humanEFText.text = sites[number].value(forKey: "risk_rating_human_ex_factor")! as? String
+            percentDSDText.text = sites[number].value(forKey: "risk_rating_percent_dsd")! as? String
+            let risk_rating_r_w_impacts = sites[number].value(forKey: "risk_rating_r_w_impacts")! as? String
+            if(ratingOptions.contains(risk_rating_r_w_impacts!)){
+                rightOWIPicker.selectRow(ratingOptions.index(of: risk_rating_r_w_impacts!)!, inComponent: 0, animated: true)
+            }
+            let risk_rating_enviro_cult_impacts = sites[number].value(forKey: "risk_rating_enviro_cult_impacts")! as? String
+            if(ratingOptions.contains(risk_rating_enviro_cult_impacts!)){
+                environCIPicker.selectRow(ratingOptions.index(of: risk_rating_enviro_cult_impacts!)!, inComponent: 0, animated: true)
+            }
+            let risk_rating_maint_complexity = sites[number].value(forKey: "risk_rating_maint_complexity")! as? String
+            if(ratingOptions.contains(risk_rating_maint_complexity!)){
+                maintCPicker.selectRow(ratingOptions.index(of: risk_rating_maint_complexity!)!, inComponent: 0, animated: true)
+            }
+            let risk_rating_event_cost = sites[number].value(forKey: "risk_rating_event_cost")! as? String
+            if(ratingOptions.contains(risk_rating_event_cost!)){
+                eventCPicker.selectRow(ratingOptions.index(of: risk_rating_event_cost!)!, inComponent: 0, animated: true)
+            }
+            
+            hazardTotalText.text = sites[number].value(forKey: "hazard_total")! as? String
+            totalScoreText.text = sites[number].value(forKey: "total_score")! as? String
+            commentsText.text = sites[number].value(forKey: "comment")! as? String
+            //TODO: hazard type (2)
+            //hazardTypeText.text = sites[number].value(forKey: "hazard_type")! as? String
+            
+            //ROCKFALL ONLY
+            let rockfall_prelim_ditch_eff = sites[number].value(forKey: "rockfall_prelim_ditch_eff")! as? String
+            if(ratingOptions.contains(rockfall_prelim_ditch_eff!)){
+                ditchEPicker.selectRow(ratingOptions.index(of: rockfall_prelim_ditch_eff!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_prelim_rockfall_history = sites[number].value(forKey: "rockfall_prelim_rockfall_history")! as? String
+            if(ratingOptions.contains(rockfall_prelim_rockfall_history!)){
+                rockfallHPicker.selectRow(ratingOptions.index(of: rockfall_prelim_rockfall_history!)!, inComponent: 0, animated: true)
+            }
+            
+            bsPerEventText.text = sites[number].value(forKey: "rockfall_prelim_block_size_event_vol")! as? String
+            
+            let rockfall_hazard_rating_maint_frequency = sites[number].value(forKey: "rockfall_hazard_rating_maint_frequency")! as? String
+            if(ratingOptions.contains(rockfall_hazard_rating_maint_frequency!)){
+                rockfallRMFPicker.selectRow(ratingOptions.index(of: rockfall_hazard_rating_maint_frequency!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_hazard_rating_case_one_struc_condition = sites[number].value(forKey: "rockfall_hazard_rating_case_one_struc_condition")! as? String
+            if(specialOptions.contains(rockfall_hazard_rating_case_one_struc_condition!)){
+                structuralC1Picker.selectRow(specialOptions.index(of: rockfall_hazard_rating_case_one_struc_condition!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_hazard_rating_case_one_rock_friction = sites[number].value(forKey: "rockfall_hazard_rating_case_one_rock_friction")! as? String
+            if(specialOptions.contains(rockfall_hazard_rating_case_one_rock_friction!)){
+                rockF1Picker.selectRow(specialOptions.index(of: rockfall_hazard_rating_case_one_rock_friction!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_hazard_rating_case_two_struc_condition = sites[number].value(forKey: "rockfall_hazard_rating_case_two_struc_condition")! as? String
+            if(specialOptions.contains(rockfall_hazard_rating_case_two_struc_condition!)){
+                structuralC2Picker.selectRow(specialOptions.index(of: rockfall_hazard_rating_case_two_struc_condition!)!, inComponent: 0, animated: true)
+            }
+            
+            let rockfall_hazard_rating_case_two_diff_erosion = sites[number].value(forKey: "rockfall_hazard_rating_case_two_diff_erosion")! as? String
+            if(specialOptions.contains(rockfall_hazard_rating_case_two_diff_erosion!)){
+                rockF2Picker.selectRow(specialOptions.index(of: rockfall_hazard_rating_case_two_diff_erosion!)!, inComponent: 0, animated: true)
+            }
+            
+            //Landslide ONLY
+            let landslide_prelim_road_width_affected = sites[number].value(forKey: "landslide_prelim_road_width_affected")! as? String
+            if(ratingOptions.contains(landslide_prelim_road_width_affected!)){
+                roadwayWAPicker.selectRow(ratingOptions.index(of: landslide_prelim_road_width_affected!)!, inComponent: 0, animated: true)
+            }
+            
+            let landslide_prelim_slide_erosion_effects = sites[number].value(forKey: "landslide_prelim_slide_erosion_effects")! as? String
+            if(ratingOptions.contains(landslide_prelim_slide_erosion_effects!)){
+                slideEEPicker.selectRow(ratingOptions.index(of: landslide_prelim_slide_erosion_effects!)!, inComponent: 0, animated: true)
+            }
+            
+            roadwayLAText.text = sites[number].value(forKey: "landslide_prelim_length_affected")! as? String
+            
+            
+            let landslide_hazard_rating_thaw_stability = sites[number].value(forKey: "landslide_hazard_rating_thaw_stability")! as? String
+            if(ratingOptions.contains(landslide_hazard_rating_thaw_stability!)){
+                thawSPicker.selectRow(ratingOptions.index(of: landslide_hazard_rating_thaw_stability!)!, inComponent: 0, animated: true)
+            }
+            
+            let landslide_hazard_rating_movement_history = sites[number].value(forKey: "landslide_hazard_rating_movement_history")! as? String
+            if(ratingOptions.contains(landslide_hazard_rating_movement_history!)){
+                movementHPicker.selectRow(ratingOptions.index(of: landslide_hazard_rating_movement_history!)!, inComponent: 0, animated: true)
+            }
+            
+            //flma link
+            flmaIdText.text = sites[number].value(forKey: "flma_id")! as? String
+            flmaNameText.text = sites[number].value(forKey: "flma_name")! as? String
+            flmaDescriptionText.text = sites[number].value(forKey: "flma_description")! as? String
+            
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+            let alertController = UIAlertController(title: "Error", message: "Could not fetch \(error.userInfo)", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+            present(alertController, animated: true, completion: nil) //may be an issue?
+        }
     }
     
     func edit(){
+        let fsmh = FullSiteModelHelper()
+        fsmh.delegate = self
+        fsmh.downloadItems()
+    }
+    
+    func itemsDownloadedF(_ items: NSArray) {
+        feedItems = items
+        fillToEdit()
+    }
+    
+    func fillToEdit(){
+        let selectedLocation = feedItems.object(at: 0) as! OfflineModel
         
+        let agencyS = selectedLocation.umbrella_agency
+        let regionS = selectedLocation.regiona_admin
+        let localS = selectedLocation.local_admin
         
+        if(agencyS == "FS"){
+            agency.selectRow(1, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
+            
+        }else if(agencyS == "NPS"){
+            agency.selectRow(2, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+            
+            
+        }else if(agencyS == "BLM"){
+            agency.selectRow(3, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 3, inComponent: 0)
+            
+            
+        }else if(agencyS == "BIA"){
+            agency.selectRow(4, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
+        }
         
+        if(FSRegionalOptions.contains(regionS!)){
+            regional.selectRow(FSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
+            self.regional.delegate?.pickerView!(regional, didSelectRow: FSRegionalOptions.index(of: regionS!)!, inComponent: 0)
+            if(FSNorthernLocal.contains(localS!)){
+                local.selectRow(FSNorthernLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSRockyMountainLocal.contains(localS!)){
+                local.selectRow(FSRockyMountainLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSSouthwesternLocal.contains(localS!)){
+                local.selectRow(FSSouthwesternLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSIntermountainLocal.contains(localS!)){
+                local.selectRow(FSIntermountainLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSPacificSouthwestLocal.contains(localS!)){
+                local.selectRow(FSPacificSouthwestLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSPacificNorthwestLocal.contains(localS!)){
+                local.selectRow(FSPacificNorthwestLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSSouthernLocal.contains(localS!)){
+                local.selectRow(FSSouthernLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSEasternLocal.contains(localS!)){
+                local.selectRow(FSEasternLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(FSAlaskaLocal.contains(localS!)){
+                local.selectRow(FSAlaskaLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }
+            
+        }
+            
+        else if(NPSRegionalOptions.contains(regionS!)){
+            regional.selectRow(NPSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
+            self.regional.delegate?.pickerView!(regional, didSelectRow: NPSRegionalOptions.index(of: regionS!)!, inComponent: 0)
+            
+            if(NPSAkrLocal.contains(localS!)){
+                local.selectRow(NPSAkrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSImrLocal.contains(localS!)){
+                local.selectRow(NPSImrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSMwrLocal.contains(localS!)){
+                local.selectRow(NPSMwrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSNcrLocal.contains(localS!)){
+                local.selectRow(NPSNcrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSNerLocal.contains(localS!)){
+                local.selectRow(NPSNerLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSPwrLocal.contains(localS!)){
+                local.selectRow(NPSPwrLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }else if(NPSSerLocal.contains(localS!)){
+                local.selectRow(NPSSerLocal.index(of: localS!)!, inComponent: 0, animated: true)
+            }
+            
+        }
+        
+        //date?
+        let road_or_trail = selectedLocation.road_or_trail
+        if(road_or_trail == "T"){
+            rtPicker.selectRow(1, inComponent: 0, animated: true)
+        }
+        else{
+            rtPicker.selectRow(0, inComponent: 0, animated: true)
+        }
+        
+        //FORMAT DATE FOR THE DATE PICKER
+        var dateString = "2017-12-01"
+        dateString = selectedLocation.date!
+        let dateIndex = dateString.index(dateString.startIndex, offsetBy: 10)
+        dateString = dateString.substring(to: dateIndex)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateFromString = dateFormatter.date(from: dateString)
+        datePicker.setDate(dateFromString!, animated: true)
+        
+        roadTrailNoText.text = selectedLocation.road_trail_no
+        roadTrailClassText.text = selectedLocation.road_trail_class
+        rater.text = selectedLocation.rater
+        beginMileText.text = selectedLocation.begin_mile_marker
+        endMileText.text = selectedLocation.end_mile_marker
+        
+        let side = selectedLocation.side as String!
+        if(sideOptions.contains(side!)){
+            let temp = sideOptions.index(of: side!)
+            sidePicker.selectRow(temp!, inComponent: 0, animated: true)
+        }
+        
+        let weather = selectedLocation.weather as String!
+        if (weatherOptions.contains(weather!)){
+            let temp = weatherOptions.index(of: weather!)
+            weatherPicker.selectRow(temp!, inComponent: 0, animated: true)
+        }
+        
+        var hazardString = ""
+        hazardString = selectedLocation.hazard_type!
+        let hazardA = hazardString.components(separatedBy: ",")
+        if(hazardA.count > 0){
+            for i in 0 ... (hazardA.count - 1){
+                if i == 0 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType1.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+                else if i == 1 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType2.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+                else if i == 2 {
+                    if hazardOptions.contains(hazardA[i]){
+                        hazardType3.selectRow(hazardOptions.index(of: hazardA[i])!, inComponent: 0, animated: true)
+                    } //end if
+                } //end if i
+            }
+        }
+        
+        lat1Text.text = selectedLocation.begin_coordinate_lat
+        lat2Text.text = selectedLocation.end_coordinate_lat
+        long1Text.text = selectedLocation.begin_coordinate_long
+        long2Text.text = selectedLocation.end_coordinate_long
+        datumText.text = selectedLocation.datum
+        aadtText.text = selectedLocation.aadt
+        lengthAffectedText.text = selectedLocation.length_affected
+        slopeHText.text = selectedLocation.slope_ht_axial_length
+        slopeAngleText.text = selectedLocation.slope_angle
+        sightDText.text = selectedLocation.sight_distance
+        roadwayTWText.text = selectedLocation.road_trail_width
+        speedText.text = selectedLocation.speed_limit
+        
+        ditchWidth1Text.text = selectedLocation.minimum_ditch_width
+        ditchWidth2Text.text = selectedLocation.maximum_ditch_width
+        ditchDepth1Text.text = selectedLocation.minimum_ditch_depth
+        ditchDepth2Text.text = selectedLocation.maximum_ditch_depth
+        ditchSlope1beginText.text = selectedLocation.minimum_ditch_slope_first
+        ditchSlope1endText.text = selectedLocation.maximum_ditch_slope_first
+        ditchSlope2beginText.text = selectedLocation.minimum_ditch_slope_second
+        ditchSlope2endText.text = selectedLocation.maximum_ditch_slope_second
+        beginRainText.text = selectedLocation.begin_annual_rainfall
+        endRainText.text = selectedLocation.end_annual_rainfall
+        let sole_access_route = selectedLocation.sole_access_route
+        if(sole_access_route == "No"){
+            accessPicker.selectRow(1, inComponent: 0, animated: true)
+        }
+        else{
+            accessPicker.selectRow(0, inComponent: 0, animated: true)
+        }
+        
+        let mitigation_present = selectedLocation.fixes_present
+        if(mitigation_present == "No"){
+            fixesPicker.selectRow(1, inComponent: 0, animated: true)
+        }
+        else{
+            fixesPicker.selectRow(0, inComponent: 0, animated: true)
+        }
+        //photos???
+        
+        commentsText.text = selectedLocation.comments
+        flmaNameText.text = selectedLocation.flma_name
+        flmaIdText.text = selectedLocation.flma_id
+        flmaDescriptionText.text = selectedLocation.flma_description
+        
+        //Prelim Ratings...Landslide Only
+        let roadway_width_affected = selectedLocation.prelim_landslide_road_width_affected
+        if(ratingOptions.contains(roadway_width_affected!)){
+            roadwayWAPicker.selectRow(ratingOptions.index(of: roadway_width_affected!)!, inComponent: 0, animated: true)
+        }
+        
+        let slide_erosion_effects = selectedLocation.prelim_landslide_slide_erosion_effects
+        if(ratingOptions.contains(slide_erosion_effects!)){
+            slideEEPicker.selectRow(ratingOptions.index(of: slide_erosion_effects!)!, inComponent: 0, animated: true)
+        }
+
+        roadwayLAText.text = selectedLocation.prelim_landslide_road_width_affected
+        
+        //Prelim Ratings...Rockfall Only
+        let ditch_effectiveness = selectedLocation.prelim_rockfall_ditch_eff as String!
+        if(ratingOptions.contains(ditch_effectiveness!)){
+            let tempDitch = ratingOptions.index(of: ditch_effectiveness!)
+            ditchEPicker.selectRow(tempDitch!, inComponent: 0, animated: true)
+        }
+        
+        let rockfall_history = selectedLocation.prelim_rockfall_rockfall_history as String!
+        if(ratingOptions.contains(rockfall_history!)){
+            let temp_history = ratingOptions.index(of: rockfall_history!)
+            rockfallHPicker.selectRow(temp_history!, inComponent: 0, animated: true)
+        }
+        
+        let bsv = selectedLocation.prelim_rockfall_block_size_event_vol as String!
+        bsPerEventText.text = bsv
+        
+        //Prelim Ratings...all
+        let impact_on_use = selectedLocation.impact_on_use
+        if(ratingOptions.contains(impact_on_use!)){
+            impactOUPicker.selectRow(ratingOptions.index(of: impact_on_use!)!, inComponent: 0, animated: true)
+        }
+       
+        //1 is true, 0 is false
+        let aadt_usage_checked = selectedLocation.aadt_usage_calc_checkbox
+        if(aadt_usage_checked == "1"){
+            let image = UIImage(named: "checkmark")
+            aadtButton.setImage(image, for: UIControlState())
+            selectedAadt = true
+        }else{
+            let image = UIImage(named: "unchecked")
+            aadtButton.setImage(image, for: UIControlState())
+            selectedAadt = false
+        }
+        
+        aadtEtcText.text = selectedLocation.aadt_usage
+        preliminaryRatingText.text = selectedLocation.prelim_rating
+        
+        //Slope Hazard Rating-All
+        let slope_drainage = selectedLocation.slope_drainage
+        if(ratingOptions.contains(slope_drainage!)){
+            slopeDPicker.selectRow(ratingOptions.index(of: slope_drainage!)!, inComponent: 0, animated: true)
+        }
+        
+        annualRText.text = selectedLocation.hazard_rating_annual_rainfall
+        slopeHeightCalcText.text = selectedLocation.hazard_rating_slope_height_axial_length
+        hazardTotalText.text = selectedLocation.hazard_total
+        
+        //Hazard Rating - Landslide only
+        let thaw_stability = selectedLocation.hazard_landslide_thaw_stability
+        if(ratingOptions.contains(thaw_stability!)){
+            thawSPicker.selectRow(ratingOptions.index(of: thaw_stability!)!, inComponent: 0, animated: true)
+        }
+        
+        let instability_rmf = selectedLocation.hazard_landslide_maint_frequency
+        if(ratingOptions.contains(instability_rmf!)){
+            instabilityRMFPicker.selectRow(ratingOptions.index(of: instability_rmf!)!, inComponent: 0, animated: true)
+        }
+        
+        let movement_history = selectedLocation.hazard_landslide_movement_history
+        if(ratingOptions.contains(movement_history!)){
+            movementHPicker.selectRow(ratingOptions.index(of: movement_history!)!, inComponent: 0, animated: true)
+        }
+        
+        //Hazard Rating - Rockfall Only
+        let rrmf = selectedLocation.hazard_rockfall_maint_frequency
+        if(ratingOptions.contains(rrmf!)){
+            let temp = ratingOptions.index(of: rrmf!)
+            rockfallRMFPicker.selectRow(temp!, inComponent: 0, animated: true)
+        }
+        
+        let struct1 = selectedLocation.case_one_struc_cond
+        if(ratingOptions.contains(struct1!)){
+            let temp = specialOptions.index(of: struct1!)
+            structuralC1Picker.selectRow(temp!, inComponent: 0, animated: true)
+        }
+        
+        let rockf1 = selectedLocation.case_one_rock_friction
+        if(ratingOptions.contains(rockf1!)){
+            let temp = specialOptions.index(of: rockf1!)
+            rockF1Picker.selectRow(temp!, inComponent: 0, animated: true)
+        }
+        
+        let struct2 = selectedLocation.case_two_struc_cond
+        if(ratingOptions.contains(struct2!)){
+            let temp = specialOptions.index(of: struct2!)
+            structuralC2Picker.selectRow(temp!, inComponent: 0, animated: true)
+        }
+        
+        let diff2 = selectedLocation.case_two_diff_erosion
+        if(ratingOptions.contains(diff2!)){
+            let temp = specialOptions.index(of: diff2!)
+            rockF2Picker.selectRow(temp!, inComponent: 0, animated: true)
+        }
+        
+        //Risk Ratings -All
+        routeTWText.text = selectedLocation.route_trail_width
+        humanEFText.text = selectedLocation.human_ex_factor
+        percentDSDText.text = selectedLocation.percent_dsd
+        let r_w_impact = selectedLocation.r_w_impacts
+        if(ratingOptions.contains(r_w_impact!)){
+            rightOWIPicker.selectRow(ratingOptions.index(of: r_w_impact!)!, inComponent: 0, animated: true)
+        }
+        
+        let ec_impact = selectedLocation.enviro_cult_impacts
+        if(ratingOptions.contains(ec_impact!)){
+            environCIPicker.selectRow(ratingOptions.index(of: ec_impact!)!, inComponent: 0, animated: true)
+        }
+        
+        let maint_complexity = selectedLocation.maint_complexity
+        if(ratingOptions.contains(maint_complexity!)){
+            maintCPicker.selectRow(ratingOptions.index(of: maint_complexity!)!, inComponent: 0, animated: true)
+        }
+        
+        let event_cost = selectedLocation.event_cost
+        if(ratingOptions.contains(event_cost!)){
+            eventCPicker.selectRow(ratingOptions.index(of: event_cost!)!, inComponent: 0, animated: true)
+        }
+        
+        riskTotalsText.text = selectedLocation.risk_total
+        
+        //total score
+        totalScoreText.text = selectedLocation.total_score
     }
     
  
     func UploadRequest(){
-        
+        if(images.count != 0){
+            //for each of the images...
+            for i in 0 ... (images.count-1){
+                let url = NSURL(string: "http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
+                
+                let request = NSMutableURLRequest(url: url! as URL)
+                request.httpMethod = "POST"
+                
+                let boundary = generateBoundaryString()
+                
+                //define the multipart request type
+                
+                request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+                
+                let manager = PHImageManager.default()
+                let option = PHImageRequestOptions()
+                var thumbnail = UIImage()
+                option.isSynchronous = true
+                manager.requestImage(for: images[i], targetSize: CGSize(width: 100, height: 100), contentMode: .aspectFit, options: option, resultHandler: {(result, info)->Void in
+                    thumbnail = result!
+                })
+                
+                let imageData = thumbnail.lowQualityJPEGNSData
+                thumbnail = UIImage(data: imageData as Data)!
+                
+                
+                let image_data = UIImagePNGRepresentation(thumbnail)
+                
+                
+                if(image_data == nil)
+                {
+                    return
+                }
+                
+                
+                let body = NSMutableData()
+                
+                var fname = images[i].localIdentifier //named by local identifier
+                fname = fname.replacingOccurrences(of: "/", with: "")
+                fname.append(".jpg")
+                let mimetype = "image/jpg"
+                
+                //define the data post parameter
+                
+                //if name is "file", will add as a document
+                
+                body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+                body.append("Content-Disposition:form-data; name=\"\(fname)\"; filename=\"\(fname)\"\r\n".data(using: String.Encoding.utf8)!)
+                body.append("Content-Type: \(mimetype)\r\n\r\n".data(using: String.Encoding.utf8)!)
+                body.append(image_data!)
+                body.append("\r\n".data(using: String.Encoding.utf8)!)
+                
+                
+                body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
+                
+                request.httpBody = body as Data
+                
+                let session = URLSession.shared
+                
+                let task = session.dataTask(with: request as URLRequest) {
+                    (
+                    data, response, error) in
+                    
+                    guard let _:NSData = data as NSData?, let _:URLResponse = response, error == nil else {
+                        print("error")
+                        return
+                    }
+                    
+                    let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+                    print(dataString!)
+                    
+                }
+                
+                task.resume()
+            }
+        }
+    }
+    
+    
+    func generateBoundaryString() -> String
+    {
+        return "Boundary-\(NSUUID().uuidString)"
     }
     
     //MARK: SUBMIT
@@ -3221,5 +3905,18 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         UploadRequest()
         
     }
+    @IBAction func saveOffline(_ sender: Any) {
+        
+    
+    }
+    
+    //offline help message
+    @IBAction func offlineHelp(_ sender: Any) {
+        let messageString = "Save forms while offline. See what forms you have saved on the list. Clear a form when it isn't needed or load a form to double-check the information. Submit form(s) once you are back online."
+        let alertController = UIAlertController(title: "Help", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
