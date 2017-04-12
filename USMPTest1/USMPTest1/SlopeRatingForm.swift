@@ -2,9 +2,33 @@
 //  SlopeRatingForm.swift
 //  USMPTest1
 //
+//  For TableViewController representing the Slope Rating forms
+//
 //  Created by Colleen Rothe on 4/6/17.
 //  Copyright © 2017 Colleen Rothe. All rights reserved.
-//
+
+//CREDITS:
+
+//infix operator from:
+    //http://stackoverflow.com/questions/29784447/swift-regex-does-a-string-match-a-pattern
+//autocomplete:
+    //http://stackoverflow.com/questions/26885438/getting-autocomplete-to-work-in-swift
+//core location:
+    //http://nshipster.com/core-location-in-ios-8/
+//picking image from library
+    //http://stackoverflow.com/questions/4314405/how-can-i-get-the-name-of-image-picked-through-photo-library-in-iphone
+//core data
+    //https://www.raywenderlich.com/115695/getting-started-with-core-data-tutorial
+//TO CHECK CONNECTIVITY
+    //http://stackoverflow.com/questions/39558868/check-internet-connection-ios-10
+//image picker library
+    //https://github.com/mikaoj/BSImagePicker
+//file upload
+    //http://www.kaleidosblog.com/how-to-upload-images-using-swift-2-send-multipart-post-request
+//image resizing
+    //http://stackoverflow.com/questions/29726643/how-to-compress-of-reduce-the-size-of-an-image-before-uploading-to-parse-as-pffi
+//post
+    //http://stackoverflow.com/questions/37400639/post-data-to-a-php-method-from-swift
 
 import Foundation
 import UIKit
@@ -15,7 +39,6 @@ import Photos
 import SystemConfiguration
 import BSImagePicker
 
-//CREDITS(7)
 //for the image resizing
 extension UIImage
 {
@@ -26,6 +49,7 @@ extension UIImage
     var lowestQualityJPEGNSData: NSData  { return UIImageJPEGRepresentation(self, 0.0)! as NSData }
 }
 
+//for teh regular expressions
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):
@@ -411,7 +435,6 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     
     @IBOutlet var rockF2Picker: UIPickerView!
     
-   //new/different
     @IBOutlet weak var hazardTotalText: UITextField!
     
     //RISK RATINGS
@@ -545,6 +568,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        //if it is a landslide form, block out the rockfall only fields
         if(shareData.form == "landslide"){
             //Landslide!!
             let notLandslide = ["blkSize", "volume", "ditchEffectiveness", "rockfallHistory", "bsvPerEvent", "rockfallRMF",  "structCond1", "rockFriction1", "structCond2", "rockFriction2"]
@@ -555,7 +579,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
                     }
             }
         }
-            
+        //if it is a rockfall form, block out the landslide only fields
         if(shareData.form == "rockfall"){
         //Rockfall!
             let notRockfall = ["roadwayWidthAffected", "slideErosionEffects", "roadwayLengthAffected", "thawStability", "instabilityRMF", "movementHistory"]
@@ -884,23 +908,18 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         if(pickerView .isEqual(hazardType1)){
             components = hazardOptions.count;
         }
-        
         if(pickerView .isEqual(hazardType2)){
             components = hazardOptions.count;
         }
-        
         if(pickerView .isEqual(hazardType3)){
             components = hazardOptions.count;
         }
-        
         if(pickerView .isEqual(agency)){
             components = agencyOptions.count;
         }
-        
         if(pickerView .isEqual(regional)){
             components = regionalOptions.count;
         }
-        
         if(pickerView .isEqual(local)){
             components = localOptions.count;
         }
@@ -973,7 +992,6 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         if(pickerView .isEqual(rockF2Picker)){
             components = specialOptions.count;
         }
-        
         return components
     }
     
@@ -1252,7 +1270,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         hazardItems = items
     }
     
-    //CREDITS(5)
+    //check network connectivity
     func isInternetAvailable() -> Bool
     {
         var zeroAddress = sockaddr_in()
@@ -2417,7 +2435,6 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     
     //LANDSLIDE CALCULATIONS
     
-    
     //Calculate C: Roadway Length Affected
     func calculateC() ->Int{
         var temp = 1.0
@@ -2922,7 +2939,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         
     }
     
-    //fill me in later
+    //load site from list of forms saved offline
     func loadFromList(){
         shareData.load = false
         
@@ -3482,17 +3499,20 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         }
     }
     
+    //called when you edit a form
     func edit(){
         let fsmh = FullSiteModelHelper()
         fsmh.delegate = self
         fsmh.downloadItems()
     }
     
+    //Full Site Model stuff
     func itemsDownloadedF(_ items: NSArray) {
         feedItems = items
         fillToEdit()
     }
     
+    //Fill out form with all info so it can be viewed/edited
     func fillToEdit(){
         let selectedLocation = feedItems.object(at: 0) as! OfflineModel
         
@@ -3809,7 +3829,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         totalScoreText.text = selectedLocation.total_score
     }
     
- 
+    //upload image
     func UploadRequest(){
         if(images.count != 0){
             //for each of the images...
@@ -4208,6 +4228,8 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         UploadRequest()
         
     }
+    
+    //save form offline for later use
     @IBAction func saveOffline(_ sender: Any) {
         //save site to core data
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
