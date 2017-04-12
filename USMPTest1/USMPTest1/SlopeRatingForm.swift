@@ -2625,7 +2625,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     func calculateX()->Int{
         var value = 0.0
         
-        if(sightDText.text != ""){
+        if(sightDText.text != "" && speedText.text != ""){
             let sightDist = Double(sightDText.text!)
             
             let selectedVal = Int(speedText.text!)
@@ -3172,7 +3172,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             slopeDPicker.selectRow(slopeD, inComponent: 0, animated: true)
             
             annualRText.text = sites[number].value(forKey: "shAnnualRain")! as? String
-            slopeHText.text = sites[number].value(forKey: "shSlopeHeight")! as? String
+            slopeHeightCalcText.text = sites[number].value(forKey: "shSlopeHeight")! as? String
             
             hazardTotalText.text = sites[number].value(forKey: "shTotal")! as? String
             
@@ -3422,9 +3422,13 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             totalScoreText.text = sites[number].value(forKey: "total_score")! as? String
             commentsText.text = sites[number].value(forKey: "comment")! as? String
             //TODO: hazard type (2)
-            //hazardTypeText.text = sites[number].value(forKey: "hazard_type")! as? String
+            print("TEST HAZARD TYPE")
+            var hazard = ""
+            hazard = (sites[number].value(forKey: "hazard_type")! as? String)!
+            print(hazard)
             
-            //ROCKFALL ONLY
+            
+            //ROCKFALL !ONLY
             let rockfall_prelim_ditch_eff = sites[number].value(forKey: "rockfall_prelim_ditch_eff")! as? String
             if(ratingOptions.contains(rockfall_prelim_ditch_eff!)){
                 ditchEPicker.selectRow(ratingOptions.index(of: rockfall_prelim_ditch_eff!)!, inComponent: 0, animated: true)
@@ -3514,7 +3518,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     
     //Fill out form with all info so it can be viewed/edited
     func fillToEdit(){
-        let selectedLocation = feedItems.object(at: 0) as! OfflineModel
+        let selectedLocation = feedItems.object(at: 0) as! FullSiteModel  //offline model?
         
         let agencyS = selectedLocation.umbrella_agency
         let regionS = selectedLocation.regiona_admin
@@ -3617,6 +3621,36 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             let temp = sideOptions.index(of: side!)
             sidePicker.selectRow(temp!, inComponent: 0, animated: true)
         }
+        //sometimes it's just "r" or "R"
+        if(side?.caseInsensitiveCompare("l") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(0, inComponent: 0, animated: true)
+        }else if(side?.caseInsensitiveCompare("r") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(1, inComponent: 0, animated: true)
+        }
+        else if(side?.caseInsensitiveCompare("n") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(2, inComponent: 0, animated: true)
+        }
+        else if(side?.caseInsensitiveCompare("ne") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(3, inComponent: 0, animated: true)
+        }
+        else if(side?.caseInsensitiveCompare("e") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(4, inComponent: 0, animated: true)
+        }
+        else if(side?.caseInsensitiveCompare("se") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(5, inComponent: 0, animated: true)
+        }
+        else if(side?.caseInsensitiveCompare("s") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(6, inComponent: 0, animated: true)
+        }
+        else if(side?.caseInsensitiveCompare("sw") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(7, inComponent: 0, animated: true)
+        }
+        else if(side?.caseInsensitiveCompare("w") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(8, inComponent: 0, animated: true)
+        }
+        else if(side?.caseInsensitiveCompare("nw") == ComparisonResult.orderedSame){
+            sidePicker.selectRow(9, inComponent: 0, animated: true)
+        }
         
         let weather = selectedLocation.weather as String!
         if (weatherOptions.contains(weather!)){
@@ -3626,6 +3660,8 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         
         var hazardString = ""
         hazardString = selectedLocation.hazard_type!
+        print("testing hazard...")
+        print(hazardString)
         let hazardA = hazardString.components(separatedBy: ",")
         if(hazardA.count > 0){
             for i in 0 ... (hazardA.count - 1){
@@ -3668,10 +3704,12 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         ditchSlope1endText.text = selectedLocation.maximum_ditch_slope_first
         ditchSlope2beginText.text = selectedLocation.minimum_ditch_slope_second
         ditchSlope2endText.text = selectedLocation.maximum_ditch_slope_second
+        blkSizeText.text = selectedLocation.blk_size
+        volumeText.text = selectedLocation.volume
         beginRainText.text = selectedLocation.begin_annual_rainfall
         endRainText.text = selectedLocation.end_annual_rainfall
         let sole_access_route = selectedLocation.sole_access_route
-        if(sole_access_route == "No"){
+        if(sole_access_route == "No" || sole_access_route == "N" || sole_access_route == "n"){
             accessPicker.selectRow(1, inComponent: 0, animated: true)
         }
         else{
@@ -3679,10 +3717,12 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         }
         
         let mitigation_present = selectedLocation.fixes_present
-        if(mitigation_present == "No"){
+        if(mitigation_present == "No" || mitigation_present == "N" || mitigation_present == "n"){
+            print("NO MITIGATION")
             fixesPicker.selectRow(1, inComponent: 0, animated: true)
         }
         else{
+            print("YES MITIGATION")
             fixesPicker.selectRow(0, inComponent: 0, animated: true)
         }
         //photos???
@@ -4079,7 +4119,12 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             var impact_on_use = "3"
             let selected_iou = impactOUPicker.selectedRow(inComponent: 0)
             impact_on_use = ratingOptions[selected_iou]
-            
+            var aadtCheck = 0
+            if(aadtButton.currentImage! == #imageLiteral(resourceName: "checkmark")){
+                 aadtCheck = 1
+            }
+        
+        
             //Slope Hazard - All:
             var slope_drainage = "3"
             let selected_sd = slopeDPicker.selectedRow(inComponent: 0)
@@ -4126,11 +4171,11 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             rock_f1 = specialOptions[selected_rf1]
             
             var struct_c2 = "3"
-            let selected_sc2=structuralC1Picker.selectedRow(inComponent: 0)
+            let selected_sc2=structuralC2Picker.selectedRow(inComponent: 0)
             struct_c2 = specialOptions[selected_sc2]
             
             var rock_f2 = "3"
-            let selected_rf2 = rockF1Picker.selectedRow(inComponent: 0 )
+            let selected_rf2 = rockF2Picker.selectedRow(inComponent: 0 )
             rock_f2 = specialOptions[selected_rf2]
             
             //landslide only:
@@ -4164,13 +4209,13 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
                 
                 request.httpMethod = "POST"
               
-                let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)&email=\(email)"
+                let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=\(aadtCheck)&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)&email=\(email)"
                 request.httpBody = postString.data(using: String.Encoding.utf8)
             }
             
             //rockfall
             else{
-                let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)&email=\(email)"
+                let postString = "old_site_id=\(shareData.current_site_id)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=\(blkSizeText.text!)&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=\(aadtCheck)&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)&email=\(email)"
                 
                 request.httpBody = postString.data(using: String.Encoding.utf8)
                 
@@ -4186,13 +4231,13 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             request.httpMethod = "POST"
             
             if(shareData.form == "landslide"){
-            let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)"
+            let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&volume=0&prelim_landslide_road_width_affected=\(prelim_landslide_road_width_affected)&prelim_landslide_slide_erosion_effects=\(prelim_landslide_slide_erosion_effects) &prelim_landslide_length_affected=\(roadwayLAText.text!)&prelim_rockfall_ditch_eff=0&prelim_rockfall_rockfall_history=0&prelim_rockfall_block_size_event_vol=0&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=\(aadtCheck)&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=\(hazard_landslide_thaw_stability)&hazard_landslide_maint_frequency=\(hazard_landslide_maint_frequency)&hazard_landslide_movement_history=\(hazard_landslide_movement_history)&hazard_rockfall_maint_frequency=0&case_one_struc_cond=0&case_one_rock_friction=0&case_two_struc_condition=0&case_two_diff_erosion=0&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)"
             request.httpBody = postString.data(using: String.Encoding.utf8)
 
             }
             //rockfall
             else{
-                let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=0&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)"
+                let postString = "umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&road_trail_number=\(roadTrailNoText.text!)&road_trail_class=\(roadTrailClassText.text!)&begin_mile_marker=\(beginMileText.text!)&end_mile_marker=\(endMileText.text!)&road_or_trail=\(road_or_trail)&side=\(side)&rater=\(rater.text!)&weather=\(weather)&begin_coordinate_latitude=\(lat1Text.text!)&begin_coordinate_longitude=\(long1Text.text!)&end_coordinate_latitude=\(lat2Text.text!)&end_coordinate_longitude=\(long2Text.text!)&datum=\(datumText.text!)&aadt=\(aadtText.text!)&hazard_type=\(hazard)&length_affected=\(lengthAffectedText.text!)&slope_height_axial_length=\(slopeHText.text!)&slope_angle=\(slopeAngleText.text!)&sight_distance=\(sightDText.text!)&road_trail_width=\(roadwayTWText.text!)&speed_limit=\(speed)&minimum_ditch_width=\(ditchWidth1Text.text!)&maximum_ditch_width=\(ditchWidth2Text.text!)&minimum_ditch_depth=\(ditchDepth1Text.text!)&maximum_ditch_depth=\(ditchDepth2Text.text!)&first_begin_ditch_slope=\(ditchSlope1beginText.text!)&first_end_ditch_slope=\(ditchSlope1endText.text!)&second_begin_ditch_slope=\(ditchSlope2beginText.text!)&second_end_ditch_slope=\(ditchSlope2endText.text!)&volume=\(volumeText.text!)&blk_size=\(blkSizeText.text!)&start_annual_rainfall=\(beginRainText.text!)&end_annual_rainfall=\(endRainText.text!)&sole_access_route=\(sole_access)&fixes_present=\(fixes_present)&blk_size=0&prelim_landslide_road_width_affected=0&prelim_landslide_slide_erosion_effects=0&prelim_landslide_length_affected=0&prelim_rockfall_ditch_eff=\(prelim_ditch_effectiveness)&prelim_rockfall_rockfall_history=\(prelim_rockfall_history)&prelim_rockfall_block_size_event_vol=\(bsPerEventText.text!)&impact_on_use=\(impact_on_use)&aadt_usage_calc_checkbox=\(aadtCheck)&aadt_usage=\(aadtEtcText.text!)&prelim_rating=\(preliminaryRatingText.text!)&slope_drainage=\(slope_drainage)&hazard_rating_annual_rainfall=\(annualRText.text!)&hazard_rating_slope_height_axial_length=\(slopeHeightCalcText.text!)&hazard_landslide_thaw_stability=0&hazard_landslide_maint_frequency=0&hazard_landslide_movement_history=0&hazard_rockfall_maint_frequency=\(hazard_rr_maint_freq)&case_one_struc_cond=\(struct_c1)&case_one_rock_friction=\(rock_f1)&case_two_struc_condition=\(struct_c2)&case_two_diff_erosion=\(rock_f2)&route_trail_width=\(routeTWText.text!)&human_ex_factor=\(humanEFText.text!)&percent_dsd=\(percentDSDText.text!)&r_w_impacts=\(r_w_impacts)&enviro_cult_impacts=\(enviro_cult_impacts)&maint_complexity=\(maint_complexity)&event_cost=\(event_cost)&hazard_rating_landslide_total=\(hazardTotalText.text!)&hazard_rating_rockfall_total=0&risk_total=\(riskTotalsText.text!)&total_score=\(totalScoreText.text!)&comments=\(commentsText.text!)&fmla_id=\(flmaIdText.text!)&fmla_name=\(flmaNameText.text!)&fmla_description=\(flmaDescriptionText.text!)"
                 
                 request.httpBody = postString.data(using: String.Encoding.utf8)
         }
@@ -4452,7 +4497,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         site.setValue(selectedDrainage, forKey: "shDrainage")
         
         site.setValue(annualRText.text, forKey: "shAnnualRain")
-        site.setValue(slopeHText.text, forKey: "shSlopeHeight")
+        site.setValue(slopeHeightCalcText.text, forKey: "shSlopeHeight")
         site.setValue(hazardTotalText.text, forKey: "shTotal")
         
         //Risk Ratings:
