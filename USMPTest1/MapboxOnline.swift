@@ -308,7 +308,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             let completed = progress.countOfResourcesCompleted
             //At the beginning of a download, this count is a lower bound; the number of expected resources may increase as the download progresses.
             let expected = progress.countOfResourcesExpected
-            print("Offline pack “\(userInfo["name"])” has downloaded \(completed) of \(expected) resources.")
+            print("Offline pack “\(String(describing: userInfo["name"]))” has downloaded \(completed) of \(expected) resources.")
             
             //for the progress bar
             if(completed < expected/4){
@@ -341,7 +341,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         if let pack = notification.object as? MGLOfflinePack,
             let userInfo = NSKeyedUnarchiver.unarchiveObject(with: pack.context) as? [String: String],
             let error = (notification as NSNotification).userInfo?[MGLOfflinePackErrorUserInfoKey] as? NSError {
-            print("Offline pack “\(userInfo["name"])” received error: \(error.localizedFailureReason)")
+            print("Offline pack “\(String(describing: userInfo["name"]))” received error: \(String(describing: error.localizedFailureReason))")
         }
     }
     
@@ -350,7 +350,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         if let pack = notification.object as? MGLOfflinePack,
             let userInfo = NSKeyedUnarchiver.unarchiveObject(with: pack.context) as? [String: String],
             let maximumCount = ((notification as NSNotification).userInfo?[MGLOfflinePackMaximumCountUserInfoKey] as AnyObject).uint64Value {
-            print("Offline pack “\(userInfo["name"])” reached limit of \(maximumCount) tiles.")
+            print("Offline pack “\(String(describing: userInfo["name"]))” reached limit of \(maximumCount) tiles.")
         }
     }
     
@@ -761,5 +761,15 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    //clicked on info button
+    @IBAction func getInfo(_ sender: Any) {
+        let message = "Cache Map: Zoom to portion of map you want to save. Corner coordinates of map in view are loaded automatically \n\nClear Cache: Delete the current saved map (can only save one at a time). You will be notified when it has been successfully deleted. \n\nCache Status: Check to see if you have a map section saved for offline use. If cached area is invalid, will notify you and automatically clear.\n\nLoad Offline Points: When offline, load the map and previously saved sites. Only works if you have previously saved a map while online. You may need to zoom in to view map.\n\n Please allow some time (~1-2 min) for all operations."
+        
+        let alert = UIAlertController(title: "Info", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
 

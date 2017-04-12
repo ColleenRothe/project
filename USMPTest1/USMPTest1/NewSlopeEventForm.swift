@@ -1089,7 +1089,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
                     }
                     
                     let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-                    print(dataString)
+                    print(dataString!)
                     
                 }
                 
