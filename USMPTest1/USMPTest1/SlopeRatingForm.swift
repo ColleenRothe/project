@@ -2075,6 +2075,14 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     
     //MARK: Info Buttons
     
+    @IBAction func getHazardInfo(_ sender: AnyObject) {
+        let messageString = "Choose up to 3 options for Hazard Type"
+        
+        let alertController = UIAlertController(title: "Info", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        present(alertController, animated: true, completion: nil)
+    }
+    
     //preliminary ratings
     @IBAction func getroadwayWAInfo(_ sender: AnyObject) {
         let messageString = "3: 0-5% \n 9: 6-25% \n 27: 26-50% \n 81: 51-100%"
