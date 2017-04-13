@@ -16,17 +16,18 @@ protocol FullSiteModelHelperProtocol: class{
     
 }
 
+var data: NSMutableData = NSMutableData()
 var responseF = ""
 var FDictionary = NSDictionary()
 
 class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
     
     func helper(){
-        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php")! as URL)
         request.httpMethod = "POST"
         
         //post the id
-        let postString = "id=\(shareData.current_clicked_id)"
+        let postString = "id=\(shareData.current_site_id)"
         
         request.httpBody = postString.data(using: String.Encoding.utf8)
         
@@ -51,15 +52,19 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
             var finalString = "{"
             finalString = finalString.appending(responseF)
             
-            finalString = finalString.appending("}")
+            finalString.append("}")  //WHY MUST YOU NOT WORK??
+            responseF = finalString
+            
+            print("final full site string is")
+            print(responseF)
             
             //tru to put into a dictionary
-            if let data2 = finalString.data(using: .utf8){
+            if let data2 = responseF.data(using: .utf8){
                 
                 do {
                     FDictionary =  try JSONSerialization.jsonObject(with: data2, options: []) as! NSDictionary
                 } catch let error as NSError {
-                    print("DICTIONARY ERROR")
+                    print("DICTIONARY ERROR FULL SITE MODEL HELPER")
                     print("error: \(error.localizedDescription)")
                 }
             }
@@ -444,12 +449,12 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
         
         //prelim and hazard ratings rockfall/landslide ids
         
-        if(FDictionary.value(forKey:"HAZARD_TYPE") as? String != nil){
-            thing.hazard_type = FDictionary.value(forKey: "HAZARD_TYPE")! as? String}
+        if(FDictionary.value(forKey:"HAZARD_TYPE2") as? String != nil){
+            thing.hazard_type = FDictionary.value(forKey: "HAZARD_TYPE2")! as? String}
         else{
             thing.hazard_type = ""
         }
-        
+                
         //PRELIM RATING ROCKFALL ONLY
         
         if(FDictionary.value(forKey:"ROCKFALL_PRELIM_DITCH_EFF") as? String != nil){
@@ -540,7 +545,7 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
         }
         
         
-        //FLMA LINK
+        //FLMA LINK (spelled wrong - FMLA in DB)
         if(FDictionary.value(forKey:"FLMA_ID") as? String != nil){
             thing.flma_id = FDictionary.value(forKey: "FLMA_ID")! as? String}
         else{
@@ -552,6 +557,7 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
         else{
             thing.flma_name = ""
         }
+        
         
         if(FDictionary.value(forKey:"FLMA_DESCRIPTION") as? String != nil){
             thing.flma_description = FDictionary.value(forKey: "FLMA_DESCRIPTION")! as? String}
