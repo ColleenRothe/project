@@ -445,13 +445,12 @@
             android:layout_margin="@dimen/text_margin"
             android:text="Speed Limit"
             />
-        <Spinner
-            android:id = "@+id/L_Speed"
+        <EditText
+            android:id="@+id/L_SpeedLimit"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:entries = "@array/speedList"
-            >
-        </Spinner>
+            android:inputType="number"
+            />
 
         <TextView
             android:layout_width="wrap_content"

@@ -39,7 +39,8 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.Manifest.permission.READ_CONTACTS;
+import java.lang.*;
+
 
 /**
  * A login screen that offers login via email/password. Auto-built by android studio
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private List permissionList;
+    private Button mEmailSignInButton;
 
     //Permissions
     public static int permissions;
@@ -89,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -286,12 +288,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             tryLogin(mEmail, mPassword);
             return login;
 
+
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
             if (success) {
                 finish();
@@ -349,6 +357,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         thread.start();
+
     }
 
     //set permission true/false

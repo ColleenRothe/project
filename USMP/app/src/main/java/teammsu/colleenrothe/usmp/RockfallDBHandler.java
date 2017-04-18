@@ -304,7 +304,7 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
             rockfall.setSlope_angle(cursor.getString(22));
             rockfall.setSight_distance(cursor.getString(23));
             rockfall.setRoad_trail_width(cursor.getString(24));
-            rockfall.setSpeed_limit(Integer.parseInt(cursor.getString(25)));
+            rockfall.setSpeed_limit(cursor.getString(25));
             rockfall.setMinimum_ditch_width(cursor.getString(26));
             rockfall.setMaximum_ditch_width(cursor.getString(27));
             rockfall.setMinimum_ditch_depth(cursor.getString(28));
