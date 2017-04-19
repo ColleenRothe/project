@@ -63,22 +63,22 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_FLMA_ID = "flma_id";
     public static final String COLUMN_FLMA_DESCRIPTION="flma_description";
     //Preliminary Rating
-        //landslide only
+    //landslide only
     public static final String COLUMN_PRELIM_LANDSLIDE_ROAD_WIDTH_AFFECTED = "prelim_landslide_road_width_affected";
     public static final String COLUMN_PRELIM_LANDSLIDE_SLIDE_EROSION_EFFECTS ="prelim_landslide_slide_erosion_effects";
     public static final String COLUMN_PRELIM_LANDSLIDE_LENGTH_AFFECTED = "prelim_landslide_length_affected";
-        //for all
+    //for all
     public static final String COLUMN_IMPACT_ON_USE = "impact_on_use";
     public static final String COLUMN_AADT_USAGE_CALC_CHECKBOX = "aadt_usage_calc_checkbox";
     public static final String COLUMN_AADT_USAGE = "aadt_usage";
     public static final String COLUMN_PRELIM_RATING="prelim_rating";
     //Hazard Rating
-        //for all
+    //for all
     public static final String COLUMN_SLOPE_DRAINAGE = "slope_drainage";
     public static final String COLUMN_HAZARD_RATING_ANNUAL_RAINFALL = "hazard_rating_annual_rainfall";
     public static final String COLUMN_HAZARD_RATING_SLOPE_HEIGHT_AXIAL_LENGTH="hazard_rating_slope_height_axial_length";
     public static final String COLUMN_HAZARD_RATING_TOTAL= "hazard_rating_total";
-        //Landslide only
+    //Landslide only
     public static final String COLUMN_HAZARD_LANDSLIDE_THAW_STABILITY = "hazard_landslide_thaw_stability";
     public static final String COLUMN_HAZARD_LANDSLIDE_MAINT_FREQUENCY = "hazard_landslide_maint_frequency";
     public static final String COLUMN_HAZARD_LANDSLIDE_MOVEMENT_HISTORY = "hazard_landslide_movement_history";
@@ -96,7 +96,7 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_TOTAL_SCORE = "total_score";
 
     public LandslideDBHandler(Context context, String name,
-                                SQLiteDatabase.CursorFactory factory, int version) {
+                              SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
@@ -161,7 +161,7 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
                 cursor.close();
             }
 
-                  db.close();
+            db.close();
             maxID++;
         }
 
@@ -212,23 +212,23 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_FLMA_DESCRIPTION, form.getFlma_description());
 
         //preliminary rating
-            //landslide only
+        //landslide only
         values.put(COLUMN_PRELIM_LANDSLIDE_ROAD_WIDTH_AFFECTED, form.getPrelim_landslide_road_width_affected());
         values.put(COLUMN_PRELIM_LANDSLIDE_SLIDE_EROSION_EFFECTS, form.getPrelim_landslide_slide_erosion_effects());
         values.put(COLUMN_PRELIM_LANDSLIDE_LENGTH_AFFECTED, form.getPrelim_landslide_length_affected());
-            //for all
+        //for all
         values.put(COLUMN_IMPACT_ON_USE, form.getImpact_on_use());
         values.put(COLUMN_AADT_USAGE_CALC_CHECKBOX, form.getAadt_usage_calc_checkbox());
         values.put(COLUMN_AADT_USAGE, form.getAadt_usage());
         values.put(COLUMN_PRELIM_RATING, form.getPrelim_rating());
 
         //hazard rating
-            //for all
+        //for all
         values.put(COLUMN_SLOPE_DRAINAGE, form.getSlope_drainage());
         values.put(COLUMN_HAZARD_RATING_ANNUAL_RAINFALL, form.getHazard_rating_annual_rainfall());
         values.put(COLUMN_HAZARD_RATING_SLOPE_HEIGHT_AXIAL_LENGTH, form.getHazard_rating_slope_height_axial_length());
         values.put(COLUMN_HAZARD_RATING_TOTAL, form.getHazard_rating_total());
-            //landslide only
+        //landslide only
         values.put(COLUMN_HAZARD_LANDSLIDE_THAW_STABILITY, form.getHazard_landslide_thaw_stability());
         values.put(COLUMN_HAZARD_LANDSLIDE_MAINT_FREQUENCY, form.getHazard_landslide_maint_frequency());
         values.put(COLUMN_HAZARD_LANDSLIDE_MOVEMENT_HISTORY, form.getHazard_landslide_movement_history());
@@ -289,7 +289,7 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
             landslide.setSlope_angle(cursor.getString(22));
             landslide.setSight_distance(cursor.getString(23));
             landslide.setRoad_trail_width(cursor.getString(24));
-            landslide.setSpeed_limit(Integer.parseInt(cursor.getString(25)));
+            landslide.setSpeed_limit(cursor.getString(25));
             landslide.setMinimum_ditch_width(cursor.getString(26));
             landslide.setMaximum_ditch_width(cursor.getString(27));
             landslide.setMinimum_ditch_depth(cursor.getString(28));
@@ -309,23 +309,23 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
             landslide.setFlma_description(cursor.getString(42));
 
             //preliminary rating
-                //landslide only
+            //landslide only
             landslide.setPrelim_landslide_road_width_affected(Integer.parseInt(cursor.getString(43)));
             landslide.setPrelim_landslide_slide_erosion_effects(Integer.parseInt(cursor.getString(44)));
             landslide.setPrelim_landslide_length_affected(cursor.getString(45));
-                //for all
+            //for all
             landslide.setImpact_on_use(Integer.parseInt(cursor.getString(46)));
             landslide.setAadt_usage_calc_checkbox(Integer.parseInt(cursor.getString(47)));
             landslide.setAadt_usage(cursor.getString(48));
             landslide.setPrelim_rating(cursor.getString(49));
 
             //Hazard Rating
-                //for all
+            //for all
             landslide.setSlope_drainage(Integer.parseInt(cursor.getString(50)));
             landslide.setHazard_rating_annual_rainfall(cursor.getString(51));
             landslide.setHazard_rating_slope_height_axial_length(cursor.getString(52));
             landslide.setHazard_rating_total(cursor.getString(53));
-                //landslide only
+            //landslide only
             landslide.setHazard_landslide_thaw_stability(Integer.parseInt(cursor.getString(54)));
             landslide.setHazard_landslide_maint_frequency(Integer.parseInt(cursor.getString(55)));
             landslide.setHazard_landslide_movement_history(Integer.parseInt(cursor.getString(56)));
@@ -392,5 +392,3 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
     }
 
 }
-
-

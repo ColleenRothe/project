@@ -30,7 +30,7 @@ public class Rockfall extends Object {
     private String slope_angle;
     private String sight_distance;
     private String road_trail_width;
-    private int speed_limit;
+    private String speed_limit;
     private String minimum_ditch_width;
     private String maximum_ditch_width;
     private String minimum_ditch_depth;
@@ -52,23 +52,23 @@ public class Rockfall extends Object {
     private String flma_description;
 
     //Preliminary Rating
-        //Rockfall only
+    //Rockfall only
     private int prelim_rockfall_ditch_eff;
     private int prelim_rockfall_rockfall_history;
     private  String prelim_rockfall_block_size_event_vol;
-        //for all
-        private int impact_on_use;
+    //for all
+    private int impact_on_use;
     private int aadt_usage_calc_checkbox;
     private String aadt_usage;
     private String prelim_rating;
 
     //Hazard Rating
-        //for all
+    //for all
     private int slope_drainage;
     private String hazard_rating_annual_rainfall;
     private String hazard_rating_slope_height_axial_length;
     private String hazard_rating_total;
-        //rockfall only
+    //rockfall only
     private int hazard_rockfall_maint_frequency;
     private int case_one_struc_cond;
     private int case_one_rock_friction;
@@ -97,7 +97,7 @@ public class Rockfall extends Object {
                     int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long,
                     String end_coordinate_latitude, String end_coordinate_longitude, String datum, String aadt, String
                             length_affected, String slope_height_axial_length, String slope_angle, String sight_distance,
-                    String road_trail_width, int speed_limit, String minimum_ditch_width, String maximum_ditch_width,
+                    String road_trail_width, String speed_limit, String minimum_ditch_width, String maximum_ditch_width,
                     String minimum_ditch_depth, String maximum_ditch_depth, String first_begin_ditch_slope, String
                             first_end_ditch_slope, String second_begin_ditch_slope, String second_end_ditch_slope,String blk_size,
                     String volume, String start_annual_rainfall, String end_annual_rainfall, int sole_access_route, int fixes_Present,
@@ -190,7 +190,7 @@ public class Rockfall extends Object {
                     int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long,
                     String end_coordinate_latitude, String end_coordinate_longitude, String datum, String aadt, String
                             length_affected, String slope_height_axial_length, String slope_angle, String sight_distance,
-                    String road_trail_width, int speed_limit, String minimum_ditch_width, String maximum_ditch_width,
+                    String road_trail_width, String speed_limit, String minimum_ditch_width, String maximum_ditch_width,
                     String minimum_ditch_depth, String maximum_ditch_depth, String first_begin_ditch_slope, String
                             first_end_ditch_slope, String second_begin_ditch_slope, String second_end_ditch_slope,String blk_size,
                     String volume, String start_annual_rainfall, String end_annual_rainfall, int sole_access_route, int fixes_Present,
@@ -354,8 +354,8 @@ public class Rockfall extends Object {
     public String getRoad_trail_width(){return road_trail_width;}
     public void setRoad_trail_width(String road_trail_width){this.road_trail_width=road_trail_width;}
 
-    public int getSpeed_limit(){return speed_limit;}
-    public void setSpeed_limit(int speed_limit){this.speed_limit=speed_limit;}
+    public String getSpeed_limit(){return speed_limit;}
+    public void setSpeed_limit(String speed_limit){this.speed_limit=speed_limit;}
 
     public String getMinimum_ditch_width(){return minimum_ditch_width;}
     public void setMinimum_ditch_width(String minimum_ditch_width){this.minimum_ditch_width=minimum_ditch_width;}
@@ -415,7 +415,7 @@ public class Rockfall extends Object {
     public void setFlma_description(String flma_description){this.flma_description=flma_description;}
 
     //prelim rating
-        //rockfall only
+    //rockfall only
 
     public int getPrelim_rockfall_ditch_eff(){return prelim_rockfall_ditch_eff;}
     public void setPrelim_rockfall_ditch_eff(int prelim_rockfall_ditch_eff){this.prelim_rockfall_ditch_eff=prelim_rockfall_ditch_eff;}
@@ -440,7 +440,7 @@ public class Rockfall extends Object {
     public void setPrelim_rating(String prelim_rating){this.prelim_rating=prelim_rating;}
 
     //Hazard Rating
-        //all
+    //all
     public int getSlope_drainage(){return slope_drainage;}
     public void setSlope_drainage(int slope_drainage){this.slope_drainage=slope_drainage;}
 
@@ -452,7 +452,7 @@ public class Rockfall extends Object {
 
     public String getHazard_rating_total(){return hazard_rating_total;}
     public void setHazard_rating_total(String hazard_rating_total){this.hazard_rating_total=hazard_rating_total;}
-        //Rockfall only
+    //Rockfall only
     public int getHazard_rockfall_maint_frequency(){return hazard_rockfall_maint_frequency;}
     public void setHazard_rockfall_maint_frequency(int hazard_rockfall_maint_frequency){this.hazard_rockfall_maint_frequency=hazard_rockfall_maint_frequency;}
 

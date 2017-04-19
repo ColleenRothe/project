@@ -304,7 +304,7 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
             rockfall.setSlope_angle(cursor.getString(22));
             rockfall.setSight_distance(cursor.getString(23));
             rockfall.setRoad_trail_width(cursor.getString(24));
-            rockfall.setSpeed_limit(Integer.parseInt(cursor.getString(25)));
+            rockfall.setSpeed_limit(cursor.getString(25));
             rockfall.setMinimum_ditch_width(cursor.getString(26));
             rockfall.setMaximum_ditch_width(cursor.getString(27));
             rockfall.setMinimum_ditch_depth(cursor.getString(28));
@@ -327,22 +327,22 @@ public class RockfallDBHandler extends SQLiteOpenHelper {
             rockfall.setFlma_description(cursor.getString(44));
 
             //preliminary rating
-                //rockfall only
+            //rockfall only
             rockfall.setPrelim_rockfall_ditch_eff(Integer.parseInt(cursor.getString(45)));
             rockfall.setPrelim_rockfall_rockfall_history(Integer.parseInt(cursor.getString(46)));
             rockfall.setPrelim_rockfall_block_size_event_vol(cursor.getString(47));
-                //for all
+            //for all
             rockfall.setImpact_on_use(Integer.parseInt(cursor.getString(48)));
             rockfall.setAadt_usage_calc_checkbox(Integer.parseInt(cursor.getString(49)));
             rockfall.setAadt_usage(cursor.getString(50));
             rockfall.setPrelim_rating(cursor.getString(51));
             //Hazard Rating
-                //for all
+            //for all
             rockfall.setSlope_drainage(Integer.parseInt(cursor.getString(52)));
             rockfall.setHazard_rating_annual_rainfall(cursor.getString(53));
             rockfall.setHazard_rating_slope_height_axial_length(cursor.getString(54));
             rockfall.setHazard_rating_total(cursor.getString(55));
-                //rockfall only
+            //rockfall only
             rockfall.setHazard_rockfall_maint_frequency(Integer.parseInt(cursor.getString(56)));
             rockfall.setCase_one_struc_cond(Integer.parseInt(cursor.getString(57)));
             rockfall.setCase_one_rock_friction(Integer.parseInt(cursor.getString(58)));

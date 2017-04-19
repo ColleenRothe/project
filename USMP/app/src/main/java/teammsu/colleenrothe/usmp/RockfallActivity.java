@@ -124,7 +124,7 @@ public class RockfallActivity extends AppCompatActivity
     EditText SlopeAngle;
     EditText SightDistance;
     EditText RtWidth;
-    Spinner Speed;
+    EditText Speed;
     EditText DitchWidth1;
     EditText DitchWidth2;
     EditText DitchDepth1;
@@ -262,6 +262,8 @@ public class RockfallActivity extends AppCompatActivity
         Local = (Spinner) findViewById(R.id.RLocal);
         Local.setFocusable(true);
         Local.setFocusableInTouchMode(true);
+
+
 
         //listen if they change agency choice, update regional accordingly
         Agency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -476,6 +478,10 @@ public class RockfallActivity extends AppCompatActivity
         adapterLocal.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Local.setAdapter(adapterLocal);
 
+        adapterRegional.setNotifyOnChange(true);
+        adapterLocal.setNotifyOnChange(true);
+
+
         Date = (EditText) findViewById(R.id.R_Date);
         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         SimpleDateFormat sdf = new SimpleDateFormat("dd:MMMM:yyyy HH:mm:ss a");
@@ -554,10 +560,10 @@ public class RockfallActivity extends AppCompatActivity
         RtWidth = (EditText) findViewById(R.id.R_RtWidth);
         RtWidth.setOnFocusChangeListener(rtWidthWatcher);
 
-        Speed = (Spinner) findViewById(R.id.R_Speed);
-        Speed.setOnItemSelectedListener(speedWatcher);
-        Speed.setFocusable(true);
-        Speed.setFocusableInTouchMode(true);
+        Speed = (EditText) findViewById(R.id.R_speed);
+        Speed.setOnFocusChangeListener(speedWatcher);
+
+
 
         DitchWidth1 = (EditText) findViewById(R.id.R_DitchWidth1);
 
@@ -1129,9 +1135,7 @@ public class RockfallActivity extends AppCompatActivity
                 SlopeAngle.setText(map.get("SLOPE_ANGLE"));
                 SightDistance.setText(map.get("SIGHT_DISTANCE"));
                 RtWidth.setText(map.get("ROAD_TRAIL_WIDTH"));
-
-                //speed???? need to look into that...
-
+                Speed.setText(map.get("SPEED_LIMIT"));
                 DitchWidth1.setText(map.get("MINIMUM_DITCH_WIDTH"));
                 DitchWidth2.setText(map.get("MAXIMUM_DITCH_WIDTH"));
                 DitchDepth1.setText(map.get("MINIMUM_DITCH_DEPTH"));
@@ -1612,13 +1616,14 @@ public class RockfallActivity extends AppCompatActivity
     public void aadtChecked(View view) {
         if (CheckAadt.isChecked()) {
             aadtCheckmark = true;
+            System.out.println("Checked aadt!!");
 
             if (Aadt.getText().toString().length() != 0) {
                 double x = 1;
                 String aadt = Aadt.getText().toString();
                 Double aadts = Double.parseDouble(aadt);
 
-                x = Math.sqrt((aadts / 25));
+                x = Math.sqrt((aadts / 50));
 
                 double score = Math.pow(3, x);
 
@@ -1637,6 +1642,7 @@ public class RockfallActivity extends AppCompatActivity
 
 
         } else {
+            System.out.println("not checked!");
             aadtCheckmark = false;
         }
 
@@ -1888,25 +1894,25 @@ public class RockfallActivity extends AppCompatActivity
                     String sightDistanceS = SightDistance.getText().toString();
                     Double sightDistance = Double.parseDouble(sightDistanceS);
 
-                    String speed = Speed.getSelectedItem().toString();
+                    Integer speed = Integer.parseInt(Speed.getText().toString());
 
-                    if (speed.equals("25mph")) {
+                    if (speed <= 25) {
                         helper = 375;
-                    } else if (speed.equals("30mph")) {
+                    } else if (speed <= 30) {
                         helper = 450;
-                    } else if (speed.equals("35mph")) {
+                    } else if (speed <= 35) {
                         helper = 525;
-                    } else if (speed.equals("40mph")) {
+                    } else if (speed <= 40) {
                         helper = 600;
-                    } else if (speed.equals("45mph")) {
+                    } else if (speed <= 45) {
                         helper = 675;
-                    } else if (speed.equals("50mph")) {
+                    } else if (speed <=50) {
                         helper = 750;
-                    } else if (speed.equals("55mph")) {
+                    } else if (speed <= 55) {
                         helper = 875;
-                    } else if (speed.equals("60mph")) {
+                    } else if (speed <=60) {
                         helper = 1000;
-                    } else if (speed.equals("65mph")) {
+                    } else if (speed <=65) {
                         helper = 1050;
                     }
 
@@ -2816,65 +2822,65 @@ public class RockfallActivity extends AppCompatActivity
 
     };
 
-    private final OnItemSelectedListener speedWatcher = new OnItemSelectedListener() {
+    private final View.OnFocusChangeListener speedWatcher = new View.OnFocusChangeListener() {
+        public void onFocusChange(View v, boolean hasFocus) {
 
-        @Override
+            if (!hasFocus) {
 
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            String sightDistanceS = SightDistance.getText().toString();
-            int length = sightDistanceS.length();
 
-            //not emtpy
-            if (length != 0) {
+                String sightDistanceS = SightDistance.getText().toString();
+                int length = sightDistanceS.length();
 
-                double score = 0;
-                double x = 1;
-                int helper = 0;
+                //not emtpy
+                if (length != 0) {
 
-                Double sightDistance = Double.parseDouble(sightDistanceS);
+                    double score = 0;
+                    double x = 1;
+                    int helper = 0;
 
-                String speed = Speed.getSelectedItem().toString();
-                if (speed.equals("25mph")) {
-                    helper = 375;
-                } else if (speed.equals("30mph")) {
-                    helper = 450;
-                } else if (speed.equals("35mph")) {
-                    helper = 525;
-                } else if (speed.equals("40mph")) {
-                    helper = 600;
-                } else if (speed.equals("45mph")) {
-                    helper = 675;
-                } else if (speed.equals("50mph")) {
-                    helper = 750;
-                } else if (speed.equals("55mph")) {
-                    helper = 875;
-                } else if (speed.equals("60mph")) {
-                    helper = 1000;
-                } else if (speed.equals("65mph")) {
-                    helper = 1050;
+                    Double sightDistance = Double.parseDouble(sightDistanceS);
+
+                    Integer speed = Integer.parseInt(Speed.getText().toString());
+
+                    if (speed <= 25) {
+                        helper = 375;
+                    } else if (speed <= 30) {
+                        helper = 450;
+                    } else if (speed <= 35) {
+                        helper = 525;
+                    } else if (speed <= 40) {
+                        helper = 600;
+                    } else if (speed <= 45) {
+                        helper = 675;
+                    } else if (speed <=50) {
+                        helper = 750;
+                    } else if (speed <= 55) {
+                        helper = 875;
+                    } else if (speed <=60) {
+                        helper = 1000;
+                    } else if (speed <=65) {
+                        helper = 1050;
+                    }
+
+                    x = ((120 - ((sightDistance / helper) * 100)) / 20);
+
+
+                    score = Math.pow(3, x);
+                    if (score > 100) {
+                        score = 100;
+                    }
+
+                    int scoreInt = (int) Math.round(score);
+
+
+                    String scores = String.valueOf(scoreInt);
+                    PercentDSD.setText(scores);
                 }
-
-                x = ((120 - ((sightDistance / helper) * 100)) / 20);
-
-
-                score = Math.pow(3, x);
-                if (score > 100) {
-                    score = 100;
-                }
-
-                int scoreInt = (int) Math.round(score);
-
-
-                String scores = String.valueOf(scoreInt);
-                PercentDSD.setText(scores);
             }
         }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
-
     };
+
 
     //on changed, calculate risk total
     private final OnItemSelectedListener riskWatcher = new OnItemSelectedListener() {
@@ -2894,10 +2900,10 @@ public class RockfallActivity extends AppCompatActivity
     public void calcRiskTotal(){
         int score = 0;
         int g = 0;
-        int h = 0;
-        int v = 0;
-        int w = 0;
-        int x = 0;
+        int h;
+        int v;
+        int w;
+        int x;
         int y = 0;
         int z = 0;
         int aa = 0;
@@ -2933,13 +2939,17 @@ public class RockfallActivity extends AppCompatActivity
         if (lengthW != 0) {
             w = Integer.parseInt(HumanEF.getText().toString());
             score += w;
+
         }
 
         //X: % DSD
         int lengthX = PercentDSD.getText().toString().length();
         if (lengthX != 0) {
             x = Integer.parseInt(PercentDSD.getText().toString());
-            score = +x;
+            score+= x;
+
+
+
         }
 
         //Y: ROW Impacts Spinner
@@ -3560,7 +3570,7 @@ public class RockfallActivity extends AppCompatActivity
 
     }
 
-  //submit edited form
+    //submit edited form
     public void editSubmit() throws Exception{
         Thread thread = new Thread(new Runnable() {
 
@@ -3661,7 +3671,7 @@ public class RockfallActivity extends AppCompatActivity
                     String sight_distance = String.valueOf(SightDistance.getText());
                     String road_trail_width = String.valueOf(RtWidth.getText()); //?
 
-                    String speed_limit = Speed.getSelectedItem().toString();
+                    String speed_limit = String.valueOf(Speed.getText());
 
                     String minimum_ditch_width = String.valueOf(DitchWidth1.getText());
                     String maximum_ditch_width = String.valueOf(DitchWidth2.getText());
@@ -4012,7 +4022,7 @@ public class RockfallActivity extends AppCompatActivity
                         String sight_distance = String.valueOf(SightDistance.getText());
                         String road_trail_width = String.valueOf(RtWidth.getText()); //?
 
-                        String speed_limit = Speed.getSelectedItem().toString();
+                        String speed_limit = String.valueOf(Speed.getText());
 
                         String minimum_ditch_width = String.valueOf(DitchWidth1.getText());
                         String maximum_ditch_width = String.valueOf(DitchWidth2.getText());
@@ -4304,7 +4314,7 @@ public class RockfallActivity extends AppCompatActivity
         String slope_angle=SlopeAngle.getText().toString();
         String sight_distance = SightDistance.getText().toString();
         String road_trail_width = RtWidth.getText().toString();
-        int speed_limit = Speed.getSelectedItemPosition();
+        String speed_limit = Speed.getText().toString();
         String minimum_ditch_width = DitchWidth1.getText().toString();
         String maximum_ditch_width = DitchWidth2.getText().toString();
         String minimum_ditch_depth = DitchDepth1.getText().toString();
@@ -4341,13 +4351,13 @@ public class RockfallActivity extends AppCompatActivity
         String flma_name = FlmaName.getText().toString();
         String flma_id = FlmaId.getText().toString();
         String flma_description = FlmaDescription.getText().toString();
-        
+
         //Preliminary Rating
-            //Rockfall only
+        //Rockfall only
         int prelim_rockfall_ditch_eff=DitchEffectiveness.getSelectedItemPosition();
         int prelim_rockfall_rockfall_history = RockfallHistory.getSelectedItemPosition();
         String prelim_rockfall_block_size_event_vol = BSVperEvent.getText().toString();
-            //for all
+        //for all
         int impact_on_use = ImpactOU.getSelectedItemPosition();
         //0 is unchecked...1 is checked
         int aadt_usage_calc_checkbox = 0;
@@ -4358,12 +4368,12 @@ public class RockfallActivity extends AppCompatActivity
         String prelim_rating = PrelimRating.getText().toString();
 
         //Hazard Rating
-            //for all
+        //for all
         int slope_drainage = SlopeDrainage.getSelectedItemPosition();
         String hazard_rating_annual_rainfall = AnnualRainfall.getText().toString();
         String hazard_rating_slope_height_axial_length = SlopeHeightCalc.getText().toString();
         String hazard_rating_total = HazardTotal.getText().toString();
-            //rockfall only
+        //rockfall only
         int hazard_rockfall_maint_frequency = RockfallRMF.getSelectedItemPosition();
         int case_one_struc_cond = StructuralCondition1.getSelectedItemPosition();
         int case_one_rock_friction = RockFriction1.getSelectedItemPosition();
@@ -4384,22 +4394,22 @@ public class RockfallActivity extends AppCompatActivity
 
 
         Rockfall rockfall=new Rockfall(umbrella_agency,regional_admin,local_admin, date, road_trail_number,  road_or_trail,
-         road_trail_class, rater,  begin_mile_marker,  end_mile_marker,
-         side,  weather,  hazard_type,  begin_coordinate_lat,  begin_coordinate_long,
-                 end_coordinate_latitude,  end_coordinate_longitude,  datum,  aadt, 
-        length_affected,  slope_height_axial_length,  slope_angle,  sight_distance,
-                 road_trail_width,  speed_limit,  minimum_ditch_width,  maximum_ditch_width,
-                 minimum_ditch_depth,  maximum_ditch_Depth,  first_begin_ditch_slope,
-        first_end_ditch_slope,  second_begin_ditch_slope,  second_end_ditch_slope, blk_size,
-                 volume,  start_annual_rainfall,  end_annual_rainfall,  sole_access_route,  fixes_present,
-         photos,  comments,  flma_name,  flma_id,  flma_description,  prelim_rockfall_ditch_eff,
-         prelim_rockfall_rockfall_history,  prelim_rockfall_block_size_event_vol,  impact_on_use,
-         aadt_usage_calc_checkbox,  aadt_usage,  prelim_rating,  slope_drainage,  hazard_rating_annual_rainfall,
-                 hazard_rating_slope_height_axial_length,  hazard_rockfall_maint_frequency,  case_one_struc_cond,
-         case_one_rock_friction,  case_two_struc_condition,  case_two_diff_erosion,  hazard_rating_total,
-                 route_trail_width,  human_ex_factor,  percent_dsd,  r_w_impacts,  enviro_cult_impacts,
-         maint_complexity,  event_cost,  risk_total,  total_score);
-        
+                road_trail_class, rater,  begin_mile_marker,  end_mile_marker,
+                side,  weather,  hazard_type,  begin_coordinate_lat,  begin_coordinate_long,
+                end_coordinate_latitude,  end_coordinate_longitude,  datum,  aadt,
+                length_affected,  slope_height_axial_length,  slope_angle,  sight_distance,
+                road_trail_width,  speed_limit,  minimum_ditch_width,  maximum_ditch_width,
+                minimum_ditch_depth,  maximum_ditch_Depth,  first_begin_ditch_slope,
+                first_end_ditch_slope,  second_begin_ditch_slope,  second_end_ditch_slope, blk_size,
+                volume,  start_annual_rainfall,  end_annual_rainfall,  sole_access_route,  fixes_present,
+                photos,  comments,  flma_name,  flma_id,  flma_description,  prelim_rockfall_ditch_eff,
+                prelim_rockfall_rockfall_history,  prelim_rockfall_block_size_event_vol,  impact_on_use,
+                aadt_usage_calc_checkbox,  aadt_usage,  prelim_rating,  slope_drainage,  hazard_rating_annual_rainfall,
+                hazard_rating_slope_height_axial_length,  hazard_rockfall_maint_frequency,  case_one_struc_cond,
+                case_one_rock_friction,  case_two_struc_condition,  case_two_diff_erosion,  hazard_rating_total,
+                route_trail_width,  human_ex_factor,  percent_dsd,  r_w_impacts,  enviro_cult_impacts,
+                maint_complexity,  event_cost,  risk_total,  total_score);
+
 
         dbHandler.addRockfall(rockfall);
 
@@ -4432,7 +4442,7 @@ public class RockfallActivity extends AppCompatActivity
         SlopeAngle.setText("");
         SightDistance.setText("");
         RtWidth.setText("");
-        Speed.setSelection(0);
+        Speed.setText("");
         DitchWidth1.setText("");
         DitchWidth2.setText("");
         DitchDepth1.setText("");
@@ -4454,12 +4464,12 @@ public class RockfallActivity extends AppCompatActivity
         FlmaDescription.setText("");
 
         //Preliminary Rating
-            //rockfall only
+        //rockfall only
         DitchEffectiveness.setSelection(0);
         RockfallHistory.setSelection(0);
         BSVperEvent.setText("");
-        
-            //for all
+
+        //for all
         ImpactOU.setSelection(0);
         if(CheckAadt.isChecked()){
             CheckAadt.toggle();
@@ -4468,12 +4478,12 @@ public class RockfallActivity extends AppCompatActivity
         PrelimRating.setText("");
 
         //Hazard Rating
-            //for all
+        //for all
         SlopeDrainage.setSelection(0);
         AnnualRainfall.setText("");
         SlopeHeightCalc.setText("");
         HazardTotal.setText("");
-            //rockfall only
+        //rockfall only
         RockfallRMF.setSelection(0);
         StructuralCondition1.setSelection(0);
         RockFriction1.setSelection(0);
@@ -4502,8 +4512,13 @@ public class RockfallActivity extends AppCompatActivity
         //set everything
         if (rockfall != null) {
             Agency.setSelection(rockfall.getAgency());
+            adapterRegional.notifyDataSetChanged();
             Regional.setSelection(rockfall.getRegional());
+            System.out.println("Rockfall regional:"+rockfall.getRegional());
+            adapterLocal.notifyDataSetChanged();
             Local.setSelection(rockfall.getLocal());
+            System.out.println("Rockfall local:"+rockfall.getLocal());
+
             Date.setText(rockfall.getDate());
             RoadTrailNo.setText(rockfall.getRoad_trail_number());
             RoadTrail.setSelection(rockfall.getRoad_or_Trail());
@@ -4522,21 +4537,21 @@ public class RockfallActivity extends AppCompatActivity
 
                 ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
 
-                    for (int i = 0; i < hazards.length; i++) {
-                        if (i == 3) { //can't have more than 3
-                            break;
+                for (int i = 0; i < hazards.length; i++) {
+                    if (i == 3) { //can't have more than 3
+                        break;
+                    }
+                    //if it's in the list, set the spinner to it
+                    if (hazardTypeList.contains(hazards[i])) {
+                        if (i == 0) {
+                            HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
+                        } else if (i == 1) {
+                            HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
+                        } else {
+                            HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
                         }
-                        //if it's in the list, set the spinner to it
-                        if (hazardTypeList.contains(hazards[i])) {
-                            if (i == 0) {
-                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            } else if (i == 1) {
-                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            } else {
-                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[i]));
-                            }
-                        }
-                    }//end for
+                    }
+                }//end for
             }
 
             BeginLat.setText(rockfall.getBegin_coordinate_lat());
@@ -4550,7 +4565,7 @@ public class RockfallActivity extends AppCompatActivity
             SlopeAngle.setText(rockfall.getSlope_angle());
             SightDistance.setText(rockfall.getSight_distance());
             RtWidth.setText(rockfall.getRoad_trail_width());
-            Speed.setSelection(rockfall.getSpeed_limit());
+            Speed.setText(rockfall.getSpeed_limit());
             DitchWidth1.setText(rockfall.getMinimum_ditch_width());
             DitchWidth2.setText(rockfall.getMaximum_ditch_width());
             DitchDepth1.setText(rockfall.getMinimum_ditch_depth());
@@ -4575,7 +4590,7 @@ public class RockfallActivity extends AppCompatActivity
             FlmaDescription.setText(rockfall.getFlma_description());
 
             //preliminary rating
-                //rockfall only
+            //rockfall only
             DitchEffectiveness.setSelection(rockfall.getPrelim_rockfall_ditch_eff());
             RockfallHistory.setSelection(rockfall.getPrelim_rockfall_rockfall_history());
             BSVperEvent.setText(rockfall.getPrelim_rockfall_block_size_event_vol());
@@ -4593,12 +4608,12 @@ public class RockfallActivity extends AppCompatActivity
             PrelimRating.setText(rockfall.getPrelim_rating());
 
             //Hazard Rating
-                //for all
+            //for all
             SlopeDrainage.setSelection(rockfall.getSlope_drainage());
             AnnualRainfall.setText(rockfall.getHazard_rating_annual_rainfall());
             SlopeHeightCalc.setText(rockfall.getHazard_rating_slope_height_axial_length());
             HazardTotal.setText(rockfall.getHazard_rating_total());
-                //rockfall only
+            //rockfall only
             RockfallRMF.setSelection(rockfall.getHazard_rockfall_maint_frequency());
             StructuralCondition1.setSelection(rockfall.getCase_one_struc_cond());
             RockFriction1.setSelection(rockfall.getCase_one_rock_friction());
@@ -4667,26 +4682,26 @@ public class RockfallActivity extends AppCompatActivity
                 String hazardString = offlineSite.getHazard_type();
 
 
-                    String [] hazards = hazardString.split(",");
+                String [] hazards = hazardString.split(",");
 
-                    ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
+                ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
 
 
-                    for(int j = 0; j<hazards.length; j++){
-                        if(j==3){ //can't have more than 3
-                            break;
-                        }
-                        //if it's in the list, set the spinner to it
-                        if(hazardTypeList.contains(hazards[j])){
-                            if(j == 0){
-                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[j]));
-                            }else if(j == 1){
-                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[j]));
-                            }else{
-                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[j]));
-                            }
+                for(int j = 0; j<hazards.length; j++){
+                    if(j==3){ //can't have more than 3
+                        break;
+                    }
+                    //if it's in the list, set the spinner to it
+                    if(hazardTypeList.contains(hazards[j])){
+                        if(j == 0){
+                            HazardType1.setSelection(hazardTypeList.indexOf(hazards[j]));
+                        }else if(j == 1){
+                            HazardType2.setSelection(hazardTypeList.indexOf(hazards[j]));
+                        }else{
+                            HazardType3.setSelection(hazardTypeList.indexOf(hazards[j]));
                         }
                     }
+                }
 
 
 
@@ -4701,7 +4716,7 @@ public class RockfallActivity extends AppCompatActivity
                 SlopeAngle.setText(offlineSite.getSlope_angle());
                 SightDistance.setText(offlineSite.getSight_distance());
                 RtWidth.setText(offlineSite.getRoad_trail_width());
-                //speed limit?
+                Speed.setText(offlineSite.getSpeed_limit());
                 DitchWidth1.setText(offlineSite.getMinimum_ditch_width());
                 DitchWidth2.setText(offlineSite.getMaximum_ditch_width());
                 DitchDepth1.setText(offlineSite.getMinimum_ditch_depth());
@@ -4999,5 +5014,3 @@ public class RockfallActivity extends AppCompatActivity
         Uri uri2 = Uri.parse(path);
     }
 }
-
-

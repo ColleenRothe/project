@@ -30,7 +30,7 @@ public class Landslide extends Object {
     private String slope_angle;
     private String sight_distance;
     private String road_trail_width;
-    private  int speed_limit;
+    private String speed_limit;
     private String minimum_ditch_width;
     private String maximum_ditch_width;
     private String minimum_ditch_depth;
@@ -50,23 +50,23 @@ public class Landslide extends Object {
     private String flma_description;
 
     //Preliminary Rating
-        //landslide only
+    //landslide only
     private int prelim_landslide_road_width_affected;
     private int prelim_landslide_slide_erosion_effects;
     private String prelim_landslide_length_affected;
-        //for all
-     private int impact_on_use;
+    //for all
+    private int impact_on_use;
     private int aadt_usage_calc_checkbox;
     private String aadt_usage;
     private String prelim_rating;
 
     //Hazard Rating
-        //for all
+    //for all
     private int slope_drainage;
     private String hazard_rating_annual_rainfall;
     private String hazard_rating_slope_height_axial_length;
     private String hazard_rating_total;
-        //landslide only
+    //landslide only
     private int hazard_landslide_thaw_stability;
     private int hazard_landslide_maint_frequency;
     private int hazard_landslide_movement_history;
@@ -93,17 +93,17 @@ public class Landslide extends Object {
                      String road_trail_class,String rater, String begin_mile_marker, String end_mile_marker,
                      int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long,
                      String end_coordinate_latitude, String end_coordinate_longitude, String datum, String aadt, String
-                     length_affected, String slope_height_axial_length, String slope_angle, String sight_distance,
-                     String road_trail_width, int speed_limit, String minimum_ditch_width, String maximum_ditch_width,
+                             length_affected, String slope_height_axial_length, String slope_angle, String sight_distance,
+                     String road_trail_width, String speed_limit, String minimum_ditch_width, String maximum_ditch_width,
                      String minimum_ditch_depth, String maximum_ditch_depth, String first_begin_ditch_slope, String
-                     first_end_ditch_slope, String second_begin_ditch_slope, String second_end_ditch_slope, String
-                     start_annual_rainfall, String end_annual_rainfall, int sole_access_route, int fixes_Present, String photos,
+                             first_end_ditch_slope, String second_begin_ditch_slope, String second_end_ditch_slope, String
+                             start_annual_rainfall, String end_annual_rainfall, int sole_access_route, int fixes_Present, String photos,
                      String comments, String flma_name, String flma_id, String flma_description, int prelim_landslide_road_width_affected,
                      int prelim_landslide_slide_erosion_effects, String prelim_landslide_length_affected, int impact_on_use, int aadt_usage_calc_checkbox, String aadt_usage,
                      String prelim_rating, int slope_drainage, String hazard_rating_annual_rainfall, String hazard_rating_slope_height_axial_length,
                      String hazard_rating_total, int hazard_landslide_thaw_stability, int hazard_landslide_maint_frequency, int
-                     hazard_landslide_movement_history, String route_trail_width, String human_ex_factor, String percent_dsd, int
-                     r_w_impacts, int enviro_cult_impacts, int maint_complexity, int event_cost, String risk_total, String total_score){
+                             hazard_landslide_movement_history, String route_trail_width, String human_ex_factor, String percent_dsd, int
+                             r_w_impacts, int enviro_cult_impacts, int maint_complexity, int event_cost, String risk_total, String total_score){
 
         this.id=id;
         this.agency = agency;
@@ -185,7 +185,7 @@ public class Landslide extends Object {
                      int side, int weather, String hazard_type, String begin_coordinate_lat, String begin_coordinate_long,
                      String end_coordinate_latitude, String end_coordinate_longitude, String datum, String aadt, String
                              length_affected, String slope_height_axial_length, String slope_angle, String sight_distance,
-                     String road_trail_width, int speed_limit, String minimum_ditch_width, String maximum_ditch_width,
+                     String road_trail_width, String speed_limit, String minimum_ditch_width, String maximum_ditch_width,
                      String minimum_ditch_depth, String maximum_ditch_depth, String first_begin_ditch_slope, String
                              first_end_ditch_slope, String second_begin_ditch_slope, String second_end_ditch_slope, String
                              start_annual_rainfall, String end_annual_rainfall, int sole_access_route, int fixes_Present, String photos,
@@ -345,8 +345,8 @@ public class Landslide extends Object {
     public String getRoad_trail_width(){return road_trail_width;}
     public void setRoad_trail_width(String road_trail_width){this.road_trail_width=road_trail_width;}
 
-    public int getSpeed_limit(){return speed_limit;}
-    public void setSpeed_limit(int speed_limit){this.speed_limit=speed_limit;}
+    public String getSpeed_limit(){return speed_limit;}
+    public void setSpeed_limit(String speed_limit){this.speed_limit=speed_limit;}
 
     public String getMinimum_ditch_width(){return minimum_ditch_width;}
     public void setMinimum_ditch_width(String minimum_ditch_width){this.minimum_ditch_width=minimum_ditch_width;}
@@ -400,7 +400,7 @@ public class Landslide extends Object {
     public void setFlma_description(String flma_description){this.flma_description=flma_description;}
 
     //prelim rating
-        //landslide only
+    //landslide only
     public int getPrelim_landslide_road_width_affected(){return prelim_landslide_road_width_affected;}
     public void setPrelim_landslide_road_width_affected(int prelim_landslide_road_width_affected){this.prelim_landslide_road_width_affected=prelim_landslide_road_width_affected;}
 
@@ -409,7 +409,7 @@ public class Landslide extends Object {
 
     public String getPrelim_landslide_length_affected(){return prelim_landslide_length_affected;}
     public void setPrelim_landslide_length_affected(String prelim_landslide_length_affected){this.prelim_landslide_length_affected=prelim_landslide_length_affected;}
-        //for all
+    //for all
     public int getImpact_on_use(){return impact_on_use;}
     public void setImpact_on_use(int impact_on_use){this.impact_on_use=impact_on_use;}
 
@@ -423,7 +423,7 @@ public class Landslide extends Object {
     public void setPrelim_rating(String prelim_rating){this.prelim_rating=prelim_rating;}
 
     //Hazard Rating
-        //for all
+    //for all
     public int getSlope_drainage(){return slope_drainage;}
     public void setSlope_drainage(int slope_drainage){this.slope_drainage=slope_drainage;}
 
@@ -436,7 +436,7 @@ public class Landslide extends Object {
     public String getHazard_rating_total(){return hazard_rating_total;}
     public void setHazard_rating_total(String hazard_rating_total){this.hazard_rating_total=hazard_rating_total;}
 
-        //landslide only
+    //landslide only
     public int getHazard_landslide_thaw_stability(){return hazard_landslide_thaw_stability;}
     public void setHazard_landslide_thaw_stability(int hazard_landslide_thaw_stability){this.hazard_landslide_thaw_stability=hazard_landslide_thaw_stability;}
 

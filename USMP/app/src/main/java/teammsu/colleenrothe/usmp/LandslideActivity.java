@@ -129,7 +129,7 @@ public class LandslideActivity extends AppCompatActivity
     EditText SlopeAngle;
     EditText SightDistance;
     EditText RtWidth;
-    Spinner Speed;
+    EditText Speed;
     EditText DitchWidth1;
     EditText DitchWidth2;
     EditText DitchDepth1;
@@ -551,10 +551,8 @@ public class LandslideActivity extends AppCompatActivity
         RtWidth.setOnFocusChangeListener(rtWidthWatcher);
 
 
-        Speed = (Spinner) findViewById(R.id.L_Speed);
-        Speed.setFocusable(true);
-        Speed.setFocusableInTouchMode(true);
-        Speed.setOnItemSelectedListener(speedWatcher);
+        Speed = (EditText) findViewById(R.id.L_SpeedLimit);
+        Speed.setOnFocusChangeListener(speedWatcher);
         //Speed.setOnItemSelectedListener(riskWatcher); //NEW NEW NEW NEW
 
         DitchWidth1 = (EditText) findViewById(R.id.L_DitchWidth1);
@@ -1057,9 +1055,7 @@ public class LandslideActivity extends AppCompatActivity
                 SlopeAngle.setText(map.get("SLOPE_ANGLE"));
                 SightDistance.setText(map.get("SIGHT_DISTANCE"));
                 RtWidth.setText(map.get("ROAD_TRAIL_WIDTH"));
-
-                //speed???? need to look into that...
-
+                Speed.setText(map.get("SPEED_LIMIT"));
                 DitchWidth1.setText(map.get("MINIMUM_DITCH_WIDTH"));
                 DitchWidth2.setText(map.get("MAXIMUM_DITCH_WIDTH"));
                 DitchDepth1.setText(map.get("MINIMUM_DITCH_DEPTH"));
@@ -1824,25 +1820,25 @@ public class LandslideActivity extends AppCompatActivity
                     String sightDistanceS = SightDistance.getText().toString();
                     Double sightDistance = Double.parseDouble(sightDistanceS);
 
-                    String speed = Speed.getSelectedItem().toString();
+                    Integer speed = Integer.parseInt(Speed.getText().toString());
 
-                    if (speed.equals("25mph")) {
+                    if (speed <= 25) {
                         helper = 375;
-                    } else if (speed.equals("30mph")) {
+                    } else if (speed <= 30) {
                         helper = 450;
-                    } else if (speed.equals("35mph")) {
+                    } else if (speed <= 35) {
                         helper = 525;
-                    } else if (speed.equals("40mph")) {
+                    } else if (speed <= 40) {
                         helper = 600;
-                    } else if (speed.equals("45mph")) {
+                    } else if (speed <= 45) {
                         helper = 675;
-                    } else if (speed.equals("50mph")) {
+                    } else if (speed <=50) {
                         helper = 750;
-                    } else if (speed.equals("55mph")) {
+                    } else if (speed <= 55) {
                         helper = 875;
-                    } else if (speed.equals("60mph")) {
+                    } else if (speed <=60) {
                         helper = 1000;
-                    } else if (speed.equals("65mph")) {
+                    } else if (speed <=65) {
                         helper = 1050;
                     }
 
@@ -1874,7 +1870,7 @@ public class LandslideActivity extends AppCompatActivity
     };
 
 
-   //Call to calculate the preliminary rating on changes
+    //Call to calculate the preliminary rating on changes
     private final OnItemSelectedListener prelimWatcher = new OnItemSelectedListener() {
 
         @Override
@@ -2628,25 +2624,25 @@ public class LandslideActivity extends AppCompatActivity
                     String sightDistanceS = SightDistance.getText().toString();
                     Double sightDistance = Double.parseDouble(sightDistanceS);
 
-                    String speed = Speed.getSelectedItem().toString();
+                    Integer speed = Integer.parseInt(Speed.getText().toString());
 
-                    if (speed.equals("25mph")) {
+                    if (speed <= 25) {
                         helper = 375;
-                    } else if (speed.equals("30mph")) {
+                    } else if (speed <= 30) {
                         helper = 450;
-                    } else if (speed.equals("35mph")) {
+                    } else if (speed <= 35) {
                         helper = 525;
-                    } else if (speed.equals("40mph")) {
+                    } else if (speed <= 40) {
                         helper = 600;
-                    } else if (speed.equals("45mph")) {
+                    } else if (speed <= 45) {
                         helper = 675;
-                    } else if (speed.equals("50mph")) {
+                    } else if (speed <=50) {
                         helper = 750;
-                    } else if (speed.equals("55mph")) {
+                    } else if (speed <= 55) {
                         helper = 875;
-                    } else if (speed.equals("60mph")) {
+                    } else if (speed <=60) {
                         helper = 1000;
-                    } else if (speed.equals("65mph")) {
+                    } else if (speed <=65) {
                         helper = 1050;
                     }
 
@@ -2720,66 +2716,64 @@ public class LandslideActivity extends AppCompatActivity
     };
 
     //watch if they change the speed...
-    private final OnItemSelectedListener speedWatcher = new OnItemSelectedListener() {
+    private final View.OnFocusChangeListener speedWatcher = new View.OnFocusChangeListener() {
+        public void onFocusChange(View v, boolean hasFocus) {
 
-        @Override
+            if (!hasFocus) {
 
-        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            String sightDistanceS = SightDistance.getText().toString();
-            int length = sightDistanceS.length();
 
-            //not emtpy
-            if (length != 0) {
+                String sightDistanceS = SightDistance.getText().toString();
+                int length = sightDistanceS.length();
 
-                double score = 0;
-                double x = 1;
-                int helper = 0;
+                //not emtpy
+                if (length != 0) {
 
-                Double sightDistance = Double.parseDouble(sightDistanceS);
+                    double score = 0;
+                    double x = 1;
+                    int helper = 0;
 
-                String speed = Speed.getSelectedItem().toString();
-                if (speed.equals("25mph")) {
-                    helper = 375;
-                } else if (speed.equals("30mph")) {
-                    helper = 450;
-                } else if (speed.equals("35mph")) {
-                    helper = 525;
-                } else if (speed.equals("40mph")) {
-                    helper = 600;
-                } else if (speed.equals("45mph")) {
-                    helper = 675;
-                } else if (speed.equals("50mph")) {
-                    helper = 750;
-                } else if (speed.equals("55mph")) {
-                    helper = 875;
-                } else if (speed.equals("60mph")) {
-                    helper = 1000;
-                } else if (speed.equals("65mph")) {
-                    helper = 1050;
+                    Double sightDistance = Double.parseDouble(sightDistanceS);
+
+                    Integer speed = Integer.parseInt(Speed.getText().toString());
+
+                    if (speed <= 25) {
+                        helper = 375;
+                    } else if (speed <= 30) {
+                        helper = 450;
+                    } else if (speed <= 35) {
+                        helper = 525;
+                    } else if (speed <= 40) {
+                        helper = 600;
+                    } else if (speed <= 45) {
+                        helper = 675;
+                    } else if (speed <=50) {
+                        helper = 750;
+                    } else if (speed <= 55) {
+                        helper = 875;
+                    } else if (speed <=60) {
+                        helper = 1000;
+                    } else if (speed <=65) {
+                        helper = 1050;
+                    }
+
+                    x = ((120 - ((sightDistance / helper) * 100)) / 20);
+
+
+                    score = Math.pow(3, x);
+                    if (score > 100) {
+                        score = 100;
+                    }
+
+                    int scoreInt = (int) Math.round(score);
+
+
+                    String scores = String.valueOf(scoreInt);
+                    PercentDSD.setText(scores);
                 }
-
-                x = ((120 - ((sightDistance / helper) * 100)) / 20);
-
-
-                score = Math.pow(3, x);
-                if (score > 100) {
-                    score = 100;
-                }
-
-                int scoreInt = (int) Math.round(score);
-
-
-                String scores = String.valueOf(scoreInt);
-                PercentDSD.setText(scores);
             }
         }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-        }
-
     };
-
     //calculate risk total on changes
     private final OnItemSelectedListener riskWatcher = new OnItemSelectedListener() {
 
@@ -3590,7 +3584,7 @@ public class LandslideActivity extends AppCompatActivity
                     String sight_distance = String.valueOf(SightDistance.getText());
                     String road_trail_width = String.valueOf(RtWidth.getText()); //?
 
-                    String speed_limit = Speed.getSelectedItem().toString();
+                    String speed_limit = String.valueOf(Speed.getText());
 
                     String minimum_ditch_width = String.valueOf(DitchWidth1.getText());
                     String maximum_ditch_width = String.valueOf(DitchWidth2.getText());
@@ -3867,7 +3861,7 @@ public class LandslideActivity extends AppCompatActivity
                         String temp = "";
                         if (HazardType1.getSelectedItemPosition() != 0) {
                             for(int i = 0; i<hazardOptions.size(); i++){
-                               String [] tempA = hazardOptions.get(i);
+                                String [] tempA = hazardOptions.get(i);
                                 System.out.println(tempA[2]);
                                 if (tempA[2].equals(HazardType1.getSelectedItem().toString())){
                                     temp = temp.concat(tempA[0]);
@@ -3899,9 +3893,7 @@ public class LandslideActivity extends AppCompatActivity
                         String slope_angle = String.valueOf(SlopeAngle.getText());
                         String sight_distance = String.valueOf(SightDistance.getText());
                         String road_trail_width = String.valueOf(RtWidth.getText()); //?
-
-                        String speed_limit = Speed.getSelectedItem().toString();
-
+                        String speed_limit = String.valueOf(Speed.getText());
                         String minimum_ditch_width = String.valueOf(DitchWidth1.getText());
                         String maximum_ditch_width = String.valueOf(DitchWidth2.getText());
                         String minimum_ditch_depth = String.valueOf(DitchDepth1.getText());
@@ -4159,7 +4151,7 @@ public class LandslideActivity extends AppCompatActivity
         String slope_angle = SlopeAngle.getText().toString();
         String sight_distance = SightDistance.getText().toString();
         String road_trail_width = RtWidth.getText().toString();
-        int speed_limit = Speed.getSelectedItemPosition();
+        String speed_limit = Speed.getText().toString();
         String minimum_ditch_width = DitchWidth1.getText().toString();
         String maximum_ditch_width = DitchWidth2.getText().toString();
         String minimum_ditch_depth = DitchDepth1.getText().toString();
@@ -4282,7 +4274,7 @@ public class LandslideActivity extends AppCompatActivity
         SlopeAngle.setText("");
         SightDistance.setText("");
         RtWidth.setText("");
-        Speed.setSelection(0);
+        Speed.setText("");
         DitchWidth1.setText("");
         DitchWidth2.setText("");
         DitchDepth1.setText("");
@@ -4401,7 +4393,7 @@ public class LandslideActivity extends AppCompatActivity
             SlopeAngle.setText(landslide.getSlope_angle());
             SightDistance.setText(landslide.getSight_distance());
             RtWidth.setText(landslide.getRoad_trail_width());
-            Speed.setSelection(landslide.getSpeed_limit());
+            Speed.setText(landslide.getSpeed_limit());
             DitchWidth1.setText(landslide.getMinimum_ditch_width());
             DitchWidth2.setText(landslide.getMaximum_ditch_width());
             DitchDepth1.setText(landslide.getMinimum_ditch_depth());
@@ -4550,7 +4542,7 @@ public class LandslideActivity extends AppCompatActivity
                 SlopeAngle.setText(offlineSite.getSlope_angle());
                 SightDistance.setText(offlineSite.getSight_distance());
                 RtWidth.setText(offlineSite.getRoad_trail_width());
-                //speed limit?
+                Speed.setText(offlineSite.getSpeed_limit());
                 DitchWidth1.setText(offlineSite.getMinimum_ditch_width());
                 DitchWidth2.setText(offlineSite.getMaximum_ditch_width());
                 DitchDepth1.setText(offlineSite.getMinimum_ditch_depth());
@@ -4749,61 +4741,61 @@ public class LandslideActivity extends AppCompatActivity
     public void uploadImage() throws  Exception {
         class Run extends AsyncTask<String, Void, String> {
 
-        @Override
-        protected String doInBackground(String... params) {
+            @Override
+            protected String doInBackground(String... params) {
 
-            try {
+                try {
 
-                if(selectedImages != null){
-                    smallerImage();
-                    for(int i = 0; i<selectedImages.size(); i++) {
+                    if(selectedImages != null){
+                        smallerImage();
+                        for(int i = 0; i<selectedImages.size(); i++) {
 
-                        final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
-                        final OkHttpClient client = new OkHttpClient();
-                        String imageName = selectedImages.get(i).name;
+                            final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+                            final OkHttpClient client = new OkHttpClient();
+                            String imageName = selectedImages.get(i).name;
 
-                        RequestBody requestBody = new MultipartBuilder()
-                                .type(MultipartBuilder.FORM)
+                            RequestBody requestBody = new MultipartBuilder()
+                                    .type(MultipartBuilder.FORM)
 
-                                .addPart(
-                                        Headers.of("Content-Disposition", "form-data; name=\"" +
-                                                imageName +
-                                                "\"; filename=\"" +
-                                                imageName +
-                                                "\""),
-                                        RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImages.get(i).path)))
-                                .build();
+                                    .addPart(
+                                            Headers.of("Content-Disposition", "form-data; name=\"" +
+                                                    imageName +
+                                                    "\"; filename=\"" +
+                                                    imageName +
+                                                    "\""),
+                                            RequestBody.create(MEDIA_TYPE_PNG, new File(selectedImages.get(i).path)))
+                                    .build();
 
-                        Request request = new Request.Builder()
-                                .url("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
-                                .post(requestBody)
-                                .build();
+                            Request request = new Request.Builder()
+                                    .url("http://nl.cs.montana.edu/usmp/server/new_site_php/add_new_site.php")
+                                    .post(requestBody)
+                                    .build();
 
-                        Response response = null;
+                            Response response = null;
 
-                        response = client.newCall(request).execute();
+                            response = client.newCall(request).execute();
 
-                        if (!response.isSuccessful()) try {
-                            throw new IOException("Unexpected code " + response);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                            if (!response.isSuccessful()) try {
+                                throw new IOException("Unexpected code " + response);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            System.out.println(response.body().string());
+
                         }
-
-                        System.out.println(response.body().string());
-
                     }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (IOException e) {
-                e.printStackTrace();
+                return null;
             }
-            return null;
-        }
 
-    }
+        }
         Run r = new Run();
         r.execute();
-}
+    }
     //CREDITS(3)
     //compress image size
     public void smallerImage(){
