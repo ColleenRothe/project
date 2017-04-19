@@ -286,91 +286,63 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             tryLogin(mEmail, mPassword);
-            return login;
-
+            return true;
 
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-//            try {
-//                Thread.sleep(5000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
 
-            if (success) {
-                finish();
-                Intent intent = new Intent(LoginActivity.this, OnlineHomeActivity.class);
-                startActivity(intent);
-            } else {
-                mPasswordView.setError("Login information incorrect");
-                mPasswordView.requestFocus();
-            }
+
         }
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
+        public void tryLogin(final String email, final String password) {
 
-    }
+            Thread thread = new Thread(new Runnable() {
 
-    public void tryLogin(final String email, final String password){
+                @Override
+                public void run() {
+                    try {
+                        System.out.println("try login");
+                        //new connection
+                        URL url = new URL("http://nl.cs.montana.edu/test_sites/colleen.rothe/initial_login.php");
+                        URLConnection conn = url.openConnection();
+                        conn.setDoOutput(true);
+                        OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
-        Thread thread = new Thread(new Runnable() {
+                        writer.write("&email=" + email + "&password=" + password);
+                        writer.flush();
+                        String line;
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        while ((line = reader.readLine()) != null) {
+                            System.out.println(line);
+                            line = line.replace("\"", "");  //because it comes back like "2"
+                            //if it's a valid permission
+                            if (permissionList.contains(Integer.parseInt(line))) {
+                                permissions = Integer.parseInt(line);
+                                login = true;
+                                finish();
+                                Intent intent = new Intent(LoginActivity.this, OnlineHomeActivity.class);
+                                startActivity(intent);
+                            } else {
+                                login = false;
+                                mPasswordView.setError("Login information incorrect");
+                                mPasswordView.requestFocus();
+                            }
 
-            @Override
-            public void run() {
-                try  {
-                    //new connection
-                    URL url = new URL("http://nl.cs.montana.edu/test_sites/colleen.rothe/initial_login.php");
-                    URLConnection conn = url.openConnection();
-                    conn.setDoOutput(true);
-                    OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
-
-                    writer.write("&email="+email+"&password="+password);
-                    writer.flush();
-                    String line;
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    while ((line = reader.readLine()) != null) {
-                        System.out.println(line);
-                        line = line.replace("\"","");  //because it comes back like "2"
-                        //if it's a valid permission
-                        if(permissionList.contains(Integer.parseInt(line))){
-                            permissions = Integer.parseInt(line);
-                            setPermissions(permissions);
                         }
-
+                        writer.close();
+                        reader.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    writer.close();
-                    reader.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
 
 
-        });
+            });
 
-        thread.start();
-
-    }
-
-    //set permission true/false
-    public void setPermissions(int permission){
-        //if permission is valid...login
-        if(permissionList.contains(permission)){
-            login = true;
-        }
-        //can't login
-        else{
-            login = false;
+            thread.start();
         }
     }
-
 }
 

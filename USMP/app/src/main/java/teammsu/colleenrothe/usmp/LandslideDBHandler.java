@@ -289,7 +289,7 @@ public class LandslideDBHandler extends SQLiteOpenHelper {
             landslide.setSlope_angle(cursor.getString(22));
             landslide.setSight_distance(cursor.getString(23));
             landslide.setRoad_trail_width(cursor.getString(24));
-            landslide.setSpeed_limit(Integer.parseInt(cursor.getString(25)));
+            landslide.setSpeed_limit(cursor.getString(25));
             landslide.setMinimum_ditch_width(cursor.getString(26));
             landslide.setMaximum_ditch_width(cursor.getString(27));
             landslide.setMinimum_ditch_depth(cursor.getString(28));
