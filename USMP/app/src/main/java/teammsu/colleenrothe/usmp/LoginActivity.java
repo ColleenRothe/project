@@ -284,23 +284,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             tryLogin(mEmail, mPassword);
-            return login;
-
+            return true;
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-                Intent intent = new Intent(LoginActivity.this, OnlineHomeActivity.class);
-                startActivity(intent);
-            } else {
-                mPasswordView.setError("Login information incorrect");
-                mPasswordView.requestFocus();
-            }
+            
         }
 
         @Override
@@ -334,7 +323,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         //if it's a valid permission
                         if(permissionList.contains(Integer.parseInt(line))){
                             permissions = Integer.parseInt(line);
-                            setPermissions(permissions);
+                            finish();
+                            Intent intent = new Intent(LoginActivity.this, OnlineHomeActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            mPasswordView.setError("Login information incorrect");
+                            mPasswordView.requestFocus();
                         }
 
                     }
@@ -350,18 +345,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         thread.start();
     }
-
-    //set permission true/false
-    public void setPermissions(int permission){
-        //if permission is valid...login
-        if(permissionList.contains(permission)){
-            login = true;
-        }
-        //can't login
-        else{
-            login = false;
-        }
-    }
-
 }
 

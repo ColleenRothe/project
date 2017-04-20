@@ -1680,7 +1680,7 @@ public class RockfallActivity extends AppCompatActivity
                         String aadt = Aadt.getText().toString();
                         Double aadts = Double.parseDouble(aadt);
 
-                        x = Math.sqrt((aadts / 25));
+                        x = Math.sqrt((aadts / 50));
 
                         double score = Math.pow(3, x);
 
