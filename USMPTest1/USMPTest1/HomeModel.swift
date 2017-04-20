@@ -28,7 +28,7 @@ class HomeModel: NSObject, URLSessionDataDelegate{
 
     func helper(){
         //where the php is
-        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php")! as URL)
         
         request.httpMethod = "POST"
         
@@ -59,12 +59,14 @@ class HomeModel: NSObject, URLSessionDataDelegate{
             tempString.append("}")
             self.responseString = tempString
             
+            
             if let data2 = self.responseString.data(using: .utf8){
             
             //save as a dictionary
             do {
                 self.JSONDictionary =  try JSONSerialization.jsonObject(with: data2, options: []) as! NSDictionary
             } catch let error as NSError {
+                print("error here")
                 print("error: \(error.localizedDescription)")
             }
             }
@@ -150,6 +152,8 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         }
         if(self.JSONDictionary.value(forKey:"HAZARD_TYPE2")as? String != nil){
         thing.hazard_type = self.JSONDictionary.value(forKey: "HAZARD_TYPE2")! as? String
+        print("test hazard type:")
+        print(thing.hazard_type!)
         }
         else{
             thing.hazard_type = ""

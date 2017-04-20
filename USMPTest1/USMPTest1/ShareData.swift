@@ -67,5 +67,8 @@ class ShareData {
     var maintenance_lat = ""
     var maintenance_long = ""
     
+    //press submit button from the list
+    var off_submit = false
+    
     
 }

@@ -190,21 +190,48 @@ class OptionCell: UITableViewCell{
     
     func handleSaved(_ alertView:UIAlertAction!){
         //clear...then submit 
+        if(sharedData.OfflineType == "landslide"){
+            sharedData.load = true
+            shareData.form = "landslide"
+            shareData.off_submit = true
+            parentViewController!.performSegue(withIdentifier: "goSlopeRating", sender: self)
+            
+        }
+        if(sharedData.OfflineType == "rockfall"){
+            sharedData.load = true
+            shareData.form = "rockfall"
+            shareData.off_submit = true
+            parentViewController!.performSegue(withIdentifier: "goSlopeRating", sender: self)
+            
+        }
+        if(sharedData.OfflineType == "slopeEvent"){
+            sharedData.load = true
+            shareData.off_submit = true
+            parentViewController!.performSegue(withIdentifier: "loadNewSlope", sender: self)
+            
+        }
+        if(sharedData.OfflineType == "maintenance"){
+            sharedData.load = true
+            shareData.off_submit = true
+            parentViewController!.performSegue(withIdentifier: "loadMaintenance", sender: self)
+            
+        }
+
         
     }
     
-    func handleSubmitAll(_ alertView:UIAlertAction!){
-        //clear...then submit
-        
-    }
-    func handleAll(_ alertView:UIAlertAction!){
-        //clear...then submit
-        let alertController = UIAlertController(title: "Submit All?", message: "Are you sure you want to submit ALL saved forms of this type?", preferredStyle: UIAlertControllerStyle.alert)
-        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSubmitAll))
-        parentViewController!.present(alertController, animated: true, completion: nil)
-        
-    }
+//    func handleSubmitAll(_ alertView:UIAlertAction!){
+//        //clear...then submit
+//        
+//    }
+//    func handleAll(_ alertView:UIAlertAction!){
+//        //clear...then submit
+//        let alertController = UIAlertController(title: "Submit All?", message: "Are you sure you want to submit ALL saved forms of this type?", preferredStyle: UIAlertControllerStyle.alert)
+//        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
+//        alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSubmitAll))
+//        parentViewController!.present(alertController, animated: true, completion: nil)
+//        
+//    }
     
     //user message, confirming submit
     @IBAction func goSubmit(_ sender: AnyObject) {

@@ -347,7 +347,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         }
 
         //dismiss keyboard...
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(LandslideChoice.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(MaintenanceForm.dismissKeyboard))
         view.addGestureRecognizer(tap)
         
         
@@ -366,6 +366,14 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         if(!isInternetAvailable()){
             submitButton.isEnabled = false
             submitButton.backgroundColor = UIColor.darkGray
+        }
+    }
+    
+    //try here
+    override func viewDidAppear(_ animated: Bool) {
+        if(shareData.off_submit == true){
+            shareData.off_submit = false
+            submitButton.sendActions(for: .touchUpInside)
         }
     }
     

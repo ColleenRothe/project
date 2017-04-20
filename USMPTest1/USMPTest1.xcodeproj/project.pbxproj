@@ -17,7 +17,6 @@
 		9B3417651D07145C00428E11 /* OfflineList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3417641D07145C00428E11 /* OfflineList.swift */; };
 		9B3417671D071A0100428E11 /* OfflineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3417661D071A0100428E11 /* OfflineCell.swift */; };
 		9B3417691D075C8000428E11 /* ButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3417681D075C7F00428E11 /* ButtonCell.swift */; };
-		9B35AFCB1CD83DEC00CAE8CB /* RockfallChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B35AFCA1CD83DEC00CAE8CB /* RockfallChoice.swift */; };
 		9B4BCA1C1C5FC75B001528D5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B4BCA1B1C5FC75B001528D5 /* MapKit.framework */; };
 		9B5844A51C617231003FB1CA /* AnnotationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5844A41C617231003FB1CA /* AnnotationInfo.swift */; };
 		9B5B8B4F1BF4E7CF00A345E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B5B8B4E1BF4E7CF00A345E8 /* AppDelegate.swift */; };
@@ -33,8 +32,6 @@
 		9B87DD5E1CFDE30100C3F44C /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B87DD5C1CFDE30100C3F44C /* Fabric.framework */; };
 		9B87DD5F1CFDE30200C3F44C /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B87DD5D1CFDE30100C3F44C /* Crashlytics.framework */; };
 		9B8828941CC13DFB009D20CB /* FormChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8828931CC13DFB009D20CB /* FormChoice.swift */; };
-		9B8828961CC147D3009D20CB /* LandslideChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8828951CC147D3009D20CB /* LandslideChoice.swift */; };
-		9B914C861E43D249005DCE99 /* LandslideModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B914C851E43D249005DCE99 /* LandslideModel.swift */; };
 		9B9DFB3F1E5B97650012E668 /* OfflineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9DFB3E1E5B97650012E668 /* OfflineModel.swift */; };
 		9B9DFB411E5BAE210012E668 /* OfflineModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9DFB401E5BAE210012E668 /* OfflineModelHelper.swift */; };
 		9B9EDF791C346E5B00DED3D6 /* ShareData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B9EDF781C346E5B00DED3D6 /* ShareData.swift */; };
@@ -45,7 +42,6 @@
 		9BAE44E01CA9B5DE007496D6 /* USMPTest1.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9BAE44DE1CA9B5DE007496D6 /* USMPTest1.xcdatamodeld */; };
 		9BAF972E1CD121B600DF3D99 /* HomeModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BAF972D1CD121B600DF3D99 /* HomeModel2.swift */; };
 		9BC3DA261D061F2B006B0DE7 /* ManualRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC3DA251D061F2B006B0DE7 /* ManualRating.swift */; };
-		9BC80B4B1E4A68C200DA6E7F /* RockfallModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC80B4A1E4A68C200DA6E7F /* RockfallModelHelper.swift */; };
 		9BCBCB961C8E5E330044C587 /* Credits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BCBCB951C8E5E320044C587 /* Credits.swift */; };
 		9BD7C7431DF0D8E600286DAE /* SiteListModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD7C7421DF0D8E600286DAE /* SiteListModelHelper.swift */; };
 		9BD7C7451DF1FE4000286DAE /* SiteListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD7C7441DF1FE3F00286DAE /* SiteListModel.swift */; };
@@ -56,8 +52,6 @@
 		9BE8D24F1DEA230C004F2210 /* MaintenancePinModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE8D24E1DEA230C004F2210 /* MaintenancePinModelHelper.swift */; };
 		9BE8D2511DEA79E6004F2210 /* MaintenanceInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE8D2501DEA79E5004F2210 /* MaintenanceInfoModel.swift */; };
 		9BE8D2531DEA7FBB004F2210 /* MaintenanceInfoModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE8D2521DEA7FBB004F2210 /* MaintenanceInfoModelHelper.swift */; };
-		9BE93E0B1E43DDE600A44D1A /* RockfallModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE93E0A1E43DDE600A44D1A /* RockfallModel.swift */; };
-		9BE93E0D1E43E03800A44D1A /* LandslideModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE93E0C1E43E03800A44D1A /* LandslideModelHelper.swift */; };
 		9BEC1ADD1C83A7D3006E2D76 /* AnnotationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEC1ADC1C83A7D2006E2D76 /* AnnotationModel.swift */; };
 		9BEC1ADF1C83AF50006E2D76 /* pinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEC1ADE1C83AF4F006E2D76 /* pinModel.swift */; };
 		9BEC1AE11C83AFA0006E2D76 /* pinModelHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BEC1AE01C83AFA0006E2D76 /* pinModelHelper.swift */; };
@@ -101,7 +95,6 @@
 		9B3417641D07145C00428E11 /* OfflineList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineList.swift; sourceTree = "<group>"; };
 		9B3417661D071A0100428E11 /* OfflineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OfflineCell.swift; path = ../OfflineCell.swift; sourceTree = "<group>"; };
 		9B3417681D075C7F00428E11 /* ButtonCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCell.swift; sourceTree = "<group>"; };
-		9B35AFCA1CD83DEC00CAE8CB /* RockfallChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RockfallChoice.swift; path = ../RockfallChoice.swift; sourceTree = "<group>"; };
 		9B4BCA1B1C5FC75B001528D5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		9B5844A41C617231003FB1CA /* AnnotationInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationInfo.swift; sourceTree = "<group>"; };
 		9B5B8B4B1BF4E7CF00A345E8 /* USMPTest1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = USMPTest1.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,8 +114,6 @@
 		9B87DD5C1CFDE30100C3F44C /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = USMPTest1/Fabric.framework; sourceTree = "<group>"; };
 		9B87DD5D1CFDE30100C3F44C /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = USMPTest1/Crashlytics.framework; sourceTree = "<group>"; };
 		9B8828931CC13DFB009D20CB /* FormChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FormChoice.swift; path = ../FormChoice.swift; sourceTree = "<group>"; };
-		9B8828951CC147D3009D20CB /* LandslideChoice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandslideChoice.swift; sourceTree = "<group>"; };
-		9B914C851E43D249005DCE99 /* LandslideModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandslideModel.swift; sourceTree = "<group>"; };
 		9B9DFB3E1E5B97650012E668 /* OfflineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineModel.swift; sourceTree = "<group>"; };
 		9B9DFB401E5BAE210012E668 /* OfflineModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineModelHelper.swift; sourceTree = "<group>"; };
 		9B9EDF781C346E5B00DED3D6 /* ShareData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareData.swift; sourceTree = "<group>"; };
@@ -133,7 +124,6 @@
 		9BAE44DF1CA9B5DE007496D6 /* USMPTest1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = USMPTest1.xcdatamodel; sourceTree = "<group>"; };
 		9BAF972D1CD121B600DF3D99 /* HomeModel2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeModel2.swift; sourceTree = "<group>"; };
 		9BC3DA251D061F2B006B0DE7 /* ManualRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualRating.swift; sourceTree = "<group>"; };
-		9BC80B4A1E4A68C200DA6E7F /* RockfallModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockfallModelHelper.swift; sourceTree = "<group>"; };
 		9BCBCB951C8E5E320044C587 /* Credits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
 		9BD7C7421DF0D8E600286DAE /* SiteListModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteListModelHelper.swift; sourceTree = "<group>"; };
 		9BD7C7441DF1FE3F00286DAE /* SiteListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiteListModel.swift; sourceTree = "<group>"; };
@@ -144,8 +134,6 @@
 		9BE8D24E1DEA230C004F2210 /* MaintenancePinModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaintenancePinModelHelper.swift; sourceTree = "<group>"; };
 		9BE8D2501DEA79E5004F2210 /* MaintenanceInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaintenanceInfoModel.swift; sourceTree = "<group>"; };
 		9BE8D2521DEA7FBB004F2210 /* MaintenanceInfoModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaintenanceInfoModelHelper.swift; sourceTree = "<group>"; };
-		9BE93E0A1E43DDE600A44D1A /* RockfallModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockfallModel.swift; sourceTree = "<group>"; };
-		9BE93E0C1E43E03800A44D1A /* LandslideModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LandslideModelHelper.swift; sourceTree = "<group>"; };
 		9BEC1ADC1C83A7D2006E2D76 /* AnnotationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationModel.swift; sourceTree = "<group>"; };
 		9BEC1ADE1C83AF4F006E2D76 /* pinModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pinModel.swift; sourceTree = "<group>"; };
 		9BEC1AE01C83AFA0006E2D76 /* pinModelHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pinModelHelper.swift; sourceTree = "<group>"; };
@@ -232,18 +220,14 @@
 				9B3417681D075C7F00428E11 /* ButtonCell.swift */,
 				9BCBCB951C8E5E320044C587 /* Credits.swift */,
 				9B8828931CC13DFB009D20CB /* FormChoice.swift */,
+				9B6764E01E9C6EF300C6BBB2 /* FullSiteModel.swift */,
+				9B6764E21E9C6FAD00C6BBB2 /* FullSiteModelHelper.swift */,
+				9B0CB3A71E95F86E00E5A322 /* HazardTypeHelper.swift */,
 				9BD916D31C7B76DB008402A1 /* HomeModel.swift */,
 				9BAF972D1CD121B600DF3D99 /* HomeModel2.swift */,
 				9B5B8B5A1BF4E7CF00A345E8 /* Info.plist */,
-				9B8828951CC147D3009D20CB /* LandslideChoice.swift */,
-				9B0CB3A71E95F86E00E5A322 /* HazardTypeHelper.swift */,
-				9B914C851E43D249005DCE99 /* LandslideModel.swift */,
-				9BE93E0C1E43E03800A44D1A /* LandslideModelHelper.swift */,
 				9B5B8B571BF4E7CF00A345E8 /* LaunchScreen.storyboard */,
 				9B5B8B521BF4E7CF00A345E8 /* Main.storyboard */,
-				9B0B2B081E9734E20012E557 /* SlopeRatingForm.swift */,
-				9B6764E01E9C6EF300C6BBB2 /* FullSiteModel.swift */,
-				9B6764E21E9C6FAD00C6BBB2 /* FullSiteModelHelper.swift */,
 				9B5D99071CDE961A00891FC9 /* MaintenanceForm.swift */,
 				9BE8D2501DEA79E5004F2210 /* MaintenanceInfoModel.swift */,
 				9BE8D2521DEA7FBB004F2210 /* MaintenanceInfoModelHelper.swift */,
@@ -261,13 +245,11 @@
 				9BEC1ADE1C83AF4F006E2D76 /* pinModel.swift */,
 				9BEC1AE01C83AFA0006E2D76 /* pinModelHelper.swift */,
 				9B9F14311BF63D26004B8B3E /* RatingManual.pdf */,
-				9B35AFCA1CD83DEC00CAE8CB /* RockfallChoice.swift */,
-				9BE93E0A1E43DDE600A44D1A /* RockfallModel.swift */,
-				9BC80B4A1E4A68C200DA6E7F /* RockfallModelHelper.swift */,
 				9B9EDF781C346E5B00DED3D6 /* ShareData.swift */,
 				9BA528351C89FAEB0042FB4D /* SiteImages.swift */,
 				9BD7C7441DF1FE3F00286DAE /* SiteListModel.swift */,
 				9BD7C7421DF0D8E600286DAE /* SiteListModelHelper.swift */,
+				9B0B2B081E9734E20012E557 /* SlopeRatingForm.swift */,
 				9BAE44DE1CA9B5DE007496D6 /* USMPTest1.xcdatamodeld */,
 				9BAC04931C037DE70057E44E /* VConlineHome.swift */,
 				9B5B8B501BF4E7CF00A345E8 /* ViewController.swift */,
@@ -555,7 +537,6 @@
 				9B3417671D071A0100428E11 /* OfflineCell.swift in Sources */,
 				9B9EDF791C346E5B00DED3D6 /* ShareData.swift in Sources */,
 				9BCBCB961C8E5E330044C587 /* Credits.swift in Sources */,
-				9B8828961CC147D3009D20CB /* LandslideChoice.swift in Sources */,
 				9BD7C7451DF1FE4000286DAE /* SiteListModel.swift in Sources */,
 				9B9DFB3F1E5B97650012E668 /* OfflineModel.swift in Sources */,
 				9B9F14301BF63B5A004B8B3E /* ViewControllerManual.swift in Sources */,
@@ -563,16 +544,11 @@
 				9BE8D24D1DEA20BF004F2210 /* MaintenancePinModel.swift in Sources */,
 				9BE8D24B1DEA138E004F2210 /* MaintenanceMap.swift in Sources */,
 				9BDA49CF1D62464000B9C7AD /* OptionCell.swift in Sources */,
-				9B35AFCB1CD83DEC00CAE8CB /* RockfallChoice.swift in Sources */,
 				9BAC04941C037DE70057E44E /* VConlineHome.swift in Sources */,
 				9BE8D24F1DEA230C004F2210 /* MaintenancePinModelHelper.swift in Sources */,
 				9B8828941CC13DFB009D20CB /* FormChoice.swift in Sources */,
-				9BE93E0D1E43E03800A44D1A /* LandslideModelHelper.swift in Sources */,
-				9B914C861E43D249005DCE99 /* LandslideModel.swift in Sources */,
 				9B0B2B091E9734E20012E557 /* SlopeRatingForm.swift in Sources */,
 				9BAF972E1CD121B600DF3D99 /* HomeModel2.swift in Sources */,
-				9BE93E0B1E43DDE600A44D1A /* RockfallModel.swift in Sources */,
-				9BC80B4B1E4A68C200DA6E7F /* RockfallModelHelper.swift in Sources */,
 				9B5844A51C617231003FB1CA /* AnnotationInfo.swift in Sources */,
 				9B5D990A1CDEB28300891FC9 /* NewSlopeEventForm.swift in Sources */,
 				9BC3DA261D061F2B006B0DE7 /* ManualRating.swift in Sources */,

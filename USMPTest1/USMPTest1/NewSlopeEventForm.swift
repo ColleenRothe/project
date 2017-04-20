@@ -351,6 +351,14 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         view.addGestureRecognizer(tap)
     }
     
+    //try here
+    override func viewDidAppear(_ animated: Bool) {
+        if(shareData.off_submit == true){
+            shareData.off_submit = false
+            submitButton.sendActions(for: .touchUpInside)
+        }
+    }
+    
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
