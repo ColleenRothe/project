@@ -116,6 +116,9 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         
         //set the labels with the appropriate information downloaded
         
+        print("selected site_id:")
+        print(selectedLocation.site_id!)
+        
         site_idLabel.text = "Site ID: \(selectedLocation.site_id!)"
         
         coordinatesLabel.text = "Coordinates: \(selectedLocation.coordinates!)"

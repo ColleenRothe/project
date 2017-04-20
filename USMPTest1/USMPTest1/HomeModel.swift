@@ -28,7 +28,7 @@ class HomeModel: NSObject, URLSessionDataDelegate{
 
     func helper(){
         //where the php is
-        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php")! as URL)
+        let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/getLandslide.php")! as URL)
         
         request.httpMethod = "POST"
         
@@ -174,6 +174,8 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         }else{
             thing.comments=""
         }
+        
+        
 
         comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
         
