@@ -59,6 +59,8 @@ class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelH
         
         let pin: MGLPointAnnotation = MGLPointAnnotation()
         pin.coordinate = CLLocationCoordinate2DMake(location.latitude, location.longitude)
+        shareData.maintenance_lat = String(location.latitude)
+        shareData.maintenance_long = String(location.longitude)
         mapView.addAnnotation(pin) //add pin to the map
         pin.title = "New Maintenance Form"
         pin.subtitle = "Click to Add"

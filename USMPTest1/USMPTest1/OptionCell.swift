@@ -216,7 +216,7 @@ class OptionCell: UITableViewCell{
 
         let alertController = UIAlertController(title: "Submit", message: "Are you sure you want to submit form?", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Submit All", style: UIAlertActionStyle.default, handler: handleAll))
+        //alertController.addAction(UIAlertAction(title: "Submit All", style: UIAlertActionStyle.default, handler: handleAll))
         alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSaved))
         
         parentViewController!.present(alertController, animated: true, completion: nil)

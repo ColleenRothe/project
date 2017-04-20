@@ -60,8 +60,12 @@ class ShareData {
             //level 2 is read-only
     var level = 4;
     
-    //
+    //slope rating
     var form = "landslide"  //or rockfall
+    
+    //when creating a new maintenance pin
+    var maintenance_lat = ""
+    var maintenance_long = ""
     
     
 }

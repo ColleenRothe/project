@@ -831,7 +831,7 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
         if checkedProlongedFreezing == false{
             let image = UIImage(named: "checkmark")! as UIImage
             prolongedFreezingButton.setImage(image, for: UIControlState())
-            checkedSnowfall = true
+            checkedProlongedFreezing = true
         }
         else{
             let image = UIImage(named: "unchecked")! as UIImage
@@ -1278,10 +1278,12 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             if error != nil {
                 print("error=\(String(describing: error))")
                 print("error=\(String(describing: error))")
-                let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
-                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alertController, animated: true, completion: nil)
-                
+                DispatchQueue.main.async(execute: {
+                    let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                })
+
                 return
             }
             
@@ -1289,9 +1291,11 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             
             print("error=\(String(describing: error))")
             //user message confirming submit
-            let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alertController, animated: true, completion: nil)
+            DispatchQueue.main.async(execute: {
+                let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+            })
 
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("responseString = \(String(describing: responseString))")
@@ -1661,8 +1665,10 @@ class NewSlopeEventForm: UIViewController, UIPickerViewDelegate, UIPickerViewDat
             
                     let photoResults = PHAsset.fetchAssets(withLocalIdentifiers: photos, options: nil)
             
+                    if(photoResults.count > 0){
                     for i in 0 ... photoResults.count-1{
                             images.append(photoResults.object(at: i))
+                    }
                     }
             
                     roadTrailNoText.text = sites[number].value(forKey: "roadTrailNo")! as? String

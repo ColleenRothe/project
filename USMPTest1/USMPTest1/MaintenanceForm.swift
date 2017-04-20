@@ -1040,39 +1040,187 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             us_event = "Slope Mitigation/Repair"
         }
        
-        let rtNumString = rtNum.text
-        let beginMileString = beginMile.text
-        let endMileString = endMile.text
+        let rtNumString = rtNum.text!
+        let beginMileString = beginMile.text!
+        let endMileString = endMile.text!
         
-        let agency = "agency"
-        let regional = "regional"
-        let local = "local"
+        //agency
+        let agencyS = agencyOptions[agency.selectedRow(inComponent: 0)]
+        if(agencyS == "FS"){
+            agency.selectRow(1, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
+            
+        }else if(agencyS == "NPS"){
+            agency.selectRow(2, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+            
+            
+        }else if(agencyS == "BLM"){
+            agency.selectRow(3, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 3, inComponent: 0)
+            
+            
+        }else if(agencyS == "BIA"){
+            agency.selectRow(4, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
+        }
+        //regional
+        var regionalS = ""
+        if(agency.selectedRow(inComponent: 0) == 1){ //fs
+            regionalS = FSRegionalOptions[regional.selectedRow(inComponent: 0)]
+        }
+        if(agency.selectedRow(inComponent: 0) == 2){ //fs
+            regionalS = NPSRegionalOptions[regional.selectedRow(inComponent: 0)]
+        }
+        //local
+        var localS = ""
+        if(agency.selectedRow(inComponent: 0) == 1){ //FS
+            if(regional.selectedRow(inComponent: 0) == 1){  //NORTHERN
+                localS = FSLocal1Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 2){  //Rocky MTN
+                localS = FSLocal2Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 3){  //Southwestern
+                localS = FSLocal3Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 4){  //Intermountain
+                localS = FSLocal4Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 5){  //Pacific Southwest
+                localS = FSLocal5Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 6){  //Pacific Northwest
+                localS = FSLocal6Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 7){  //Southern
+                localS = FSLocal7Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 8){  //Eastern
+                localS = FSLocal8Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 9){  //Alaska
+                localS = FSLocal9Options[local.selectedRow(inComponent: 0)]
+            }
+        }
+        
+        if(agency.selectedRow(inComponent: 0) == 2){ //NPS
+            if(regional.selectedRow(inComponent: 0) == 1){  //Akr
+                localS = NPSLocal1Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 2){  //Imr
+                localS = NPSLocal2Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 3){  //Mwr
+                localS = NPSLocal3Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 4){  //Ncr
+                localS = NPSLocal4Options[local.selectedRow(inComponent: 0)]
+            }
+            
+            if(regional.selectedRow(inComponent: 0) == 5){  //Ner
+                localS = NPSLocal5Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 6){  //pwr
+                localS = NPSLocal6Options[local.selectedRow(inComponent: 0)]
+            }
+            if(regional.selectedRow(inComponent: 0) == 7){  //ser
+                localS = NPSLocal7Options[local.selectedRow(inComponent: 0)]
+            }
+            
+        }
+
         
         
-        let percent0 = Int(percent0Text.text!)
-        let percent1 = Int(percent1Text.text!)
-        let percent2 = Int(percent2Text.text!)
-        let percent3 = Int(percent3Text.text!)
-        let percent4 = Int(percent4Text.text!)
-        let percent5 = Int(percent5Text.text!)
-        let percent6 = Int(percent6Text.text!)
-        let percent7 = Int(percent7Text.text!)
-        let percent8 = Int(percent8Text.text!)
-        let percent9 = Int(percent9Text.text!)
-        let percent10 = Int(percent10Text.text!)
-        let percent11 = Int(percent11Text.text!)
-        let percent12 = Int(percent12Text.text!)
-        let percent13 = Int(percent13Text.text!)
-        let percent14 = Int(percent14Text.text!)
-        let percent15 = Int(percent15Text.text!)
-        let percent16 = Int(percent16Text.text!)
-        let percent17 = Int(percent17Text.text!)
-        let percent18 = Int(percent18Text.text!)
-        let percent19 = Int(percent19Text.text!)
-        let percent20 = Int(percent20Text.text!)
+        var percent0 = 0
+        if(percent0Text.text != ""){
+         percent0 = Int(percent0Text.text!)!
+        }
+        var percent1 = 0
+        if(percent1Text.text != ""){
+            percent1 = Int(percent1Text.text!)!
+        }
+        var percent2 = 0
+        if(percent2Text.text != ""){
+            percent2 = Int(percent2Text.text!)!
+        }
+        var percent3 = 0
+        if(percent3Text.text != ""){
+            percent3 = Int(percent3Text.text!)!
+        }
+        var percent4 = 0
+        if(percent4Text.text != ""){
+            percent4 = Int(percent4Text.text!)!
+        }
+        var percent5 = 0
+        if(percent5Text.text != ""){
+            percent5 = Int(percent5Text.text!)!
+        }
+        var percent6 = 0
+        if(percent6Text.text != ""){
+            percent6 = Int(percent6Text.text!)!
+        }
+        var percent7 = 0
+        if(percent7Text.text != ""){
+            percent7 = Int(percent7Text.text!)!
+        }
+        var percent8 = 0
+        if(percent8Text.text != ""){
+            percent8 = Int(percent8Text.text!)!
+        }
+        var percent9 = 0
+        if(percent9Text.text != ""){
+            percent9 = Int(percent9Text.text!)!
+        }
+        var percent10 = 0
+        if(percent10Text.text != ""){
+            percent10 = Int(percent10Text.text!)!
+        }
+        var percent11 = 0
+        if(percent11Text.text != ""){
+            percent11 = Int(percent11Text.text!)!
+        }
+        var percent12 = 0
+        if(percent12Text.text != ""){
+            percent12 = Int(percent12Text.text!)!
+        }
+        var percent13 = 0
+        if(percent13Text.text != ""){
+            percent13 = Int(percent13Text.text!)!
+        }
+        var percent14 = 0
+        if(percent14Text.text != ""){
+            percent14 = Int(percent14Text.text!)!
+        }
+        var percent15 = 0
+        if(percent15Text.text != ""){
+            percent15 = Int(percent15Text.text!)!
+        }
+        var percent16 = 0
+        if(percent16Text.text != ""){
+            percent16 = Int(percent16Text.text!)!
+        }
+        var percent17 = 0
+        if(percent17Text.text != ""){
+            percent17 = Int(percent17Text.text!)!
+        }
+        var percent18 = 0
+        if(percent18Text.text != ""){
+            percent18 = Int(percent18Text.text!)!
+        }
+        var percent19 = 0
+        if(percent19Text.text != ""){
+            percent19 = Int(percent19Text.text!)!
+        }
+        var percent20 = 0
+        if(percent20Text.text != ""){
+            percent20 = Int(percent20Text.text!)!
+        }
+    
+        let total = totalCostText.text!
         
         
-        let postString = "site_id=0&code_relation=\(codeText.text!)&maintenance_type=\(maintenance_type)&road_trail_no=\(rtNumString)&begin_mile_marker=\(beginMileString)&end_mile_marker=\(endMileString)&umbrella_agency=\(agency)&regional_admin=\(regional)&local_admin=\(local)&us_event=\(us_event)&event_desc=\(eventDescriptionText.text!)&design_pse=\(percent0!)&remove_ditch_debris=\(percent1!)&remove_road_trail_debris=\(percent2!)&relevel_aggregate=\(percent3!)&relevel_patch=\(percent4!)&drainage_improvement=\(percent5!)&deep_patch=\(percent6!)&haul_debris=\(percent7!)&scaling_rock_slopes=\(percent8!)&road_trail_alignment=\(percent9!)&repair_rockfall_barrier=\(percent10!)&repair_rockfall_netting=\(percent11!)&sealing_cracks=\(percent12!)&guardrail=\(percent13!)&cleaning_drains=\(percent14!)&flagging_signing=\(percent15!)&other1_desc=\(other1Text.text!)&other1=\(percent16!)&other2_desc=\(other2Text.text!)&other2=\(percent17!)&other3_desc=\(other3Text.text!)&other3=\(percent18!)&other4_desc=\(other4Text.text!)&other4=\(percent19!)&other5_desc=\(other5Text.text!)&other5=\(percent20!)"
+        let postString = "site_id=0&code_relation=\(codeText.text!)&maintenance_type=\(maintenance_type)&road_trail_no=\(rtNumString)&begin_mile_marker=\(beginMileString)&end_mile_marker=\(endMileString)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&us_event=\(us_event)&event_desc=\(eventDescriptionText.text!)&design_pse=\(percent0)&remove_ditch_debris=\(percent1)&remove_road_trail_debris=\(percent2)&relevel_aggregate=\(percent3)&relevel_patch=\(percent4)&drainage_improvement=\(percent5)&deep_patch=\(percent6)&haul_debris=\(percent7)&scaling_rock_slopes=\(percent8)&road_trail_alignment=\(percent9)&repair_rockfall_barrier=\(percent10)&repair_rockfall_netting=\(percent11)&sealing_cracks=\(percent12)&guardrail=\(percent13)&cleaning_drains=\(percent14)&flagging_signing=\(percent15)&other1_desc=\(other1Text.text!)&other1=\(percent16)&other2_desc=\(other2Text.text!)&other2=\(percent17)&other3_desc=\(other3Text.text!)&other3=\(percent18)&other4_desc=\(other4Text.text!)&other4=\(percent19)&other5_desc=\(other5Text.text!)&other5=\(percent20)&maintenance_lat=\(shareData.maintenance_lat)&maintenance_long=\(shareData.maintenance_long)&total=\(total)"
 
             request.httpBody = postString.data(using: String.Encoding.utf8)
         
@@ -1081,6 +1229,12 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
             if error != nil {
                 print("error=\(String(describing: error))")
+                print("error=\(String(describing: error))")
+                DispatchQueue.main.async(execute: {
+                let alertController = UIAlertController(title: "Error", message: "There was an error submitting your information", preferredStyle: UIAlertControllerStyle.alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alertController, animated: true, completion: nil)
+                })
                 return
             }
             
@@ -1088,6 +1242,14 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("responseString = \(String(describing: responseString))")
+            
+            //user message confirming submit
+            DispatchQueue.main.async(execute: {
+            let alertController = UIAlertController(title: "Success", message: "Information Submitted Successfully", preferredStyle: UIAlertControllerStyle.alert)
+            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alertController, animated: true, completion: nil)
+            })
+
         }
         task.resume()
 
@@ -1190,7 +1352,12 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         site.setValue(other5Text.text, forKey: "other5Text")
 
         site.setValue(percentagesTotalText.text, forKey: "percentTotal")
-            
+        
+        //latitude/longitude
+        site.setValue(shareData.maintenance_lat, forKey: "latitude")
+        site.setValue(shareData.maintenance_long, forKey: "longitude")
+
+        
         //success/failure messages to user
         do {
                 try managedContext.save()
@@ -1258,6 +1425,8 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     //MARK: Actions and Cost
                     
                     totalCostText.text = sites[number].value(forKey: "totalCost")! as? String
+            
+                    percent0Text.text = sites[number].value(forKey: "designPSE")! as? String
                     
                     percent1Text.text = sites[number].value(forKey: "removeAndMaintain")! as? String
                     
@@ -1312,7 +1481,13 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
                     percent20Text.text = sites[number].value(forKey: "other5")! as? String
             
                     percentagesTotalText.text = sites[number].value(forKey: "percentTotal")! as? String
-                    
+            
+                    //latitude & longitude
+                    shareData.maintenance_lat = (sites[number].value(forKey: "latitude")! as? String)!
+                    shareData.maintenance_long = (sites[number].value(forKey: "longitude")! as? String)!
+
+
+            
             
         } catch let error as NSError {
             print("Could not fetch \(error), \(error.userInfo)")
