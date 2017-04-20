@@ -3178,6 +3178,8 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             for i in 0 ... (agencyOptions.count - 1){
                 if (agencyOptions[i] == agencyS){
                     agency.selectRow(agencyOptions.index(of: agencyS!)!, inComponent: 0, animated: true)
+                    self.agency.delegate?.pickerView!(agency, didSelectRow: agencyOptions.index(of: agencyS!)!, inComponent: 0)
+
                 }
             }
             
@@ -3188,33 +3190,52 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             if(agency.selectedRow(inComponent: 0) == 1){
                 if(FSRegionalOptions.contains(regional_admin!)){
                     regional.selectRow(FSRegionalOptions.index(of: regional_admin!)!, inComponent: 0, animated: true)
+                    self.regional.delegate?.pickerView!(regional, didSelectRow: FSRegionalOptions.index(of: regional_admin!)!, inComponent: 0)
+
                     
                     if(FSNorthernLocal.contains(local_admin!)){
                         local.selectRow(FSNorthernLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSNorthernLocal.index(of: local_admin!)!, inComponent: 0)
                     }
                     else if(FSRockyMountainLocal.contains(local_admin!)){
                         local.selectRow(FSRockyMountainLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSRockyMountainLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(FSSouthwesternLocal.contains(local_admin!)){
                         local.selectRow(FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(FSIntermountainLocal.contains(local_admin!)){
                         local.selectRow(FSIntermountainLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSIntermountainLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(FSPacificSouthwestLocal.contains(local_admin!)){
                         local.selectRow(FSPacificSouthwestLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSPacificSouthwestLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(FSPacificNorthwestLocal.contains(local_admin!)){
                         local.selectRow(FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSSouthwesternLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(FSSouthernLocal.contains(local_admin!)){
                         local.selectRow(FSSouthernLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSSouthernLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(FSEasternLocal.contains(local_admin!)){
                         local.selectRow(FSEasternLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSEasternLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(FSAlaskaLocal.contains(local_admin!)){
                         local.selectRow(FSAlaskaLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: FSAlaskaLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                 }
             }
@@ -3223,27 +3244,43 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             if(agency.selectedRow(inComponent: 0) == 2){
                 if(NPSRegionalOptions.contains(regional_admin!)){
                     regional.selectRow(NPSRegionalOptions.index(of: regional_admin!)!, inComponent: 0, animated: true)
+                    self.local.delegate?.pickerView!(local, didSelectRow: NPSRegionalOptions.index(of: regional_admin!)!, inComponent: 0)
+
                     
                     if(NPSAkrLocal.contains(local_admin!)){
                         local.selectRow(NPSAkrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: NPSAkrLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(NPSImrLocal.contains(local_admin!)){
                         local.selectRow(NPSImrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: NPSImrLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(NPSMwrLocal.contains(local_admin!)){
                         local.selectRow(NPSMwrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: NPSMwrLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(NPSNcrLocal.contains(local_admin!)){
                         local.selectRow(NPSNcrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: NPSNcrLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(NPSNerLocal.contains(local_admin!)){
                         local.selectRow(NPSNerLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: NPSNerLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(NPSPwrLocal.contains(local_admin!)){
                         local.selectRow(NPSPwrLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: NPSPwrLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                     else if(NPSSerLocal.contains(local_admin!)){
                         local.selectRow(NPSSerLocal.index(of: local_admin!)!, inComponent: 0, animated: true)
+                        self.local.delegate?.pickerView!(local, didSelectRow: NPSSerLocal.index(of: local_admin!)!, inComponent: 0)
+
                     }
                 }
             }
@@ -3261,6 +3298,46 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             if(sideOptions.contains(side!)){
                 let sideNum = sideOptions.index(of: side!)
                 sidePicker.selectRow(sideNum!, inComponent: 0, animated: true)
+            }
+            else if (side! == "L" || side! == "l"){
+                sidePicker.selectRow(0, inComponent: 0, animated: true)
+                
+            }
+            else if (side! == "R" || side! == "r"){
+                sidePicker.selectRow(1, inComponent: 0, animated: true)
+            
+                }
+            else if (side! == "N" || side! == "n"){
+                sidePicker.selectRow(2, inComponent: 0, animated: true)
+                
+                }
+            else if (side! == "NE" || side! == "ne"){
+                sidePicker.selectRow(3, inComponent: 0, animated: true)
+                
+                }
+            else if (side! == "E" || side! == "e"){
+                sidePicker.selectRow(4, inComponent: 0, animated: true)
+                
+            }
+            else if (side! == "SE" || side! == "se"){
+                sidePicker.selectRow(5, inComponent: 0, animated: true)
+                
+            }
+            else if (side! == "S" || side! == "s"){
+                sidePicker.selectRow(6, inComponent: 0, animated: true)
+                
+            }
+            else if (side! == "SW" || side! == "sw"){
+                sidePicker.selectRow(7, inComponent: 0, animated: true)
+                
+            }
+            else if (side! == "W" || side! == "w"){
+                sidePicker.selectRow(8, inComponent: 0, animated: true)
+                
+                }
+            else if (side! == "NW" || side! == "nw"){
+                sidePicker.selectRow(9, inComponent: 0, animated: true)
+                
             }
             
             rater.text = sites[number].value(forKey: "rater")! as? String
@@ -3549,6 +3626,46 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         if(sideOptions.contains(side!)){
             let temp = sideOptions.index(of: side!)
             sidePicker.selectRow(temp!, inComponent: 0, animated: true)
+        }
+        else if (side! == "L" || side! == "l"){
+            sidePicker.selectRow(0, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "R" || side! == "r"){
+            sidePicker.selectRow(1, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "N" || side! == "n"){
+            sidePicker.selectRow(2, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "NE" || side! == "ne"){
+            sidePicker.selectRow(3, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "E" || side! == "e"){
+            sidePicker.selectRow(4, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "SE" || side! == "se"){
+            sidePicker.selectRow(5, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "S" || side! == "s"){
+            sidePicker.selectRow(6, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "SW" || side! == "sw"){
+            sidePicker.selectRow(7, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "W" || side! == "w"){
+            sidePicker.selectRow(8, inComponent: 0, animated: true)
+            
+        }
+        else if (side! == "NW" || side! == "nw"){
+            sidePicker.selectRow(9, inComponent: 0, animated: true)
+            
         }
         
         let weather = selectedLocation.weather as String!
