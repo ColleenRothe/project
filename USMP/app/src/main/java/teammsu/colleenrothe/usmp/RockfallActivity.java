@@ -957,17 +957,40 @@ public class RockfallActivity extends AppCompatActivity
             public void run() {
                 System.out.println("Deal with it");
 
-
                 text2 = text2.replace("[",""); //old,new
                 text2 = text2.replace("]",""); //old,new
+
+
+                //weird bug, not with all sites, only some
+                if(text2.charAt(2) != 'I'){ //not 4, 6
+                    text2 = text2.replace("\"0\":", "");
+                    text2 = text2.replace("\"1\":", "");
+                    text2 = text2.replace("\"2\":", "");
+                    text2 = text2.replace("\"3\":", "");
+                    text2 = text2.replace("\"4\":", "");
+                    text2 = text2.replace("\"5\":", "");
+                    text2 = text2.replace("\"6\":", "");
+                    text2 = text2.replace("\"7\":", "");
+
+                    text2 = text2.replace(",,",",");
+                }
+
+
                 text2 = text2.replace("{",""); //old,new
                 text2 = text2.replace("}",""); //old,new
                 String text3 = "{";
                 text3 = text3.concat(text2);
-                text3 =text3.concat("}");
+                text2 = text3.concat("}");
+
+                //weird new bug.... will print like {"0": {"ID:"...
+                if(text2.charAt(2) != 'I'){ //not 4, 6
+                    text2 = text2.substring(5,text2.length());
+                    text2 = "{".concat(text2);
+                }
+                System.out.println("final TEXT 2: "+text2);
 
                 //Map<String, String> map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
-                map = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {}.getType());
+                map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
                 System.out.println(map);
                 System.out.println("keys");
                 System.out.println(map.keySet());
@@ -1101,7 +1124,7 @@ public class RockfallActivity extends AppCompatActivity
                 //todo: hazard type (1)
                 String hazardString = map.get("HAZARD_TYPE2");
                 System.out.println("hazard string is: "+ hazardString);
-                if(!hazardString.equals("") && !hazardString.equals(null)) {
+                if(hazardString != null &&!hazardString.equals("")) {
                     String[] hazards = hazardString.split(",");
                     ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
 
@@ -1200,13 +1223,16 @@ public class RockfallActivity extends AppCompatActivity
                     }
                 }
 
-                String aadt_checkbox = (map.get("PRELIMINARY_RATING_AADT_USAGE_CALC_CHECKBOX"));
-                if(aadt_checkbox == "1"){
-                    CheckAadt.toggle();
-                    aadtCheckmark = true;
-                }
 
-                AadtEtc.setText(map.get("PRELIMINARY_RATING_AADT_USAGE"));
+                //bad spelling in php
+                AadtEtc.setText(map.get("PRELIMINARY_RATING_ADDT_USAGE"));
+                String aadtcheck= map.get("PRELIMINARY_RATING_ADDT_USAGE_CALC_CHECKBOX");
+                if(aadtcheck.equals("1")){
+                    aadtCheckmark = true;
+                    if(!CheckAadt.isChecked()){
+                        CheckAadt.toggle();
+                    }
+                }
                 PrelimRating.setText(map.get("PRELIMINARY_RATING"));
 
                 //Slope Hazard Ratings ALL
@@ -1887,53 +1913,56 @@ public class RockfallActivity extends AppCompatActivity
                     dialog.show();
 
                 } else {
-                    double score = 0;
-                    double x = 1;
-                    int helper = 0;
+                    if (!Speed.getText().toString().equals("")) {
 
-                    String sightDistanceS = SightDistance.getText().toString();
-                    Double sightDistance = Double.parseDouble(sightDistanceS);
+                        double score = 0;
+                        double x = 1;
+                        int helper = 0;
 
-                    Integer speed = Integer.parseInt(Speed.getText().toString());
+                        String sightDistanceS = SightDistance.getText().toString();
+                        Double sightDistance = Double.parseDouble(sightDistanceS);
 
-                    if (speed <= 25) {
-                        helper = 375;
-                    } else if (speed <= 30) {
-                        helper = 450;
-                    } else if (speed <= 35) {
-                        helper = 525;
-                    } else if (speed <= 40) {
-                        helper = 600;
-                    } else if (speed <= 45) {
-                        helper = 675;
-                    } else if (speed <=50) {
-                        helper = 750;
-                    } else if (speed <= 55) {
-                        helper = 875;
-                    } else if (speed <=60) {
-                        helper = 1000;
-                    } else if (speed <=65) {
-                        helper = 1050;
+                        Integer speed = Integer.parseInt(Speed.getText().toString());
+
+                        if (speed <= 25) {
+                            helper = 375;
+                        } else if (speed <= 30) {
+                            helper = 450;
+                        } else if (speed <= 35) {
+                            helper = 525;
+                        } else if (speed <= 40) {
+                            helper = 600;
+                        } else if (speed <= 45) {
+                            helper = 675;
+                        } else if (speed <= 50) {
+                            helper = 750;
+                        } else if (speed <= 55) {
+                            helper = 875;
+                        } else if (speed <= 60) {
+                            helper = 1000;
+                        } else if (speed <= 65) {
+                            helper = 1050;
+                        }
+
+
+                        x = ((120 - ((sightDistance / helper) * 100)) / 20);
+
+
+                        score = Math.pow(3, x);
+                        if (score > 100) {
+                            score = 100;
+                        }
+
+                        int scoreInt = (int) Math.round(score);
+
+
+                        String scores = String.valueOf(scoreInt);
+
+                        PercentDSD.setText(scores);
+                        calcRiskTotal();
+                        SightDistance.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
                     }
-
-
-                    x = ((120 - ((sightDistance / helper) * 100)) / 20);
-
-
-                    score = Math.pow(3, x);
-                    if (score > 100) {
-                        score = 100;
-                    }
-
-                    int scoreInt = (int) Math.round(score);
-
-
-                    String scores = String.valueOf(scoreInt);
-
-                    PercentDSD.setText(scores);
-                    calcRiskTotal();
-                    SightDistance.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-
                 }
 
             }

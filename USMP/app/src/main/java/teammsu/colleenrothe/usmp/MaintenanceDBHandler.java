@@ -61,6 +61,9 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_OTHERS4_DESC = "others4_desc";
     public static final String COLUMN_OTHERS5_DESC = "others5_desc";
     public static final String COLUMN_TOTAL_PERCENT = "total_percent";
+    public static final String COLUMN_LATITUDE = "latitude";
+    public static final String COLUMN_LONGITUDE = "longitude";
+
 
 
 
@@ -86,7 +89,7 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
                 +" INTEGER,"+COLUMN_P16+" INTEGER,"+COLUMN_P17+" INTEGER,"+COLUMN_P18+" INTEGER,"+COLUMN_P19+
                 " INTEGER,"+COLUMN_P20+" INTEGER,"+COLUMN_OTHERS1_DESC+" TEXT,"+COLUMN_OTHERS2_DESC+" TEXT,"+
                 COLUMN_OTHERS3_DESC+" TEXT,"+COLUMN_OTHERS4_DESC+" TEXT,"+COLUMN_OTHERS5_DESC+" TEXT,"+
-                COLUMN_TOTAL_PERCENT+" INTEGER"+")";
+                COLUMN_TOTAL_PERCENT+" INTEGER,"+COLUMN_LATITUDE+" TEXT,"+COLUMN_LONGITUDE+" TEXT"+")";
 
         db.execSQL(CREATE_MAINTENANCE_TABLE);
 
@@ -172,6 +175,9 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_OTHERS4_DESC, form.getOthers4_desc());
         values.put(COLUMN_OTHERS5_DESC, form.getOthers5_desc());
         values.put(COLUMN_TOTAL_PERCENT, form.getTotal_percent());
+        values.put(COLUMN_LATITUDE, form.getLatitude());
+        values.put(COLUMN_LONGITUDE, form.getLongitude());
+
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -231,6 +237,8 @@ public class MaintenanceDBHandler extends SQLiteOpenHelper {
             maintenance.setOthers4_desc(cursor.getString(37));
             maintenance.setOthers5_desc(cursor.getString(38));
             maintenance.setTotal_percent(Integer.parseInt(cursor.getString(39)));
+            maintenance.setLatitude(cursor.getString(40));
+            maintenance.setLongitude(cursor.getString(41));
 
             cursor.close();
         } else {

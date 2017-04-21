@@ -114,6 +114,9 @@ public class MaintenanceActivity extends AppCompatActivity
     ArrayAdapter<String> adapterLocal;
     ArrayList<String> fs_local1;
 
+    String longitude = "";
+    String latitude = "";
+
     private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/currentMaintenance.php";
 
 
@@ -489,9 +492,8 @@ public class MaintenanceActivity extends AppCompatActivity
         }
         //creating a new form
         else {
-            Context context = getApplicationContext();
-            int duration = Toast.LENGTH_SHORT;
-
+            latitude = getIntent().getStringExtra("latitude");
+            longitude = getIntent().getStringExtra("longitude");
         }
 
         //LOAD from an offline list
@@ -733,7 +735,7 @@ public class MaintenanceActivity extends AppCompatActivity
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                loading = ProgressDialog.show(MaintenanceActivity.this, "Please Wait...",null,true,true);
+                //loading = ProgressDialog.show(MaintenanceActivity.this, "Please Wait...",null,true,true);
             }
 
             @Override
@@ -750,7 +752,7 @@ public class MaintenanceActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                loading.dismiss(); //dismiss the "loading" message
+                //loading.dismiss(); //dismiss the "loading" message
             }
         }
         GetJSON gj = new GetJSON();
@@ -1079,7 +1081,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     "&repair_rockfall_netting_val="+Percent11Text+"&sealing_cracks_val="+Percent12Text+"&guardrail_val="+Percent13Text+"&cleaning_drains_val="+Percent14Text+
                     "&flagging_signing_val="+Percent15Text+"&other1_desc="+Other1Text+"&other1_val="+Percent16Text+"&other2_desc="+Other2Text+"&other2_val="+Percent17Text+
                     "&other3_desc="+Other3Text+"&other3_val="+Percent18Text+"&other4_desc="+Other4Text+"&other4_val="+Percent19Text+"&other5_desc="+Other5Text+
-                    "&other5_val="+Percent20Text+"&total="+TotalPercent);
+                    "&other5_val="+Percent20Text+"&total="+TotalPercent+"&maintenance_lat="+latitude+"&maintenance_long="+longitude);
                     writer.flush();
                     String line;
                     BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -1202,7 +1204,6 @@ public class MaintenanceActivity extends AppCompatActivity
         if(!Percent19.getText().toString().isEmpty()) {
             p19 = Integer.parseInt(Percent19.getText().toString());
         }
-        System.out.println("P19 IS: "+p19);
 
         int p20=0;
         if(!Percent20.getText().toString().isEmpty()) {
@@ -1222,7 +1223,7 @@ public class MaintenanceActivity extends AppCompatActivity
                 new Maintenance(site_id, code_relation,maintenance_type,rt_num,begin_mile,end_mile,
                         agency,regional,local,us_event,event_desc,total,p1,p2,p3,p4,p4_5,p5,p6,p7,p8,
                         p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,others1_desc,others2_desc,others3_desc,
-                        others4_desc,others5_desc,total_percent);
+                        others4_desc,others5_desc,total_percent,latitude,longitude);
 
         dbHandler.addMaintenance(maintenance);
 
@@ -1316,6 +1317,8 @@ public class MaintenanceActivity extends AppCompatActivity
             Other4.setText(String.valueOf(maintenance.getOthers4_desc()));
             Other5.setText(String.valueOf(maintenance.getOthers5_desc()));
             RunningTotal.setText(String.valueOf(maintenance.getTotal_percent()));
+            latitude =  String.valueOf(maintenance.getLatitude());
+            longitude =  String.valueOf(maintenance.getLongitude());
 
             if(OfflineList.should_submit==true){
                 OfflineList.should_submit=false;

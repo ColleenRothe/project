@@ -544,7 +544,7 @@ public class LandslideActivity extends AppCompatActivity
 
         SightDistance = (EditText) findViewById(R.id.L_SightDistance);
         SightDistance.setOnFocusChangeListener(sightDistanceWatcher);
-        //SightDistance.setOnFocusChangeListener(dsdWatcher);
+        SightDistance.setOnFocusChangeListener(dsdWatcher);
 
 
         RtWidth = (EditText) findViewById(R.id.L_RtWidth);
@@ -877,18 +877,41 @@ public class LandslideActivity extends AppCompatActivity
             @Override
             public void run() {
 
+                text2 = text2.replace("[",""); //old,new
+                text2 = text2.replace("]",""); //old,new
 
-                text2 = text2.replace("[", ""); //old,new
-                text2 = text2.replace("]", ""); //old,new
-                text2 = text2.replace("{", ""); //old,new
-                text2 = text2.replace("}", ""); //old,new
+
+                //weird bug, not with all sites, only some
+                if(text2.charAt(2) != 'I'){ //not 4, 6
+                    text2 = text2.replace("\"0\":", "");
+                    text2 = text2.replace("\"1\":", "");
+                    text2 = text2.replace("\"2\":", "");
+                    text2 = text2.replace("\"3\":", "");
+                    text2 = text2.replace("\"4\":", "");
+                    text2 = text2.replace("\"5\":", "");
+                    text2 = text2.replace("\"6\":", "");
+                    text2 = text2.replace("\"7\":", "");
+
+                    text2 = text2.replace(",,",",");
+                }
+
+
+                text2 = text2.replace("{",""); //old,new
+                text2 = text2.replace("}",""); //old,new
                 String text3 = "{";
                 text3 = text3.concat(text2);
-                text3 = text3.concat("}");
+                text2 = text3.concat("}");
+
+                //weird new bug.... will print like {"0": {"ID:"...
+                if(text2.charAt(2) != 'I'){ //not 4, 6
+                    text2 = text2.substring(5,text2.length());
+                    text2 = "{".concat(text2);
+                }
+                System.out.println("final TEXT 2: "+text2);
 
 
                 //Map<String, String> map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
-                map = new Gson().fromJson(text3, new TypeToken<HashMap<String, String>>() {
+                map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {
                 }.getType());
                 System.out.println(map);
 
@@ -1020,8 +1043,7 @@ public class LandslideActivity extends AppCompatActivity
 
                 //TODO: hazard type here (1)
                 String hazardString = map.get("HAZARD_TYPE2");
-                System.out.println("hazard string is: "+ hazardString);
-                if(!hazardString.equals("") && !hazardString.equals(null)) {
+                if(hazardString!= null && !hazardString.equals("")) {
                     String[] hazards = hazardString.split(",");
                     ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeLList)));
 
@@ -1119,13 +1141,18 @@ public class LandslideActivity extends AppCompatActivity
                     }
                 }
 
-                String aadt_checkbox = (map.get("PRELIMINARY_RATING_AADT_USAGE_CALC_CHECKBOX"));
-                if (aadt_checkbox == "1") {
-                    CheckAadt.toggle();
+
+                //bad spelling in php....
+                AadtEtc.setText(map.get("PRELIMINARY_RATING_ADDT_USAGE"));
+                String aadtcheck= map.get("PRELIMINARY_RATING_ADDT_USAGE_CALC_CHECKBOX");
+                if(aadtcheck.equals("1")){
                     aadtCheckmark = true;
+                    if(!CheckAadt.isChecked()){
+                        CheckAadt.toggle();
+                    }
                 }
 
-                AadtEtc.setText(map.get("PRELIMINARY_RATING_AADT_USAGE"));
+
                 PrelimRating.setText(map.get("PRELIMINARY_RATING"));
 
                 //Slope Hazard Ratings ALL
@@ -1813,55 +1840,55 @@ public class LandslideActivity extends AppCompatActivity
                     dialog.show();
 
                 } else {
-                    double score = 0;
-                    double x = 1;
-                    int helper = 0;
+                    if (!Speed.getText().toString().equals("")) {
+                        double score = 0;
+                        double x = 1;
+                        int helper = 0;
 
-                    String sightDistanceS = SightDistance.getText().toString();
-                    Double sightDistance = Double.parseDouble(sightDistanceS);
+                        String sightDistanceS = SightDistance.getText().toString();
+                        Double sightDistance = Double.parseDouble(sightDistanceS);
 
-                    Integer speed = Integer.parseInt(Speed.getText().toString());
+                        Integer speed = Integer.parseInt(Speed.getText().toString());
 
-                    if (speed <= 25) {
-                        helper = 375;
-                    } else if (speed <= 30) {
-                        helper = 450;
-                    } else if (speed <= 35) {
-                        helper = 525;
-                    } else if (speed <= 40) {
-                        helper = 600;
-                    } else if (speed <= 45) {
-                        helper = 675;
-                    } else if (speed <=50) {
-                        helper = 750;
-                    } else if (speed <= 55) {
-                        helper = 875;
-                    } else if (speed <=60) {
-                        helper = 1000;
-                    } else if (speed <=65) {
-                        helper = 1050;
+                        if (speed <= 25) {
+                            helper = 375;
+                        } else if (speed <= 30) {
+                            helper = 450;
+                        } else if (speed <= 35) {
+                            helper = 525;
+                        } else if (speed <= 40) {
+                            helper = 600;
+                        } else if (speed <= 45) {
+                            helper = 675;
+                        } else if (speed <= 50) {
+                            helper = 750;
+                        } else if (speed <= 55) {
+                            helper = 875;
+                        } else if (speed <= 60) {
+                            helper = 1000;
+                        } else if (speed <= 65) {
+                            helper = 1050;
+                        }
+
+
+                        x = ((120 - ((sightDistance / helper) * 100)) / 20);
+
+                        score = Math.pow(3, x);
+                        if (score > 100) {
+                            score = 100;
+                        }
+
+                        int scoreInt = (int) Math.round(score);
+
+                        String scores = String.valueOf(scoreInt);
+
+                        PercentDSD.setText(scores);
+                        calcRiskTotal();
+                        SightDistance.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+
                     }
-
-
-                    x = ((120 - ((sightDistance / helper) * 100)) / 20);
-
-
-                    score = Math.pow(3, x);
-                    if (score > 100) {
-                        score = 100;
-                    }
-
-                    int scoreInt = (int) Math.round(score);
-
-
-                    String scores = String.valueOf(scoreInt);
-
-                    PercentDSD.setText(scores);
-                    calcRiskTotal();
-                    SightDistance.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
                 }
-
 
             }
 
@@ -2616,7 +2643,7 @@ public class LandslideActivity extends AppCompatActivity
             if (!hasFocus) {
                 String s = SightDistance.getText().toString();
 
-                if (s.length() != 0) {
+                if (s.length() != 0 && !Speed.getText().toString().equals("")) {
                     double score = 0;
                     double x = 1;
                     int helper = 0;
@@ -2768,6 +2795,7 @@ public class LandslideActivity extends AppCompatActivity
 
 
                     String scores = String.valueOf(scoreInt);
+                    calcRiskTotal();
                     PercentDSD.setText(scores);
                 }
             }
@@ -3760,7 +3788,7 @@ public class LandslideActivity extends AppCompatActivity
                             second_end_ditch_slope + "&start_annual_rainfall=" + start_annual_rainfall + "&end_annual_rainfall=" + end_annual_rainfall +
                             "&sole_access_route=" + sole_access_route + "&fixes_present=" + fixes_present + "&blk_size= &volume= &prelim_landslide_road_width_affected=" +
                             road_width_affected + "&prelim_landslide_slide_erosion_effects=" + slide_erosion_effects + "&prelim_landslide_slide_erosion_effects=" +
-                            slide_erosion_effects + "&prelim_landslide_length_affected=" + length_affected + "&prelim_rockfall_ditch_eff= &prelim_rockfall_rockfall_history= " +
+                            slide_erosion_effects + "&prelim_landslide_length_affected=" + l_length_affected + "&prelim_rockfall_ditch_eff= &prelim_rockfall_rockfall_history= " +
                             "&prelim_rockfall_block_size_event_vol= &impact_on_use=" + impact_on_use + "&aadt_usage_calc_checkbox=" +
                             aadt_usage_calc_checkbox + "&aadt_usage=" + aadt_usage + "&prelim_rating=" + prelim_rating + "&slope_drainage=" +
                             slope_drainage + "&hazard_rating_annual_rainfall=" + annual_rainfall + "&hazard_rating_slope_height_axial_length=" + axial_los +
@@ -4075,7 +4103,7 @@ public class LandslideActivity extends AppCompatActivity
                                 second_end_ditch_slope + "&start_annual_rainfall=" + start_annual_rainfall + "&end_annual_rainfall=" + end_annual_rainfall +
                                 "&sole_access_route=" + sole_access_route + "&fixes_present=" + fixes_present + "&blk_size= &volume= &prelim_landslide_road_width_affected=" +
                                 road_width_affected + "&prelim_landslide_slide_erosion_effects=" + slide_erosion_effects + "&prelim_landslide_slide_erosion_effects=" +
-                                slide_erosion_effects + "&prelim_landslide_length_affected=" + length_affected + "&prelim_rockfall_ditch_eff= &prelim_rockfall_rockfall_history= " +
+                                slide_erosion_effects + "&prelim_landslide_length_affected=" + l_length_affected + "&prelim_rockfall_ditch_eff= &prelim_rockfall_rockfall_history= " +
                                 "&prelim_rockfall_block_size_event_vol= &impact_on_use=" + impact_on_use + "&aadt_usage_calc_checkbox=" +
                                 aadt_usage_calc_checkbox + "&aadt_usage=" + aadt_usage + "&prelim_rating=" + prelim_rating + "&slope_drainage=" +
                                 slope_drainage + "&hazard_rating_annual_rainfall=" + annual_rainfall + "&hazard_rating_slope_height_axial_length=" + axial_los +

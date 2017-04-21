@@ -62,6 +62,8 @@ public class MaintenanceMapActivity extends AppCompatActivity
     String [] tempSites; //could bring down?
     String [] [] finalSites; //final 2d array that the site information is kept in
     static String load_id = "0";
+    String latitude = "";
+    String longitude = "";
 
 
     @Override
@@ -336,6 +338,8 @@ public class MaintenanceMapActivity extends AppCompatActivity
                     @Override
                     public void onMapLongClick(@NonNull LatLng point) {
                         //add a new marker to create a new maintenance form
+                        latitude = String.valueOf(point.getLatitude());
+                        longitude = String.valueOf(point.getLongitude());
                         mapboxMap.addMarker(new MarkerOptions()
                             .position(point)
                             .title("New Maintenance Form")
@@ -359,6 +363,8 @@ public class MaintenanceMapActivity extends AppCompatActivity
                         }
                         //pull up the maintenance form
                         Intent intent = new Intent(MaintenanceMapActivity.this, MaintenanceActivity.class);
+                        intent.putExtra("latitude", latitude );
+                        intent.putExtra("longitude",longitude);
                         startActivity(intent);
                     }
                 }

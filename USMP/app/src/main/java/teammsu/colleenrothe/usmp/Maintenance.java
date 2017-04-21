@@ -48,6 +48,9 @@ public class Maintenance extends Object {
     private String others5_desc;
     private int total_percent;
 
+    private String latitude;
+    private String longitude;
+
     public Maintenance(){
 
     }
@@ -57,7 +60,7 @@ public class Maintenance extends Object {
                        String event_desc, int total, int p1, int p2,int p3,int p4,int p4_5,int p5,int p6,int p7,
                        int p8,int p9,int p10,int p11,int p12,int p13,int p14,int p15,int p16,int p17,int p18,
                        int p19,int p20, String others1_desc, String others2_desc, String others3_desc,
-                       String others4_desc, String others5_desc, int total_percent){
+                       String others4_desc, String others5_desc, int total_percent, String latitude, String longitude){
         this.id = id;
         this.site_id=site_id;
         this.code_relation=code_relation;
@@ -98,6 +101,8 @@ public class Maintenance extends Object {
         this.others4_desc = others4_desc;
         this.others5_desc = others5_desc;
         this.total_percent=total_percent;
+        this.latitude = latitude;
+        this.longitude = longitude;
 
 
 
@@ -108,7 +113,7 @@ public class Maintenance extends Object {
                        String event_desc, int total, int p1, int p2,int p3,int p4,int p4_5,int p5,int p6,int p7,
                        int p8,int p9,int p10,int p11,int p12,int p13,int p14,int p15,int p16,int p17,int p18,
                        int p19,int p20, String others1_desc, String others2_desc, String others3_desc,
-                       String others4_desc, String others5_desc,int total_percent){
+                       String others4_desc, String others5_desc,int total_percent, String latitude, String longitude){
 
         this.site_id=site_id;
         this.code_relation=code_relation;
@@ -149,6 +154,8 @@ public class Maintenance extends Object {
         this.others4_desc = others4_desc;
         this.others5_desc = others5_desc;
         this.total_percent=total_percent;
+        this.latitude = latitude;
+        this.longitude = longitude;
 
     }
     //all the getter/setter methods
@@ -273,5 +280,10 @@ public class Maintenance extends Object {
     public int getTotal_percent(){return total_percent;}
     public void setTotal_percent(int total_percent){this.total_percent=total_percent;}
 
+    public String getLatitude(){return latitude;}
+    public void setLatitude(String latitude){this.latitude = latitude;}
+
+    public String getLongitude(){return longitude;}
+    public void setLongitude(String longitude){this.longitude = longitude;}
 
 }

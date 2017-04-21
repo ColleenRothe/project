@@ -285,16 +285,39 @@ public class AnnotationInfoActivity extends AppCompatActivity
             String text2 = text;
             @Override
             public void run() {
+
                 text2 = text2.replace("[",""); //old,new
                 text2 = text2.replace("]",""); //old,new
 
+
+                //weird bug, not with all sites, only some
+                if(text2.charAt(2) != 'I'){ //not 4, 6
+                    text2 = text2.replace("\"0\":", "");
+                    text2 = text2.replace("\"1\":", "");
+                    text2 = text2.replace("\"2\":", "");
+                    text2 = text2.replace("\"3\":", "");
+                    text2 = text2.replace("\"4\":", "");
+                    text2 = text2.replace("\"5\":", "");
+                    text2 = text2.replace("\"6\":", "");
+                    text2 = text2.replace("\"7\":", "");
+
+                    text2 = text2.replace(",,",",");
+                }
+
+
                 text2 = text2.replace("{",""); //old,new
                 text2 = text2.replace("}",""); //old,new
-
                 String text3 = "{";
                 text3 = text3.concat(text2);
                 text2 = text3.concat("}");
-                System.out.println("TEXT 2:"+text2);
+
+                //weird new bug.... will print like {"0": {"ID:"...
+                if(text2.charAt(2) != 'I'){ //not 4, 6
+                    text2 = text2.substring(5,text2.length());
+                    text2 = "{".concat(text2);
+                }
+                System.out.println("final TEXT 2: "+text2);
+
 
                 //Map<String, String> map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
                 map = new Gson().fromJson(text2, new TypeToken<HashMap<String, String>>() {}.getType());
