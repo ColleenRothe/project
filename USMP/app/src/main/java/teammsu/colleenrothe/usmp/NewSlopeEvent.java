@@ -10,6 +10,7 @@ public class NewSlopeEvent extends Object {
     private String observer_name;
     private String email;
     private String phone_no;
+    private String comments;
     private String date; //? DATE
     private int date_approximator;
     private String dateinput; //? DATE
@@ -82,11 +83,12 @@ public class NewSlopeEvent extends Object {
                          int hurricane_checkbox, int flood_checkbox, int snowfall_checkbox, int freezing_checkbox,
                          int high_temp_checkbox, int earthquake_checkbox, int volcano_checkbox, int leaky_pipe_checkbox,
                          int mining_checkbox, int construction_checkbox, int dam_embankment_collapse_checkbox, int
-                         not_obvious_checkbox, int unknown_checkbox, int other_checkbox, int damages_y_n, String damages){
+                         not_obvious_checkbox, int unknown_checkbox, int other_checkbox, int damages_y_n, String damages, String comments){
         this.id = id;
         this.observer_name = observer_name;
         this.email = email;
         this.phone_no = phone_no;
+        this.comments = comments;
         this.date = date;
         this.date_approximator = date_approximator;
         this.dateinput = dateinput;
@@ -152,11 +154,12 @@ public class NewSlopeEvent extends Object {
                          int hurricane_checkbox, int flood_checkbox, int snowfall_checkbox, int freezing_checkbox,
                          int high_temp_checkbox, int earthquake_checkbox, int volcano_checkbox, int leaky_pipe_checkbox,
                          int mining_checkbox, int construction_checkbox, int dam_embankment_collapse_checkbox, int
-                                 not_obvious_checkbox, int unknown_checkbox, int other_checkbox, int damages_y_n, String damages){
+                                 not_obvious_checkbox, int unknown_checkbox, int other_checkbox, int damages_y_n, String damages, String comments){
 
         this.observer_name = observer_name;
         this.email = email;
         this.phone_no = phone_no;
+        this.comments = comments;
         this.date = date;
         this.date_approximator = date_approximator;
         this.dateinput = dateinput;
@@ -226,6 +229,9 @@ public class NewSlopeEvent extends Object {
 
     public String getDate(){return date;}
     public void setDate(String date){this.date=date;}
+
+    public String getComments(){return comments;}
+    public void setComments(String comments){this.comments=comments;}
 
     public int getDate_approximator(){return date_approximator;}
     public void setDate_approximator(int date_approximator){this.date_approximator=date_approximator;}

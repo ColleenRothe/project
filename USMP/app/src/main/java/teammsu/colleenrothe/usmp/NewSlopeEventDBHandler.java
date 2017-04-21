@@ -79,6 +79,8 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
 
     public static final String COLUMN_DAMAGES_Y_N="damages_y_n";
     public static final String COLUMN_DAMAGES="damages";
+    public static final String COLUMN_COMMENTS = "comments";
+
 
 
 
@@ -90,7 +92,6 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
     //create the nse table in the database
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // TODO Auto-generated method stub
         String CREATE_NEW_SLOPE_EVENT_TABLE = "CREATE TABLE " +
                 TABLE_NEW_SLOPE_EVENT + "("
                 + COLUMN_ID + " INTEGER PRIMARY KEY," + COLUMN_OBSERVER_NAME+" TEXT,"+COLUMN_EMAIL+" TEXT,"+
@@ -110,7 +111,7 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
                 +" INTEGER,"+COLUMN_LEAKY_PIPE_CHECKBOX+" INTEGER,"+COLUMN_MINING_CHECKBOX+" INTEGER,"+COLUMN_CONSTRUCTION_CHECKBOX
                 +" INTEGER,"+COLUMN_DAM_EMBANKMENT_COLLAPSE_CHECKBOX+" INTEGER,"+COLUMN_NOT_OBVIOUS_CHECKBOX+" INTEGER,"+
                 COLUMN_UNKNOWN_CHECKBOX+" INTEGER,"+COLUMN_OTHER_CHECKBOX+" INTEGER,"+COLUMN_DAMAGES_Y_N+ " INTEGER,"+
-                COLUMN_DAMAGES+" TEXT"+")";
+                COLUMN_DAMAGES+" TEXT,"+COLUMN_COMMENTS+" TEXT"+")";
 
         db.execSQL(CREATE_NEW_SLOPE_EVENT_TABLE);
 
@@ -212,6 +213,9 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
 
         values.put(COLUMN_DAMAGES_Y_N, form.getDamages_y_n());
         values.put(COLUMN_DAMAGES, form.getDamages());
+        values.put(COLUMN_COMMENTS, form.getComments());
+
+
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -290,6 +294,7 @@ public class NewSlopeEventDBHandler extends SQLiteOpenHelper {
 
             nse.setDamages_y_n(Integer.parseInt(cursor.getString(53)));
             nse.setDamages(cursor.getString(54));
+            nse.setComments(cursor.getString(55));
 
 
             cursor.close();

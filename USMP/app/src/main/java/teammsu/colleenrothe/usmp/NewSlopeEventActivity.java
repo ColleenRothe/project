@@ -740,11 +740,14 @@ public class NewSlopeEventActivity extends AppCompatActivity
         String observer_name = ObserverName.getText().toString();
         String email = Email.getText().toString();
         String phone_no = PhoneNo.getText().toString();
+        String comments = ObserverComments.getText().toString();
         String date = TodaysDate.getText().toString();
         int date_approximator = dateApprox.getSelectedItemPosition();
         String dateInput = dateView.getText().toString(); //??
         int hazard_type = NSEHazardType.getSelectedItemPosition();
         int state = State.getSelectedItemPosition();
+
+
 
         //save photos
 
@@ -948,7 +951,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
                 engineered_slope,unknown,other,rain_checkbox,thunder_checkbox,cont_rain_checkbox,
                 hurricane_checkbox,flood_checkbox,snowfall_checkbox,freezing_checkbox,high_temp_checkbox,
                 earthquake_checkbox,volcano_checkbox,leaky_pipe_checkbox,mining_checkbox,construction_checkbox,dam_embankment_collapse_checkbox,
-                not_obvious_checkbox,unknown_checkbox,other_checkbox,damages_y_n,damages);
+                not_obvious_checkbox,unknown_checkbox,other_checkbox,damages_y_n,damages,comments);
         dbHandler.addNewSlopeEvent(nse);
 
         //set everything empty to start over
@@ -957,6 +960,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
         Email.setText("");
         PhoneNo.setText("");
         //date...still today so ok
+        ObserverComments.setText("");
         dateApprox.setSelection(0);
         dateView.setText("");
         NSEHazardType.setSelection(0);
@@ -1118,6 +1122,7 @@ public class NewSlopeEventActivity extends AppCompatActivity
             ObserverName.setText(nse.getObserver_name());
             Email.setText(nse.getEmail());
             PhoneNo.setText(nse.getPhone_no());
+            ObserverComments.setText(nse.getComments());
             TodaysDate.setText(nse.getDate());
             dateApprox.setSelection(nse.getDate_approximator());
             dateView.setText(nse.getDateinput());
