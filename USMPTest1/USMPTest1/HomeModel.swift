@@ -52,6 +52,27 @@ class HomeModel: NSObject, URLSessionDataDelegate{
             //parse the response string, because it comes back in several {} blocks
             self.responseString = self.responseString.replacingOccurrences(of: "[", with: "")
             self.responseString = self.responseString.replacingOccurrences(of: "]", with: "")
+            
+            let someIndex = self.responseString.index(self.responseString.startIndex,
+                                           offsetBy: 1)
+            
+            
+                if(self.responseString[someIndex] != "I"){
+                self.responseString = self.responseString.replacingOccurrences(of: "\"0\":", with: "")
+                self.responseString = self.responseString.replacingOccurrences(of: "\"1\":", with: "")
+                self.responseString = self.responseString.replacingOccurrences(of: "\"2\":", with: "")
+                self.responseString = self.responseString.replacingOccurrences(of: "\"3\":", with: "")
+                self.responseString = self.responseString.replacingOccurrences(of: "\"4\":", with: "")
+                self.responseString = self.responseString.replacingOccurrences(of: "\"5\":", with: "")
+                self.responseString = self.responseString.replacingOccurrences(of: "\"6\":", with: "")
+                self.responseString = self.responseString.replacingOccurrences(of: "\"7\":", with: "")
+                
+                self.responseString = self.responseString.replacingOccurrences(of: ",,", with: ",")
+
+            }
+            
+            
+            
             self.responseString = self.responseString.replacingOccurrences(of: "{", with: "")
             self.responseString = self.responseString.replacingOccurrences(of: "}", with: "")
             var tempString = "{"

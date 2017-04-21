@@ -46,6 +46,30 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
             //parse to get rid of the multiple {} blocks
             responseF = responseF.replacingOccurrences(of: "[", with: "")
             responseF = responseF.replacingOccurrences(of: "]", with: "")
+            
+            
+            
+            let someIndex = responseF.index(responseF.startIndex,
+                                                      offsetBy: 1)
+            
+            
+            if(responseF[someIndex] != "I"){
+                responseF = responseF.replacingOccurrences(of: "\"0\":", with: "")
+                responseF = responseF.replacingOccurrences(of: "\"1\":", with: "")
+                responseF = responseF.replacingOccurrences(of: "\"2\":", with: "")
+                responseF = responseF.replacingOccurrences(of: "\"3\":", with: "")
+                responseF = responseF.replacingOccurrences(of: "\"4\":", with: "")
+                responseF = responseF.replacingOccurrences(of: "\"5\":", with: "")
+                responseF = responseF.replacingOccurrences(of: "\"6\":", with: "")
+                responseF = responseF.replacingOccurrences(of: "\"7\":", with: "")
+                
+                responseF = responseF.replacingOccurrences(of: ",,", with: ",")
+                
+            }
+
+            
+            
+            
             responseF = responseF.replacingOccurrences(of: "{", with: "")
             responseF = responseF.replacingOccurrences(of: "}", with: "")
             var finalString = "{"
