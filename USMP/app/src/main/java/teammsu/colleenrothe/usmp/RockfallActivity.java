@@ -4710,24 +4710,25 @@ public class RockfallActivity extends AppCompatActivity
                 //todo: hazard type (10)
                 String hazardString = offlineSite.getHazard_type();
 
+                if(hazardString != null) {
+                    String[] hazards = hazardString.split(",");
 
-                String [] hazards = hazardString.split(",");
-
-                ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
+                    ArrayList<String> hazardTypeList = new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.HazardTypeRList)));
 
 
-                for(int j = 0; j<hazards.length; j++){
-                    if(j==3){ //can't have more than 3
-                        break;
-                    }
-                    //if it's in the list, set the spinner to it
-                    if(hazardTypeList.contains(hazards[j])){
-                        if(j == 0){
-                            HazardType1.setSelection(hazardTypeList.indexOf(hazards[j]));
-                        }else if(j == 1){
-                            HazardType2.setSelection(hazardTypeList.indexOf(hazards[j]));
-                        }else{
-                            HazardType3.setSelection(hazardTypeList.indexOf(hazards[j]));
+                    for (int j = 0; j < hazards.length; j++) {
+                        if (j == 3) { //can't have more than 3
+                            break;
+                        }
+                        //if it's in the list, set the spinner to it
+                        if (hazardTypeList.contains(hazards[j])) {
+                            if (j == 0) {
+                                HazardType1.setSelection(hazardTypeList.indexOf(hazards[j]));
+                            } else if (j == 1) {
+                                HazardType2.setSelection(hazardTypeList.indexOf(hazards[j]));
+                            } else {
+                                HazardType3.setSelection(hazardTypeList.indexOf(hazards[j]));
+                            }
                         }
                     }
                 }

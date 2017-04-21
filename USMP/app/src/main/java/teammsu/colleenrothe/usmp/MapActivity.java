@@ -73,12 +73,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 /* Class that represents the map for the slope rating forms
     CREDITS:
         (1)https://www.mapbox.com/android-sdk/examples/offline-map/
         (2)https://www.mapbox.com/android-sdk/examples/offline-manager/
         (3)Network Connectivity:
             http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
+        (4) Timeout to fix the offline map download notification issue
 */
 
 public class MapActivity extends AppCompatActivity
@@ -198,18 +207,18 @@ public class MapActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.map, menu); //side
-        MenuItem cache_map = menu.getItem(0);
+        MenuItem cache_map = menu.getItem(1);
         MenuItem load_offline = menu.getItem(2);
 
         //can't save map tiles w/o network connectivity
-        if (!isNetworkAvailable()) {
-            cache_map.setEnabled(false);
-        }
-        //if you already have points saved, can't have any more
-        OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
-        if (dbHandler.getNumRows() != 0) {
-            cache_map.setEnabled(false);
-        }
+//        if (!isNetworkAvailable()) {
+//            cache_map.setEnabled(false);
+//        }
+//        //if you already have points saved, can't have any more
+//        OfflineSiteDBHandler dbHandler = new OfflineSiteDBHandler(this, null, null, 1);
+//        if (dbHandler.getNumRows() != 0) {
+//            cache_map.setEnabled(false);
+//        }
         //if you dont have points saved, can't load any, can't load if you have service
 
         getMenuInflater().inflate(R.menu.menu_main, menu); //top
@@ -830,9 +839,11 @@ public class MapActivity extends AppCompatActivity
 }
 
     public void downloadHelper(){
+        System.out.println("download helper");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                System.out.println("run");
 
                 //stuff that updates ui
                 startProgress();
@@ -851,7 +862,7 @@ public class MapActivity extends AppCompatActivity
                 offline_ids.add(markers.get(i).getTitle());
             }
         }
-
+        System.out.println("call save offline sites");
         saveOfflineSites();
 
         // Create offline definition using the current
@@ -870,6 +881,7 @@ public class MapActivity extends AppCompatActivity
             jsonObject.put(JSON_FIELD_REGION_NAME, regionName);
             String json = jsonObject.toString();
             metadata = json.getBytes(JSON_CHARSET);
+            System.out.println("IN TRY!");
         } catch(
                 Exception exception)
 
@@ -883,9 +895,32 @@ public class MapActivity extends AppCompatActivity
         {
             @Override
             public void onCreate (OfflineRegion offlineRegion){
+                System.out.println("ON CREATE");
                 Log.d(TAG, "Offline region created: " + regionName);
                 MapActivity.this.offlineRegion = offlineRegion;
-                launchDownload();
+
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                Future<String> future = executor.submit(new Task());
+
+                try {
+                    System.out.println("Started..");
+                    System.out.println(future.get(10, TimeUnit.SECONDS));
+                    System.out.println("Finished!");
+
+                } catch (TimeoutException e) {
+                    future.cancel(true);
+                    endProgress("Finished Download");
+                    System.out.println("Terminated!");
+                    return;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("shutdown now");
+                executor.shutdownNow();
+
             }
 
             @Override
@@ -896,7 +931,9 @@ public class MapActivity extends AppCompatActivity
 
     }
 
+    //doesn't continually notify.... problem
     private void launchDownload() {
+        System.out.println("launch download");
         // Set up an observer to handle download progress and
         // notify the user when the region is finished downloading
         offlineRegion.setObserver(new OfflineRegion.OfflineRegionObserver() {
@@ -906,6 +943,7 @@ public class MapActivity extends AppCompatActivity
                 double percentage = status.getRequiredResourceCount() >= 0
                         ? (100.0 * status.getCompletedResourceCount() / status.getRequiredResourceCount()) :
                         0.0;
+
 
                 System.out.println("percentage is" + percentage);
 
@@ -925,6 +963,9 @@ public class MapActivity extends AppCompatActivity
                         String.valueOf(status.getCompletedResourceSize())));
 
                 System.out.println("Status Changed");
+
+
+
             }
 
             @Override
@@ -939,8 +980,23 @@ public class MapActivity extends AppCompatActivity
             }
         });
         // Change the region state
+
         offlineRegion.setDownloadState(OfflineRegion.STATE_ACTIVE);
     }
+
+
+    class Task implements Callable<String> {
+        @Override
+        public String call() throws Exception {
+            while(!Thread.interrupted()) {
+                launchDownload();
+            }
+            endProgress("Finished Download");
+            return "Ready!";
+        }
+    }
+
+
     private void downloadedRegionList() {
         // Build a region list when the user clicks the list button
 
