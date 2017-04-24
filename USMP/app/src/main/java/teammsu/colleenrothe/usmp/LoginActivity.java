@@ -3,8 +3,11 @@ package teammsu.colleenrothe.usmp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -43,7 +46,11 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password. Auto-built by android studio
+ * Credits:
+ *  (1) Internet Connectivity
+        http://stackoverflow.com/questions/28168867/check-internet-status-from-the-main-activity
  */
+
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
@@ -123,27 +130,29 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
-        if (TextUtils.isEmpty(password)) {
-            mPasswordView.setError("This field is required");
-            focusView = mPasswordView;
-            cancel = true;
-        }else if(!isPasswordValid(password)){
-            mPasswordView.setError("This password is invalid");
-            focusView = mPasswordView;
-            cancel = true;
-        }
+        if(isNetworkAvailable()) {
+            // Check for a valid password, if the user entered one.
+            if (TextUtils.isEmpty(password)) {
+                mPasswordView.setError("This field is required");
+                focusView = mPasswordView;
+                cancel = true;
+            } else if (!isPasswordValid(password)) {
+                mPasswordView.setError("This password is invalid");
+                focusView = mPasswordView;
+                cancel = true;
+            }
 
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
+            // Check for a valid email address.
+            if (TextUtils.isEmpty(email)) {
+                mEmailView.setError(getString(R.string.error_field_required));
+                focusView = mEmailView;
+                cancel = true;
+            } else if (!isEmailValid(email)) {
+                mEmailView.setError(getString(R.string.error_invalid_email));
+                focusView = mEmailView;
+                cancel = true;
+            }
         }
 
         if (cancel) {
@@ -283,7 +292,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            tryLogin(mEmail, mPassword);
+            if(!isNetworkAvailable()){
+                finish();
+                Intent intent = new Intent(LoginActivity.this, OnlineHomeActivity.class);
+                startActivity(intent);
+            }
+            else {
+                tryLogin(mEmail, mPassword);
+            }
             return true;
         }
 
@@ -344,6 +360,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
 
         thread.start();
+    }
+
+    //CREDITS (2)
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+        return false;
     }
 }
 

@@ -323,6 +323,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             
             else if expected == completed{
                 progressView.setProgress(100, animated: true)
+                progressView.removeFromSuperview()
                 
                 //call function that handles core data implementation for save
                 offline1Helper()

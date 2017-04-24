@@ -854,6 +854,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         slopeAngleText.keyboardType = .numberPad
         
         sightDText.keyboardType = .decimalPad
+        speedText.keyboardType = .numberPad
         
         roadwayTWText.keyboardType = .decimalPad
         

@@ -9,6 +9,8 @@
 //
 
 import UIKit
+import Foundation
+import SystemConfiguration
 
 class ViewControllerLogin: UIViewController, UITextFieldDelegate {
     //title
@@ -38,6 +40,10 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
         permissionList.append("1")
         permissionList.append("2")
         
+        if(!isInternetAvailable()){
+            welcomeLabel.text = "Email/Password not required, press submit to login"
+        }
+        
         //submit button design
         submitButton.layer.cornerRadius = 5
         submitButton.layer.borderWidth = 1
@@ -64,6 +70,10 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
         email = usernameText.text!
         password = passwordText.text!
         
+        if(!isInternetAvailable()){
+            goLogin()
+        }
+        
         //they must enter something to be considered
         if (email == "" || password == ""){
             welcomeLabel.text = "Please fill in username and password"
@@ -72,6 +82,28 @@ class ViewControllerLogin: UIViewController, UITextFieldDelegate {
             helper();
         }
         
+    }
+    
+    //CREDITS(5)
+    func isInternetAvailable() -> Bool
+    {
+        var zeroAddress = sockaddr_in()
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+        return (isReachable && !needsConnection)
     }
     
     //authentication code
