@@ -3,10 +3,12 @@
 //  USMPTest1
 //
 //  Corresponds to ViewController for the Login Page
-//
 //  Created by Colleen Rothe on 11/12/15.
 //  Copyright © 2015 Colleen Rothe. All rights reserved.
 //
+
+//check connectivity
+//http://stackoverflow.com/questions/39558868/check-internet-connection-ios-10
 
 import UIKit
 import Foundation
