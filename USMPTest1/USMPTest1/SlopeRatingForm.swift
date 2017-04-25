@@ -3963,6 +3963,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     
  
     func UploadRequest(){
+        print("call upload request")
         if(images.count != 0){
             //for each of the images...
             for i in 0 ... (images.count-1){
