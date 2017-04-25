@@ -902,6 +902,10 @@ public class LandslideActivity extends AppCompatActivity
                 text3 = text3.concat(text2);
                 text2 = text3.concat("}");
 
+                text2 = text2.replace(",,",",");
+
+
+
                 //weird new bug.... will print like {"0": {"ID:"...
                 if(text2.charAt(2) != 'I'){ //not 4, 6
                     text2 = text2.substring(5,text2.length());
@@ -918,28 +922,39 @@ public class LandslideActivity extends AppCompatActivity
                 //Fill the form
 
                 String agency = (map.get("UMBRELLA_AGENCY"));
+                String regional = (map.get("REGIONAL_ADMIN"));
+
+
                 String[] agencyArray = getResources().getStringArray(R.array.AgencyList);
+                String[] regionalArray1 = getResources().getStringArray(R.array.FSRegionalList);
+                String[] regionalArray2 = getResources().getStringArray(R.array.NPSRegionalList);
+
+
+                //set the agency
                 for (int i = 0; i < agencyArray.length; i++) {
                     if (agencyArray[i].equals(agency)) {
                         Agency.setSelection(i);
                     }
                 }
 
-                String regional = (map.get("REGIONAL_ADMIN"));
-                String[] regionalArray1 = getResources().getStringArray(R.array.FSRegionalList);
-                String[] regionalArray2 = getResources().getStringArray(R.array.NPSRegionalList);
-
-                for (int i = 0; i < regionalArray1.length; i++) {
-                    if (regionalArray1[i].equals(regional)) {
-                        Regional.setSelection(i);
+                //if agency = FS...
+                if(Agency.getSelectedItem() == "FS"){
+                    for(int i = 0; i< regionalArray1.length; i++){
+                        //Set the FS region
+                        if(regional.contains(regionalArray1[i])){
+                            Regional.setSelection(i);
+                        }
+                    }
+                    //if agency = NPS
+                }else if (Agency.getSelectedItem() == "NPS"){
+                    for(int i = 0; i< regionalArray2.length; i++){
+                        //Set the NPS region
+                        if(regional.contains(regionalArray2[i])){
+                            Regional.setSelection(i);
+                        }
                     }
                 }
-
-                for (int i = 0; i < regionalArray2.length; i++) {
-                    if (regionalArray2[i].equals(regional)) {
-                        Regional.setSelection(i);
-                    }
-                }
+                
 
                 String local = (map.get("LOCAL_ADMIN"));
                 String[] local1 = getResources().getStringArray(R.array.FSLocalList1);
@@ -3524,9 +3539,32 @@ public class LandslideActivity extends AppCompatActivity
                     OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
                     //GET ALL THE VALUES
+
                     String umbrella_agency = String.valueOf(Agency.getSelectedItem());
                     String regional_admin = String.valueOf(Regional.getSelectedItem());
                     String local_admin = String.valueOf(Local.getSelectedItem());
+
+                    //GET ALL THE VALUES
+                    if(!umbrella_agency.equals("Select Agency Option")){
+                        String temp = umbrella_agency;
+                        if(!regional_admin.equals("Select Regional Option")){
+                            temp = temp.concat("_");
+                            temp = temp.concat(regional_admin);
+                            regional_admin = temp;
+                            if(!local_admin.equals("Select Local Option")){
+                                temp = temp.concat("_");
+                                temp = temp.concat(local_admin);
+                                local_admin = temp;
+                            }
+
+                        }
+
+                    }
+                    else{ //if not selected, set as empty string
+                        umbrella_agency = "";
+                        regional_admin = "";
+                        local_admin = "";
+                    }
 
 
                     String road_trail_number = String.valueOf(RoadTrailNo.getText());
@@ -3834,10 +3872,32 @@ public class LandslideActivity extends AppCompatActivity
                         conn.setDoOutput(true);
                         OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
-                        //GET ALL THE VALUES
                         String umbrella_agency = String.valueOf(Agency.getSelectedItem());
                         String regional_admin = String.valueOf(Regional.getSelectedItem());
                         String local_admin = String.valueOf(Local.getSelectedItem());
+
+                        //GET ALL THE VALUES
+                        if(!umbrella_agency.equals("Select Agency Option")){
+                            String temp = umbrella_agency;
+                            if(!regional_admin.equals("Select Regional Option")){
+                                temp = temp.concat("_");
+                                temp = temp.concat(regional_admin);
+                                regional_admin = temp;
+                                if(!local_admin.equals("Select Local Option")){
+                                    temp = temp.concat("_");
+                                    temp = temp.concat(local_admin);
+                                    local_admin = temp;
+                                }
+
+                            }
+
+                        }
+                        else{ //if not selected, set as emtpy string
+                            umbrella_agency = "";
+                            regional_admin = "";
+                            local_admin = "";
+                        }
+
 
                         String road_trail_number = String.valueOf(RoadTrailNo.getText());
                         String road_trail_class = String.valueOf(RoadTrailClass.getText());

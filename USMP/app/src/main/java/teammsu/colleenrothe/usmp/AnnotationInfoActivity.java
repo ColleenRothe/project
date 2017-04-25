@@ -316,6 +316,9 @@ public class AnnotationInfoActivity extends AppCompatActivity
                     text2 = text2.substring(5,text2.length());
                     text2 = "{".concat(text2);
                 }
+
+                text2 = text2.replace(",,",",");
+
                 System.out.println("final TEXT 2: "+text2);
 
 

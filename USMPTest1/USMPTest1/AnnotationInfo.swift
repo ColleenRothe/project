@@ -85,13 +85,31 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
             homeModel.downloadItems()
         }
         
-        let font = UIFont(name: "Times New Roman", size: 10)
-        //fixes the alert controllers resizing the nav bar when dismissed
-        mapButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-        slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-        newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-        maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
-        logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+        //resizing
+        //iPad sizing
+        if(shareData.device == "iPad"){
+            let font = UIFont(name: "Times New Roman", size: 15)
+            //fixes the alert controllers resizing the nav bar when dismissed
+            
+            mapButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            
+            logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            
+        }else{
+            //iPhone sizing
+            let font = UIFont(name: "Times New Roman", size: 9)
+            //fixes the alert controllers resizing the nav bar when dismissed
+            
+            mapButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            slopeRatingFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            newSlopeEventButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            maintenanceFormButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+            logoutButton.setTitleTextAttributes([NSFontAttributeName: font!], for: UIControlState())
+        }
+
     }
     
     override func didReceiveMemoryWarning() {

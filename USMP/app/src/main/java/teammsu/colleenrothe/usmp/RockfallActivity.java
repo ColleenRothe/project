@@ -982,6 +982,9 @@ public class RockfallActivity extends AppCompatActivity
                 text3 = text3.concat(text2);
                 text2 = text3.concat("}");
 
+                text2 = text2.replace(",,",",");
+
+
                 //weird new bug.... will print like {"0": {"ID:"...
                 if(text2.charAt(2) != 'I'){ //not 4, 6
                     text2 = text2.substring(5,text2.length());
@@ -3617,6 +3620,27 @@ public class RockfallActivity extends AppCompatActivity
                     String regional_admin = String.valueOf(Regional.getSelectedItem());
                     String local_admin = String.valueOf(Local.getSelectedItem());
 
+                    if(!umbrella_agency.equals("Select Agency Option")){
+                        String temp = umbrella_agency;
+                        if(!regional_admin.equals("Select Regional Option")){
+                            temp = temp.concat("_");
+                            temp = temp.concat(regional_admin);
+                            regional_admin = temp;
+                            if(!local_admin.equals("Select Local Option")){
+                                temp = temp.concat("_");
+                                temp = temp.concat(local_admin);
+                                local_admin = temp;
+                            }
+
+                        }
+
+                    }
+                    else{ //if not selected, set as emtpy string
+                        umbrella_agency = "";
+                        regional_admin = "";
+                        local_admin = "";
+                    }
+
                     String road_trail_number = String.valueOf(RoadTrailNo.getText());
                     String road_trail_class = String.valueOf(RoadTrailClass.getText());
                     String begin_mile_marker = String.valueOf(BeginMile.getText());
@@ -3963,10 +3987,30 @@ public class RockfallActivity extends AppCompatActivity
                         OutputStreamWriter writer = new OutputStreamWriter(conn.getOutputStream());
 
                         //GET ALL THE VALUES
-
                         String umbrella_agency = String.valueOf(Agency.getSelectedItem());
                         String regional_admin = String.valueOf(Regional.getSelectedItem());
                         String local_admin = String.valueOf(Local.getSelectedItem());
+
+                        if(!umbrella_agency.equals("Select Agency Option")){
+                            String temp = umbrella_agency;
+                            if(!regional_admin.equals("Select Regional Option")){
+                                temp = temp.concat("_");
+                                temp = temp.concat(regional_admin);
+                                regional_admin = temp;
+                                if(!local_admin.equals("Select Local Option")){
+                                    temp = temp.concat("_");
+                                    temp = temp.concat(local_admin);
+                                    local_admin = temp;
+                                }
+
+                            }
+
+                        }
+                        else{ //if not selected, set as emtpy string
+                            umbrella_agency = "";
+                            regional_admin = "";
+                            local_admin = "";
+                        }
 
                         String road_trail_number = String.valueOf(RoadTrailNo.getText());
                         String road_trail_class = String.valueOf(RoadTrailClass.getText());

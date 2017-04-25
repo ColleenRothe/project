@@ -1044,20 +1044,33 @@ public class MaintenanceActivity extends AppCompatActivity
 
                     }
 
-                    String agency = "search_0";
-                    if(Agency.getSelectedItemPosition()!=0){
-                        agency = Agency.getSelectedItem().toString();
+
+                    String umbrella_agency = String.valueOf(Agency.getSelectedItem());
+                    String regional_admin = String.valueOf(Regional.getSelectedItem());
+                    String local_admin = String.valueOf(Local.getSelectedItem());
+
+                    //GET ALL THE VALUES
+                    if(!umbrella_agency.equals("Select Agency Option")){
+                        String temp = umbrella_agency;
+                        if(!regional_admin.equals("Select Regional Option")){
+                            temp = temp.concat("_");
+                            temp = temp.concat(regional_admin);
+                            regional_admin = temp;
+                            if(!local_admin.equals("Select Local Option")){
+                                temp = temp.concat("_");
+                                temp = temp.concat(local_admin);
+                                local_admin = temp;
+                            }
+
+                        }
+
+                    }
+                    else{ //if not selected, set as emtpy string
+                        umbrella_agency = "";
+                        regional_admin = "";
+                        local_admin = "";
                     }
 
-                    String regional = "search_0";
-                    if(Regional.getSelectedItemPosition()!=0){
-                        regional = Regional.getSelectedItem().toString();
-                    }
-
-                    String local = "search_0";
-                    if(Local.getSelectedItemPosition()!=0){
-                        local = Local.getSelectedItem().toString();
-                    }
 
                     String usEvent = "";
                     if(EventType.getSelectedItem().toString().equals("Recent Unstable Slope Event")){
@@ -1074,7 +1087,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
 
                     writer.write("code_relation="+code+"&maintenance_type="+maintenanceType+"&road_trail_no="+rtnum+"&begin_mile_marker="+beginMile+"&end_mile_marker=" +
-                            endMile+"&umbrella_agency="+agency+"&regional_admin="+regional+"&local_admin="+local+"&us_event="+usEvent+"&event_desc="+MDescriptionText+"&dateinput="+dateinput+
+                            endMile+"&umbrella_agency="+umbrella_agency+"&regional_admin="+regional_admin+"&local_admin="+local_admin+"&us_event="+usEvent+"&event_desc="+MDescriptionText+"&dateinput="+dateinput+
                     "&design_pse_val="+Percent1Text+"&remove_ditch_val="+Percent2Text+"&remove_road_trail_val="+Percent3Text+"&relevel_aggregate_val="+Percent4Text+
                     "&relevel_patch_val="+Percent4_5Text+"&drainage_improvement_val="+Percent5Text+"&deep_patch_val="+Percent6Text+"&haul_debris_val="+Percent7Text+
                     "&scaling_rock_slopes_val="+Percent8Text+"&road_trail_alignment_val="+Percent9Text+"&repair_rockfall_barrier_val="+Percent10Text+

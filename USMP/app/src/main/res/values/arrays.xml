@@ -362,6 +362,7 @@
         <item>@string/FSR7L3</item>
         <item>@string/FSR7L4</item>
         <item>@string/FSR7L5</item>
+        <item>@string/FSR7L16</item>
         <item>@string/FSR7L6</item>
         <item>@string/FSR7L7</item>
         <item>@string/FSR7L8</item>
@@ -372,6 +373,7 @@
         <item>@string/FSR7L13</item>
         <item>@string/FSR7L14</item>
         <item>@string/FSR7L15</item>
+
     </string-array>
 
     <string-array name="FSLocalList8">
@@ -618,7 +620,6 @@
         <item>@string/NPSR4L35</item>
         <item>@string/NPSR4L36</item>
         <item>@string/NPSR4L37</item>
-        <item>@string/NPSR4L38</item>
     </string-array>
 
     <string-array name="NPSLocal5">
@@ -770,6 +771,8 @@
         <item>@string/NPSR6L59</item>
         <item>@string/NPSR6L60</item>
         <item>@string/NPSR6L61</item>
+        <item>@string/NPSR6L62</item>
+
     </string-array>
 
     <string-array name="NPSLocal7">
@@ -838,6 +841,8 @@
         <item>@string/NPSR7L62</item>
         <item>@string/NPSR7L63</item>
         <item>@string/NPSR7L64</item>
+        <item>@string/NPSR7L65</item>
+
     </string-array>
 
     <!--Offline FORM SELECTOR-->

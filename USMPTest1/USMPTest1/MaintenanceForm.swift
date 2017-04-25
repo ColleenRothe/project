@@ -143,42 +143,77 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     var regionalOptions = ["Select Regional Option"]
     var localOptions = ["Select Local Option"]
     //FS>>>>>>>>>>>>>>>>>>>>
-    let FSRegionalOptions = ["Select Regional Option", "Northern Region", "Rocky Mountain Region", "Southwestern Region", "Intermountain Region", "Pacific Southwest Region","Pacific Northwest Region", "Southern Region", "Eastern Region", "Alaska Region"]
+    let FSRegionalOptions = ["Select Regional option" ,"Northern_Region", "Rocky_Mountain_Region", "Southwestern_Region", "Intermountain_Region", "Pacific_Southwest_Region","Pacific_Northwest_Region","Southern_Region","Eastern_Region","Alaska_Region"]
     //northern
-    let FSLocal1Options = ["Select Local Option","Beaverhead-Deerlodge National Forest", "Bitterroot National Forest", "Dakota Prairie National Grasslands", "Flathead National Forest", "Custer Gallatin National Forest", "Helena National Forest", "Idaho Panhandle National Forests", "Kootenai National Forest", "Lewis & Clark National Forest", "Lolo National Forest", "Nex Perce-Clearwater National Forests" ]
+    let FSLocal1Options = ["Select Local option","Beaverhead-Deerlodge_National_Forest","Bitterroot_National_Forest",
+                           "Dakota_Prairie_National_Grasslands","Flathead_National_Forest","Custer_Gallatin_National_Forest",
+                           "Helena_National_Forest","Idaho_Panhandle_National_Forests","Kootenai_National_Forest",
+                           "Lewis_&_Clark_National_Forest","Lolo_National_Forest","Nez_Perce-Clearwater_National_Forests"]
     //rocky mountain 
-    let FSLocal2Options = ["Select Local Option", "Arapaho and Roosevelt National Forests and Pawnee National Grassland", "Bighorn National Forest", "Black Hills National Forest", "Grand Mesa, Uncompahgre and Gunnison National Forests", "Mecine Bow-Routt National Forests and Thunder Basin National Grassland", "Nebraska National Forests and Grasslands", "Pike and San Isabel National Forests Cimarron and Comanche National Grasslands", "Rio Grande National Forest", "San Juan National Forest", "Shoshone National Forest", "White River National Forest"]
-    //southwestern 
-    let FSLocal3Options = ["Select Local Option", "Apache-Sitgreaves National Forests", "Carson National Forest", "Cibola National Forest","Coconino National Forest", "Coronado National Forest", "Gila National Forest", "Kaibab National Forest", "Lincoln National Forest", "Prescott National Forest", "Sante Fe National Forest", "Tonto National Forest"]
+    let FSLocal2Options = ["Select Local option","Arapaho_and_Roosevelt_National_Forests_and_Pawnee_National_Grassland","Bighorn_National_Forest",
+                           "Black_Hills_National_Forest","Grand_Mesa,Uncompahgre_and_Gunnison_National_Forests",
+                           "Medicine_Bow-Routt_National_Forests_and_Thunder_Basin_National_Grassland","Nebraska_ National_Forests_and_Grasslands",
+                           "Pike_and_San_Isabel_National_Forests_Cimarron_and_Comanche_National_Grasslands","Rio_Grande_National_Forest",
+                           "San_Juan_National_Forest","Shoshone_National_Forest","White_River_National_Forest"]
+    //southwestern
+    let FSLocal3Options = ["Select Local option","Apache-Sitgreaves_National_Forests","Carson_National_Forest","Cibola_National_Forest",
+                           "Coconino_National_Forest","Coronado_National_Forest","Gila_National_Forest",
+                           "Kaibab_National_Forest","Lincoln_National_Forest","Prescott_National_Forest",
+                           "Santa_Fe_National_Forest","Tonto_National_Forest"]
     //intermountain
-    let FSLocal4Options = ["Select Local Option", "Ashley National Forest", "Boise National Forest", "Bridger-Teton National Forest", "Caribou-Targhee National Forest", "Dixie National Forest", "Fishlake National Forest", "Humboldt-Toiyabe National Forest", "Manti-LaSal National Forest", "Payette National Forest", "Salmon-Challis National Forest", "Sawtooth National Forest", "Uinta-Wasatch-Cache National Forest"]
+    let FSLocal4Options = ["Select Local option","Ashley_National_Forest","Boise_National_Forest","Bridger-Teton_National_Forest",
+                           "Caribou-Targhee_National_Forest","Dixie_National_Forest","Fishlake_National_Forest",
+                           "Humboldt-Toiyabe_National_Forest","Manti-LaSal_National_Forest","Payette_National_Forest",
+                           "Salmon-Challis_National_Forest","Sawtooth_National_Forest","Uinta-Wasatch-Cache_National_Forest"]
     //pacific southwest
-    let FSLocal5Options = ["Select Local Option", "Angeles National Forest", "Cleveland National Forest", "Eldorado National Forest", "Inyo National Forest", "Klamath NAtional Forest", "Lake Tahoe Basin Management Unit", "Lassen National Forest", "Los Padres National Forest", "Mendocino National Forest", "Modoc National Forest", "Plumas National Forest", "San Bernardino National Forest", "Sequoia National Forest", "Shasta-Trinity National Forest", "Sierra National Forest", "Six Rivers National Forest", "Stanislaus National Forest", "Tahoe National Forest"]
+    let FSLocal5Options = ["Select Local option","Angeles_National_Forest","Cleveland_National_Forest","Eldorado_National_Forest",
+                           "Inyo_National_Forest","Klamath_National_Forest","Lake_Tahoe_Basin_Management_Unit",
+                           "Lassen_National_Forest","Los_Padres_National_Forest","Mendocino_National_Forest",
+                           "Modoc_National_Forest","Plumas_National_Forest","San_Bernardino_National_Forest",
+                           "Sequoia_National_Forest","Shasta-Trinity_National_Forest","Sierra_National_Forest",
+                           "Six_Rivers_National_Forest","Stanislaus_National_Forest","Tahoe_National_Forest"]
     //pacific northwest
-    let FSLocal6Options = ["Select Local Option", "Columbia River Gorge National Scenic Area", "Colville National Forest", "Crooked River National Grassland", "Deschutes National Forest", "Fremont-Winema National Forest", "Gifford Pinchot National Forest", "Malheur National Forest", "Mt. Baker-Snoqualmie NAtional Forest", "Mt. Hood National Forest", "Ochoco National Forest", "Okanogan-Wenatchee National Forest", "Olympic National Forest", "Siuslaw National Forest", "Rogue River-Siskiyou National Forest", "Umatilla National Forest", "Umpqua National Forest", "Wallowa-Whitma National Forest", "Willamette National Forest"]
+    let FSLocal6Options = ["Select Local option","Columbia_River_Gorge_National_Scenic_Area","Colville_National_Forest",
+                           "Crooked_River_National_Grassland","Deschutes_National_Forest",
+                           "Fremont-Winema_National_Forest","Gifford_Pinchot_National_Forest",
+                           "Malheur_National_Forest","Mt._Baker-Snoqualmie_National_Forest",
+                           "Mt._Hood_National_Forest","Ochoco_National_Forest","Okanogan-Wenatchee_National_Forest",
+                           "Olympic_National_Forest","Siuslaw_National_Forest","Rogue_River-Siskiyou_National_Forest",
+                           "Umatilla_National_Forest","Umpqua_National_Forest",
+                           "Wallowa-Whitma_National_Forest","Willamette_National_Forest"]
     //southern
-    let FSLocal7Options = ["Select Local Option", "Chattahoochee-Oconee National Forest", "Cherokee NAtional Forest", "Daniel Boone National Forest", "El Yunque National Forest", "Francis Marion and Sumter National Forests", "George Washington and Jefferson National Forests", "Kisatchie NAtional Forest", "Land Between the Lakes Recreation Area", "National Forests and Grasslands in Texas", "National Forests in Alabama", "National Forests in Florida", "National Forests in Mississippi", "National Forests in North Carolina", "Ouachita National Forest", "Ozark-St. Francis National Forest", "Savannah River Site"]
+    let FSLocal7Options = ["Select Local option","Chattahoochee-Oconee_National_Forest","Cherokee_National_Forest","Daniel_Boone_National_Forest",
+                           "El_Yunque_National_Forest","Francis_Marion_and_Sumter_National_Forests",
+                           "George_Washington_and_Jefferson_National_Forests","Kisatchie_National_Forest",
+                           "Land_Between_the_Lakes_Recreation_Area","National_Forests_and_Grasslands_in_Texas",
+                           "National_Forests_in_Alabama","National_Forests_in_Florida","National_Forests_in_Mississippi",
+                           "National_Forests_in_North_Carolina","Ouachita_National_Forest",
+                           "Ozark-St._Francis_National_Forest","Savannah_River_Site"]
     //eastern
-    let FSLocal8Options = ["Select Local Option", "Allegheny National Forest", "Chequamegon-Nicolet National Forest", "Chippewa National Forest", "Green Mountain & Finger Lakes National Forests", "Hiawatha National Forest", "Hoosier National Forest", "Huron-Manistee National Forests", "Mark Twain National Forest", "Midewin NAtional Tallgrass Prairie", "Monongahela National Forest", "Ottawa National Forest", "Shawnee National Forest", "Superior National Forest", "Wayne National Forest", "White Mountain National Forest"]
+    let FSLocal8Options = ["Select Local option","Allegheny_National_Forest","Chequamegon-Nicolet_National_Forest","Chippewa_National_Forest",
+                           "Green_Mountain_&_Finger_Lakes_National_Forests","Hiawatha_National_Forest","Hoosier_National_Forest",
+                           "Huron-Manistee_National_Forests","Mark_Twain_National_Forest","Midewin_National_Tallgrass_Prairie",
+                           "Monongahela_National_Forest","Ottawa_National_Forest","Shawnee_National_Forest",
+                           "Superior_National_Forest","Wayne_National_Forest","White_Mountain_National_Forest"]
     //alaska
-    let FSLocal9Options = ["Select Local Option", "Chugach National Forest", "Tongass National Forest"]
+    let FSLocal9Options = ["Select Local option","Chugach_National_Forest","Tongass_National_Forest"]
     
     //NPS>>>>>>>>>>>>>>
     let NPSRegionalOptions = ["Select Regional Option", "AKR", "IMR", "MWR", "NCR","NER","PWR", "SER"]
     //AKR
-    let NPSLocal1Options = ["Select Local Option", "Klondike Gold Rush", "Sitka", "Cape Krusenstern", "Aniakchak", "Kenai Fjords", "Kobuk Valley", "Denali", "Gates of the Arctic", "Glacier Bay", "Katmai", "Lake Clark", "Wrangell-St.Elias", "Bering Land Bridge", "Noatak", "Yukon-Charley Rivers"]
+    let NPSLocal1Options = ["Select Local option","ANIAKCHAK","BERING_LAND_BRIDGE", "CAPE_KRUSENSTERN", "DENALI","GATES_OF_THE_ARCTIC", "GLACIER_BAY","KATMAI","KENAI_FJORDS", "KLONDIKE_GOLD_RUSH","KOBUK_VALLEY","LAKE_CLARK","NOATAK","SITKA","WRANGELL-ST._ELIAS","YUKON-CHARLEY_RIVERS"]
     //IMR
-    let NPSLocal2Options = ["Select Local Option", "John D. Rockefeller, JR.", "Chaco Culture", "Lyndon B. Johnson", "Manhattan Project", "Palo Alto", "Pecos", "San Antonia Missions", "Tumacacori", "Bents Old Fort", "Fort Bowie", "Fort Davis", "Fort Laramie", "Golden Spike", "Grant-Kohrs Ranch", "Hubbell Trading Post", "Sand Creek Massacre", "Washita", "Alibates-Flint Quarries", "Aztec Ruins", "Bandelier", "Canyon De Chelly", "Capulin Volcano", "Case Grande Ruins", "Cedar Breaks", "Chiricahua", "Colorado", "Devils Tower", "Dinosaur", "El Malpais", "El Morro", "Florissant Fossil Beds", "Fort Union", "Fossil Butte", "Gila Cliff Dwellings", "Hohokam Pima", "Hovenweep", "Little Bighorn", "Montezuma Castle", "Natural Bridges", "Navajo", "Organ Pipe Cactus", "Petroglyph", "Pipe Spring", "Rainbow Bridge", "Salinas Pueblo Missions", "Sunset Crater Volcano", "Timpanogos Cave", "Tonto", "Tuzigoot", "Waco Mammoth", "Walnut Canyon", "White Sands", "Wupatki", "Yucca House", "Chamizal", "Coronado", "Arches", "Big Bend", "Black Canyon of the Gunnison", "Bryce Canyon", "Canyonlands", "Capitol Reef", "Carlsbad Caverns", "Glacier", "Grand Canyon", "Grand Teton", "Guadalupe Mountains", "Mesa Verde", "Petrified Forest","Rocky Mountain", "Saguaro", "Yellowstone", "Zion", "Big Thicket", "Great Sand Dunes", "Valles Caldera", "Amistad", "Bighorn Canyon", "Chickasaw", "Curecanti","Glen Canyon", "Lake Meredith", "Padre Island", "Rio Grande"]
+    let NPSLocal2Options = ["Select Local option","ALIBATES_FLINT_QUARRIES","AMISTAD","ARCHES","AZTEC_RUINS","BANDELIER","BENTS_OLD_FORT","BIG_BEND","BIG_THICKET","BIGHORN_CANYON","BLACK_CANYON_OF_THE_GUNNISON","BRYCE_CANYON","CANYON_DE_CHELLY","CANYONLANDS","CAPITOL_REEF","CAPULIN_VOLCANO","CARLSBAD_CAVERNS","CASA_GRANDE_RUINS","CEDAR_BREAKS","CHACO_CULTURE","CHAMIZAL","CHICKASAW","CHIRICAHUA","COLORADO","CORONADO","CURECANTI","DEVILS_TOWER","DINOSAUR","EL_MALPAIS","EL_MORRO","FLORISSANT_FOSSIL_BEDS","FORT_BOWIE","FORT_DAVIS","FORT_LARAMIE","FORT_UNION","FOSSIL_BUTTE","GILA_CLIFF_DWELLINGS","GLACIER","GLEN_CANYON","GOLDEN_SPIKE","GRAND_CANYON","GRAND_TETON","GRANT-KOHRS_RANCH","GREAT_SAND_DUNES","GUADALUPE_MOUNTAINS","HOHOKAM_PIMA","HOVENWEEP","HUBBELL_TRADING_POST","JOHN_D._ROCKEFELLER,_JR.","LAKE_MEREDITH","LITTLE_BIGHORN","LYNDON_B._JOHNSON","MANHATTAN_PROJECT","MESA_VERDE","MONTEZUMA_CASTLE","NATURAL_BRIDGES","NAVAJO","ORGAN_PIPE_CACTUS","PADRE_ISLAND","PALO_ALTO","PECOS","PETRIFIED_FOREST","PETROGLYPH","PIPE_SPRING","RAINBOW_BRIDGE","RIO_GRANDE","ROCKY_MOUNTAIN","SAGUARO","SALINAS_PUEBLO_MISSIONS","SAN_ANTONIO_MISSIONS","SAND_CREEK_MASSACRE","SUNSET_CRATER_VOLCANO","TIMPANOGOS_CAVE","TONTO","TUMACACORI","TUZIGOOT","VALLES_CALDERA","WACO_MAMMOTH","WALNUT_CANYON","WASHITA","WHITE_SANDS","WUPATKI","YELLOWSTONE","YUCCA_HOUSE","ZION"]
     //MWR
-    let NPSLocal3Options = ["Select Local Options", "Jefferson National Expansion", "Wilson's Creek", "River Raisin", "Dayton Aviation Heritage", "George Rogers Clark", "Hopewell Culture", "Keweenaw", "Brown V. Board of Education", "First Ladies'", "Fort Larned", "Fort Scott","Forst Smith", "Forst Union Trading Post", "Harry S Truman", "Herbert Hoover", "James A. Garfield", "Knife River Indian Villages", "Lincoln Home", "Little Rock Central High School", "Minuteman Missile", "Nicodemus", "President William Jefferson Clinton Birthplace", "Ulysses S. Grant", "William Howard Taft", "Apostle Islands", "Indiana Dunes", "Pictured Rocks", "Sleeping Bear Dunes", "Agate Fossil Beds", "Charles Young Buffalo Soldiers", "Effigy Mounds", "George Washington Carver", "Grand Portage", "Homestead", "Jewel Cave", "Pipestone", "Pullman", "Scotts Bluff", "Arkansas Post", "Lincoln Boyhood", "Mount Rushmore", "Perry's Victory and International Peace Memorial", "Pea Ridge", "Badlands", "Cuyahoga Valley", "Hot Springs", "Isle Royale", "Theodore Roosevelt", "Voyageurs", "Wind Cave", "Tallgrass Prairie", "Buffalo", "Mississippi National River and Recreation Area", "Niobrara", "Ozark National Scenic Riverway", "Saint Croix", "Missouri National REcreational River"]
+    let NPSLocal3Options = ["Select Local option","AGATE_FOSSIL_BEDS","APOSTLE_ISLANDS","ARKANSAS_POST","BADLANDS","BROWN_V._BOARD_OF_EDUCATION","BUFFALO","CHARLES_YOUNG_BUFFALO_SOLDIERS","CUYAHOGA_VALLEY","DAYTON_AVIATION_HERITAGE","EFFIGY_MOUNDS","FIRST_LADIES'","FORT_LARNED","FORT_SCOTT","FORT_SMITH","FORT_UNION_TRADING_POST","GEORGE_ROGERS_CLARK","GEORGE_WASHINGTON_CARVER","GRAND_PORTAGE","HARRY_S_TRUMAN","HERBERT_HOOVER","HOMESTEAD","HOPEWELL_CULTURE","HOT_SPRINGS","INDIANA_DUNES","ISLE_ROYALE","JAMES_A._GARFIELD","JEFFERSON_NATIONAL_EXPANSION","JEWEL_CAVE","KEWEENAW","KNIFE_RIVER_INDIAN_VILLAGES","LINCOLN_BOYHOOD","LINCOLN_HOME","LITTLE_ROCK_CENTRAL_HIGH_SCHOOL","MINUTEMAN_MISSILE","MISSISSIPPI_NATIONAL_RIVER_AND_RECREATION_AREA","MISSOURI_NATIONAL_RECREATIONAL_RIVER","MOUNT_RUSHMORE","NICODEMUS","NIOBRARA","OZARK_NATIONAL_SCENIC_RIVERWAY","PEA_RIDGE","PERRY’S_VICTORY_AND_INTERNATIONAL_PEACE_MEMORIAL","PICTURED_ROCKS","PIPESTONE","PRESIDENT_WILLIAM_JEFFERSON_CLINTON_BIRTHPLACE_HOME","PULLMAN","RIVER_RAISIN","SAINT_CROIX","SCOTTS_BLUFF","SLEEPING_BEAR_DUNES","TALLGRASS_PRAIRIE","THEODORE_ROOSEVELT","ULYSSES_S._GRANT","VOYAGEURS","WILLIAM_HOWARD_TAFT","WILSON’S_CREEK","WIND_CAVE"]
     //NCR
-    let NPSLocal4Options = ["Select Local Options", "Lincoln", "Thomas Jefferson", "Vietnam Veterans", "World War II", "George Washington Memorial Parkway", "Antietam", "Monocacy", "Manassas", "Chesapeake and Ohio Canal", "Harpers Ferry", "Carter G. Woodson Home", "Clara Barton", "Ford's Theatre", "Frederick Douglass", "Mary McLeod Bethune Council House", "Pennsylvania Avenue", "Belmont-Paul Women's Equality", "Arlington House- Robert E. Lee Memorial", "Franklin Delano Roosevelt", "Korean War Veterans", "Lyndon Baines Johnson Memorial Grove on the Potomac", "Martin Luther King, Jr.", "Theodore Roosevelt Island", "World War I", "Potomac Heritage", "Constitution Gardens", "National Capital Parks-East", "National Mall", "Prince William Forest Park", "Washington Monument", "White House Presidents Park", "Wolf Trap Park for the Performing Arts", "Catoctin Mountain", "Fort Washington", "Green Belt", "Piscataway", "Rock Creek"]
+    let NPSLocal4Options = ["Select Local option","ANTIETAM","ARLINGTON_HOUSE_-_ROBERT_E._LEE_MEMORIAL","BELMONT-PAUL_WOMEN'S_EQUALITY","CARTER_G._WOODSON_HOME","CATOCTIN_MOUNTAIN","CHESAPEAKE_AND_OHIO_CANAL","CLARA_BARTON","CONSTITUTION_GARDENS","FORD'S_THEATRE","FORT_WASHINGTON","FRANKLIN_DELANO_ROOSEVELT","FREDERICK_DOUGLASS","GEORGE_WASHINGTON_MEMORIAL_PARKWAY","GREEN_BELT","HARPERS_FERRY","KOREAN_WAR_VETERANS","LINCOLN","LYNDON_BAINES_JOHNSON_MEMORIAL_GROVE_ON_THE_POTOMAC","MANASSAS","MARTIN_LUTHER_KING,_JR.","MARY_MCLEOD_BETHUNE_COUNCIL_HOUSE","MONOCACY","NATIONAL_CAPITAL_PARKS_-_EAST","NATIONAL_MALL","PENNSYLVANIA_AVENUE","PISCATAWAY","POTOMAC_HERITAGE","PRINCE_WILLIAM_FOREST_PARK","ROCK_CREEK","THEODORE_ROOSEVELT_ISLAND","THOMAS_JEFFERSON","VIETNAM_VETERANS","WASHINGTON_MONUMENT","WHITE_HOUSE_PRESIDENTS_PARK","WOLF_TRAP_PARK_FOR_THE_PERFORMING_ARTS","WORLD_WAR_I","WORLD_WAR_II"]
     //NER
-    let NPSLocal5Options = ["Select Local Options", "Forst Necessity", "Petersburg", "Richmond", "Adams", "Appomattox Court House", "Blackstone River Valley", "Boston", "Cedar Creek & Belle Grove", "Colonial", "First State", "Harriet Tubman Underground Railroad", "Independence", "Lowell", "Marsh-Billings-Rockefeller", "Minute Man", "Morristown", "New Bedord Whaling", "Paterson Great Falls", "Saratoga", "Thomas Edison", "Valley Forge", "Women's Rights", "Allegheny Portage Railroad", "Boston African American", "Edgar Allan Poe", "Eisenhower", "Eleanor Roosevelt", "Frederick Law Olmsted", "Friendship Hill", "Hampton", "Home of Franklin D. Roosevelt", "Hopewell Furnace", "John Fitzgerald Kennedy", "Longfellow House-Washington's Headwuarters", "Maggie L. Walker", "Martin Van Buren", "Sagamore Hill", "Saint Paul's Church", "Saint-Gaudens", "Salem Maritime", "Saugus Iron Works", "Springfield Armory", "Steamtown", "Theodore Roosevelt Birthplace", "Thomas Stone", "Vanderbilt Mansion", "Weir Farm", "African Burial Ground", "Booker T. Washington NM", "Castle Clinton", "Fort Monroe", "Fort Stanwix", "George Washington Birthplace", "Governors Island", "Katahdin Woods and Waters", "Statue of Liberty and Ellis Island", "Stonewall", "Federal Hall", "Flight 93", "General Grant", "Hamilton Grange NM", "Johnstown Flood NM", "Roger Williams", "Thaddeus Kosciuszko", "Fredericksburg & Spotsylvania", "Gettysburg", "Acadia", "Shenandoah", "New River Gorge", "Boston Harbor Islands", "Delaware Water Gap", "Gateway", "Gauley", "Assateague Islands NS", "Cape Cod", "Fire ISland", "Bluestone", "Fort McHEnry National Monument And Historic Shrine", "Saint Croix Island INternational Historic Site", "Great Egg Harbor", "Uppder Delaware", "Appalachian"]
+    let NPSLocal5Options = ["Select Local option", "ACADIA","ADAMS","AFRICAN_BURIAL_GROUND","ALLEGHENY_PORTAGE_RAILROAD","APPALACHIAN","APPOMATTOX_COURT_HOUSE","ASSATEAGUE_ISLAND_NS","BLACKSTONE_RIVER_VALLEY","BLUESTONE","BOOKER_T._WASHINGTON_NM","BOSTON","BOSTON_AFRICAN_AMERICAN","BOSTON_HARBOR_ISLANDS","CAPE_COD","CASTLE_CLINTON","CEDAR_CREEK_&_BELLE_GROVE","COLONIAL","DELAWARE_WATER_GAP","EDGAR_ALLAN_POE","EISENHOWER","ELEANOR_ROOSEVELT","FEDERAL_HALL","FIRE_ISLAND","FIRST_STATE","FLIGHT_93","FORT_MCHENRY_NATIONAL_MONUMENT_AND_HISTORIC_SHRINE","FORT_MONROE","FORT_NECESSITY","FORT_STANWIX","FREDRICK_LAW_OLMSTED","FREDRICKSBURG_&_SPOTSYLVANIA","FRIENDSHIP_HILL","GATEWAY","GAULEY","GENERAL_GRANT","GEORGE_WASHINGTON_BIRTHPLACE","GETTYSBURG","GOVERNORS_ISLAND","GREAT_EGG_HARBOR","HAMILTON_GRANGE_NM","HAMPTON","HARRIET_TUBMAN_UNDERGROUND_RAILROAD","HOME_OF_FRANKLIN_D._ROOSEVELT","HOPEWELL_FURNACE","INDEPENDENCE","JOHN_FITZGERALD_KENNEDY","JOHNSTOWN_FLOOD_NM","KATAHDIN_WOODS_AND_WATERS","LONGFELLOW_HOUSE_-WASHINGTON'S_HEADQUARTERS","LOWELL","MAGGIE_L._WALKER","MARSH-BILLINGS-ROCKEFELLER","MARTIN_VAN_BUREN","MINUTE_MAN","MORRISTOWN","NEW_BEDFORD_WHALING","NEW_RIVER_GORGE","PATERSON_GREAT_FALLS","PETERSBURG","RICHMOND","ROGER_WILLIAMS","SAGAMORE_HILL","SAINT-GAUDENS","SAINT_CROIX_ISLAND_INTERNATIONAL_HISTORIC_SITE","SAINT_PAUL'S_CHURCH","SALEM_MARITIME","SARATOGA","SAUGUS_IRON_WORKS","SHENANDOAH","SPRINGFIELD_ARMORY","STATUE_OF_LIBERTY_AND_ELLIS_ISLAND","STEAMTOWN","STONEWALL","THADDEUS_KOSCIUSZKO","THEODORE_ROOSEVELT_BIRTHPLACE","THOMAS_EDISON","THOMAS_STONE","UPPER_DELAWARE","VALLEY_FORGE","VANDERBILT_MANSION","WEIR_FARM","WOMEN'S_RIGHTS"]
     //pwr
-    let NPSLocal6Options = ["Select Local Options", "Big Hole", "Kalaupapa", "Kaloko-Honokohau", "Klondike Gold Rush", "Lewis and Clark", "Nez Perce", "Pu'Uhonua O Honaunau", "Rosie The Riverter/WWII Home Front", "San Francisco Maritime", "War in the Pacific", "Eugene O'Neill", "Fort Point", "Fort Vancouver", "John Muir", "Manzanar", "Minidoka", "Pu'Ukohola Heiau", "San Juan Island", "Whitman Misson", "Cabrillo", "Castle Mountain", "Cesar E. Chavez", "Devils Postpile", "Hagerman Fossil Beds", "Honouliuli", "John Day Fossil Beds", "Lava Beds", "Muir Woods", "Port Chicago Naval Magazine", "Tule Springs Fossil Beds", "World War II Valor in the Pacific", "Oregon Caves", "Craters of the Moon", "Channel Islands", "Crater Lake", "Death Valley", "Great Basin", "Haleakala", "Hawaii Volcanoes", "Joshua Tree", "Kings Canyon", "Lassen Volcanic", "Mount Rainier", "National Park of American Samoa", "North Cascades", "Olympic", "Pinnacles", "Redwood", "Sequoia", "Yosemite", "Mojave", "Golden Gate", "Lake Chelan", "Lake Mead", "Lake Roosevelt", "Ross Lake", "Santa Montica Mountains", "Whiskeytown", "Point Reyes", "American Memorial Park", "City Of Rocks National Reserve", "Ebey's Landing National Historical Reserve"]
+    let NPSLocal6Options = ["Select Local option","AMERICAN_MEMORIAL_PARK","BIG_HOLE","CABRILLO","CASTLE_MOUNTAIN","CESAR_E._CHAVEZ","CHANNEL_ISLANDS","CITY_OF_ROCKS_NATIONAL_RESERVE","CRATER_LAKE","CRATERS_OF_THE_MOON","DEATH_VALLEY","DEVILS_POSTPILE","EBEY'S_LANDING_NATIONAL_HISTORICAL_RESERVE","EUGENE_O'NEILL","FORT_POINT","FORT_VANCOUVER","GOLDEN_GATE","GREAT_BASIN","HAGERMAN_FOSSIL_BEDS","HALEAKALA","HAWAII_VOLCANOES","HONOULIULI","JOHN_DAY_FOSSIL_BEDS","JOHN_MUIR","JOSHUA_TREE","KALAUPAPA","KALOKO-HONOKOHAU","KINGS_CANYON","KLONDIKE_GOLD_RUSH","LAKE_CHELAN","LAKE_MEAD","LAKE_ROOSEVELT","LASSEN_VOLCANIC","LAVA_BEDS","LEWIS_AND_CLARK","MANZANAR","MINIDOKA","MOJAVE","MOUNT_RAINIER","MUIR_WOODS","NATIONAL_PARK_OF_AMERICAN_SAMOA","NEZ_PERCE","NORTH_CASCADES","OLYMPIC","OREGON_CAVES","PINNACLES","POINT_REYES","PORT_CHICAGO_NAVAL_MAGAZINE","PU'UHONUA_O_HONAUNAU","PU'UKOHOLA_HEIAU","REDWOOD","ROSIE_THE_RIVETER/WWII_HOME_FRONT","ROSS_LAKE","SAN_FRANCISCO_MARITIME","SAN_JUAN_ISLAND","SANTA_MONICA_MOUNTAINS","SEQUOIA","TULE_SPRINGS_FOSSIL_BEDS","WAR_IN_THE_PACIFIC","WHISKEYTOWN","WHITMAN_MISSION","WORLD_WAR_II_VALOR_IN_THE_PACIFIC","YOSEMITE"]
     //ser
-    let NPSLocal7Options = ["Select Local Options", "Cowpens", "Forst Donelson", "Moores Creek", "Stones River", "Tupelo", "Kennesaw Mountain", "Abraham Lincoln Birthplace", "Cumberland Gap", "Natchez", "New Orleans Jazz", "Andersonville", "Andrew Johnson", "Carl Sandburg Home", "Charles Pinckney", "Christiansted", "Fort Raleigh", "Jimmy Carter", "Martin Luther King, JR.", "Ninety Six", "San Juan", "Tuskegee Airmen", "Tuskegee Institue", "Buck Island reef", "Castillo de San Marcos", "Fort Frederica", "Fort Matanzas" ,"Fort Pulaski", "Forst Sumter", "Ocmulgee", "Poverty Point State", "Russell Cave", "Virgin Islands Coral Reef", "De Soto", "Fort Caroline", "Wright Brothers", "Chickamauga and Chattanooga", "Guilford Courthouse", "Horseshoe Bend", "Kings Mountain", "Shiloh, Vicksburg", "Biscayne", "Congaree", "Dry Tortugas", "Everglades", "Great Smoky Mountains", "Mammoth Cave", "Virgin Islands", "Little River Canyon", "Big South Fork", "Chattahoochee", "Canaveral", "Cape Hatteras", "Cape Lookout","Cumberland Island", "Gulf Islands", "Appalachian", "Natchez Trace", "Brices Cross Roads National Battlefield Site", "Cane River Creole National HIstorical Park & Heritage Area", "Jean Lafitte National Historical Park & Preserve", "Salt River Bay National HIstorical Park & Ecological Preserve", "Timucuan Ecological", "Blue Ridge Parkway"]
+    let NPSLocal7Options = ["Select Local option","ABRAHAM_LINCOLN_BIRTHPLACE","ANDERSONVILLE","ANDREW_JOHNSON","APPALACHIAN","BIG_SOUTH_FORK ","BISCAYNE","BLUE_RIDGE_PARKWAY","BRICES_CROSS_ROADS_NATIONAL_BATTLEFIELD_SITE","BUCK_ISLAND_REEF","CANAVERAL","CANE_RIVER_CREOLE_NATIONAL_HISTORICAL_PARK_&_HERITAGE_AREA","CAPE_HATTERAS","CAPE_LOOKOUT","CARL_SANDBURG_HOME","CASTILLO_de_SAN_MARCOS","CHARLES_PINCKNEY","CHATTAHOOCHEE","CHICKAMAUGA_AND_CHATTANOOGA","CHRISTIANSTED","CONGAREE","COWPENS","CUMBERLAND_GAP","CUMBERLAND_ISLAND","DE_SOTO","DRY_TORTUGAS","EVERGLADES","FORT_CAROLINE","FORT_DONELSON","FORT_FREDERICA","FORT_MATANZAS","FORT_PULASKI","FORT_RALEIGH","FORT_SUMTER","GREAT_SMOKY_MOUNTAINS","GUILFORD_COURTHOUSE","GULF_ISLANDS","HORSESHOE_BEND","JEAN_LAFITTE_NATIONAL_HISTORICAL_PARK_&_PRESERVE","JIMMY_CARTER","KENNESAW_MOUNTAIN","KINGS_MOUNTAIN","LITTLE_RIVER_CANYON","MAMMOTH_CAVE","MARTIN_LUTHER_KING,_JR.","MOORES_CREEK","NATCHEZ","NATCHEZ_TRACE","NEW_ORLEANS_JAZZ","NINETY_SIX","OBED","OCMULGEE","POVERTY_POINT_STATE","RUSSELL_CAVE","SALT_RIVER_BAY_NATIONAL_HISTORICAL_PARK_&_ECOLOGICAL_PRESERVE","SAN_JUAN","SHILOH","STONES_RIVER","TIMUCUAN_ECOLOGICAL","TUPELO","TUSKEGEE_AIRMEN","TUSKEGEE_INSTITUTE","VICKSBURG","VIRGIN_ISLANDS","VIRGIN_ISLANDS_CORAL_REEF","WRIGHT_BROTHERS"]
     
     //offline func.
     var sites = [NSManagedObject]()             //core data
@@ -435,59 +470,192 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         
         //agency, regional, local
         let agencyS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).agency)
-        if(agencyOptions.contains(agencyS!)){
-            agency.selectRow(agencyOptions.index(of: agencyS!)!, inComponent: 0, animated: true)
-            self.agency.delegate?.pickerView!(agency, didSelectRow: agencyOptions.index(of: agencyS!)!, inComponent: 0)
-
-        }
         let regionS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).regional)
         let localS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).local)
         
-        if(FSRegionalOptions.contains(regionS!)){
-            regional.selectRow(FSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
-            self.regional.delegate?.pickerView!(regional, didSelectRow: FSRegionalOptions.index(of: regionS!)!, inComponent: 0)
-            if(FSLocal1Options.contains(localS!)){
-                local.selectRow(FSLocal1Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSLocal2Options.contains(localS!)){
-                local.selectRow(FSLocal2Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSLocal3Options.contains(localS!)){
-                local.selectRow(FSLocal3Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSLocal4Options.contains(localS!)){
-                local.selectRow(FSLocal4Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSLocal5Options.contains(localS!)){
-                local.selectRow(FSLocal5Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSLocal6Options.contains(localS!)){
-                local.selectRow(FSLocal6Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSLocal6Options.contains(localS!)){
-                local.selectRow(FSLocal6Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSLocal7Options.contains(localS!)){
-                local.selectRow(FSLocal7Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSLocal8Options.contains(localS!)){
-                local.selectRow(FSLocal8Options.index(of: localS!)!, inComponent: 0, animated: true)
+        //fix, based on it being like "NPS_SER_BITTERROOT"....
+        
+        if(agencyS == "FS"){
+            agency.selectRow(1, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
+            
+            //To get the region
+            for i in 0 ... (FSRegionalOptions.count - 1){
+                if(regionS?.range(of: FSRegionalOptions[i]) != nil){
+                    regional.selectRow(i, inComponent: 0, animated: true)
+                    self.regional.delegate?.pickerView!(regional, didSelectRow: i, inComponent: 0)
+                }
             }
             
-        }
+            var localB = false
             
-        else if(NPSRegionalOptions.contains(regionS!)){
-            regional.selectRow(NPSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
-            self.regional.delegate?.pickerView!(regional, didSelectRow: NPSRegionalOptions.index(of: regionS!)!, inComponent: 0)
             
-            if(NPSLocal1Options.contains(localS!)){
-                local.selectRow(NPSLocal1Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSLocal2Options.contains(localS!)){
-                local.selectRow(NPSLocal2Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSLocal3Options.contains(localS!)){
-                local.selectRow(NPSLocal3Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSLocal4Options.contains(localS!)){
-                local.selectRow(NPSLocal4Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSLocal5Options.contains(localS!)){
-                local.selectRow(NPSLocal5Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSLocal6Options.contains(localS!)){
-                local.selectRow(NPSLocal6Options.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSLocal7Options.contains(localS!)){
-                local.selectRow(NPSLocal7Options.index(of: localS!)!, inComponent: 0, animated: true)
+            for i in 0 ... (FSLocal1Options.count - 1){
+                if(localS?.range(of: FSLocal1Options[i]) != nil){
+                    local.selectRow(i, inComponent: 0, animated: true)
+                    localB = true
+                }
             }
             
+            if(localB != true){
+                for i in 0 ... (FSLocal2Options.count - 1){
+                    if(localS?.range(of: FSLocal2Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (FSLocal3Options.count  - 1){
+                    if(localS?.range(of: FSLocal3Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (FSLocal4Options.count  - 1){
+                    if(localS?.range(of: FSLocal4Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (FSLocal5Options.count  - 1){
+                    if(localS?.range(of: FSLocal5Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (FSLocal6Options.count  - 1){
+                    if(localS?.range(of: FSLocal6Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (FSLocal7Options.count  - 1){
+                    if(localS?.range(of: FSLocal7Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (FSLocal8Options.count  - 1){
+                    if(localS?.range(of: FSLocal8Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (FSLocal9Options.count  - 1){
+                    if(localS?.range(of: FSLocal9Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            
+        }else if(agencyS == "NPS"){
+            agency.selectRow(2, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+            
+            //To get the region
+            for i in 0 ... (NPSRegionalOptions.count - 1){
+                if(regionS?.range(of: NPSRegionalOptions[i]) != nil){
+                    regional.selectRow(i, inComponent: 0, animated: true)
+                    self.regional.delegate?.pickerView!(regional, didSelectRow: i, inComponent: 0)
+                }
+            }
+            
+            var localB = false
+            if(localB != true){
+                for i in 0 ... (NPSLocal1Options.count  - 1){
+                    if(localS?.range(of: NPSLocal1Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSLocal2Options.count  - 1){
+                    if(localS?.range(of: NPSLocal2Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSLocal3Options.count  - 1){
+                    if(localS?.range(of: NPSLocal3Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSLocal4Options.count  - 1){
+                    if(localS?.range(of: NPSLocal4Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSLocal5Options.count  - 1){
+                    if(localS?.range(of: NPSLocal5Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSLocal6Options.count  - 1){
+                    if(localS?.range(of: NPSLocal6Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSLocal7Options.count  - 1){
+                    if(localS?.range(of: NPSLocal7Options[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            
+            
+        }else if(agencyS == "BLM"){
+            agency.selectRow(3, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 3, inComponent: 0)
+            
+            
+        }else if(agencyS == "BIA"){
+            agency.selectRow(4, inComponent: 0, animated: true)
+            self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
         }
 
         
@@ -1137,7 +1305,22 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             }
             
         }
-
+        
+        //different way for the website ex: NPS_SER_BITTERROOT
+        if(agencyS != ""){
+            var temp = agencyS
+            if(regionalS != ""){
+                temp = temp.appending("_")
+                temp = temp.appending(regionalS)
+                regionalS = temp
+            }
+            if(localS != ""){
+                temp = regionalS
+                temp = temp.appending("_")
+                temp = temp.appending(localS)
+                localS = temp
+            }
+        }
         
         
         var percent0 = 0

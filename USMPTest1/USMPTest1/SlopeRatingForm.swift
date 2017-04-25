@@ -164,115 +164,22 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
                           "Monongahela_National_Forest","Ottawa_National_Forest","Shawnee_National_Forest",
                           "Superior_National_Forest","Wayne_National_Forest","White_Mountain_National_Forest"]
     
-    var FSAlaskaLocal = ["Select Local option","Chugach National Forest","Tongass National Forest"]
+    var FSAlaskaLocal = ["Select Local option","Chugach_National_Forest","Tongass_National_Forest"]
     
-    var NPSAkrLocal = ["Select Local option","KLONDIKE_GOLD_RUSH","SITKA","CAPE_KRUSENSTERN","ANIAKCHAK","KENAI_FJORDS",
-                       "KOBUK_VALLEY","DENALI","GATES_OF_THE_ARCTIC","GLACIER_BAY","KATMAI",
-                       "LAKE_CLARK","WRANGELL-ST._ELIAS","BERING_LAND_BRIDGE","NOATAK",
-                       "YUKON-CHARLEY_RIVERS"]
+    var NPSAkrLocal = ["Select Local option","ANIAKCHAK","BERING_LAND_BRIDGE", "CAPE_KRUSENSTERN", "DENALI","GATES_OF_THE_ARCTIC", "GLACIER_BAY","KATMAI","KENAI_FJORDS", "KLONDIKE_GOLD_RUSH","KOBUK_VALLEY","LAKE_CLARK","NOATAK","SITKA","WRANGELL-ST._ELIAS","YUKON-CHARLEY_RIVERS"]
     
-    var NPSImrLocal = ["Select Local option","JOHN_D._ROCKEFELLER,_JR.,","CHACO_CULTURE","LYNDON_B._JOHNSON",
-                       "MANHATTAN_PROJECT","PALO_ALTO","PECOS","SAN_ANTONIO_MISSIONS","TUMACACORI",
-                       "BENTS_OLD_FORT","FORT_BOWIE","FORT_DAVIS","FORT_LARAMIE","GOLDEN_SPIKE",
-                       "GRANT-KOHRS_RANCH","HUBBELL_TRADING_POST","SAND_CREEK_MASSACRE","WASHITA",
-                       "ALIBATES_FLINT_QUARRIES","AZTEC_RUINS","BANDELIER","CANYON_DE_CHELLY",
-                       "CAPULIN_VOLCANO","CASA_GRANDE_RUINS","CEDAR_BREAKS","CHIRICAHUA","COLORADO",
-                       "DEVILS_TOWER","DINOSAUR","EL_MALPAIS","EL_MORRO","FLORISSANT_FOSSIL_BEDS",
-                       "FORT_UNION","FOSSIL_BUTTE","GILA_CLIFF_DWELLINGS","HOHOKAM_PIMA","HOVENWEEP",
-                       "LITTLE_BIGHORN","MONTEZUMA_CASTLE","NATURAL_BRIDGES","NAVAJO","ORGAN_PIPE_CACTUS",
-                       "PETROGLYPH","PIPE_SPRING","RAINBOW_BRIDGE","SALINAS_PUEBLO_MISSIONS",
-                       "SUNSET_CRATER_VOLCANO","TIMPANOGOS_CAVE","TONTO","TUZIGOOT","WACO_MAMMOTH",
-                       "WALNUT_CANYON","WHITE_SANDS","WUPATKI","YUCCA_HOUSE","CHAMIZAL",
-                       "CORONADO","ARCHES","BIG_BEND","BLACK_CANYON_OF_THE_GUNNISON","BRYCE_CANYON",
-                       "CANYONLANDS","CAPITOL_REEF","CARLSBAD_CAVERNS","GLACIER","GRAND_CANYON",
-                       "GRAND_TETON","GUADALUPE_MOUNTAINS","MESA_VERDE","PETRIFIED_FOREST",
-                       "ROCKY_MOUNTAIN","SAGUARO","YELLOWSTONE","ZION","BIG_THICKET",
-                       "GREAT_SAND_DUNES","VALLES_CALDERA","AMISTAD","BIGHORN_CANYON ","CHICKASAW",
-                       "CURECANTI","GLEN_CANYON","LAKE_MEREDITH","PADRE_ISLAND","RIO_GRANDE"]
     
-    var NPSMwrLocal = ["Select Local option","JEFFERSON_NATIONAL_EXPANSION","WILSON’S_CREEK","RIVER_RAISIN","DAYTON_AVIATION_HERITAGE",
-                       "GEORGE_ROGERS_CLARK","HOPEWELL_CULTURE","KEWEENAW","BROWN_V._BOARD_OF_EDUCATION",
-                       "FIRST_LADIES'","FORT_LARNED","FORT_SCOTT","FORT_SMITH","FORT_UNION_TRADING_POST",
-                       "HARRY_S_TRUMAN","HERBERT_HOOVER","JAMES_A._GARFIELD","KNIFE_RIVER_INDIAN_VILLAGES",
-                       "LINCOLN_HOME","LITTLE_ROCK_CENTRAL_HIGH_SCHOOL","MINUTEMAN_MISSILE","NICODEMUS",
-                       "PRESIDENT_WILLIAM_JEFFERSON_CLINTON_BIRTHPLACE_HOME","ULYSSES_S._GRANT","WILLIAM_HOWARD_TAFT",
-                       "APOSTLE_ISLANDS","INDIANA_DUNES","PICTURED_ROCKS","SLEEPING_BEAR_DUNES",
-                       "AGATE_FOSSIL_BEDS","CHARLES_YOUNG_BUFFALO_SOLDIERS","EFFIGY_MOUNDS",
-                       "GEORGE_WASHINGTON_CARVER","GRAND_PORTAGE","HOMESTEAD","JEWEL_CAVE","PIPESTONE",
-                       "PULLMAN","SCOTTS_BLUFF","ARKANSAS_POST","LINCOLN_BOYHOOD","MOUNT_RUSHMORE",
-                       "PERRY’S_VICTORY_AND_INTERNATIONAL_PEACE_MEMORIAL","PEA_RIDGE","BADLANDS",
-                       "CUYAHOGA_VALLEY","HOT_SPRINGS","ISLE_ROYALE","THEODORE_ROOSEVELT","VOYAGEURS",
-                       "WIND_CAVE","TALLGRASS_PRAIRIE","BUFFALO","MISSISSIPPI_NATIONAL_RIVER_AND_RECREATION_AREA",
-                       "NIOBRARA","OZARK_NATIONAL_SCENIC_RIVERWAY","SAINT_CROIX","MISSOURI_NATIONAL_RECREATIONAL_RIVER"]
+    var NPSImrLocal = ["Select Local option","ALIBATES_FLINT_QUARRIES","AMISTAD","ARCHES","AZTEC_RUINS","BANDELIER","BENTS_OLD_FORT","BIG_BEND","BIG_THICKET","BIGHORN_CANYON","BLACK_CANYON_OF_THE_GUNNISON","BRYCE_CANYON","CANYON_DE_CHELLY","CANYONLANDS","CAPITOL_REEF","CAPULIN_VOLCANO","CARLSBAD_CAVERNS","CASA_GRANDE_RUINS","CEDAR_BREAKS","CHACO_CULTURE","CHAMIZAL","CHICKASAW","CHIRICAHUA","COLORADO","CORONADO","CURECANTI","DEVILS_TOWER","DINOSAUR","EL_MALPAIS","EL_MORRO","FLORISSANT_FOSSIL_BEDS","FORT_BOWIE","FORT_DAVIS","FORT_LARAMIE","FORT_UNION","FOSSIL_BUTTE","GILA_CLIFF_DWELLINGS","GLACIER","GLEN_CANYON","GOLDEN_SPIKE","GRAND_CANYON","GRAND_TETON","GRANT-KOHRS_RANCH","GREAT_SAND_DUNES","GUADALUPE_MOUNTAINS","HOHOKAM_PIMA","HOVENWEEP","HUBBELL_TRADING_POST","JOHN_D._ROCKEFELLER,_JR.","LAKE_MEREDITH","LITTLE_BIGHORN","LYNDON_B._JOHNSON","MANHATTAN_PROJECT","MESA_VERDE","MONTEZUMA_CASTLE","NATURAL_BRIDGES","NAVAJO","ORGAN_PIPE_CACTUS","PADRE_ISLAND","PALO_ALTO","PECOS","PETRIFIED_FOREST","PETROGLYPH","PIPE_SPRING","RAINBOW_BRIDGE","RIO_GRANDE","ROCKY_MOUNTAIN","SAGUARO","SALINAS_PUEBLO_MISSIONS","SAN_ANTONIO_MISSIONS","SAND_CREEK_MASSACRE","SUNSET_CRATER_VOLCANO","TIMPANOGOS_CAVE","TONTO","TUMACACORI","TUZIGOOT","VALLES_CALDERA","WACO_MAMMOTH","WALNUT_CANYON","WASHITA","WHITE_SANDS","WUPATKI","YELLOWSTONE","YUCCA_HOUSE","ZION"]
     
-    var NPSNcrLocal = ["Select Local option","LINCOLN","THOMAS_JEFFERSON","VIETNAM_VETERANS","WORLD_WAR_II",
-                       "GEORGE_WASHINGTON_MEMORIAL_PARKWAY","ANTIETAM","MONOCACY","MANASSAS",
-                       "CHESAPEAKE_AND_OHIO_CANAL","HARPERS_FERRY","CARTER_G._WOODSON_HOME","CLARA_BARTON",
-                       "FORD'S_THEATRE","FREDERICK_DOUGLASS","MARY_MCLEOD_BETHUNE_COUNCIL_HOUSE",
-                       "PENNSYLVANIA_AVENUE","BELMONT-PAUL_WOMEN'S_EQUALITY","ARLINGTON_HOUSE_-_ROBERT_E._LEE_MEMORIAL",
-                       "FRANKLIN_DELANO_ROOSEVELT","KOREAN_WAR_VETERANS",
-                       "LYNDON_BAINES_JOHNSON_MEMORIAL_GROVE_ON_THE_POTOMAC","MARTIN_LUTHER_KING,_JR.",
-                       "THEODORE_ROOSEVELT_ISLAND","WORLD_WAR_I","POTOMAC_HERITAGE","CONSTITUTION_GARDENS",
-                       "NATIONAL_CAPITAL_PARKS_-_EAST","NATIONAL_MALL","PRINCE_WILLIAM_FOREST_PARK",
-                       "WASHINGTON_MONUMENT","WHITE_HOUSE_PRESIDENTS_PARK","WOLF_TRAP_PARK_FOR_THE_PERFORMING_ARTS",
-                       "CATOCTIN_MOUNTAIN","FORT_WASHINGTON","GREEN_BELT","PISCATAWAY","ROCK_CREEK"]
+    var NPSMwrLocal = ["Select Local option","AGATE_FOSSIL_BEDS","APOSTLE_ISLANDS","ARKANSAS_POST","BADLANDS","BROWN_V._BOARD_OF_EDUCATION","BUFFALO","CHARLES_YOUNG_BUFFALO_SOLDIERS","CUYAHOGA_VALLEY","DAYTON_AVIATION_HERITAGE","EFFIGY_MOUNDS","FIRST_LADIES'","FORT_LARNED","FORT_SCOTT","FORT_SMITH","FORT_UNION_TRADING_POST","GEORGE_ROGERS_CLARK","GEORGE_WASHINGTON_CARVER","GRAND_PORTAGE","HARRY_S_TRUMAN","HERBERT_HOOVER","HOMESTEAD","HOPEWELL_CULTURE","HOT_SPRINGS","INDIANA_DUNES","ISLE_ROYALE","JAMES_A._GARFIELD","JEFFERSON_NATIONAL_EXPANSION","JEWEL_CAVE","KEWEENAW","KNIFE_RIVER_INDIAN_VILLAGES","LINCOLN_BOYHOOD","LINCOLN_HOME","LITTLE_ROCK_CENTRAL_HIGH_SCHOOL","MINUTEMAN_MISSILE","MISSISSIPPI_NATIONAL_RIVER_AND_RECREATION_AREA","MISSOURI_NATIONAL_RECREATIONAL_RIVER","MOUNT_RUSHMORE","NICODEMUS","NIOBRARA","OZARK_NATIONAL_SCENIC_RIVERWAY","PEA_RIDGE","PERRY’S_VICTORY_AND_INTERNATIONAL_PEACE_MEMORIAL","PICTURED_ROCKS","PIPESTONE","PRESIDENT_WILLIAM_JEFFERSON_CLINTON_BIRTHPLACE_HOME","PULLMAN","RIVER_RAISIN","SAINT_CROIX","SCOTTS_BLUFF","SLEEPING_BEAR_DUNES","TALLGRASS_PRAIRIE","THEODORE_ROOSEVELT","ULYSSES_S._GRANT","VOYAGEURS","WILLIAM_HOWARD_TAFT","WILSON’S_CREEK","WIND_CAVE"]
     
-    var NPSNerLocal = ["Select Local option","FORT_NECESSITY","PETERSBURG","RICHMOND","ADAMS","APPOMATTOX_COURT_HOUSE",
-                       "BLACKSTONE_RIVER_VALLEY","BOSTON","CEDAR_CREEK_&_BELLE_GROVE","COLONIAL",
-                       "FIRST_STATE","HARRIET_TUBMAN_UNDERGROUND_RAILROAD","INDEPENDENCE","LOWELL",
-                       "MARSH-BILLINGS-ROCKEFELLER","MINUTE_MAN","MORRISTOWN","NEW_BEDFORD_WHALING",
-                       "PATERSON_GREAT_FALLS","SARATOGA","THOMAS_EDISON","VALLEY_FORGE","WOMEN'S_RIGHTS",
-                       "ALLEGHENY_PORTAGE_RAILROAD","BOSTON_AFRICAN_AMERICAN","EDGAR_ALLAN_POE","EISENHOWER",
-                       "ELEANOR_ROOSEVELT","FREDRICK_LAW_OLMSTED","FRIENDSHIP_HILL","HAMPTON",
-                       "HOME_OF_FRANKLIN_D._ROOSEVELT","HOPEWELL_FURNACE","JOHN_FITZGERALD_KENNEDY",
-                       "LONGFELLOW_HOUSE_-WASHINGTON'S_HEADQUARTERS","MAGGIE_L._WALKER","MARTIN_VAN_BUREN",
-                       "SAGAMORE_HILL","SAINT_PAUL'S_CHURCH","SAINT-GAUDENS","SALEM_MARITIME",
-                       "SAUGUS_IRON_WORKS","SPRINGFIELD_ARMORY","STEAMTOWN","THEODORE_ROOSEVELT_BIRTHPLACE",
-                       "THOMAS_STONE","VANDERBILT_MANSION","WEIR_FARM","AFRICAN_BURIAL_GROUND",
-                       "BOOKER_T._WASHINGTON_NM","CASTLE_CLINTON","FORT_MONROE","FORT_STANWIX",
-                       "GEORGE_WASHINGTON_BIRTHPLACE","GOVERNORS_ISLAND","KATAHDIN_WOODS_AND_WATERS",
-                       "STATUE_OF_LIBERTY_AND_ELLIS_ISLAND","STONEWALL","FEDERAL_HALL","FLIGHT_93",
-                       "GENERAL_GRANT","HAMILTON_GRANGE_NM","JOHNSTOWN_FLOOD_NM","ROGER_WILLIAMS",
-                       "THADDEUS_KOSCIUSZKO","FREDRICKSBURG_&_SPOTSYLVANIA","GETTYSBURG","ACADIA",
-                       "SHENANDOAH","NEW_RIVER_GORGE","BOSTON_HARBOR_ISLANDS","DELAWARE_WATER_GAP",
-                       "GATEWAY","GAULEY","ASSATEAGUE_ISLAND_NS","CAPE_COD","FIRE_ISLAND",
-                       "BLUESTONE","FORT_MCHENRY_NATIONAL_MONUMENT_AND_HISTORIC_SHRINE",
-                       "SAINT_CROIX_ISLAND_INTERNATIONAL_HISTORIC_SITE","GREAT_EGG_HARBOR","UPPER_DELAWARE",
-                       "APPALACHIAN"]
+    var NPSNcrLocal = ["Select Local option","ANTIETAM","ARLINGTON_HOUSE_-_ROBERT_E._LEE_MEMORIAL","BELMONT-PAUL_WOMEN'S_EQUALITY","CARTER_G._WOODSON_HOME","CATOCTIN_MOUNTAIN","CHESAPEAKE_AND_OHIO_CANAL","CLARA_BARTON","CONSTITUTION_GARDENS","FORD'S_THEATRE","FORT_WASHINGTON","FRANKLIN_DELANO_ROOSEVELT","FREDERICK_DOUGLASS","GEORGE_WASHINGTON_MEMORIAL_PARKWAY","GREEN_BELT","HARPERS_FERRY","KOREAN_WAR_VETERANS","LINCOLN","LYNDON_BAINES_JOHNSON_MEMORIAL_GROVE_ON_THE_POTOMAC","MANASSAS","MARTIN_LUTHER_KING,_JR.","MARY_MCLEOD_BETHUNE_COUNCIL_HOUSE","MONOCACY","NATIONAL_CAPITAL_PARKS_-_EAST","NATIONAL_MALL","PENNSYLVANIA_AVENUE","PISCATAWAY","POTOMAC_HERITAGE","PRINCE_WILLIAM_FOREST_PARK","ROCK_CREEK","THEODORE_ROOSEVELT_ISLAND","THOMAS_JEFFERSON","VIETNAM_VETERANS","WASHINGTON_MONUMENT","WHITE_HOUSE_PRESIDENTS_PARK","WOLF_TRAP_PARK_FOR_THE_PERFORMING_ARTS","WORLD_WAR_I","WORLD_WAR_II"]
     
-    var NPSPwrLocal = ["Select Local option","BIG_HOLE","KALAUPAPA","KALOKO-HONOKOHAU","KLONDIKE_GOLD_RUSH",
-                       "LEWIS_AND_CLARK","NEZ_PERCE","PU'UHONUA_O_HONAUNAU","ROSIE_THE_RIVETER/WWII_HOME_FRONT",
-                       "SAN_FRANCISCO_MARITIME","WAR_IN_THE_PACIFIC","EUGENE_O'NEILL","FORT_POINT",
-                       "FORT_VANCOUVER","JOHN_MUIR","MANZANAR","MINIDOKA","PU'UKOHOLA_HEIAU",
-                       "SAN_JUAN_ISLAND","WHITMAN_MISSION","CABRILLO","CASTLE_MOUNTAIN",
-                       "CESAR_E._CHAVEZ","DEVILS_POSTPILE","HAGERMAN_FOSSIL_BEDS","HONOULIULI",
-                       "JOHN_DAY_FOSSIL_BEDS","LAVA_BEDS","MUIR_WOODS","PORT_CHICAGO_NAVAL_MAGAZINE",
-                       "TULE_SPRINGS_FOSSIL_BEDS","WORLD_WAR_II_VALOR_IN_THE_PACIFIC","OREGON_CAVES",
-                       "CRATERS_OF_THE_MOON","CHANNEL_ISLANDS","CRATER_LAKE","DEATH_VALLEY",
-                       "GREAT_BASIN","HALEAKALA","HAWAII_VOLCANOES","JOSHUA_TREE","KINGS_CANYON",
-                       "LASSEN_VOLCANIC","MOUNT_RAINIER","NATIONAL_PARK_OF_AMERICAN_SAMOA","NORTH_CASCADES",
-                       "OLYMPIC","PINNACLES","REDWOOD","SEQUOIA","YOSEMITE","MOJAVE",
-                       "GOLDEN_GATE","LAKE_CHELAN","LAKE_MEAD","LAKE_ROOSEVELT","ROSS_LAKE",
-                       "SANTA_MONICA_MOUNTAINS","WHISKEYTOWN","POINT_REYES","AMERICAN_MEMORIAL_PARK",
-                       "CITY_OF_ROCKS_NATIONAL_RESERVE","EBEY'S_LANDING_NATIONAL_HISTORICAL_RESERVE"]
+    var NPSNerLocal = ["Select Local option", "ACADIA","ADAMS","AFRICAN_BURIAL_GROUND","ALLEGHENY_PORTAGE_RAILROAD","APPALACHIAN","APPOMATTOX_COURT_HOUSE","ASSATEAGUE_ISLAND_NS","BLACKSTONE_RIVER_VALLEY","BLUESTONE","BOOKER_T._WASHINGTON_NM","BOSTON","BOSTON_AFRICAN_AMERICAN","BOSTON_HARBOR_ISLANDS","CAPE_COD","CASTLE_CLINTON","CEDAR_CREEK_&_BELLE_GROVE","COLONIAL","DELAWARE_WATER_GAP","EDGAR_ALLAN_POE","EISENHOWER","ELEANOR_ROOSEVELT","FEDERAL_HALL","FIRE_ISLAND","FIRST_STATE","FLIGHT_93","FORT_MCHENRY_NATIONAL_MONUMENT_AND_HISTORIC_SHRINE","FORT_MONROE","FORT_NECESSITY","FORT_STANWIX","FREDRICK_LAW_OLMSTED","FREDRICKSBURG_&_SPOTSYLVANIA","FRIENDSHIP_HILL","GATEWAY","GAULEY","GENERAL_GRANT","GEORGE_WASHINGTON_BIRTHPLACE","GETTYSBURG","GOVERNORS_ISLAND","GREAT_EGG_HARBOR","HAMILTON_GRANGE_NM","HAMPTON","HARRIET_TUBMAN_UNDERGROUND_RAILROAD","HOME_OF_FRANKLIN_D._ROOSEVELT","HOPEWELL_FURNACE","INDEPENDENCE","JOHN_FITZGERALD_KENNEDY","JOHNSTOWN_FLOOD_NM","KATAHDIN_WOODS_AND_WATERS","LONGFELLOW_HOUSE_-WASHINGTON'S_HEADQUARTERS","LOWELL","MAGGIE_L._WALKER","MARSH-BILLINGS-ROCKEFELLER","MARTIN_VAN_BUREN","MINUTE_MAN","MORRISTOWN","NEW_BEDFORD_WHALING","NEW_RIVER_GORGE","PATERSON_GREAT_FALLS","PETERSBURG","RICHMOND","ROGER_WILLIAMS","SAGAMORE_HILL","SAINT-GAUDENS","SAINT_CROIX_ISLAND_INTERNATIONAL_HISTORIC_SITE","SAINT_PAUL'S_CHURCH","SALEM_MARITIME","SARATOGA","SAUGUS_IRON_WORKS","SHENANDOAH","SPRINGFIELD_ARMORY","STATUE_OF_LIBERTY_AND_ELLIS_ISLAND","STEAMTOWN","STONEWALL","THADDEUS_KOSCIUSZKO","THEODORE_ROOSEVELT_BIRTHPLACE","THOMAS_EDISON","THOMAS_STONE","UPPER_DELAWARE","VALLEY_FORGE","VANDERBILT_MANSION","WEIR_FARM","WOMEN'S_RIGHTS"]
     
-    var NPSSerLocal = ["Select Local option","COWPENS",
-                       "FORT_DONELSON","MOORES_CREEK","STONES_RIVER","TUPELO","KENNESAW_MOUNTAIN",
-                       "ABRAHAM_LINCOLN_BIRTHPLACE","CUMBERLAND_GAP","NATCHEZ","NEW_ORLEANS_JAZZ",
-                       "ANDERSONVILLE","ANDREW_JOHNSON","CARL_SANDBURG_HOME","CHARLES_PINCKNEY",
-                       "CHRISTIANSTED","FORT_RALEIGH","JIMMY_CARTER","MARTIN_LUTHER_KING,_JR.",
-                       "NINETY_SIX","SAN_JUAN","TUSKEGEE_AIRMEN","TUSKEGEE_INSTITUTE","BUCK_ISLAND_REEF",
-                       "CASTILLO_de_SAN_MARCOS","FORT_FREDERICA","FORT_MATANZAS","FORT_PULASKI",
-                       "FORT_SUMTER","OCMULGEE","POVERTY_POINT_STATE","RUSSELL_CAVE",
-                       "VIRGIN_ISLANDS_CORAL_REEF","DE_SOTO","FORT_CAROLINE","WRIGHT_BROTHERS",
-                       "CHICKAMAUGA_AND_CHATTANOOGA","GUILFORD_COURTHOUSE","HORSESHOE_BEND","KINGS_MOUNTAIN",
-                       "SHILOH","VICKSBURG","BISCAYNE","CONGAREE","DRY_TORTUGAS","EVERGLADES",
-                       "GREAT_SMOKY_MOUNTAINS","MAMMOTH_CAVE","VIRGIN_ISLANDS","LITTLE_RIVER_CANYON",
-                       "BIG_SOUTH_FORK ","CHATTAHOOCHEE","CANAVERAL","CAPE_HATTERAS","CAPE_LOOKOUT",
-                       "CUMBERLAND_ISLAND","GULF_ISLANDS","APPALACHIAN","NATCHEZ_TRACE",
-                       "BRICES_CROSS_ROADS_NATIONAL_BATTLEFIELD_SITE","CANE_RIVER_CREOLE_NATIONAL_HISTORICAL_PARK_&_HERITAGE_AREA",
-                       "JEAN_LAFITTE_NATIONAL_HISTORICAL_PARK_&_PRESERVE","SALT_RIVER_BAY_NATIONAL_HISTORICAL_PARK_&_ECOLOGICAL_PRESERVE",
-                       "TIMUCUAN_ECOLOGICAL","BLUE_RIDGE_PARKWAY","OBED"]
+    var NPSPwrLocal = ["Select Local option","AMERICAN_MEMORIAL_PARK","BIG_HOLE","CABRILLO","CASTLE_MOUNTAIN","CESAR_E._CHAVEZ","CHANNEL_ISLANDS","CITY_OF_ROCKS_NATIONAL_RESERVE","CRATER_LAKE","CRATERS_OF_THE_MOON","DEATH_VALLEY","DEVILS_POSTPILE","EBEY'S_LANDING_NATIONAL_HISTORICAL_RESERVE","EUGENE_O'NEILL","FORT_POINT","FORT_VANCOUVER","GOLDEN_GATE","GREAT_BASIN","HAGERMAN_FOSSIL_BEDS","HALEAKALA","HAWAII_VOLCANOES","HONOULIULI","JOHN_DAY_FOSSIL_BEDS","JOHN_MUIR","JOSHUA_TREE","KALAUPAPA","KALOKO-HONOKOHAU","KINGS_CANYON","KLONDIKE_GOLD_RUSH","LAKE_CHELAN","LAKE_MEAD","LAKE_ROOSEVELT","LASSEN_VOLCANIC","LAVA_BEDS","LEWIS_AND_CLARK","MANZANAR","MINIDOKA","MOJAVE","MOUNT_RAINIER","MUIR_WOODS","NATIONAL_PARK_OF_AMERICAN_SAMOA","NEZ_PERCE","NORTH_CASCADES","OLYMPIC","OREGON_CAVES","PINNACLES","POINT_REYES","PORT_CHICAGO_NAVAL_MAGAZINE","PU'UHONUA_O_HONAUNAU","PU'UKOHOLA_HEIAU","REDWOOD","ROSIE_THE_RIVETER/WWII_HOME_FRONT","ROSS_LAKE","SAN_FRANCISCO_MARITIME","SAN_JUAN_ISLAND","SANTA_MONICA_MOUNTAINS","SEQUOIA","TULE_SPRINGS_FOSSIL_BEDS","WAR_IN_THE_PACIFIC","WHISKEYTOWN","WHITMAN_MISSION","WORLD_WAR_II_VALOR_IN_THE_PACIFIC","YOSEMITE"]
+    
+    var NPSSerLocal = ["Select Local option","ABRAHAM_LINCOLN_BIRTHPLACE","ANDERSONVILLE","ANDREW_JOHNSON","APPALACHIAN","BIG_SOUTH_FORK ","BISCAYNE","BLUE_RIDGE_PARKWAY","BRICES_CROSS_ROADS_NATIONAL_BATTLEFIELD_SITE","BUCK_ISLAND_REEF","CANAVERAL","CANE_RIVER_CREOLE_NATIONAL_HISTORICAL_PARK_&_HERITAGE_AREA","CAPE_HATTERAS","CAPE_LOOKOUT","CARL_SANDBURG_HOME","CASTILLO_de_SAN_MARCOS","CHARLES_PINCKNEY","CHATTAHOOCHEE","CHICKAMAUGA_AND_CHATTANOOGA","CHRISTIANSTED","CONGAREE","COWPENS","CUMBERLAND_GAP","CUMBERLAND_ISLAND","DE_SOTO","DRY_TORTUGAS","EVERGLADES","FORT_CAROLINE","FORT_DONELSON","FORT_FREDERICA","FORT_MATANZAS","FORT_PULASKI","FORT_RALEIGH","FORT_SUMTER","GREAT_SMOKY_MOUNTAINS","GUILFORD_COURTHOUSE","GULF_ISLANDS","HORSESHOE_BEND","JEAN_LAFITTE_NATIONAL_HISTORICAL_PARK_&_PRESERVE","JIMMY_CARTER","KENNESAW_MOUNTAIN","KINGS_MOUNTAIN","LITTLE_RIVER_CANYON","MAMMOTH_CAVE","MARTIN_LUTHER_KING,_JR.","MOORES_CREEK","NATCHEZ","NATCHEZ_TRACE","NEW_ORLEANS_JAZZ","NINETY_SIX","OBED","OCMULGEE","POVERTY_POINT_STATE","RUSSELL_CAVE","SALT_RIVER_BAY_NATIONAL_HISTORICAL_PARK_&_ECOLOGICAL_PRESERVE","SAN_JUAN","SHILOH","STONES_RIVER","TIMUCUAN_ECOLOGICAL","TUPELO","TUSKEGEE_AIRMEN","TUSKEGEE_INSTITUTE","VICKSBURG","VIRGIN_ISLANDS","VIRGIN_ISLANDS_CORAL_REEF","WRIGHT_BROTHERS"]
     
     
     @IBOutlet var datePicker: UIDatePicker!
@@ -3612,13 +3519,180 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         let regionS = selectedLocation.regiona_admin
         let localS = selectedLocation.local_admin
         
+        
+        //fix, based on it being like "NPS_SER_BITTERROOT"....
+        
         if(agencyS == "FS"){
             agency.selectRow(1, inComponent: 0, animated: true)
             self.agency.delegate?.pickerView!(agency, didSelectRow: 1, inComponent: 0)
             
+            //To get the region
+            for i in 0 ... (FSRegionalOptions.count - 1){
+                if(regionS?.range(of: FSRegionalOptions[i]) != nil){
+                    regional.selectRow(i, inComponent: 0, animated: true)
+                    self.regional.delegate?.pickerView!(regional, didSelectRow: i, inComponent: 0)
+                }
+            }
+            
+                var localB = false
+                
+                
+                for i in 0 ... (FSNorthernLocal.count - 1){
+                    if(localS?.range(of: FSNorthernLocal[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+                
+                if(localB != true){
+                    for i in 0 ... (FSRockyMountainLocal.count - 1){
+                        if(localS?.range(of: FSRockyMountainLocal[i]) != nil){
+                            local.selectRow(i, inComponent: 0, animated: true)
+                            localB = true
+                        }
+                    }
+                }
+                
+                if(localB != true){
+                    for i in 0 ... (FSSouthwesternLocal.count  - 1){
+                        if(localS?.range(of: FSSouthwesternLocal[i]) != nil){
+                            local.selectRow(i, inComponent: 0, animated: true)
+                            localB = true
+                        }
+                    }
+                }
+                
+                if(localB != true){
+                    for i in 0 ... (FSIntermountainLocal.count  - 1){
+                        if(localS?.range(of: FSIntermountainLocal[i]) != nil){
+                            local.selectRow(i, inComponent: 0, animated: true)
+                            localB = true
+                        }
+                    }
+                }
+                
+                if(localB != true){
+                    for i in 0 ... (FSPacificSouthwestLocal.count  - 1){
+                        if(localS?.range(of: FSPacificSouthwestLocal[i]) != nil){
+                            local.selectRow(i, inComponent: 0, animated: true)
+                            localB = true
+                        }
+                    }
+                }
+                
+                if(localB != true){
+                    for i in 0 ... (FSPacificNorthwestLocal.count  - 1){
+                        if(localS?.range(of: FSPacificNorthwestLocal[i]) != nil){
+                            local.selectRow(i, inComponent: 0, animated: true)
+                            localB = true
+                        }
+                    }
+                }
+                
+                if(localB != true){
+                    for i in 0 ... (FSSouthernLocal.count  - 1){
+                        if(localS?.range(of: FSSouthernLocal[i]) != nil){
+                            local.selectRow(i, inComponent: 0, animated: true)
+                            localB = true
+                        }
+                    }
+                }
+                
+                if(localB != true){
+                    for i in 0 ... (FSEasternLocal.count  - 1){
+                        if(localS?.range(of: FSEasternLocal[i]) != nil){
+                            local.selectRow(i, inComponent: 0, animated: true)
+                            localB = true
+                        }
+                    }
+                }
+                
+                if(localB != true){
+                    for i in 0 ... (FSAlaskaLocal.count  - 1){
+                        if(localS?.range(of: FSAlaskaLocal[i]) != nil){
+                            local.selectRow(i, inComponent: 0, animated: true)
+                            localB = true
+                        }
+                    }
+                }
+            
+            
         }else if(agencyS == "NPS"){
             agency.selectRow(2, inComponent: 0, animated: true)
             self.agency.delegate?.pickerView!(agency, didSelectRow: 2, inComponent: 0)
+            
+            //To get the region
+            for i in 0 ... (NPSRegionalOptions.count - 1){
+                if(regionS?.range(of: NPSRegionalOptions[i]) != nil){
+                    regional.selectRow(i, inComponent: 0, animated: true)
+                    self.regional.delegate?.pickerView!(regional, didSelectRow: i, inComponent: 0)
+                }
+            }
+            
+            var localB = false
+            if(localB != true){
+                for i in 0 ... (NPSAkrLocal.count  - 1){
+                    if(localS?.range(of: NPSAkrLocal[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSImrLocal.count  - 1){
+                    if(localS?.range(of: NPSImrLocal[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSMwrLocal.count  - 1){
+                    if(localS?.range(of: NPSMwrLocal[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSNcrLocal.count  - 1){
+                    if(localS?.range(of: NPSNcrLocal[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSNerLocal.count  - 1){
+                    if(localS?.range(of: NPSNerLocal[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSPwrLocal.count  - 1){
+                    if(localS?.range(of: NPSPwrLocal[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
+            if(localB != true){
+                for i in 0 ... (NPSSerLocal.count  - 1){
+                    if(localS?.range(of: NPSSerLocal[i]) != nil){
+                        local.selectRow(i, inComponent: 0, animated: true)
+                        localB = true
+                    }
+                }
+            }
+            
             
             
         }else if(agencyS == "BLM"){
@@ -3631,52 +3705,6 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
             self.agency.delegate?.pickerView!(agency, didSelectRow: 4, inComponent: 0)
         }
         
-        if(FSRegionalOptions.contains(regionS!)){
-            regional.selectRow(FSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
-            self.regional.delegate?.pickerView!(regional, didSelectRow: FSRegionalOptions.index(of: regionS!)!, inComponent: 0)
-            if(FSNorthernLocal.contains(localS!)){
-                local.selectRow(FSNorthernLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSRockyMountainLocal.contains(localS!)){
-                local.selectRow(FSRockyMountainLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSSouthwesternLocal.contains(localS!)){
-                local.selectRow(FSSouthwesternLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSIntermountainLocal.contains(localS!)){
-                local.selectRow(FSIntermountainLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSPacificSouthwestLocal.contains(localS!)){
-                local.selectRow(FSPacificSouthwestLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSPacificNorthwestLocal.contains(localS!)){
-                local.selectRow(FSPacificNorthwestLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSSouthernLocal.contains(localS!)){
-                local.selectRow(FSSouthernLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSEasternLocal.contains(localS!)){
-                local.selectRow(FSEasternLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(FSAlaskaLocal.contains(localS!)){
-                local.selectRow(FSAlaskaLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }
-            
-        }
-            
-        else if(NPSRegionalOptions.contains(regionS!)){
-            regional.selectRow(NPSRegionalOptions.index(of: regionS!)!, inComponent: 0, animated: true)
-            self.regional.delegate?.pickerView!(regional, didSelectRow: NPSRegionalOptions.index(of: regionS!)!, inComponent: 0)
-            
-            if(NPSAkrLocal.contains(localS!)){
-                local.selectRow(NPSAkrLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSImrLocal.contains(localS!)){
-                local.selectRow(NPSImrLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSMwrLocal.contains(localS!)){
-                local.selectRow(NPSMwrLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSNcrLocal.contains(localS!)){
-                local.selectRow(NPSNcrLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSNerLocal.contains(localS!)){
-                local.selectRow(NPSNerLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSPwrLocal.contains(localS!)){
-                local.selectRow(NPSPwrLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }else if(NPSSerLocal.contains(localS!)){
-                local.selectRow(NPSSerLocal.index(of: localS!)!, inComponent: 0, animated: true)
-            }
-            
-        }
         
         //date?
         let road_or_trail = selectedLocation.road_or_trail
@@ -4148,6 +4176,22 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
                     localS = NPSSerLocal[local.selectedRow(inComponent: 0)]
                 }
                 
+            }
+        
+            //different way for the website ex: NPS_SER_BITTERROOT
+            if(agencyS != ""){
+                var temp = agencyS
+                if(regionalS != ""){
+                temp = temp.appending("_")
+                temp = temp.appending(regionalS)
+                regionalS = temp
+                }
+                if(localS != ""){
+                    temp = regionalS
+                    temp = temp.appending("_")
+                    temp = temp.appending(localS)
+                    localS = temp
+                }
             }
             
             
