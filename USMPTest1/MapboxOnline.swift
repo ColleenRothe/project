@@ -694,7 +694,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
             //not a complete pack...can't load
             if(pack.state.rawValue != 3){
                 //message to user
-                messageString = "Invalid or Empty Download. Clear Cache and Redo"
+                messageString = "Invalid or empty download. Clear cache and redo"
                 let alertController = UIAlertController(title: "Error", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alertController, animated: true, completion: nil) //may be an issue?
@@ -703,7 +703,7 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         }//end for pack...
         if MGLOfflineStorage.shared().packs?.count == 0 {
             //message to user
-            messageString = "Invalid or Empty Download. Clear Cache and Redo"
+            messageString = "Invalid or empty download. Clear cache and redo"
             let alertController = UIAlertController(title: "Error", message: messageString, preferredStyle: UIAlertControllerStyle.alert)
             alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
             self.present(alertController, animated: true, completion: nil) //may be an issue?

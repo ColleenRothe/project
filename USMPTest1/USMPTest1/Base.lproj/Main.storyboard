@@ -18835,7 +18835,25 @@
                                                         <segue destination="VAZ-Go-kNI" kind="show" id="j2s-rq-kYT"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WdW-gS-7Wy">
+                                                    <rect key="frame" x="73" y="5" width="159" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Add Maintenance Form"/>
+                                                    <connections>
+                                                        <segue destination="g2v-ZE-FMN" kind="show" id="Ee1-Yh-Llk"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
+                                            <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="WdW-gS-7Wy"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=regular">
+                                                <mask key="subviews">
+                                                    <include reference="WdW-gS-7Wy"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -24772,10 +24790,10 @@
         <segue reference="j2s-rq-kYT"/>
         <segue reference="omK-Xe-j3k"/>
         <segue reference="llY-fe-SOr"/>
+        <segue reference="Ee1-Yh-Llk"/>
         <segue reference="9YD-8H-QNB"/>
-        <segue reference="pPa-FC-y1x"/>
-        <segue reference="wmW-Im-6MB"/>
-        <segue reference="wrv-ZR-wG6"/>
-        <segue reference="VRO-8h-jtS"/>
+        <segue reference="ztf-fa-gyz"/>
+        <segue reference="Z0H-Bc-6eE"/>
+        <segue reference="6aD-ri-kjR"/>
     </inferredMetricsTieBreakers>
 </document>

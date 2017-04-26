@@ -162,6 +162,9 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         commentsLabel.text = "Comments: \(selectedLocation.comments!)"
         
         shareData.photo_string = selectedLocation.photos!
+        
+        shareData.maintenance_site = selectedLocation.site_id!
+
     }
     
     //fill table when user is offline
@@ -218,6 +221,8 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
                     //id of the site you are editing
                     shareData.offline_edit_site_id = (site[pz].value(forKey: "siteID")! as? String)!
                     
+                    shareData.maintenance_site = (site[pz].value(forKey: "siteID")! as? String)!
+                    
                 }
                 
             }
@@ -242,4 +247,6 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
             
         }
     }
+    
+    
 }

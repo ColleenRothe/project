@@ -397,11 +397,22 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             slmh.delegate = self
             slmh.downloadItems()
         }
+        else{
+            if(isInternetAvailable()){
+                //internet is available
+                //get list of site ids
+                let slmh = SiteListModelHelper()
+                slmh.delegate = self
+                slmh.downloadItems()
+                
+            }
+        }
         
         if(!isInternetAvailable()){
             submitButton.isEnabled = false
             submitButton.backgroundColor = UIColor.darkGray
         }
+       
     }
     
     //try here
@@ -708,8 +719,9 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         //load the correct one
         if(siteIDOptions.contains(shareData.maintenance_site)){
             index = siteIDOptions.index(of: shareData.maintenance_site)!
+            siteIDPicker.selectRow(index, inComponent: 0, animated: true)
+
         }
-        siteIDPicker.selectRow(index, inComponent: 0, animated: true)
     }
     
     
@@ -1410,8 +1422,13 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
         let total = totalCostText.text!
         
+        var side_id = 0
+        if(siteIDPicker.selectedRow(inComponent: 0) != 0){
+         site_id = siteIDOptions[siteIDPicker.selectedRow(inComponent: 0)]
+        }
         
-        let postString = "site_id=0&code_relation=\(codeText.text!)&maintenance_type=\(maintenance_type)&road_trail_no=\(rtNumString)&begin_mile_marker=\(beginMileString)&end_mile_marker=\(endMileString)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&us_event=\(us_event)&event_desc=\(eventDescriptionText.text!)&design_pse=\(percent0)&remove_ditch_debris=\(percent1)&remove_road_trail_debris=\(percent2)&relevel_aggregate=\(percent3)&relevel_patch=\(percent4)&drainage_improvement=\(percent5)&deep_patch=\(percent6)&haul_debris=\(percent7)&scaling_rock_slopes=\(percent8)&road_trail_alignment=\(percent9)&repair_rockfall_barrier=\(percent10)&repair_rockfall_netting=\(percent11)&sealing_cracks=\(percent12)&guardrail=\(percent13)&cleaning_drains=\(percent14)&flagging_signing=\(percent15)&other1_desc=\(other1Text.text!)&other1=\(percent16)&other2_desc=\(other2Text.text!)&other2=\(percent17)&other3_desc=\(other3Text.text!)&other3=\(percent18)&other4_desc=\(other4Text.text!)&other4=\(percent19)&other5_desc=\(other5Text.text!)&other5=\(percent20)&maintenance_lat=\(shareData.maintenance_lat)&maintenance_long=\(shareData.maintenance_long)&total=\(total)"
+        
+        let postString = "site_id=\(site_id)&code_relation=\(codeText.text!)&maintenance_type=\(maintenance_type)&road_trail_no=\(rtNumString)&begin_mile_marker=\(beginMileString)&end_mile_marker=\(endMileString)&umbrella_agency=\(agencyS)&regional_admin=\(regionalS)&local_admin=\(localS)&us_event=\(us_event)&event_desc=\(eventDescriptionText.text!)&design_pse=\(percent0)&remove_ditch_debris=\(percent1)&remove_road_trail_debris=\(percent2)&relevel_aggregate=\(percent3)&relevel_patch=\(percent4)&drainage_improvement=\(percent5)&deep_patch=\(percent6)&haul_debris=\(percent7)&scaling_rock_slopes=\(percent8)&road_trail_alignment=\(percent9)&repair_rockfall_barrier=\(percent10)&repair_rockfall_netting=\(percent11)&sealing_cracks=\(percent12)&guardrail=\(percent13)&cleaning_drains=\(percent14)&flagging_signing=\(percent15)&other1_desc=\(other1Text.text!)&other1=\(percent16)&other2_desc=\(other2Text.text!)&other2=\(percent17)&other3_desc=\(other3Text.text!)&other3=\(percent18)&other4_desc=\(other4Text.text!)&other4=\(percent19)&other5_desc=\(other5Text.text!)&other5=\(percent20)&maintenance_lat=\(shareData.maintenance_lat)&maintenance_long=\(shareData.maintenance_long)&total=\(total)"
 
             request.httpBody = postString.data(using: String.Encoding.utf8)
         

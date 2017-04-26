@@ -8,6 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
@@ -32,6 +33,7 @@ import android.widget.Button;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -45,6 +47,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Date;
 import java.text.DateFormat;
+import java.util.List;
+
 
 /* Class for Maintenance Form
     CREDITS:
@@ -117,8 +121,12 @@ public class MaintenanceActivity extends AppCompatActivity
     String longitude = "";
     String latitude = "";
 
-    private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/currentMaintenance.php";
+    //to hold site ids
+    List <String> ids;
+    ArrayAdapter<String> idAdapter;
 
+    private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/currentMaintenance.php";
+    private static final String JSON_URL2 = "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_site_ids.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +171,7 @@ public class MaintenanceActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         //Connect to UI
         SubmitButton = (Button) findViewById(R.id.MSubmitButton);
         MScroll = (ScrollView)findViewById(R.id.MScroll);
@@ -184,8 +193,17 @@ public class MaintenanceActivity extends AppCompatActivity
             }
         });
 
+        ids = new ArrayList<>();
 
         MaintenanceID = (Spinner) findViewById(R.id.MaintenanceID);
+//        idAdapter = new ArrayAdapter<String>(MaintenanceActivity.this, android.R.layout.simple_spinner_item, ids);
+//        idAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        MaintenanceID.setAdapter(idAdapter);
+
+        if(isNetworkAvailable()){
+            getJSONS(JSON_URL2);
+        }
+
         Mcode = (EditText) findViewById(R.id.Mcode);
         MDescription = (EditText) findViewById(R.id.MDescription);
 
@@ -487,7 +505,7 @@ public class MaintenanceActivity extends AppCompatActivity
         //MaintenanceMapActivity.newOld =false;
 
         //looking at an already created form
-        if (MaintenanceMapActivity.newOld == true) {
+        if (MaintenanceMapActivity.newOld == true && getIntent().getStringExtra("form") == null) {
             getJSON(JSON_URL); //call to get info from the db
         }
         //creating a new form
@@ -501,6 +519,7 @@ public class MaintenanceActivity extends AppCompatActivity
             OfflineList.should_load=false;
             lookupMaintenance(OfflineList.selected_row);
         }
+
     }
 
     //CREDITS(1)
@@ -838,9 +857,78 @@ public class MaintenanceActivity extends AppCompatActivity
     }
 
     //first call to get db info
+    private void getJSONS(String url) {
+        class GetJSON extends AsyncTask<String, Void, String>{
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                //loading = ProgressDialog.show(MaintenanceActivity.this, "Please Wait...",null,true,true);
+            }
+
+            @Override
+            protected String doInBackground(String... params) {
+
+                String uri = params[0];
+                BufferedReader bufferedReader = null;
+
+
+                try {
+
+                    URL url = new URL(uri);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+
+                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+                    String json;
+                    while((json = bufferedReader.readLine())!= null){
+                        sb.append(json+"\n");
+                    }
+                    String temp = sb.toString().trim();
+                    temp = temp.replace("\"","");
+                    temp = temp.replace("[", "");
+                    temp = temp.replace("]","");
+                    ids = Arrays.asList(temp.split(","));
+
+                    return sb.toString().trim();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                ArrayList<String> tempID = new ArrayList<>();
+                tempID.add("---");
+                for(int i = 0; i<ids.size(); i++){
+                    tempID.add(ids.get(i));
+                }
+                idAdapter = new ArrayAdapter<>(MaintenanceActivity.this, android.R.layout.simple_spinner_item, tempID);
+                idAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                MaintenanceID.setAdapter(idAdapter);
+                idAdapter.notifyDataSetChanged();
+
+                if(tempID.contains(getIntent().getStringExtra("form"))){
+                    MaintenanceID.setSelection(tempID.indexOf(getIntent().getStringExtra("form")));
+                }
+
+                //loading.dismiss(); //dismiss the "loading" message
+            }
+        }
+        GetJSON gj = new GetJSON();
+        gj.execute(url);
+    }
+
+
+
+    //first call to get db info
     private void getJSON(String url) {
         class GetJSON extends AsyncTask<String, Void, String>{
-            ProgressDialog loading; //just to tell the user that the map is in progress...all good
 
             @Override
             protected void onPreExecute() {
@@ -928,7 +1016,7 @@ public class MaintenanceActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.maintenaceForm) {
-            Intent intent = new Intent(this, MaintenanceActivity.class);
+            Intent intent = new Intent(this, MaintenanceMapActivity.class);
 
             startActivity(intent);
 
@@ -1195,8 +1283,12 @@ public class MaintenanceActivity extends AppCompatActivity
                         usEvent = "SM";
 
                     }
+                    String site_id = "0";
+                    if(MaintenanceID.getSelectedItemPosition() != 0) {
+                        site_id = MaintenanceID.getSelectedItem().toString();
+                    }
 
-                    writer.write("code_relation="+code+"&maintenance_type="+maintenanceType+"&road_trail_no="+rtnum+"&begin_mile_marker="+beginMile+"&end_mile_marker=" +
+                    writer.write("site_id="+site_id+"&code_relation="+code+"&maintenance_type="+maintenanceType+"&road_trail_no="+rtnum+"&begin_mile_marker="+beginMile+"&end_mile_marker=" +
                             endMile+"&umbrella_agency="+umbrella_agency+"&regional_admin="+regional_admin+"&local_admin="+local_admin+"&us_event="+usEvent+"&event_desc="+MDescriptionText+"&dateinput="+dateinput+
                     "&design_pse_val="+Percent1Text+"&remove_ditch_val="+Percent2Text+"&remove_road_trail_val="+Percent3Text+"&relevel_aggregate_val="+Percent4Text+
                     "&relevel_patch_val="+Percent4_5Text+"&drainage_improvement_val="+Percent5Text+"&deep_patch_val="+Percent6Text+"&haul_debris_val="+Percent7Text+

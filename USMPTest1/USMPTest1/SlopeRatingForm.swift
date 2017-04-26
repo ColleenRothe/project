@@ -2277,13 +2277,21 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         }
         if CLLocationManager.authorizationStatus() == .authorizedAlways {
             //print("location!!")
+            do{
             locationManager.requestLocation()
+            }catch{
+             print("error")
+            }
             
             
         }
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             //print("location!!")
+            do{
             locationManager.requestLocation()
+            }catch{
+                print("error")
+            }
         }
     }
     
@@ -4684,6 +4692,8 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
         alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
         present(alertController, animated: true, completion: nil)
     }
+    
+    
     
 }
 

@@ -194,10 +194,7 @@ class HomeModel: NSObject, URLSessionDataDelegate{
         }else{
             thing.photos=""
         }
-        
-        print("test home model (current site) photos")
-        print(thing.photos)
-        
+
         
         if(self.JSONDictionary.value(forKey:"COMMENT")as? String != nil){
         thing.comments = self.JSONDictionary.value(forKey: "COMMENT")! as? String

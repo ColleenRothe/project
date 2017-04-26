@@ -62,6 +62,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
     String clicked_id = "0";
     String offline_clicked = "0";
     String offline_landslide_id = "";
+    String mSite_id = "0";
 
     private static final String JSON_URL = "http://nl.cs.montana.edu/test_sites/colleen.rothe/get_current_site.php"; //to place the sites
 
@@ -199,6 +200,8 @@ public class AnnotationInfoActivity extends AppCompatActivity
             if(offlineSite.getSite_id().equals(offline_clicked)){
                 //set all the values on the UI to the saved ones we want
                 siteId.setText(offlineSite.getSite_id());
+                //for maintenance form
+                mSite_id = offlineSite.getSite_id();
                 coordinates.setText(offlineSite.getBegin_coordinate_lat()+","+offlineSite.getBegin_coordinate_long());
                 date.setText(offlineSite.getDate());
 
@@ -328,6 +331,7 @@ public class AnnotationInfoActivity extends AppCompatActivity
 
                 //fill-in values on the UI
                 siteId.setText(map.get("SITE_ID"));
+                mSite_id = map.get("SITE_ID");
                 String coordinatesS = map.get("BEGIN_COORDINATE_LAT")+","+map.get("BEGIN_COORDINATE_LONG");
                 coordinates.setText(coordinatesS);
                 date.setText(map.get("DATE"));
@@ -414,6 +418,13 @@ public class AnnotationInfoActivity extends AppCompatActivity
                 startActivity(intent);
             }
         }
+
+    }
+
+    public void addMaintenance(View view){
+        Intent intent = new Intent(this, MaintenanceActivity.class);
+        intent.putExtra("form",mSite_id);
+        startActivity(intent);
 
     }
 
