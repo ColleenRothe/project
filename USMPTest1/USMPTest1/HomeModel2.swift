@@ -161,6 +161,9 @@ class HomeModel2: NSObject, URLSessionDataDelegate, OfflineModelHelperProtocol{
                     thing.photos = ""
                 }
                 
+                print("photos mapService.php are:")
+                print(thing.photos!)
+                
                 if(jsonElement.value(forKey:"COMMENTS") as? String != nil){
                     thing.comments = jsonElement.value(forKey: "COMMENTS")! as? String}
                 else{

@@ -268,7 +268,7 @@ public class MaintenanceActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
                 String region = adapter.getItemAtPosition(position).toString();
                 //FS
-                if (region.equals("Northern Region")) {
+                if (region.equals("Northern_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList1);
                     for (int i = 0; i < localArray.length; i++) {
@@ -276,7 +276,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                } else if (region.equals("Rocky Mountain Region")) {
+                } else if (region.equals("Rocky_Mountain_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList2);
                     for (int i = 0; i < localArray.length; i++) {
@@ -284,7 +284,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                } else if (region.equals("Southwestern Region")) {
+                } else if (region.equals("Southwestern_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList3);
                     for (int i = 0; i < localArray.length; i++) {
@@ -292,7 +292,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                } else if (region.equals("Intermountain Region")) {
+                } else if (region.equals("Intermountain_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList4);
                     for (int i = 0; i < localArray.length; i++) {
@@ -300,7 +300,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                } else if (region.equals("Pacific Southwest Region")) {
+                } else if (region.equals("Pacific_Southwest_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList5);
                     for (int i = 0; i < localArray.length; i++) {
@@ -308,7 +308,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                } else if (region.equals("Pacific Northwest Region")) {
+                } else if (region.equals("Pacific_Northwest_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList6);
                     for (int i = 0; i < localArray.length; i++) {
@@ -316,7 +316,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                } else if (region.equals("Southern Region")) {
+                } else if (region.equals("Southern_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList7);
                     for (int i = 0; i < localArray.length; i++) {
@@ -324,7 +324,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                } else if (region.equals("Eastern Region")) {
+                } else if (region.equals("Eastern_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList8);
                     for (int i = 0; i < localArray.length; i++) {
@@ -332,7 +332,7 @@ public class MaintenanceActivity extends AppCompatActivity
                     }
                     adapterLocal.notifyDataSetChanged();
 
-                } else if (region.equals("Alaska Region")) {
+                } else if (region.equals("Alaska_Region")) {
                     fs_local1.clear();
                     String[] localArray = getResources().getStringArray(R.array.FSLocalList9);
                     for (int i = 0; i < localArray.length; i++) {
@@ -585,46 +585,30 @@ public class MaintenanceActivity extends AppCompatActivity
         BeginMile.setText(map.get("BEGIN_MILE_MARKER"));
         EndMile.setText(map.get("END_MILE_MARKER"));
         String agency = (map.get("UMBRELLA_AGENCY"));
-        String [] agencyArray = getResources().getStringArray(R.array.AgencyList);
-        for(int i = 0; i<agencyArray.length;i++){
-            if(agencyArray[i].equals(agency)){
-                Agency.setSelection(i);
-            }
-        }
-
         String regional = (map.get("REGIONAL_ADMIN"));
-        String [] regionalArray1 = getResources().getStringArray(R.array.FSRegionalList);
-        String [] regionalArray2 = getResources().getStringArray(R.array.NPSRegionalList);
 
-        for(int i = 0; i<regionalArray1.length;i++){
-            if(regionalArray1[i].equals(regional)){
-                Regional.setSelection(i);
-            }
-        }
 
-        for(int i = 0; i<regionalArray2.length;i++){
-            if(regionalArray2[i].equals(regional)){
-                Regional.setSelection(i);
-            }
-        }
+        String[] agencyArray = getResources().getStringArray(R.array.AgencyList);
+        String[] regionalArray1 = getResources().getStringArray(R.array.FSRegionalList);
+        String[] regionalArray2 = getResources().getStringArray(R.array.NPSRegionalList);
 
         String local = (map.get("LOCAL_ADMIN"));
-        String [] local1 = getResources().getStringArray(R.array.FSLocalList1);
-        String [] local2 = getResources().getStringArray(R.array.FSLocalList2);
-        String [] local3 = getResources().getStringArray(R.array.FSLocalList3);
-        String [] local4 = getResources().getStringArray(R.array.FSLocalList4);
-        String [] local5 = getResources().getStringArray(R.array.FSLocalList5);
-        String [] local6 = getResources().getStringArray(R.array.FSLocalList6);
-        String [] local7 = getResources().getStringArray(R.array.FSLocalList7);
-        String [] local8 = getResources().getStringArray(R.array.FSLocalList8);
-        String [] local9 = getResources().getStringArray(R.array.FSLocalList9);
-        String [] local10 = getResources().getStringArray(R.array.NPSLocalList1);
-        String [] local11 = getResources().getStringArray(R.array.NPSLocalList2);
-        String [] local12 = getResources().getStringArray(R.array.NPSLocal3);
-        String [] local13 = getResources().getStringArray(R.array.NPSLocal4);
-        String [] local14 = getResources().getStringArray(R.array.NPSLocal5);
-        String [] local15 = getResources().getStringArray(R.array.NPSLocal6);
-        String [] local16 = getResources().getStringArray(R.array.NPSLocal7);
+        String[] local1 = getResources().getStringArray(R.array.FSLocalList1);
+        String[] local2 = getResources().getStringArray(R.array.FSLocalList2);
+        String[] local3 = getResources().getStringArray(R.array.FSLocalList3);
+        String[] local4 = getResources().getStringArray(R.array.FSLocalList4);
+        String[] local5 = getResources().getStringArray(R.array.FSLocalList5);
+        String[] local6 = getResources().getStringArray(R.array.FSLocalList6);
+        String[] local7 = getResources().getStringArray(R.array.FSLocalList7);
+        String[] local8 = getResources().getStringArray(R.array.FSLocalList8);
+        String[] local9 = getResources().getStringArray(R.array.FSLocalList9);
+        String[] local10 = getResources().getStringArray(R.array.NPSLocalList1);
+        String[] local11 = getResources().getStringArray(R.array.NPSLocalList2);
+        String[] local12 = getResources().getStringArray(R.array.NPSLocal3);
+        String[] local13 = getResources().getStringArray(R.array.NPSLocal4);
+        String[] local14 = getResources().getStringArray(R.array.NPSLocal5);
+        String[] local15 = getResources().getStringArray(R.array.NPSLocal6);
+        String[] local16 = getResources().getStringArray(R.array.NPSLocal7);
 
         ArrayList<String> localList1 = new ArrayList<String>(Arrays.asList(local1));
         ArrayList<String> localList2 = new ArrayList<String>(Arrays.asList(local2));
@@ -644,39 +628,165 @@ public class MaintenanceActivity extends AppCompatActivity
         ArrayList<String> localList16 = new ArrayList<String>(Arrays.asList(local16));
 
 
-        if(localList1.contains(local)){
-            Local.setSelection(localList1.indexOf(local));
+        //set the agency
+        for (int i = 0; i < agencyArray.length; i++) {
+            if (agencyArray[i].equals(agency)) {
+                Agency.setSelection(i);
+            }
         }
-        else if (localList2.contains(local)){
-            Local.setSelection(localList2.indexOf(local));
-        }else if (localList3.contains(local)){
-            Local.setSelection(localList3.indexOf(local));
-        }else if (localList4.contains(local)){
-            Local.setSelection(localList4.indexOf(local));
-        }else if (localList5.contains(local)){
-            Local.setSelection(localList5.indexOf(local));
-        }else if (localList6.contains(local)){
-            Local.setSelection(localList6.indexOf(local));
-        }else if (localList7.contains(local)){
-            Local.setSelection(localList7.indexOf(local));
-        }else if (localList8.contains(local)){
-            Local.setSelection(localList8.indexOf(local));
-        }else if (localList9.contains(local)){
-            Local.setSelection(localList9.indexOf(local));
-        }else if (localList10.contains(local)){
-            Local.setSelection(localList10.indexOf(local));
-        }else if (localList11.contains(local)){
-            Local.setSelection(localList11.indexOf(local));
-        }else if (localList12.contains(local)){
-            Local.setSelection(localList12.indexOf(local));
-        }else if (localList13.contains(local)){
-            Local.setSelection(localList13.indexOf(local));
-        }else if (localList14.contains(local)){
-            Local.setSelection(localList14.indexOf(local));
-        }else if (localList15.contains(local)){
-            Local.setSelection(localList15.indexOf(local));
-        }else if (localList16.contains(local)){
-            Local.setSelection(localList16.indexOf(local));
+        //if agency = FS...
+        if(Agency.getSelectedItem().equals("FS")){
+            adapterRegional.notifyDataSetChanged();
+            for(int i = 0; i< regionalArray1.length; i++){
+                //Set the FS region
+                if(regional.contains(regionalArray1[i])){
+                    Regional.setSelection(i);
+                    adapterLocal.notifyDataSetChanged();
+                }
+            }
+
+            Boolean localB = false;
+            for(int i = 0; i<localList1.size(); i++){
+                if(local.contains(localList1.get(i))){
+                    Local.setSelection(i);
+                    localB = true;
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList2.size(); i++){
+                    if(local.contains(localList2.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList3.size(); i++){
+                    if(local.contains(localList3.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList4.size(); i++){
+                    if(local.contains(localList4.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList5.size(); i++){
+                    if(local.contains(localList5.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList6.size(); i++){
+                    if(local.contains(localList6.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList7.size(); i++){
+                    if(local.contains(localList7.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList8.size(); i++){
+                    if(local.contains(localList8.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList9.size(); i++){
+                    if(local.contains(localList9.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+
+            //if agency = NPS
+        }else if (Agency.getSelectedItem().equals("NPS")){
+            adapterRegional.notifyDataSetChanged();
+            for(int i = 0; i< regionalArray2.length; i++){
+                //Set the NPS region
+                if(regional.contains(regionalArray2[i])){
+                    Regional.setSelection(i);
+                    adapterLocal.notifyDataSetChanged();
+                }
+            }
+
+            Boolean localB = false;
+            if(!localB){
+                for(int i = 0; i<localList10.size(); i++){
+                    if(local.contains(localList10.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList11.size(); i++){
+                    if(local.contains(localList11.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList12.size(); i++){
+                    if(local.contains(localList12.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList13.size(); i++){
+                    if(local.contains(localList13.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList14.size(); i++){
+                    if(local.contains(localList9.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList15.size(); i++){
+                    if(local.contains(localList9.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+            if(!localB){
+                for(int i = 0; i<localList16.size(); i++){
+                    if(local.contains(localList9.get(i))){
+                        Local.setSelection(i);
+                        localB = true;
+                    }
+                }
+            }
+
+
         }
 
 

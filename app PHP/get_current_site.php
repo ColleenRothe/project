@@ -256,8 +256,12 @@
     $data[6]=$vals;
     
     //get photos info
-    $photos_query = "SELECT * FROM PHOTOS WHERE SITE_ID = '".$row['SITE_ID']."' ORDER BY SI_ID DESC LIMIT 5";
+    $photos_query = "SELECT * FROM PHOTOS WHERE SITE_ID = '".$site_id."' ORDER BY SI_ID DESC LIMIT 5";
+   
     $photos_result = $conn->query($photos_query);
+    
+   
+    
     $photos_list = array();
     $i = 0;
     while($photo_row = $photos_result->fetch_assoc())
@@ -272,6 +276,9 @@
     );
     //$data[7]=implode(",", $photos_list);
     //$data[7] = $photos_list;
+    
+    
+    
     $data[] = $photos;
 
     
