@@ -2,6 +2,8 @@
 //  SlopeRatingForm.swift
 //  USMPTest1
 //
+//  Slope Rating Form. Can be either Landslide or Rockfall
+//
 //  Created by Colleen Rothe on 4/6/17.
 //  Copyright © 2017 Colleen Rothe. All rights reserved.
 //
@@ -341,7 +343,6 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     
     @IBOutlet var rockF2Picker: UIPickerView!
     
-   //new/different
     @IBOutlet weak var hazardTotalText: UITextField!
     
     //RISK RATINGS
@@ -418,7 +419,7 @@ class SlopeRatingForm: UITableViewController, UIPickerViewDelegate, UIPickerView
     commentsText.layer.borderWidth = 3
     commentsText.layer.borderColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 1).cgColor
 
-    //cal autocomplete stuff
+    //call autocomplete stuff
     //autocompleteStuff()
     
     //LOCATION

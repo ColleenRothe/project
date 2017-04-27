@@ -2,7 +2,7 @@
 //  MaintenanceMap.swift
 //  USMPTest1
 //
-//  Map that shows the maintenance forms
+
 //
 //  Created by Colleen Rothe on 11/26/16.
 //  Copyright © 2016 Colleen Rothe. All rights reserved.
@@ -18,7 +18,8 @@ import Mapbox
 class MaintenanceMap: UIViewController, MGLMapViewDelegate, MaintenancePinModelHelperProtocol {
     //map view
     @IBOutlet weak var mapView: MGLMapView!
-    var feedItems: NSArray = NSArray() //feed for pin info
+    //feed for pin info
+    var feedItems: NSArray = NSArray()
     let maintenancePinModel = MaintenancePinModel()
     let shareData = ShareData.sharedInstance
     var current_id = 0

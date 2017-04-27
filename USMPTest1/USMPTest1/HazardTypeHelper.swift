@@ -21,9 +21,9 @@ class HazardTypeHelper: NSObject, URLSessionDataDelegate{
     
     var data: NSMutableData = NSMutableData()
     
-    //or wherever the php service lives...
     let urlPath: String = "http://nl.cs.montana.edu/usmp/server/shared/get_hazard_type_dropdown_options.php"
     
+    //call to download data
     func downloadItems(){
         let url: URL = URL(string: urlPath)!
         var session: Foundation.URLSession!
@@ -41,6 +41,7 @@ class HazardTypeHelper: NSObject, URLSessionDataDelegate{
         self.data.append(data);
     }
     
+    //did the data download?
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?){
         if (error != nil)
         {
@@ -52,6 +53,7 @@ class HazardTypeHelper: NSObject, URLSessionDataDelegate{
         }
     }
     
+    //put into an array to be passed to forms
     func parseJSON(){
         var jsonResult: NSArray = NSArray()
         do{
@@ -60,8 +62,6 @@ class HazardTypeHelper: NSObject, URLSessionDataDelegate{
             print(error)
             
         }
-        print("Hazard JSON RESULT IS")
-        print(jsonResult)
 
         //add current object to mutable array, ready to be sent to VC via protocol
         

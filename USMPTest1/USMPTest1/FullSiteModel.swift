@@ -2,6 +2,8 @@
 //  FullSiteModel.swift
 //  USMPTest1
 //
+//  Object representating a full slope rating form
+//
 //  Created by Colleen Rothe on 4/10/17.
 //  Copyright © 2017 Colleen Rothe. All rights reserved.
 //

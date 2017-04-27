@@ -72,7 +72,6 @@ class HomeModel: NSObject, URLSessionDataDelegate{
             }
             
             
-            
             self.responseString = self.responseString.replacingOccurrences(of: "{", with: "")
             self.responseString = self.responseString.replacingOccurrences(of: "}", with: "")
             var tempString = "{"

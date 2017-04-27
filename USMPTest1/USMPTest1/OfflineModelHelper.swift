@@ -22,7 +22,9 @@ protocol OfflineModelHelperProtocol: class{
     
 }
 
+//response string
 var responseO = ""
+//dictionary it gets put in
 var ODictionary = NSDictionary()
 
 class OfflineModelHelper: NSObject, URLSessionDataDelegate{
@@ -59,7 +61,7 @@ class OfflineModelHelper: NSObject, URLSessionDataDelegate{
             
             finalString = finalString.appending("}")
             
-            //tru to put into a dictionary
+            //try to put into a dictionary
             if let data2 = finalString.data(using: .utf8){
                 
                 do {

@@ -15,10 +15,12 @@ import CoreData
 
 
 class AnnotationInfo: UITableViewController, HomeModelProtocol  {
-    //listTableView
+    //holds info from database, filled from HomeModel.swift
     var feedItems: NSArray = NSArray()
+    //Singleton
     let shareData = ShareData.sharedInstance
-    var sites = [NSManagedObject]()             //core data sites
+    //Holds Core Data Pins
+    var sites = [NSManagedObject]()
     
     //UI Connections
     @IBOutlet weak var site_idLabel: UILabel!
@@ -52,7 +54,7 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
     @IBOutlet weak var navBar: UINavigationBar!
     
     //offline func.
-    var site = [NSManagedObject]()             //core data sites
+    var site = [NSManagedObject]()
     
     //nav bar
     @IBOutlet weak var mapButton: UIBarButtonItem!
@@ -133,9 +135,6 @@ class AnnotationInfo: UITableViewController, HomeModelProtocol  {
         let selectedLocation = feedItems.object(at: 0) as! AnnotationModel
         
         //set the labels with the appropriate information downloaded
-        
-        print("selected site_id:")
-        print(selectedLocation.site_id!)
         
         site_idLabel.text = "Site ID: \(selectedLocation.site_id!)"
         

@@ -35,11 +35,13 @@ import CoreData
 import SystemConfiguration
 
 class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UIPopoverPresentationControllerDelegate, UIScrollViewDelegate, MaintenanceInfoModelHelperProtocol, SiteListModelHelperProtocol{
-    //nav bar
-    
+
+    //singleton
     let shareData = ShareData.sharedInstance
-    var feedItems: NSArray = NSArray()          //feed for pin info
-    var feedItemsList: NSArray = NSArray()      //feed for list of site ids
+    //feed for pin info
+    var feedItems: NSArray = NSArray()
+    //feed for list of site ids
+    var feedItemsList: NSArray = NSArray()
 
     //nav bar
     @IBOutlet weak var mapButton: UIBarButtonItem!
@@ -376,6 +378,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
         }
         
+        //if you are loading a saved offline site
         if(shareData.load == true){
             //call special load method
             loadFromList()
@@ -386,6 +389,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         view.addGestureRecognizer(tap)
         
         
+        //if you are loading a site from the map
         if shareData.fillMaintenance == true {
         //load form stuff....
             shareData.fillMaintenance = false
@@ -408,6 +412,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
             }
         }
         
+        //if internet is not available, can't submit
         if(!isInternetAvailable()){
             submitButton.isEnabled = false
             submitButton.backgroundColor = UIColor.darkGray
@@ -415,7 +420,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
        
     }
     
-    //try here
+    //submit from the saved forms list
     override func viewDidAppear(_ animated: Bool) {
         if(shareData.off_submit == true){
             shareData.off_submit = false
@@ -428,6 +433,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         view.endEditing(true)
     }
     
+    //check if you have connection
     func isInternetAvailable() -> Bool
     {
         var zeroAddress = sockaddr_in()
@@ -450,7 +456,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
     
     
-    //get maintenance form info out of the MaintenanceInfoModel
+    //get maintenance form info out of the MaintenanceInfoModel (form saved offline)
     func loadSiteInformation(){
         //fill in the UI
         codeText.text = ((feedItems.object(at: 0) as! MaintenanceInfoModel).code_relation)
@@ -484,7 +490,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         let regionS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).regional)
         let localS = ((feedItems.object(at: 0) as! MaintenanceInfoModel).local)
         
-        //fix, based on it being like "NPS_SER_BITTERROOT"....
+        //fixed, based on it being like "NPS_SER_BITTERROOT"....
         
         if(agencyS == "FS"){
             agency.selectRow(1, inComponent: 0, animated: true)
@@ -742,7 +748,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         // Dispose of any resources that can be recreated.
     }
     
-    //to place the floating thing
+    //to place the floating percentage thing
     override func viewWillAppear(_ animated: Bool) {
         originalOffset = float.frame.origin.y
     }
@@ -1422,7 +1428,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     
         let total = totalCostText.text!
         
-        var side_id = 0
+        var site_id = 0
         if(siteIDPicker.selectedRow(inComponent: 0) != 0){
          site_id = siteIDOptions[siteIDPicker.selectedRow(inComponent: 0)]
         }
@@ -1584,7 +1590,7 @@ class MaintenanceForm: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
 
     }
     
-    //MARK: LOAD offline list
+    //MARK: Load from offline list
     func loadFromList(){
         shareData.load = false
         

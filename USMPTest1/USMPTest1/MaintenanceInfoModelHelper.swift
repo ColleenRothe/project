@@ -24,7 +24,6 @@ var JSONDictionary = NSDictionary()
 class MaintenanceInfoModelHelper: NSObject, URLSessionDataDelegate{
 
     func helper(){
-        print("Helper")
         let request = NSMutableURLRequest(url: NSURL(string: "http://nl.cs.montana.edu/test_sites/colleen.rothe/currentMaintenance.php")! as URL)
         request.httpMethod = "POST"
         

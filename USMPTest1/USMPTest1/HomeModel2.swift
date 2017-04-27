@@ -23,6 +23,7 @@ class HomeModel2: NSObject, URLSessionDataDelegate, OfflineModelHelperProtocol{
     //offline model stuff
      var OFeedItems: NSArray = NSArray()
     
+    //info from OfflineModelHelper
     func itemsDownloadedO(_ items: NSArray) {
         OFeedItems = items
     }

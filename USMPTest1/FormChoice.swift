@@ -84,11 +84,13 @@ class FormChoice: UIViewController{
         
     }
     
+    //go to a landslide form
     @IBAction func goLandslide(_ sender: Any) {
         shareData.form = "landslide"
         
     }
     
+    //go to rockfall form
     @IBAction func goRockfall(_ sender: Any) {
         shareData.form = "rockfall"
     }

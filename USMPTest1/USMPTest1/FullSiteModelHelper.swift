@@ -2,6 +2,9 @@
 //  FullSiteModelHelper.swift
 //  USMPTest1
 //
+//  Gets info from database for slope rating form that needs to be saved with cached map
+
+//
 //  Created by Colleen Rothe on 4/10/17.
 //  Copyright © 2017 Colleen Rothe. All rights reserved.
 //
@@ -47,12 +50,10 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
             responseF = responseF.replacingOccurrences(of: "[", with: "")
             responseF = responseF.replacingOccurrences(of: "]", with: "")
             
-            
-            
             let someIndex = responseF.index(responseF.startIndex,
                                                       offsetBy: 1)
             
-            
+            //need to manipulate the response string a bit so it can be put in a dictionary
             if(responseF[someIndex] != "I"){
                 responseF = responseF.replacingOccurrences(of: "\"0\":", with: "")
                 responseF = responseF.replacingOccurrences(of: "\"1\":", with: "")
@@ -67,9 +68,6 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
                 
             }
 
-            
-            
-            
             responseF = responseF.replacingOccurrences(of: "{", with: "")
             responseF = responseF.replacingOccurrences(of: "}", with: "")
             var finalString = "{"
@@ -77,7 +75,7 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
             
             finalString = finalString.appending("}")
             
-            //tru to put into a dictionary
+            //try to put into a dictionary
             if let data2 = finalString.data(using: .utf8){
                 
                 do {
@@ -111,13 +109,11 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
     //put dictionary data into an OfflineModel
     func parseJSON(){
         
-        
         let comments : NSMutableArray = NSMutableArray()
         let thing = FullSiteModel()//instantiate object to hold each element in the spec. JSON obj.
         
         if(FDictionary.value(forKey:"ID") as? String != nil){
             thing.id = FDictionary.value(forKey: "ID")! as? String
-            
         }
             
         else{
@@ -594,7 +590,6 @@ class FullSiteModelHelper: NSObject, URLSessionDataDelegate{
         comments.add(thing) //add current object to mutable array, ready to be sent to VC via protocol
         
        
-        
         DispatchQueue.main.async(execute: { ()->Void in self.delegate!.itemsDownloadedF(comments)
         })
     }

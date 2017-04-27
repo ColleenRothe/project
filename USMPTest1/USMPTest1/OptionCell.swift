@@ -35,6 +35,7 @@ class OptionCell: UITableViewCell{
     
     let sharedData = ShareData.sharedInstance
     
+    //what type of form?
     var coreType = ""
     
     //buttons
@@ -220,19 +221,6 @@ class OptionCell: UITableViewCell{
         
     }
     
-//    func handleSubmitAll(_ alertView:UIAlertAction!){
-//        //clear...then submit
-//        
-//    }
-//    func handleAll(_ alertView:UIAlertAction!){
-//        //clear...then submit
-//        let alertController = UIAlertController(title: "Submit All?", message: "Are you sure you want to submit ALL saved forms of this type?", preferredStyle: UIAlertControllerStyle.alert)
-//        alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-//        alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSubmitAll))
-//        parentViewController!.present(alertController, animated: true, completion: nil)
-//        
-//    }
-    
     //user message, confirming submit
     @IBAction func goSubmit(_ sender: AnyObject) {
         if(sharedData.selectedForm < 0){ //in case they select the nav bar/option bar
@@ -243,7 +231,6 @@ class OptionCell: UITableViewCell{
 
         let alertController = UIAlertController(title: "Submit", message: "Are you sure you want to submit form?", preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
-        //alertController.addAction(UIAlertAction(title: "Submit All", style: UIAlertActionStyle.default, handler: handleAll))
         alertController.addAction(UIAlertAction(title: "Submit", style: UIAlertActionStyle.default, handler: handleSaved))
         
         parentViewController!.present(alertController, animated: true, completion: nil)
