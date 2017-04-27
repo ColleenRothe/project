@@ -763,5 +763,14 @@ class MapboxOnline: ViewController, pinModelHelperProtocol, HomeModel2Protocol, 
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
+    //click the info button
+    @IBAction func clickInfo(_ sender: Any) {
+        let message = "Cache Map: Input northeast and southwest corner coordinates to save a portion of the map for offline use. You must be online to do this, and will be notified when the download is complete (~2 min.)\n\nClear Cache: Delete the current saved map (can only save one at a time). You will be notified when it has been successfully deleted (~2 min.)\n\nCache Status: Check to see if you have a map section saved for offline use. If cached area is invalid, will notify you and automatically clear.\n\nLoad Offline Points: When offline, load the map and previously saved sites. Only works if you have previously saved a map while online. You may need to zoom in to view map.\n\n"
+        let alert = UIAlertController(title: "Info", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        
+    }
 }
 
